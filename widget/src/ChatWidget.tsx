@@ -29,13 +29,35 @@ export function ChatWidget({ studioId, apiUrl, privacyUrl, studioName, lang }: P
   ]);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
+  const isMobile = () => window.matchMedia("(max-width: 480px)").matches;
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight });
   }, [msgs, open]);
 
   useEffect(() => {
-    if (open) inputRef.current?.focus();
+    if (!open) return;
+    if (!isMobile()) { inputRef.current?.focus(); return; }
+    // mobile: blocca lo scroll della pagina e adatta l'altezza alla tastiera
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const vv = window.visualViewport;
+    const fit = () => {
+      if (panelRef.current && vv) {
+        panelRef.current.style.height = `${vv.height}px`;
+        panelRef.current.style.top = `${vv.offsetTop}px`;
+      }
+      listRef.current?.scrollTo({ top: listRef.current.scrollHeight });
+    };
+    fit();
+    vv?.addEventListener("resize", fit);
+    vv?.addEventListener("scroll", fit);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      vv?.removeEventListener("resize", fit);
+      vv?.removeEventListener("scroll", fit);
+    };
   }, [open]);
 
   async function send() {
@@ -62,7 +84,7 @@ export function ChatWidget({ studioId, apiUrl, privacyUrl, studioName, lang }: P
   return (
     <div className="dc">
       {open && (
-        <section className="dc-panel" aria-label="Chat con l'assistente">
+        <section className="dc-panel" ref={panelRef} aria-label="Chat con l'assistente">
           <header className="dc-head">
             <div>
               <strong>{t.title(studioName)}</strong>
