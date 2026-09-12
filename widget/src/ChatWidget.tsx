@@ -98,7 +98,7 @@ export function ChatWidget({ studioId, apiUrl, privacyUrl, studioName, lang }: P
         </section>
       )}
 
-      <button className="dc-launcher" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label="Apri chat">
+      <button className={`dc-launcher${open ? " dc-open" : ""}`} onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label="Apri chat">
         {open ? "×" : t.open}
       </button>
     </div>

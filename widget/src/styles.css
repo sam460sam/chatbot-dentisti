@@ -31,7 +31,7 @@
 .dc-head strong { font-size: 15px; }
 .dc-notice { margin: 4px 0 0; font-size: 12px; color: var(--dc-muted); }
 .dc-notice a { color: var(--dc-accent); }
-.dc-close { border: 0; background: none; font-size: 22px; line-height: 1; cursor: pointer; color: var(--dc-muted); padding: 0 4px; }
+.dc-close { border: 0; min-width: 40px; min-height: 40px; background: none; font-size: 22px; line-height: 1; cursor: pointer; color: var(--dc-muted); padding: 0 4px; }
 
 .dc-list { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 8px; }
 .dc-msg { max-width: 85%; padding: 9px 12px; border-radius: 14px; white-space: pre-wrap; word-wrap: break-word; }
@@ -47,5 +47,8 @@
 
 @media (max-width: 480px) {
   .dc { right: 12px; bottom: 12px; }
-  .dc-panel { width: calc(100vw - 24px); height: calc(100vh - 100px); }
+  .dc-panel { position: fixed; inset: 0; width: 100%; max-width: none; height: 100dvh; max-height: none; border: 0; border-radius: 0; box-shadow: none; }
+  .dc-head { padding-top: max(14px, env(safe-area-inset-top)); }
+  .dc-input { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+  .dc-launcher.dc-open { display: none; }
 }
