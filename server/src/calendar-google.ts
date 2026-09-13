@@ -91,3 +91,20 @@ export const googleCalendar: CalendarProvider = {
     return booking;
   },
 };
+
+const CALLBACK_TITLE = { it: "DA RICHIAMARE", nl: "TERUGBELLEN", en: "CALL BACK" } as const;
+
+/** Segna nel calendario dello studio una richiesta da gestire a mano (urgenze, modifiche, domande senza risposta). */
+export async function addCallbackNote(studio: Studio, reason: string, contact?: string): Promise<string> {
+  const now = new Date();
+  const end = new Date(now.getTime() + 30 * 60000);
+  const ev = await call<{ id: string }>("POST", `/calendars/${encodeURIComponent(studio.googleCalendarId!)}/events`, {
+    summary: `${CALLBACK_TITLE[studio.language]} – ${contact?.trim() || "?"}`,
+    description: `${reason}\n\n(segnalazione dell'assistente virtuale)`,
+    start: { dateTime: now.toISOString() },
+    end: { dateTime: end.toISOString() },
+    colorId: "11",
+  });
+  console.log("[HANDOFF:google]", ev.id, studio.id, reason);
+  return ev.id;
+}

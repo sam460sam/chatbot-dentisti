@@ -1,7 +1,7 @@
 import type Anthropic from "@anthropic-ai/sdk";
 import type { Studio } from "./studios/demo.js";
 import { memoryCalendar, type CalendarProvider } from "./calendar.js";
-import { googleCalendar, googleConfigured } from "./calendar-google.js";
+import { googleCalendar, googleConfigured, addCallbackNote } from "./calendar-google.js";
 
 export function calendarFor(studio: Studio): CalendarProvider {
   return studio.googleCalendarId && googleConfigured() ? googleCalendar : memoryCalendar;
@@ -74,9 +74,12 @@ export async function executeTool(
         return JSON.stringify({ ok: true, bookingId: b.id, start: b.start });
       }
       case "escalate_to_human": {
-        // TODO: inviare email/WhatsApp a studio.handoffContact
-        console.log("[HANDOFF]", studio.id, input);
-        return JSON.stringify({ ok: true, message: `Segreteria avvisata (${studio.handoffContact})` });
+        if (studio.googleCalendarId && googleConfigured()) {
+          await addCallbackNote(studio, String(input.reason), input.patient_contact ? String(input.patient_contact) : undefined);
+        } else {
+          console.log("[HANDOFF]", studio.id, input);
+        }
+        return JSON.stringify({ ok: true, message: "Segreteria avvisata: ricontatterà il paziente al più presto." });
       }
       default:
         return JSON.stringify({ error: `Tool sconosciuto: ${name}` });
