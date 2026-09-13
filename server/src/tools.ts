@@ -1,6 +1,11 @@
 import type Anthropic from "@anthropic-ai/sdk";
 import type { Studio } from "./studios/demo.js";
 import { memoryCalendar, type CalendarProvider } from "./calendar.js";
+import { googleCalendar, googleConfigured } from "./calendar-google.js";
+
+export function calendarFor(studio: Studio): CalendarProvider {
+  return studio.googleCalendarId && googleConfigured() ? googleCalendar : memoryCalendar;
+}
 
 export const toolDefinitions: Anthropic.Tool[] = [
   {
@@ -48,7 +53,7 @@ export async function executeTool(
   name: string,
   input: any,
   studio: Studio,
-  calendar: CalendarProvider = memoryCalendar,
+  calendar: CalendarProvider = calendarFor(studio),
 ): Promise<string> {
   try {
     switch (name) {

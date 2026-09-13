@@ -15,6 +15,8 @@ export type Studio = {
   doctors: string[];
   services: { name: string; durationMin: number; priceFrom: number }[];
   faq: { q: string; a: string }[];
+  /** ID del Google Calendar dello studio (es. xxx@group.calendar.google.com); se assente usa il calendario in memoria */
+  googleCalendarId?: string;
   /** email/numero della segreteria per l'escalation */
   handoffContact: string;
 };
@@ -22,6 +24,7 @@ export type Studio = {
 export const demoStudio: Studio = {
   id: "demo",
   name: "Studio Dentistico Rossi",
+  googleCalendarId: "77ef448395a411804533ce7061fc3df714c5ff35497e11793a18b91cb10fb984@group.calendar.google.com",
   language: "it",
   customInstructions: "Dai del lei ai pazienti. Tono caldo ma professionale, niente emoji. Se chiedono dello sbiancamento, ricorda che serve prima una visita di controllo.",
   address: "Via Roma 12, Castelfranco Veneto (TV)",
