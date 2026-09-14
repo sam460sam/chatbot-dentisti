@@ -6,13 +6,11 @@ import { serve } from "@hono/node-server";
 import { studios } from "./studios/demo.js";
 import { buildSystemPrompt } from "./prompt.js";
 import { toolDefinitions, executeTool } from "./tools.js";
+import { loadSession, saveSession, cleanupOldSessions } from "./store.js";
 
 const client = new Anthropic(); // legge ANTHROPIC_API_KEY
 const MODEL = process.env.CLAUDE_MODEL ?? "claude-sonnet-5";
 const MAX_TOOL_ROUNDS = 5;
-
-// history per sessione, in memoria (da spostare su DB con Supabase)
-const sessions = new Map<string, Anthropic.MessageParam[]>();
 
 const app = new Hono();
 app.use(
@@ -33,7 +31,8 @@ app.post("/chat", async (c) => {
   if (!studio) return c.json({ error: "studio non trovato" }, 404);
   if (!message?.trim()) return c.json({ error: "messaggio vuoto" }, 400);
 
-  const history = sessions.get(sessionId) ?? [];
+  if (!sessionId || sessionId.length > 80) return c.json({ error: "sessionId non valido" }, 400);
+  const history = await loadSession(sessionId);
   history.push({ role: "user", content: message.trim() });
 
   const system: Anthropic.TextBlockParam[] = [
@@ -73,9 +72,12 @@ app.post("/chat", async (c) => {
   }
 
   // limita la history per non far crescere i token
-  sessions.set(sessionId, history.slice(-40));
+  await saveSession(sessionId, studioId, history.slice(-40));
   return c.json({ reply });
 });
+
+cleanupOldSessions();
+setInterval(cleanupOldSessions, 24 * 3600 * 1000);
 
 const port = Number(process.env.PORT ?? 3001);
 serve({ fetch: app.fetch, port });
