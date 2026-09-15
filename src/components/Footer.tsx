@@ -11,15 +11,7 @@ export function Footer({ t }: { t: Translation }) {
       <div aria-hidden="true" className="noise pointer-events-none absolute inset-0 opacity-[0.04]" />
       <div className="container-page relative flex flex-col gap-10 py-14 sm:flex-row sm:items-start sm:justify-between">
         <div className="max-w-sm">
-          <div className="flex items-center gap-2.5">
-            <span
-              aria-hidden="true"
-              className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-accent-bright to-accent-dark text-[13px] font-extrabold text-white"
-            >
-              TB
-            </span>
-            <span className="text-[17px] font-extrabold tracking-tight">Twinbyte</span>
-          </div>
+          <img src="/logo-white.png" alt="Twinbyte" width={640} height={175} className="h-8 w-auto" />
           <p className="mt-4 text-sm leading-relaxed text-white/50">{t.footer.tagline}</p>
         </div>
 

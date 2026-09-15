@@ -69,9 +69,13 @@ export function ChatMockup({ t }: { t: Translation }) {
         </div>
 
         <div className="mt-4 flex items-center gap-3 border-b border-white/5 px-5 pb-4">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-gradient-to-br from-accent-bright to-accent-dark text-[11px] font-bold text-white">
-            TB
-          </span>
+          <img
+            src="/icon-192.png"
+            alt=""
+            width={192}
+            height={192}
+            className="h-9 w-9 rounded-full"
+          />
           <div className="leading-tight">
             <p className="text-[13px] font-semibold text-white/90">{t.demo.assistant}</p>
             <p className="flex items-center gap-1.5 text-[11px] text-white/40">
@@ -111,19 +115,19 @@ export function ChatMockup({ t }: { t: Translation }) {
         </div>
       </div>
 
-      {/* Calendar card, floating in front of the browser frame */}
+      {/* Calendar card: sits under the frame so it never covers the conversation */}
       <div
-        className={`absolute -bottom-20 -left-3 w-[262px] lg:-left-20 rounded-xl border border-white/12 bg-night-soft/95 p-4 shadow-float backdrop-blur-xl transition-all duration-700 ${
+        className={`mt-5 w-[262px] rounded-xl border border-white/12 bg-night-soft/95 p-4 shadow-float backdrop-blur-xl transition-all duration-700 sm:w-[290px] ${
           done ? 'opacity-100' : 'opacity-0'
         }`}
-        style={{ transform: `translateZ(60px) translateY(${done ? '0px' : '18px'})` }}
+        style={{ transform: `translateZ(55px) translateY(${done ? '0px' : '14px'})` }}
         aria-hidden="true"
       >
         <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-white/40">
           <CalendarCheck size={14} className="text-accent-bright" />
           {t.demo.calendarTitle}
         </div>
-        <div className="mt-3 rounded-lg border-l-2 border-accent-bright bg-accent/15 px-3 py-2.5">
+        <div className="mt-3 rounded-lg border-l-2 border-accent-bright bg-accent/25 px-3 py-2.5">
           <p className="text-[13px] font-semibold text-white">{t.demo.eventTitle}</p>
           <p className="mt-0.5 text-[11px] text-white/50">{t.demo.eventTime}</p>
         </div>

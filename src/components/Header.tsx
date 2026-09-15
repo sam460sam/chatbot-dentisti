@@ -41,20 +41,22 @@ export function Header({ t }: { t: Translation }) {
       }`}
     >
       <div className="container-page flex h-16 items-center justify-between gap-4 sm:h-[72px]">
-        <Link
-          to={home}
-          className={`flex items-center gap-2.5 font-extrabold tracking-tight ${
-            solid ? 'text-ink' : 'text-white'
-          }`}
-          aria-label="Twinbyte"
-        >
-          <span
-            aria-hidden="true"
-            className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-accent-bright to-accent-dark text-[13px] font-extrabold text-white shadow-glow"
-          >
-            TB
-          </span>
-          <span className="text-[17px]">Twinbyte</span>
+        <Link to={home} className="flex items-center" aria-label="Twinbyte">
+          {/* Both variants ship so switching over the hero never flashes. */}
+          <img
+            src="/logo.png"
+            alt="Twinbyte"
+            width={640}
+            height={175}
+            className={`h-8 w-auto sm:h-9 ${solid ? '' : 'hidden'}`}
+          />
+          <img
+            src="/logo-white.png"
+            alt="Twinbyte"
+            width={640}
+            height={175}
+            className={`h-8 w-auto sm:h-9 ${solid ? 'hidden' : ''}`}
+          />
         </Link>
 
         <nav aria-label="Main" className="hidden items-center gap-7 lg:flex">

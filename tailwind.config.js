@@ -14,11 +14,12 @@ export default {
           soft: '#0d1524',
           card: '#131c2e',
         },
+        /* Brand colours, taken from the logo. */
         accent: {
-          DEFAULT: '#0d9488',
-          dark: '#0f766e',
-          bright: '#2dd4bf',
-          light: '#e9f6f4',
+          DEFAULT: '#1f6f8b',
+          dark: '#175a72',
+          bright: '#7fd3c1',
+          light: '#e8f1f4',
         },
       },
       fontFamily: {

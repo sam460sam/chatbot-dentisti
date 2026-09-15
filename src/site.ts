@@ -14,7 +14,7 @@ export const SITE = {
     api: 'https://chatbot-dentisti-production.up.railway.app',
     studio: 'demo',
     name: 'Twinbyte',
-    color: '#0d9488',
+    color: '#1f6f8b',
   },
   /**
    * Live demo practice, served from this site (public/demo).
