@@ -7,6 +7,15 @@ export const SITE = {
   /** TODO: replace with the final Cloudflare Pages domain (or a custom domain). */
   baseUrl: 'https://twinbyte.pages.dev',
   lastUpdated: '2026-09-15',
+  /** Live assistant widget on this site. Set enabled: false to take it off. */
+  widget: {
+    enabled: true,
+    src: 'https://chatbot-dentisti.vercel.app/widget.js',
+    api: 'https://chatbot-dentisti-production.up.railway.app',
+    studio: 'demo',
+    name: 'Twinbyte',
+    color: '#0d9488',
+  },
   demo: {
     en: 'https://chatbot-dentisti.vercel.app/demo-en.html',
     nl: 'https://chatbot-dentisti.vercel.app/demo-nl.html',

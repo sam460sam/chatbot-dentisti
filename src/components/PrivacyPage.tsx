@@ -7,7 +7,7 @@ export function PrivacyPage({ t }: { t: Translation }) {
   const { lang } = useRoute()
 
   return (
-    <main id="main" className="container-page py-16 sm:py-20">
+    <main id="main" className="container-page pb-20 pt-28 sm:pt-32">
       <article className="max-w-2xl">
         <h1 className="text-3xl font-bold tracking-tight text-ink sm:text-4xl">
           {t.privacyPage.title}

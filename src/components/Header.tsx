@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Link, pathFor, useRoute } from '../router'
 import { LANGS, LANG_LABELS, type Translation } from '../i18n'
@@ -8,41 +8,76 @@ const SECTIONS = ['how', 'benefits', 'security', 'websites', 'faq', 'contact'] a
 export function Header({ t }: { t: Translation }) {
   const { lang, page } = useRoute()
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const barRef = useRef<HTMLDivElement>(null)
   const home = pathFor(lang, 'home')
 
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24)
+      const bar = barRef.current
+      if (bar) {
+        const max = document.documentElement.scrollHeight - window.innerHeight
+        bar.style.transform = `scaleX(${max > 0 ? Math.min(window.scrollY / max, 1) : 0})`
+      }
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => setOpen(false), [page, lang])
+
+  /** Transparent over the dark hero, solid once you scroll or on the privacy page. */
+  const solid = scrolled || open || page !== 'home'
   const links = SECTIONS.map((id) => ({ id, label: t.nav[id], to: `${home}#${id}` }))
 
   return (
-    <header className="sticky top-0 z-40 border-b border-ink/10 bg-white/95 backdrop-blur">
-      <div className="container-page flex h-16 items-center justify-between gap-4">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        solid
+          ? 'border-b border-ink/10 bg-white/85 backdrop-blur-xl'
+          : 'on-dark border-b border-transparent'
+      }`}
+    >
+      <div className="container-page flex h-16 items-center justify-between gap-4 sm:h-[72px]">
         <Link
           to={home}
-          className="flex items-center gap-2 font-bold tracking-tight text-ink"
+          className={`flex items-center gap-2.5 font-extrabold tracking-tight ${
+            solid ? 'text-ink' : 'text-white'
+          }`}
           aria-label="Twinbyte"
         >
           <span
             aria-hidden="true"
-            className="grid h-8 w-8 place-items-center rounded-lg bg-accent text-sm font-bold text-white"
+            className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-accent-bright to-accent-dark text-[13px] font-extrabold text-white shadow-glow"
           >
             TB
           </span>
-          <span className="text-lg">Twinbyte</span>
+          <span className="text-[17px]">Twinbyte</span>
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-6 lg:flex">
+        <nav aria-label="Main" className="hidden items-center gap-7 lg:flex">
           {links.map((l) => (
             <Link
               key={l.id}
               to={l.to}
-              className="text-sm font-medium text-ink-soft hover:text-accent"
+              className={`text-[14px] font-medium transition-colors ${
+                solid ? 'text-ink-soft hover:text-accent-dark' : 'text-white/65 hover:text-white'
+              }`}
             >
               {l.label}
             </Link>
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <nav aria-label={t.nav.language} className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5">
+          <nav
+            aria-label={t.nav.language}
+            className={`flex items-center rounded-lg p-0.5 ${
+              solid ? 'bg-ink/[0.06]' : 'bg-white/10'
+            }`}
+          >
             {LANGS.map((l) => (
               <Link
                 key={l}
@@ -50,11 +85,15 @@ export function Header({ t }: { t: Translation }) {
                 hrefLang={l}
                 aria-current={l === lang ? 'true' : undefined}
                 aria-label={LANG_LABELS[l]}
-                className={
+                className={`rounded-md px-2 py-1 text-[11px] font-bold uppercase tracking-wide transition-colors ${
                   l === lang
-                    ? 'rounded px-2 py-1 text-xs font-bold uppercase text-accent'
-                    : 'rounded px-2 py-1 text-xs font-semibold uppercase text-ink-muted hover:text-ink'
-                }
+                    ? solid
+                      ? 'bg-white text-accent-dark shadow-sm'
+                      : 'bg-white/90 text-night'
+                    : solid
+                      ? 'text-ink-muted hover:text-ink'
+                      : 'text-white/60 hover:text-white'
+                }`}
               >
                 {l}
               </Link>
@@ -63,7 +102,7 @@ export function Header({ t }: { t: Translation }) {
 
           <button
             type="button"
-            className="-mr-2 rounded-lg p-2 text-ink lg:hidden"
+            className={`-mr-2 rounded-lg p-2 lg:hidden ${solid ? 'text-ink' : 'text-white'}`}
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
@@ -73,6 +112,12 @@ export function Header({ t }: { t: Translation }) {
           </button>
         </div>
       </div>
+
+      <div
+        aria-hidden="true"
+        ref={barRef}
+        className="h-0.5 origin-left scale-x-0 bg-gradient-to-r from-accent to-accent-bright"
+      />
 
       {open && (
         <nav
@@ -86,7 +131,7 @@ export function Header({ t }: { t: Translation }) {
                 <Link
                   to={l.to}
                   onClick={() => setOpen(false)}
-                  className="block py-3 text-base font-medium text-ink-soft"
+                  className="block border-b border-ink/5 py-3.5 text-[15px] font-medium text-ink-soft last:border-0"
                 >
                   {l.label}
                 </Link>

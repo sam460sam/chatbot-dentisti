@@ -45,7 +45,7 @@ export interface Translation {
   how: { title: string; lead: string; steps: TitledItem[] }
   benefits: { title: string; lead: string; items: TitledItem[] }
   security: { title: string; lead: string; items: TitledItem[] }
-  websites: { title: string; lead: string; items: string[]; cta: string }
+  websites: { title: string; lead: string; items: string[]; tags: string[]; cta: string }
   trial: { title: string; lead: string; steps: string[]; cta: string; note: string }
   faq: { title: string; lead: string; items: { q: string; a: string }[] }
   contact: {
@@ -63,6 +63,20 @@ export interface Translation {
     intro: string
     sections: { title: string; body: string[] }[]
     back: string
+  }
+  demo: {
+    tag: string
+    siteLabel: string
+    messages: { from: 'patient' | 'bot'; text: string }[]
+    typing: string
+    assistant: string
+    online: string
+    calendarTitle: string
+    eventTitle: string
+    eventTime: string
+    eventBadge: string
+    callback: string
+    tryHere: string
   }
   wa: { generic: string; trial: string; websites: string }
 }

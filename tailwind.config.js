@@ -5,18 +5,25 @@ export default {
     extend: {
       colors: {
         ink: {
-          DEFAULT: '#14181d',
-          soft: '#3d4650',
-          muted: '#5f6b77',
+          DEFAULT: '#101722',
+          soft: '#3c4757',
+          muted: '#657181',
+        },
+        night: {
+          DEFAULT: '#070c16',
+          soft: '#0d1524',
+          card: '#131c2e',
         },
         accent: {
-          DEFAULT: '#0f766e',
-          dark: '#0b5c56',
-          light: '#e6f4f2',
+          DEFAULT: '#0d9488',
+          dark: '#0f766e',
+          bright: '#2dd4bf',
+          light: '#e9f6f4',
         },
       },
       fontFamily: {
         sans: [
+          'InterVariable',
           'system-ui',
           '-apple-system',
           'Segoe UI',
@@ -26,8 +33,40 @@ export default {
           'sans-serif',
         ],
       },
-      maxWidth: {
-        content: '68rem',
+      maxWidth: { content: '76rem' },
+      boxShadow: {
+        lift: '0 24px 60px -24px rgba(16, 23, 34, 0.35)',
+        glow: '0 0 0 1px rgba(45, 212, 191, 0.25), 0 20px 60px -20px rgba(13, 148, 136, 0.55)',
+        float: '0 40px 90px -30px rgba(7, 12, 22, 0.65)',
+      },
+      keyframes: {
+        drift: {
+          '0%, 100%': { transform: 'translate3d(0, 0, 0) scale(1)' },
+          '50%': { transform: 'translate3d(2%, -4%, 0) scale(1.08)' },
+        },
+        floaty: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        blink: {
+          '0%, 100%': { opacity: '0.25' },
+          '50%': { opacity: '1' },
+        },
+        pop: {
+          '0%': { opacity: '0', transform: 'translateY(8px) scale(0.98)' },
+          '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+        },
+        sheen: {
+          '0%': { transform: 'translateX(-120%)' },
+          '100%': { transform: 'translateX(220%)' },
+        },
+      },
+      animation: {
+        drift: 'drift 18s ease-in-out infinite',
+        floaty: 'floaty 6s ease-in-out infinite',
+        blink: 'blink 1.2s ease-in-out infinite',
+        pop: 'pop 0.45s cubic-bezier(0.22, 1, 0.36, 1) both',
+        sheen: 'sheen 6s ease-in-out infinite',
       },
     },
   },

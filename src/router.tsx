@@ -33,7 +33,11 @@ export function useRoute(): Route {
 }
 
 export function navigate(path: string): void {
-  window.history.pushState({}, '', path)
+  try {
+    window.history.pushState({}, '', path)
+  } catch {
+    // Some sandboxed preview environments block pushState; keep navigating anyway.
+  }
   window.dispatchEvent(new PopStateEvent('popstate'))
 }
 
