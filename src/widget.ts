@@ -14,6 +14,7 @@ export function useAssistantWidget(lang: Lang) {
     if (document.querySelector('script[data-twinbyte-widget]')) return
 
     let timer = 0
+    let idle = 0
     const inject = () => {
       const script = document.createElement('script')
       script.src = SITE.widget.src
@@ -29,7 +30,9 @@ export function useAssistantWidget(lang: Lang) {
     }
 
     const start = () => {
-      timer = window.setTimeout(inject, 1200)
+      const idleCallback = window.requestIdleCallback
+      if (idleCallback) idle = idleCallback(inject, { timeout: 4000 })
+      else timer = window.setTimeout(inject, 1500)
     }
 
     if (document.readyState === 'complete') start()
@@ -37,6 +40,7 @@ export function useAssistantWidget(lang: Lang) {
 
     return () => {
       window.clearTimeout(timer)
+      if (idle && window.cancelIdleCallback) window.cancelIdleCallback(idle)
       window.removeEventListener('load', start)
     }
     // The widget reads its language once, at injection time.

@@ -48,6 +48,7 @@ export function Header({ t }: { t: Translation }) {
             alt="Twinbyte"
             width={640}
             height={175}
+            decoding="async"
             className={`h-8 w-auto sm:h-9 ${solid ? '' : 'hidden'}`}
           />
           <img
@@ -55,6 +56,7 @@ export function Header({ t }: { t: Translation }) {
             alt="Twinbyte"
             width={640}
             height={175}
+            decoding="async"
             className={`h-8 w-auto sm:h-9 ${solid ? 'hidden' : ''}`}
           />
         </Link>

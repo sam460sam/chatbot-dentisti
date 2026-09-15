@@ -3,7 +3,7 @@
  * crawlers and link previews get the right title, description and hreflang
  * without running JavaScript. The app itself still renders client-side.
  */
-import { readFile, writeFile, mkdir } from 'node:fs/promises'
+import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -12,7 +12,19 @@ const BASE = 'https://twinbyte.online'
 const LANGS = ['en', 'nl', 'it']
 
 const meta = JSON.parse(await readFile(join(root, 'src/i18n/meta.json'), 'utf8'))
-const template = await readFile(join(root, 'dist/index.html'), 'utf8')
+let template = await readFile(join(root, 'dist/index.html'), 'utf8')
+
+// Preload the latin font: it is requested by the CSS, so without this hint the
+// browser only discovers it after the stylesheet has been parsed.
+const assets = await readdir(join(root, 'dist/assets'))
+const font = assets.find((f) => f.startsWith('inter-latin-var') && f.endsWith('.woff2'))
+if (font && !template.includes('rel="preload" as="font"')) {
+  template = template.replace(
+    '</head>',
+    `  <link rel="preload" as="font" type="font/woff2" href="/assets/${font}" crossorigin />\n  </head>`,
+  )
+  await writeFile(join(root, 'dist/index.html'), template, 'utf8')
+}
 
 const pathFor = (lang, page) =>
   (lang === 'en' ? '' : `/${lang}`) + (page === 'privacy' ? '/privacy' : '') || '/'

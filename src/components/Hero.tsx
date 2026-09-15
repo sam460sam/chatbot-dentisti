@@ -23,7 +23,6 @@ export function Hero({ t }: { t: Translation }) {
         <div className="absolute inset-x-0 bottom-0 h-[42%] [perspective:600px]">
           <div className="grid-floor h-full w-full origin-bottom [transform:rotateX(72deg)_scale(1.6)]" />
         </div>
-        <div className="noise absolute inset-0 opacity-[0.035] mix-blend-overlay" />
       </div>
 
       <div className="container-page relative grid items-center gap-16 pb-28 pt-14 sm:pt-20 lg:grid-cols-[1.02fr_0.98fr] lg:gap-10 lg:pb-36 lg:pt-24">

@@ -74,6 +74,7 @@ export function ChatMockup({ t }: { t: Translation }) {
             alt=""
             width={192}
             height={192}
+            decoding="async"
             className="h-9 w-9 rounded-full"
           />
           <div className="leading-tight">

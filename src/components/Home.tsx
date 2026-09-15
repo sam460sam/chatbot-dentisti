@@ -51,7 +51,6 @@ function Section({
       {tone === 'dark' && (
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute -right-24 top-0 h-80 w-80 animate-drift rounded-full bg-accent/20 blur-[110px]" />
-          <div className="noise absolute inset-0 opacity-[0.04] mix-blend-overlay" />
         </div>
       )}
       <div className="container-page relative">

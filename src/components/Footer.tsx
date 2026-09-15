@@ -8,10 +8,17 @@ export function Footer({ t }: { t: Translation }) {
 
   return (
     <footer className="on-dark relative overflow-hidden border-t border-white/10 bg-night text-white">
-      <div aria-hidden="true" className="noise pointer-events-none absolute inset-0 opacity-[0.04]" />
       <div className="container-page relative flex flex-col gap-10 py-14 sm:flex-row sm:items-start sm:justify-between">
         <div className="max-w-sm">
-          <img src="/logo-white.png" alt="Twinbyte" width={640} height={175} className="h-8 w-auto" />
+          <img
+            src="/logo-white.png"
+            alt="Twinbyte"
+            width={640}
+            height={175}
+            loading="lazy"
+            decoding="async"
+            className="h-8 w-auto"
+          />
           <p className="mt-4 text-sm leading-relaxed text-white/50">{t.footer.tagline}</p>
         </div>
 
