@@ -136,7 +136,7 @@ export function ChatMockup({ t }: { t: Translation }) {
 
       {/* Urgency hand-off card */}
       <div
-        className="absolute -right-3 -top-7 hidden animate-floaty items-center gap-2 rounded-xl border border-white/12 bg-night-soft/95 px-3.5 py-2.5 shadow-float backdrop-blur-xl sm:flex lg:-right-10"
+        className="absolute -right-3 -top-7 hidden items-center gap-2 rounded-xl border border-white/12 bg-night-soft/95 px-3.5 py-2.5 shadow-float backdrop-blur-xl sm:flex lg:-right-10"
         style={{ transform: 'translateZ(90px)' }}
         aria-hidden="true"
       >

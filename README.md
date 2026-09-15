@@ -1,6 +1,6 @@
 # Twinbyte — showcase site
 
-Static marketing site for Twinbyte (Anna & Samuele): an AI assistant for dental
+Static marketing site for Twinbyte (Anna & Samuele): a digital assistant for dental
 practices and websites for small businesses.
 
 React + TypeScript + Vite + Tailwind. No backend, no CMS, no cookies, no

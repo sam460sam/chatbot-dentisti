@@ -19,14 +19,14 @@ export const it: Translation = {
   hero: {
     eyebrow: 'Twinbyte — Anna e Samuele',
     title: 'Lo studio risponde ai pazienti 24 ore su 24, anche quando il telefono è occupato',
-    lead: 'Mettiamo un assistente AI sul sito del vostro studio. Risponde alle domande di ogni giorno — orari, trattamenti, cosa portare alla prima visita — e fissa gli appuntamenti direttamente nel vostro Google Calendar.',
+    lead: 'Mettiamo un assistente digitale sul sito del vostro studio, che risponde ai pazienti 24 ore su 24. Gestisce le domande di ogni giorno — orari, trattamenti, cosa portare alla prima visita — e fissa gli appuntamenti direttamente nell’agenda che lo studio usa già.',
     ctaTrial: 'Prova gratis 14 giorni',
     ctaDemo: 'Guarda la demo',
     note: 'Senza impegno. Se non è utile allo studio lo rimuoviamo gratuitamente.',
     bullets: [
-      'Scrive nel Google Calendar che usate già',
+      'Scrive nell’agenda che lo studio usa già',
       'Risponde ai pazienti nella loro lingua',
-      'Le urgenze passano allo staff, non le gestisce l’AI',
+      'Le urgenze passano allo staff, non le gestisce l’assistente',
     ],
   },
   how: {
@@ -43,7 +43,7 @@ export const it: Translation = {
       },
       {
         title: 'I pazienti prenotano da soli',
-        body: 'L’assistente controlla le disponibilità, chiede nome e numero di telefono e crea l’appuntamento nel vostro Google Calendar. L’agenda resta interamente sotto il vostro controllo.',
+        body: 'L’assistente controlla le disponibilità, chiede nome e numero di telefono e crea l’appuntamento nell’agenda che lo studio usa già. L’agenda resta interamente sotto il vostro controllo.',
       },
     ],
   },
@@ -78,7 +78,7 @@ export const it: Translation = {
         body: 'Per fissare un appuntamento all’assistente servono un nome e un numero di telefono. Nessuna anamnesi, nessun documento, nessun dato di pagamento.',
       },
       {
-        title: 'Il paziente sa che è un’AI',
+        title: 'Il paziente sa che non è una persona',
         body: 'L’assistente lo dichiara prima che inizi la conversazione. Non fa diagnosi e non dà consigli medici: le domande cliniche passano allo studio.',
       },
       {
@@ -93,7 +93,7 @@ export const it: Translation = {
     items: [
       'Veloci prima di tutto sul telefono, perché è lì che sono i vostri clienti',
       'Una struttura chiara: cosa fate, dove siete, come vi si contatta',
-      'L’assistente AI si può aggiungere in un secondo momento, sullo stesso sito',
+      'L’assistente si può aggiungere in un secondo momento, sullo stesso sito',
       'Nessun CMS da imparare: ci dite cosa cambia e lo aggiorniamo noi',
     ],
     tags: ['Mobile-first', 'Veloce di base', 'Pronto per l\u2019assistente'],
@@ -129,7 +129,7 @@ export const it: Translation = {
       },
       {
         q: 'Dobbiamo cambiare calendario o gestionale?',
-        a: 'No. Lavoriamo con il Google Calendar che lo studio usa già. Gli appuntamenti compaiono come eventi normali e potete spostarli o cancellarli come sempre.',
+        a: 'No. Configuriamo l’assistente sull’agenda con cui lavorate già: con Google Calendar è pronto, per altri gestionali valutiamo insieme l’integrazione prima della prova. Gli appuntamenti compaiono come eventi normali e potete spostarli o cancellarli come sempre.',
       },
       {
         q: 'E se volessimo smettere?',
@@ -155,7 +155,7 @@ export const it: Translation = {
     regions: 'Lavoriamo con studi nel Regno Unito, in Italia e nei Paesi Bassi, e lavoriamo da remoto.',
   },
   footer: {
-    tagline: 'Assistente AI per studi dentistici e siti web per piccole aziende.',
+    tagline: 'Assistente digitale per studi dentistici e siti web per piccole aziende.',
     privacy: 'Informativa privacy',
     rights: 'Tutti i diritti riservati.',
   },
@@ -194,7 +194,7 @@ export const it: Translation = {
       {
         title: 'L’assistente sui siti dei nostri clienti',
         body: [
-          'L’assistente AI descritto in questa pagina funziona sui siti dei nostri clienti, cioè degli studi stessi. Per quelle conversazioni il titolare del trattamento è lo studio e Twinbyte agisce come responsabile, sulla base di un accordo sul trattamento dei dati firmato.',
+          'L’assistente descritto in questa pagina funziona sui siti dei nostri clienti, cioè degli studi stessi. Per quelle conversazioni il titolare del trattamento è lo studio e Twinbyte agisce come responsabile, sulla base di un accordo sul trattamento dei dati firmato.',
           'Questa informativa riguarda quindi solo questo sito. I pazienti che parlano con un assistente sul sito di uno studio devono fare riferimento all’informativa di quello studio.',
         ],
       },
@@ -224,7 +224,7 @@ export const it: Translation = {
       { from: 'bot', text: 'Fissato: gioved\u00ec 18 alle 10:30. \u00c8 gi\u00e0 nel calendario dello studio.' },
     ],
     typing: 'sta scrivendo',
-    assistant: 'Assistente AI',
+    assistant: 'Assistente digitale',
     online: 'sempre attivo',
     calendarTitle: 'Calendario dello studio',
     eventTitle: 'Controllo — Laura Bianchi',
@@ -234,9 +234,9 @@ export const it: Translation = {
     tryHere: 'La bolla di chat in basso a destra \u00e8 l\u2019assistente vero. Provatelo.',
   },
   wa: {
-    generic: 'Ciao Twinbyte, ho una domanda sul vostro assistente AI.',
+    generic: 'Ciao Twinbyte, ho una domanda sul vostro assistente digitale.',
     trial:
-      'Ciao Twinbyte, vorrei iniziare la prova gratuita di 14 giorni dell’assistente AI per il mio studio dentistico.',
+      'Ciao Twinbyte, vorrei iniziare la prova gratuita di 14 giorni dell’assistente digitale per il mio studio dentistico.',
     websites: 'Ciao Twinbyte, vorrei sapere di più su un sito web per la mia azienda.',
   },
 }

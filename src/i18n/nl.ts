@@ -19,14 +19,14 @@ export const nl: Translation = {
   hero: {
     eyebrow: 'Twinbyte — Anna & Samuele',
     title: 'Uw praktijk geeft 24/7 antwoord, ook als de telefoon bezet is',
-    lead: 'Wij zetten een AI-assistent op uw praktijkwebsite. Die beantwoordt de vragen die u dagelijks krijgt — openingstijden, behandelingen, wat u meeneemt naar een eerste afspraak — en plant afspraken rechtstreeks in uw Google Agenda.',
+    lead: 'Wij zetten een digitale assistent op uw praktijkwebsite, die 24/7 antwoord geeft. Hij behandelt de vragen die u dagelijks krijgt — openingstijden, behandelingen, wat u meeneemt naar een eerste afspraak — en plant afspraken rechtstreeks in de agenda die uw praktijk al gebruikt.',
     ctaTrial: 'Start 14 dagen gratis',
     ctaDemo: 'Bekijk de demo',
     note: 'Vrijblijvend. Blijkt het niets voor uw praktijk, dan halen we het kosteloos weer weg.',
     bullets: [
-      'Plant in de Google Agenda die u al gebruikt',
+      'Plant in de agenda die uw praktijk al gebruikt',
       'Antwoordt patiënten in hun eigen taal',
-      'Spoedgevallen gaan naar uw medewerkers, niet naar de AI',
+      'Spoedgevallen gaan naar uw medewerkers, niet naar de assistent',
     ],
   },
   how: {
@@ -43,7 +43,7 @@ export const nl: Translation = {
       },
       {
         title: 'Patiënten plannen zelf',
-        body: 'De assistent kijkt wanneer u beschikbaar bent, vraagt om een naam en een telefoonnummer en zet de afspraak in uw Google Agenda. U houdt de agenda volledig in eigen hand.',
+        body: 'De assistent kijkt wanneer u beschikbaar bent, vraagt om een naam en een telefoonnummer en zet de afspraak in de agenda die uw praktijk al gebruikt. U houdt de agenda volledig in eigen hand.',
       },
     ],
   },
@@ -78,7 +78,7 @@ export const nl: Translation = {
         body: 'Voor een afspraak heeft de assistent een naam en een telefoonnummer nodig. Geen medische voorgeschiedenis, geen documenten, geen betaalgegevens.',
       },
       {
-        title: 'De patiënt weet dat het een AI is',
+        title: 'De patiënt weet dat het geen persoon is',
         body: 'De assistent zegt dat voordat het gesprek begint. Hij stelt geen diagnose en geeft geen medisch advies — klinische vragen gaan naar de praktijk.',
       },
       {
@@ -93,7 +93,7 @@ export const nl: Translation = {
     items: [
       'Snel op de telefoon in de eerste plaats, want daar zitten uw klanten',
       'Een heldere opbouw: wat u doet, waar u zit, hoe men u bereikt',
-      'De AI-assistent kan er later op dezelfde site bij',
+      'De assistent kan er later op dezelfde site bij',
       'Geen CMS om te leren: u zegt wat er verandert, wij passen het aan',
     ],
     tags: ['Mobile-first', 'Standaard snel', 'Klaar voor de assistent'],
@@ -129,7 +129,7 @@ export const nl: Translation = {
       },
       {
         q: 'Moeten we onze agenda of software aanpassen?',
-        a: 'Nee. We werken met de Google Agenda die de praktijk al gebruikt. Afspraken verschijnen als gewone items en u kunt ze verzetten of annuleren zoals altijd.',
+        a: 'Nee. We stellen de assistent in op de agenda waarmee u al werkt: met Google Agenda is het meteen klaar, en voor andere praktijksoftware bekijken we de koppeling samen vóór de proefperiode. Afspraken verschijnen als gewone items en u kunt ze verzetten of annuleren zoals altijd.',
       },
       {
         q: 'En als we willen stoppen?',
@@ -155,7 +155,7 @@ export const nl: Translation = {
     regions: 'We werken met praktijken in het Verenigd Koninkrijk, Italië en Nederland, en we werken op afstand.',
   },
   footer: {
-    tagline: 'AI-assistent voor tandartspraktijken en websites voor kleine bedrijven.',
+    tagline: 'Digitale assistent voor tandartspraktijken en websites voor kleine bedrijven.',
     privacy: 'Privacyverklaring',
     rights: 'Alle rechten voorbehouden.',
   },
@@ -194,7 +194,7 @@ export const nl: Translation = {
       {
         title: 'De assistent op websites van klanten',
         body: [
-          'De AI-assistent die op deze pagina beschreven wordt, draait op de websites van onze klanten — de praktijken zelf. Voor die gesprekken is de praktijk verwerkingsverantwoordelijke en treedt Twinbyte op als verwerker, op basis van een ondertekende verwerkersovereenkomst.',
+          'De assistent die op deze pagina beschreven wordt, draait op de websites van onze klanten — de praktijken zelf. Voor die gesprekken is de praktijk verwerkingsverantwoordelijke en treedt Twinbyte op als verwerker, op basis van een ondertekende verwerkersovereenkomst.',
           'Deze verklaring gaat dus alleen over deze website. Patiënten die met een assistent op een praktijkwebsite chatten, lezen de privacyverklaring van die praktijk.',
         ],
       },
@@ -224,7 +224,7 @@ export const nl: Translation = {
       { from: 'bot', text: 'Genoteerd: donderdag de 18e om 10:30. Het staat nu in de agenda van de praktijk.' },
     ],
     typing: 'typt',
-    assistant: 'AI-assistent',
+    assistant: 'Digitale assistent',
     online: 'altijd aan',
     calendarTitle: 'Agenda van de praktijk',
     eventTitle: 'Controle — Laura Bakker',
@@ -234,9 +234,9 @@ export const nl: Translation = {
     tryHere: 'De chatbubbel rechtsonder is de echte assistent. Probeer hem gerust.',
   },
   wa: {
-    generic: 'Hallo Twinbyte, ik heb een vraag over jullie AI-assistent.',
+    generic: 'Hallo Twinbyte, ik heb een vraag over jullie digitale assistent.',
     trial:
-      'Hallo Twinbyte, ik wil graag de gratis proefperiode van 14 dagen starten voor de AI-assistent van mijn tandartspraktijk.',
+      'Hallo Twinbyte, ik wil graag de gratis proefperiode van 14 dagen starten voor de digitale assistent van mijn tandartspraktijk.',
     websites: 'Hallo Twinbyte, ik wil graag meer weten over een website voor mijn bedrijf.',
   },
 }

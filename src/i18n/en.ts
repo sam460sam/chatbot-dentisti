@@ -19,14 +19,14 @@ export const en: Translation = {
   hero: {
     eyebrow: 'Twinbyte — Anna & Samuele',
     title: 'Your practice answers patients 24/7, even when the phone is busy',
-    lead: 'We add an AI assistant to your practice website. It answers the questions you get every day — opening hours, treatments, what to bring to a first visit — and books appointments directly in your Google Calendar.',
+    lead: 'We put a digital assistant on your practice website, answering patients 24/7. It handles the questions you get every day — opening hours, treatments, what to bring to a first visit — and books appointments straight into the calendar your practice already uses.',
     ctaTrial: 'Start the 14-day free trial',
     ctaDemo: 'See the live demo',
     note: 'No commitment. If it turns out not to help your practice, we remove it for free.',
     bullets: [
-      'Books into the Google Calendar you already use',
+      'Books into the calendar your practice already uses',
       'Answers patients in their own language',
-      'Urgent requests are handed to your staff, not answered by the AI',
+      'Urgent requests are handed to your staff, not answered by the assistant',
     ],
   },
   how: {
@@ -43,7 +43,7 @@ export const en: Translation = {
       },
       {
         title: 'Patients book themselves',
-        body: 'The assistant checks your availability, asks for a name and a phone number and creates the appointment in your Google Calendar. You keep full control of the agenda.',
+        body: 'The assistant checks your availability, asks for a name and a phone number and creates the appointment in the calendar your practice already uses. You keep full control of your calendar.',
       },
     ],
   },
@@ -78,8 +78,8 @@ export const en: Translation = {
         body: 'To make a booking the assistant needs a name and a phone number. No medical history, no documents, no payment details.',
       },
       {
-        title: 'Patients know it is an AI',
-        body: 'The assistant says so before the conversation starts. It gives no diagnosis and no medical advice — clinical questions are passed to the practice.',
+        title: 'Patients know it is not a person',
+        body: 'The assistant makes that clear before the conversation starts. It gives no diagnosis and no medical advice — clinical questions are passed to the practice.',
       },
       {
         title: 'A signed data processing agreement',
@@ -93,7 +93,7 @@ export const en: Translation = {
     items: [
       'Fast on a phone first, because that is where your customers are',
       'A clear structure: what you do, where you are, how to reach you',
-      'The AI assistant can be added later, on the same site',
+      'The assistant can be added later, on the same site',
       'No CMS to learn: you tell us what changed, we update it',
     ],
     tags: ['Mobile-first', 'Fast by default', 'Assistant-ready'],
@@ -129,7 +129,7 @@ export const en: Translation = {
       },
       {
         q: 'Do we have to change our calendar or software?',
-        a: 'No. We work with the Google Calendar your practice already uses. Appointments appear as ordinary events and you can move or cancel them as always.',
+        a: 'No. We set the assistant up around the calendar you already work with: with Google Calendar it is ready to go, and for other practice software we look at the integration together before the trial starts. Appointments appear as ordinary events and you can move or cancel them as always.',
       },
       {
         q: 'What if we want to stop?',
@@ -155,7 +155,7 @@ export const en: Translation = {
     regions: 'We work with practices in the United Kingdom, Italy and the Netherlands, and we work remotely.',
   },
   footer: {
-    tagline: 'AI assistant for dental practices and websites for small businesses.',
+    tagline: 'Digital assistant for dental practices and websites for small businesses.',
     privacy: 'Privacy statement',
     rights: 'All rights reserved.',
   },
@@ -194,7 +194,7 @@ export const en: Translation = {
       {
         title: 'The assistant on our clients’ websites',
         body: [
-          'The AI assistant described on this page runs on the websites of our clients — the practices themselves. For those conversations the practice is the controller and Twinbyte acts as processor under a signed data processing agreement.',
+          'The assistant described on this page runs on the websites of our clients — the practices themselves. For those conversations the practice is the controller and Twinbyte acts as processor under a signed data processing agreement.',
           'This statement therefore covers only this website. Patients chatting with an assistant on a practice website should read that practice’s privacy statement.',
         ],
       },
@@ -224,7 +224,7 @@ export const en: Translation = {
       { from: 'bot', text: 'Booked: Thursday the 18th at 10:30. It is in the practice calendar now.' },
     ],
     typing: 'typing',
-    assistant: 'AI assistant',
+    assistant: 'Digital assistant',
     online: 'always on',
     calendarTitle: 'Practice calendar',
     eventTitle: 'Check-up — Laura Bakker',
@@ -234,9 +234,9 @@ export const en: Translation = {
     tryHere: 'The chat bubble in the bottom right is the real assistant. Try it.',
   },
   wa: {
-    generic: 'Hello Twinbyte, I have a question about your AI assistant.',
+    generic: 'Hello Twinbyte, I have a question about your digital assistant.',
     trial:
-      'Hello Twinbyte, I would like to start the 14-day free trial of the AI assistant for my dental practice.',
+      'Hello Twinbyte, I would like to start the 14-day free trial of the digital assistant for my dental practice.',
     websites: 'Hello Twinbyte, I would like to know more about a website for my business.',
   },
 }

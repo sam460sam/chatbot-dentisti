@@ -1,13 +1,11 @@
 import { ArrowUpRight, Check, MessageCircle } from 'lucide-react'
 import { ChatMockup } from './ChatMockup'
-import { useTilt } from './motion'
 import { SITE, waLink } from '../site'
 import { useRoute } from '../router'
 import type { Translation } from '../i18n'
 
 export function Hero({ t }: { t: Translation }) {
   const { lang } = useRoute()
-  const tiltRef = useTilt<HTMLDivElement>(5, 5, -14)
 
   return (
     <section className="on-dark relative overflow-hidden bg-night text-white">
@@ -75,11 +73,9 @@ export function Hero({ t }: { t: Translation }) {
         </div>
 
         <div className="stage">
-          {/* The float animation owns `transform`, so the tilt lives on an inner layer. */}
-          <div className="animate-floaty">
-            <div ref={tiltRef} className="tilt tilt-hero relative">
-              <ChatMockup t={t} />
-            </div>
+          {/* Fixed 3D angle: the mock does not move, only the conversation plays. */}
+          <div className="tilt tilt-hero relative">
+            <ChatMockup t={t} />
           </div>
         </div>
       </div>

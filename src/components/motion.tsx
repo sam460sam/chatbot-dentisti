@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import type { CSSProperties, MouseEvent, ReactNode } from 'react'
 
 export function prefersReducedMotion(): boolean {
@@ -64,47 +64,6 @@ export function Reveal({
       {children}
     </div>
   )
-}
-
-/** Rotates the element slightly towards the pointer. Ignored on touch and with reduced motion. */
-export function useTilt<T extends HTMLElement>(max = 7, baseX = 0, baseY = 0) {
-  const ref = useRef<T>(null)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el || prefersReducedMotion()) return
-    if (window.matchMedia('(pointer: coarse)').matches) return
-
-    const zone = el.parentElement ?? el
-    let frame = 0
-
-    const onMove = (event: PointerEvent) => {
-      cancelAnimationFrame(frame)
-      frame = requestAnimationFrame(() => {
-        const rect = zone.getBoundingClientRect()
-        const x = (event.clientX - rect.left) / rect.width - 0.5
-        const y = (event.clientY - rect.top) / rect.height - 0.5
-        el.style.setProperty('--ry', `${baseY + x * max * 2}deg`)
-        el.style.setProperty('--rx', `${baseX - y * max * 2}deg`)
-      })
-    }
-
-    const reset = () => {
-      cancelAnimationFrame(frame)
-      el.style.setProperty('--rx', `${baseX}deg`)
-      el.style.setProperty('--ry', `${baseY}deg`)
-    }
-
-    zone.addEventListener('pointermove', onMove)
-    zone.addEventListener('pointerleave', reset)
-    return () => {
-      zone.removeEventListener('pointermove', onMove)
-      zone.removeEventListener('pointerleave', reset)
-      cancelAnimationFrame(frame)
-    }
-  }, [max, baseX, baseY])
-
-  return ref
 }
 
 /** Moves the highlight inside .card to follow the cursor. */
