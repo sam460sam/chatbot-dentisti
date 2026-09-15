@@ -6,7 +6,7 @@ export const nl: Translation = {
   meta: metaJson.nl,
   nav: {
     how: 'Hoe het werkt',
-    benefits: 'Voor uw praktijk',
+    benefits: 'Wat het oplevert',
     security: 'Privacy & veiligheid',
     websites: 'Websites',
     faq: 'Veelgestelde vragen',
@@ -18,15 +18,15 @@ export const nl: Translation = {
   },
   hero: {
     eyebrow: 'Twinbyte — Anna & Samuele',
-    title: 'Uw praktijk geeft 24/7 antwoord, ook als de telefoon bezet is',
-    lead: 'Wij zetten een digitale assistent op uw praktijkwebsite, die 24/7 antwoord geeft. Hij behandelt de vragen die u dagelijks krijgt — openingstijden, behandelingen, wat u meeneemt naar een eerste afspraak — en plant afspraken rechtstreeks in de agenda die uw praktijk al gebruikt.',
+    title: 'Uw bedrijf geeft 24/7 antwoord, ook als niemand kan opnemen',
+    lead: 'Wij zetten een digitale assistent op uw website, die op elk uur antwoord geeft. Hij behandelt de vragen die u dagelijks krijgt — openingstijden, diensten, prijzen, wat mee te nemen — en plant afspraken rechtstreeks in de agenda die u al gebruikt.',
     ctaTrial: 'Start 14 dagen gratis',
     ctaDemo: 'Bekijk de demo',
-    note: 'Vrijblijvend. Blijkt het niets voor uw praktijk, dan halen we het kosteloos weer weg.',
+    note: 'Vrijblijvend. Blijkt het niets voor uw bedrijf, dan halen we het kosteloos weer weg.',
     bullets: [
-      'Plant in de agenda die uw praktijk al gebruikt',
-      'Antwoordt patiënten in hun eigen taal',
-      'Spoedgevallen gaan naar uw medewerkers, niet naar de assistent',
+      'Plant in de agenda die u al gebruikt',
+      'Antwoordt klanten in hun eigen taal',
+      'Gevoelige vragen gaan naar uw team, niet naar de assistent',
     ],
   },
   how: {
@@ -35,61 +35,61 @@ export const nl: Translation = {
     steps: [
       {
         title: 'Wij richten het in met uw gegevens',
-        body: 'U stuurt ons uw openingstijden, de behandelingen die u doet en de vragen die patiënten het vaakst stellen. Daar bouwen wij de assistent omheen, zodat de antwoorden van uw praktijk zijn en niet uit een standaardtekst komen.',
+        body: 'U stuurt ons uw openingstijden, wat u aanbiedt en de vragen die klanten het vaakst stellen. Daar bouwen wij de assistent omheen, zodat de antwoorden van u zijn en niet uit een standaardtekst komen.',
       },
       {
         title: 'Wij plaatsen het op uw website',
         body: 'Eén regel code op de site die u al heeft. Niets te installeren, verder verandert er niets. Een WhatsApp-versie volgt binnenkort.',
       },
       {
-        title: 'Patiënten plannen zelf',
-        body: 'De assistent kijkt wanneer u beschikbaar bent, vraagt om een naam en een telefoonnummer en zet de afspraak in de agenda die uw praktijk al gebruikt. U houdt de agenda volledig in eigen hand.',
+        title: 'Klanten plannen zelf',
+        body: 'De assistent kijkt wanneer u beschikbaar bent, vraagt om een naam en een telefoonnummer en zet de afspraak in de agenda die u al gebruikt. U houdt die volledig in eigen hand.',
       },
     ],
   },
   benefits: {
-    title: 'Wat uw praktijk eraan heeft',
-    lead: 'Niets spectaculairs — gewoon het repeterende werk aan de balie uit handen genomen.',
+    title: 'Wat uw bedrijf eraan heeft',
+    lead: 'Het begon bij tandartspraktijken, waar een gemiste oproep een verloren patiënt is. Datzelfde probleem heeft elk bedrijf dat op afspraak werkt: een salon, een garage, een praktijk, een studio, een adviesbureau.',
     items: [
       {
-        title: 'Minder telefoontjes aan de balie',
-        body: 'Openingstijden, adres, parkeren, wat er bij een eerste afspraak gebeurt: die vragen worden beantwoord zonder dat iemand de telefoon opneemt.',
+        title: 'Minder telefoontjes om op te nemen',
+        body: 'Openingstijden, adres, parkeren, prijzen, hoe een eerste afspraak verloopt: die vragen worden beantwoord zonder dat iemand de telefoon opneemt.',
       },
       {
         title: 'Afspraken buiten openingstijden',
-        body: 'Avonden, weekenden, feestdagen. Een patiënt die anders morgen zou bellen — of een andere praktijk zou bellen — plant vanavond.',
+        body: 'Avonden, weekenden, feestdagen en elke tijdzone waarin uw klanten zitten. Wie anders morgen zou bellen — of een concurrent zou bellen — plant vanavond.',
       },
       {
-        title: 'Hij spreekt de taal van uw patiënt',
-        body: 'We stellen de assistent in op de taal waarin uw praktijk werkt, en als een patiënt vraagt om verder te gaan in een andere taal, schakelt hij over. Handig in elke praktijk met internationale patiënten.',
+        title: 'Hij spreekt de taal van uw klant',
+        body: 'We stellen de assistent in op de taal waarin u werkt, en als een klant vraagt om verder te gaan in een andere taal, schakelt hij over. Handig overal waar uw klanten niet allemaal van hier zijn.',
       },
       {
-        title: 'Spoed komt bij een mens terecht',
-        body: 'Bij spoed of wijzigingen gaat de assistent niet zelf aan de slag. Hij noteert naam en nummer en maakt een "terugbellen"-afspraak in uw agenda, zodat een medewerker het oppakt.',
+        title: 'Gevoelige vragen komen bij een mens terecht',
+        body: 'Bij alles wat dringend of ongewoon is, of buiten zijn kennis valt, gaat de assistent niet zelf aan de slag. Hij noteert naam en nummer en maakt een "terugbellen"-afspraak in uw agenda, zodat iemand van uw team het oppakt.',
       },
     ],
   },
   security: {
     title: 'Privacy en veiligheid',
-    lead: 'Een tandartspraktijk werkt met gevoelige gegevens. Ons uitgangspunt: er zo min mogelijk van aanraken.',
+    lead: 'De gegevens van uw klanten zijn van u, niet van ons. Ons uitgangspunt: er zo min mogelijk van aanraken.',
     items: [
       {
         title: 'Wij vragen het minimum',
-        body: 'Voor een afspraak heeft de assistent een naam en een telefoonnummer nodig. Geen medische voorgeschiedenis, geen documenten, geen betaalgegevens.',
+        body: 'Voor een afspraak heeft de assistent een naam en een telefoonnummer nodig. Geen documenten, geen betaalgegevens en niets gevoeligs dat uw bedrijf niet nodig heeft om een afspraak in te plannen.',
       },
       {
-        title: 'De patiënt weet dat het geen persoon is',
-        body: 'De assistent zegt dat voordat het gesprek begint. Hij stelt geen diagnose en geeft geen medisch advies — klinische vragen gaan naar de praktijk.',
+        title: 'De klant weet dat het geen persoon is',
+        body: 'De assistent zegt dat voordat het gesprek begint. Hij geeft geen professioneel of medisch advies — alles waarvoor een oordeel nodig is, gaat naar u.',
       },
       {
         title: 'Een ondertekende verwerkersovereenkomst',
-        body: 'Voor de livegang tekenen we een verwerkersovereenkomst met de praktijk: wat er verwerkt wordt, waarom en hoe lang. De praktijk blijft verwerkingsverantwoordelijke.',
+        body: 'Voor de livegang tekenen we een verwerkersovereenkomst met u: wat er verwerkt wordt, waarom en hoe lang. U blijft verwerkingsverantwoordelijke.',
       },
     ],
   },
   websites: {
     title: 'Websites voor kleine bedrijven',
-    lead: 'Naast de assistent voor tandartsen bouwen we websites — het soort site dat een klein bedrijf echt nodig heeft, geen etalage voor onszelf.',
+    lead: 'Naast de assistent bouwen we websites — het soort site dat een klein bedrijf echt nodig heeft, geen etalage voor onszelf.',
     items: [
       'Snel op de telefoon in de eerste plaats, want daar zitten uw klanten',
       'Een heldere opbouw: wat u doet, waar u zit, hoe men u bereikt',
@@ -103,41 +103,45 @@ export const nl: Translation = {
     title: 'De gratis proefperiode van 14 dagen',
     lead: 'Twee weken op uw eigen website, kosteloos en zonder dat u vooraf iets tekent.',
     steps: [
-      'Wij richten de assistent in met uw openingstijden, behandelingen en veelgestelde vragen en plaatsen hem op uw site.',
+      'Wij richten de assistent in met uw openingstijden, diensten en veelgestelde vragen en plaatsen hem op uw site.',
       'Hij draait 14 dagen. U ziet echte gesprekken en echte afspraken, geen demo.',
       'We nemen de resultaten samen door en u beslist of het de moeite waard is.',
       'Houdt u het, dan wordt het een maandabonnement. Zo niet, dan halen we het dezelfde dag kosteloos weg.',
     ],
     cta: 'Start de proefperiode via WhatsApp',
-    note: 'Over de maandprijs praten we na de proefperiode, als we allebei weten wat uw praktijk er werkelijk mee doet.',
+    note: 'Over de maandprijs praten we na de proefperiode, als we allebei weten wat uw bedrijf er werkelijk mee doet.',
   },
   faq: {
     title: 'Veelgestelde vragen',
     lead: 'Staat uw vraag er niet bij? Stel hem gerust via WhatsApp.',
     items: [
       {
-        q: 'Geeft de assistent medisch advies?',
-        a: 'Nee. Hij beantwoordt organisatorische vragen en plant afspraken. Alles wat klinisch is gaat naar de praktijk, en de patiënt krijgt te horen dat iemand van de praktijk terugkomt op de vraag.',
+        q: 'Wat voorkomt dat hij iets verkeerds zegt?',
+        a: 'Hij antwoordt op basis van de informatie die u ons geeft — uw tijden, uw diensten, uw prijzen — en niets anders. Weet hij iets niet, dan zegt hij dat, noteert naam en nummer en legt de vraag bij u neer in plaats van een antwoord te verzinnen.',
       },
       {
-        q: 'Wat gebeurt er bij spoed?',
-        a: 'De assistent doet niet aan triage. Hij noteert naam en telefoonnummer en maakt een "terugbellen"-afspraak in uw agenda, zodat uw medewerkers snel kunnen reageren. Hetzelfde gebeurt als een patiënt een afspraak wil verzetten of annuleren.',
+        q: 'Wat gebeurt er bij dringende of ongewone vragen?',
+        a: 'De assistent gaat niet zelf aan de slag. Hij noteert naam en telefoonnummer en maakt een "terugbellen"-afspraak in uw agenda, zodat uw team snel kan reageren. Hetzelfde gebeurt als een klant een afspraak wil verzetten of annuleren.',
       },
       {
         q: 'Werkt het met onze huidige website?',
-        a: 'Ja, zolang we er één regel code aan kunnen toevoegen. Dat kan bij vrijwel elke site — WordPress, Wix, Squarespace of maatwerk.',
+        a: 'Ja, zolang we er één regel code aan kunnen toevoegen. Dat kan bij vrijwel elke site — WordPress, Wix, Squarespace, Shopify of maatwerk.',
       },
       {
         q: 'Moeten we onze agenda of software aanpassen?',
-        a: 'Nee. We stellen de assistent in op de agenda waarmee u al werkt: met Google Agenda is het meteen klaar, en voor andere praktijksoftware bekijken we de koppeling samen vóór de proefperiode. Afspraken verschijnen als gewone items en u kunt ze verzetten of annuleren zoals altijd.',
+        a: 'Nee. We stellen de assistent in op de agenda waarmee u al werkt: met Google Agenda is het meteen klaar, en voor andere boekingssoftware bekijken we de koppeling samen vóór de proefperiode. Afspraken verschijnen als gewone items en u kunt ze verzetten of annuleren zoals altijd.',
+      },
+      {
+        q: 'In welke talen antwoordt de assistent?',
+        a: 'We stellen de assistent in op de taal waarin u werkt, en een klant die in een andere taal schrijft, krijgt in die taal antwoord. Hij is niet beperkt tot een kort lijstje, wat telt als uw klanten van overal komen.',
+      },
+      {
+        q: 'Voor wat voor bedrijven is dit bedoeld?',
+        a: 'Voor iedereen die steeds dezelfde vragen krijgt en op afspraak werkt: tandarts- en huisartspraktijken, salons, garages, adviesbureaus, trainers, reparatiebedrijven. We zijn begonnen bij tandartspraktijken en daar is de assistent het meest getest; voor de rest werkt het hetzelfde.',
       },
       {
         q: 'En als we willen stoppen?',
         a: 'U geeft het aan en wij halen de assistent van uw site. Tijdens de proefperiode valt er niets op te zeggen; daarna loopt het abonnement per maand.',
-      },
-      {
-        q: 'In welke talen antwoordt de assistent?',
-        a: 'We stellen de assistent in op de taal waarin uw praktijk werkt, en een patiënt die vraagt om in een andere taal verder te gaan, krijgt in die taal antwoord. We werken vooral met praktijken in het Verenigd Koninkrijk, Italië en Nederland, maar de assistent is niet tot die talen beperkt.',
       },
       {
         q: 'Wie zit er achter Twinbyte?',
@@ -152,10 +156,10 @@ export const nl: Translation = {
     email: 'Stuur een e-mail',
     emailSubject: 'Vraag over de Twinbyte-assistent',
     note: 'U krijgt altijd antwoord van Anna of Samuele — er zit geen callcenter achter.',
-    regions: 'We werken met praktijken in het Verenigd Koninkrijk, Italië en Nederland, en we werken op afstand.',
+    regions: 'We werken op afstand met bedrijven waar ook ter wereld. Waar u ook zit, de assistent antwoordt in de taal van uw klanten.',
   },
   footer: {
-    tagline: 'Digitale assistent voor tandartspraktijken en websites voor kleine bedrijven.',
+    tagline: 'Digitale assistent voor kleine bedrijven en websites die snel laden.',
     privacy: 'Privacyverklaring',
     rights: 'Alle rechten voorbehouden.',
   },
@@ -194,8 +198,8 @@ export const nl: Translation = {
       {
         title: 'De assistent op websites van klanten',
         body: [
-          'De assistent die op deze pagina beschreven wordt, draait op de websites van onze klanten — de praktijken zelf. Voor die gesprekken is de praktijk verwerkingsverantwoordelijke en treedt Twinbyte op als verwerker, op basis van een ondertekende verwerkersovereenkomst.',
-          'Deze verklaring gaat dus alleen over deze website. Patiënten die met een assistent op een praktijkwebsite chatten, lezen de privacyverklaring van die praktijk.',
+          'De assistent die op deze pagina beschreven wordt, draait op de websites van onze klanten. Voor die gesprekken is de klant verwerkingsverantwoordelijke en treedt Twinbyte op als verwerker, op basis van een ondertekende verwerkersovereenkomst.',
+          'Deze verklaring gaat dus alleen over deze website. Wie met een assistent op de site van een klant chat, leest de privacyverklaring van dat bedrijf.',
         ],
       },
       {
@@ -214,20 +218,20 @@ export const nl: Translation = {
   },
   demo: {
     tag: 'Voorbeeldgesprek',
-    siteLabel: 'uw-praktijk.nl',
+    siteLabel: 'uw-website.nl',
     messages: [
-      { from: 'patient', text: 'Goedenavond, kan ik volgende week langskomen voor controle?' },
+      { from: 'patient', text: 'Goedenavond, kan ik volgende week een afspraak maken?' },
       { from: 'bot', text: 'Zeker. Donderdag de 18e om 10:30, of vrijdag de 19e om 16:00?' },
       { from: 'patient', text: 'Donderdag is goed.' },
       { from: 'bot', text: 'Mag ik uw naam en een telefoonnummer?' },
       { from: 'patient', text: 'Laura Bakker, 06 12345678' },
-      { from: 'bot', text: 'Genoteerd: donderdag de 18e om 10:30. Het staat nu in de agenda van de praktijk.' },
+      { from: 'bot', text: 'Genoteerd: donderdag de 18e om 10:30. Het staat nu in uw agenda.' },
     ],
     typing: 'typt',
     assistant: 'Digitale assistent',
     online: 'altijd aan',
-    calendarTitle: 'Agenda van de praktijk',
-    eventTitle: 'Controle — Laura Bakker',
+    calendarTitle: 'Uw agenda',
+    eventTitle: 'Afspraak — Laura Bakker',
     eventTime: 'do 18 sep · 10:30 – 11:00',
     eventBadge: 'Aangemaakt door de assistent',
     callback: 'Terugbellen — spoedvraag',
@@ -238,7 +242,7 @@ export const nl: Translation = {
   wa: {
     generic: 'Hallo Twinbyte, ik heb een vraag over jullie digitale assistent.',
     trial:
-      'Hallo Twinbyte, ik wil graag de gratis proefperiode van 14 dagen starten voor de digitale assistent van mijn tandartspraktijk.',
+      'Hallo Twinbyte, ik wil graag de gratis proefperiode van 14 dagen starten voor de digitale assistent van mijn bedrijf.',
     websites: 'Hallo Twinbyte, ik wil graag meer weten over een website voor mijn bedrijf.',
   },
 }

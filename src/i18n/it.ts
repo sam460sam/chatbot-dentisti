@@ -6,7 +6,7 @@ export const it: Translation = {
   meta: metaJson.it,
   nav: {
     how: 'Come funziona',
-    benefits: 'Per lo studio',
+    benefits: 'Cosa ottenete',
     security: 'Privacy e sicurezza',
     websites: 'Siti web',
     faq: 'Domande frequenti',
@@ -18,15 +18,15 @@ export const it: Translation = {
   },
   hero: {
     eyebrow: 'Twinbyte — Anna e Samuele',
-    title: 'Lo studio risponde ai pazienti 24 ore su 24, anche quando il telefono è occupato',
-    lead: 'Mettiamo un assistente digitale sul sito del vostro studio, che risponde ai pazienti 24 ore su 24. Gestisce le domande di ogni giorno — orari, trattamenti, cosa portare alla prima visita — e fissa gli appuntamenti direttamente nell’agenda che lo studio usa già.',
+    title: 'La vostra attività risponde ai clienti 24 ore su 24, anche quando non può rispondere nessuno',
+    lead: 'Mettiamo un assistente digitale sul vostro sito, che risponde ai clienti a qualsiasi ora. Gestisce le domande di ogni giorno — orari, servizi, prezzi, cosa portare — e fissa gli appuntamenti direttamente nell’agenda che usate già.',
     ctaTrial: 'Prova gratis 14 giorni',
     ctaDemo: 'Guarda la demo',
-    note: 'Senza impegno. Se non è utile allo studio lo rimuoviamo gratuitamente.',
+    note: 'Senza impegno. Se non è utile alla vostra attività lo rimuoviamo gratuitamente.',
     bullets: [
-      'Scrive nell’agenda che lo studio usa già',
-      'Risponde ai pazienti nella loro lingua',
-      'Le urgenze passano allo staff, non le gestisce l’assistente',
+      'Scrive nell’agenda che usate già',
+      'Risponde ai clienti nella loro lingua',
+      'Le richieste delicate passano al vostro team, non le gestisce l’assistente',
     ],
   },
   how: {
@@ -35,109 +35,113 @@ export const it: Translation = {
     steps: [
       {
         title: 'Lo configuriamo con i vostri dati',
-        body: 'Ci mandate orari, trattamenti e le domande che i pazienti fanno più spesso. Costruiamo l’assistente intorno a quelle informazioni, così le risposte sono quelle dello studio e non un testo generico.',
+        body: 'Ci mandate orari, servizi e le domande che i clienti fanno più spesso. Costruiamo l’assistente intorno a quelle informazioni, così le risposte sono le vostre e non un testo generico.',
       },
       {
         title: 'Lo inseriamo sul vostro sito',
         body: 'Una riga di codice sul sito che avete già. Niente da installare, il resto del sito non cambia. La versione WhatsApp è in arrivo.',
       },
       {
-        title: 'I pazienti prenotano da soli',
-        body: 'L’assistente controlla le disponibilità, chiede nome e numero di telefono e crea l’appuntamento nell’agenda che lo studio usa già. L’agenda resta interamente sotto il vostro controllo.',
+        title: 'I clienti prenotano da soli',
+        body: 'L’assistente controlla le disponibilità, chiede nome e numero di telefono e crea l’appuntamento nell’agenda che usate già. Il controllo resta interamente vostro.',
       },
     ],
   },
   benefits: {
-    title: 'Cosa ci guadagna lo studio',
-    lead: 'Niente di rivoluzionario: semplicemente la parte ripetitiva della reception gestita da sola.',
+    title: 'Cosa ci guadagna la vostra attività',
+    lead: 'È nato negli studi dentistici, dove una chiamata persa è un paziente perso. Lo stesso problema c’è in qualsiasi attività che prende appuntamenti: un salone, un’officina, uno studio professionale, una clinica, un centro estetico.',
     items: [
       {
-        title: 'Meno telefonate alla reception',
-        body: 'Orari, indirizzo, parcheggio, come si svolge la prima visita: le domande di routine trovano risposta senza che nessuno alzi la cornetta.',
+        title: 'Meno telefonate a cui rispondere',
+        body: 'Orari, indirizzo, parcheggio, prezzi, come si svolge il primo appuntamento: le domande di routine trovano risposta senza che nessuno alzi la cornetta.',
       },
       {
         title: 'Prenotazioni fuori orario',
-        body: 'Sere, weekend, festivi. Il paziente che avrebbe chiamato domani — o avrebbe chiamato un altro studio — prenota stasera.',
+        body: 'Sere, weekend, festivi, e qualsiasi fuso orario in cui si trovino i vostri clienti. Chi avrebbe chiamato domani — o avrebbe chiamato un concorrente — prenota stasera.',
       },
       {
-        title: 'Parla la lingua dei vostri pazienti',
-        body: 'Configuriamo l\u2019assistente nella lingua in cui lavora lo studio e, se un paziente chiede di essere seguito in un\u2019altra lingua, passa alla sua. Utile in qualsiasi studio con pazienti stranieri.',
+        title: 'Parla la lingua dei vostri clienti',
+        body: 'Configuriamo l’assistente nella lingua in cui lavorate e, se un cliente chiede di essere seguito in un’altra lingua, passa alla sua. Utile ovunque i clienti non siano tutti del posto.',
       },
       {
-        title: 'Le urgenze arrivano a una persona',
-        body: 'Sulle urgenze e sulle modifiche l’assistente non improvvisa: prende nome e numero e crea un evento "da richiamare" nel vostro calendario, così se ne occupa qualcuno dello staff.',
+        title: 'Le richieste delicate arrivano a una persona',
+        body: 'Su ciò che è urgente, insolito o fuori da quello che sa, l’assistente non improvvisa: prende nome e numero e crea un evento "da richiamare" nella vostra agenda, così se ne occupa qualcuno del vostro team.',
       },
     ],
   },
   security: {
     title: 'Privacy e sicurezza',
-    lead: 'Uno studio dentistico lavora con dati sensibili. Il nostro criterio è toccarne il meno possibile.',
+    lead: 'I dati dei vostri clienti sono vostri, non nostri. Il nostro criterio è toccarne il meno possibile.',
     items: [
       {
         title: 'Chiediamo il minimo indispensabile',
-        body: 'Per fissare un appuntamento all’assistente servono un nome e un numero di telefono. Nessuna anamnesi, nessun documento, nessun dato di pagamento.',
+        body: 'Per fissare un appuntamento all’assistente servono un nome e un numero di telefono. Nessun documento, nessun dato di pagamento e nulla di sensibile che alla vostra attività non serva per prendere una prenotazione.',
       },
       {
-        title: 'Il paziente sa che non è una persona',
-        body: 'L’assistente lo dichiara prima che inizi la conversazione. Non fa diagnosi e non dà consigli medici: le domande cliniche passano allo studio.',
+        title: 'Il cliente sa che non è una persona',
+        body: 'L’assistente lo dichiara prima che inizi la conversazione. Non dà consulenze professionali né consigli medici: tutto ciò che richiede un giudizio passa a voi.',
       },
       {
         title: 'Accordo sul trattamento dei dati firmato',
-        body: 'Prima di andare online firmiamo con lo studio un accordo sul trattamento dei dati (DPA): cosa viene trattato, perché e per quanto tempo. Lo studio resta titolare del trattamento.',
+        body: 'Prima di andare online firmiamo con voi un accordo sul trattamento dei dati (DPA): cosa viene trattato, perché e per quanto tempo. Il titolare del trattamento restate voi.',
       },
     ],
   },
   websites: {
     title: 'Siti web per piccole aziende',
-    lead: 'Oltre all’assistente per i dentisti realizziamo siti web: quelli che servono davvero a una piccola azienda, non una vetrina per noi.',
+    lead: 'Oltre all’assistente realizziamo siti web: quelli che servono davvero a una piccola azienda, non una vetrina per noi.',
     items: [
       'Veloci prima di tutto sul telefono, perché è lì che sono i vostri clienti',
       'Una struttura chiara: cosa fate, dove siete, come vi si contatta',
       'L’assistente si può aggiungere in un secondo momento, sullo stesso sito',
       'Nessun CMS da imparare: ci dite cosa cambia e lo aggiorniamo noi',
     ],
-    tags: ['Mobile-first', 'Veloce di base', 'Pronto per l\u2019assistente'],
+    tags: ['Mobile-first', 'Veloce di base', 'Pronto per l’assistente'],
     cta: 'Chiedi informazioni su un sito',
   },
   trial: {
     title: 'La prova gratuita di 14 giorni',
     lead: 'Due settimane sul vostro sito, a costo zero e senza firmare nulla in anticipo.',
     steps: [
-      'Configuriamo l’assistente con i vostri orari, i trattamenti e le domande frequenti e lo mettiamo online sul vostro sito.',
+      'Configuriamo l’assistente con i vostri orari, i servizi e le domande frequenti e lo mettiamo online sul vostro sito.',
       'Resta attivo 14 giorni. Vedete conversazioni vere e prenotazioni vere, non una demo.',
       'Guardiamo insieme i risultati e decidete se vale la pena tenerlo.',
       'Se lo tenete diventa un abbonamento mensile. Altrimenti lo rimuoviamo lo stesso giorno, gratuitamente.',
     ],
     cta: 'Inizia la prova su WhatsApp',
-    note: 'Del prezzo mensile parliamo dopo la prova, quando sappiamo entrambi quanto lo studio lo usa davvero.',
+    note: 'Del prezzo mensile parliamo dopo la prova, quando sappiamo entrambi quanto la vostra attività lo usa davvero.',
   },
   faq: {
     title: 'Domande frequenti',
     lead: 'Se manca qualcosa, scrivetecelo su WhatsApp.',
     items: [
       {
-        q: 'L’assistente dà consigli medici?',
-        a: 'No. Risponde a domande organizzative e fissa appuntamenti. Tutto ciò che è clinico passa allo studio, e al paziente viene detto che qualcuno dello studio lo ricontatterà.',
+        q: 'Cosa gli impedisce di dire cose sbagliate?',
+        a: 'Risponde partendo dalle informazioni che ci date — i vostri orari, i vostri servizi, i vostri prezzi — e da nient’altro. Quando non sa una cosa lo dice, prende nome e numero e passa la domanda a voi invece di inventare una risposta.',
       },
       {
-        q: 'Cosa succede con le urgenze?',
-        a: 'L’assistente non fa triage. Prende nome e numero di telefono e crea un evento "da richiamare" nel vostro calendario, così lo staff può intervenire in fretta. Lo stesso vale quando un paziente vuole spostare o disdire un appuntamento.',
+        q: 'Cosa succede con le richieste urgenti o insolite?',
+        a: 'L’assistente non improvvisa. Prende nome e numero di telefono e crea un evento "da richiamare" nella vostra agenda, così il vostro team può intervenire in fretta. Lo stesso vale quando un cliente vuole spostare o disdire un appuntamento.',
       },
       {
         q: 'Funziona con il sito che abbiamo già?',
-        a: 'Sì, se possiamo aggiungerci una riga di codice. È possibile su quasi tutti i siti — WordPress, Wix, Squarespace o sviluppati su misura.',
+        a: 'Sì, se possiamo aggiungerci una riga di codice. È possibile su quasi tutti i siti — WordPress, Wix, Squarespace, Shopify o sviluppati su misura.',
       },
       {
-        q: 'Dobbiamo cambiare calendario o gestionale?',
+        q: 'Dobbiamo cambiare agenda o gestionale?',
         a: 'No. Configuriamo l’assistente sull’agenda con cui lavorate già: con Google Calendar è pronto, per altri gestionali valutiamo insieme l’integrazione prima della prova. Gli appuntamenti compaiono come eventi normali e potete spostarli o cancellarli come sempre.',
+      },
+      {
+        q: 'In quali lingue risponde?',
+        a: 'Configuriamo l’assistente nella lingua in cui lavorate, e a un cliente che scrive in un’altra lingua risponde in quella. Non è limitato a un elenco ristretto, il che conta se i vostri clienti arrivano da ovunque.',
+      },
+      {
+        q: 'Per che tipo di attività è pensato?',
+        a: 'Per chiunque riceva sempre le stesse domande e prenda appuntamenti: studi dentistici e medici, saloni, officine, studi professionali, personal trainer, consulenti, centri assistenza. Abbiamo iniziato dagli studi dentistici ed è lì che l’assistente è più collaudato; per il resto funziona allo stesso modo.',
       },
       {
         q: 'E se volessimo smettere?',
         a: 'Ce lo dite e togliamo l’assistente dal sito. Durante la prova non c’è nulla da disdire; dopo, l’abbonamento è mese per mese.',
-      },
-      {
-        q: 'In quali lingue risponde?',
-        a: 'Configuriamo l\u2019assistente nella lingua in cui lavora lo studio, e a un paziente che chiede di proseguire in un\u2019altra lingua risponde in quella. Lavoriamo soprattutto con studi nel Regno Unito, in Italia e nei Paesi Bassi, ma l\u2019assistente non è limitato a queste lingue.',
       },
       {
         q: 'Chi c’è dietro Twinbyte?',
@@ -152,10 +156,10 @@ export const it: Translation = {
     email: 'Scrivici un’email',
     emailSubject: 'Domanda sull’assistente Twinbyte',
     note: 'Vi risponde sempre Anna o Samuele: dietro non c’è nessun call center.',
-    regions: 'Lavoriamo con studi nel Regno Unito, in Italia e nei Paesi Bassi, e lavoriamo da remoto.',
+    regions: 'Lavoriamo da remoto con attività in qualsiasi parte del mondo. Ovunque siate, l’assistente risponde nella lingua dei vostri clienti.',
   },
   footer: {
-    tagline: 'Assistente digitale per studi dentistici e siti web per piccole aziende.',
+    tagline: 'Assistente digitale per piccole attività e siti web che caricano veloci.',
     privacy: 'Informativa privacy',
     rights: 'Tutti i diritti riservati.',
   },
@@ -194,8 +198,8 @@ export const it: Translation = {
       {
         title: 'L’assistente sui siti dei nostri clienti',
         body: [
-          'L’assistente descritto in questa pagina funziona sui siti dei nostri clienti, cioè degli studi stessi. Per quelle conversazioni il titolare del trattamento è lo studio e Twinbyte agisce come responsabile, sulla base di un accordo sul trattamento dei dati firmato.',
-          'Questa informativa riguarda quindi solo questo sito. I pazienti che parlano con un assistente sul sito di uno studio devono fare riferimento all’informativa di quello studio.',
+          'L’assistente descritto in questa pagina funziona sui siti dei nostri clienti. Per quelle conversazioni il titolare del trattamento è il cliente e Twinbyte agisce come responsabile, sulla base di un accordo sul trattamento dei dati firmato.',
+          'Questa informativa riguarda quindi solo questo sito. Chi parla con un assistente sul sito di un cliente deve fare riferimento all’informativa di quell’azienda.',
         ],
       },
       {
@@ -214,31 +218,31 @@ export const it: Translation = {
   },
   demo: {
     tag: 'Conversazione di esempio',
-    siteLabel: 'il-vostro-studio.it',
+    siteLabel: 'il-vostro-sito.it',
     messages: [
-      { from: 'patient', text: 'Buonasera, posso venire per un controllo la prossima settimana?' },
-      { from: 'bot', text: 'Certo. Gioved\u00ec 18 alle 10:30 oppure venerd\u00ec 19 alle 16:00?' },
-      { from: 'patient', text: 'Gioved\u00ec va bene.' },
+      { from: 'patient', text: 'Buonasera, posso prenotare un appuntamento la prossima settimana?' },
+      { from: 'bot', text: 'Certo. Giovedì 18 alle 10:30 oppure venerdì 19 alle 16:00?' },
+      { from: 'patient', text: 'Giovedì va bene.' },
       { from: 'bot', text: 'Mi lascia il suo nome e un numero di telefono?' },
       { from: 'patient', text: 'Laura Bianchi, 340 1234567' },
-      { from: 'bot', text: 'Fissato: gioved\u00ec 18 alle 10:30. \u00c8 gi\u00e0 nel calendario dello studio.' },
+      { from: 'bot', text: 'Fissato: giovedì 18 alle 10:30. È già nella vostra agenda.' },
     ],
     typing: 'sta scrivendo',
     assistant: 'Assistente digitale',
     online: 'sempre attivo',
-    calendarTitle: 'Calendario dello studio',
-    eventTitle: 'Controllo — Laura Bianchi',
+    calendarTitle: 'La vostra agenda',
+    eventTitle: 'Appuntamento — Laura Bianchi',
     eventTime: 'gio 18 set · 10:30 – 11:00',
-    eventBadge: 'Creato dall\u2019assistente',
+    eventBadge: 'Creato dall’assistente',
     callback: 'Da richiamare — richiesta urgente',
-    tryHere: 'La bolla di chat in basso a destra \u00e8 l\u2019assistente vero. Provatelo.',
+    tryHere: 'La bolla di chat in basso a destra è l’assistente vero. Provatelo.',
   },
   widgetHello:
     'Ciao! Rispondo alle domande su Twinbyte — come si configura l’assistente, la prova di 14 giorni, la privacy. Cosa vuoi sapere?',
   wa: {
     generic: 'Ciao Twinbyte, ho una domanda sul vostro assistente digitale.',
     trial:
-      'Ciao Twinbyte, vorrei iniziare la prova gratuita di 14 giorni dell’assistente digitale per il mio studio dentistico.',
+      'Ciao Twinbyte, vorrei iniziare la prova gratuita di 14 giorni dell’assistente digitale per la mia attività.',
     websites: 'Ciao Twinbyte, vorrei sapere di più su un sito web per la mia azienda.',
   },
 }
