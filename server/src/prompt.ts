@@ -14,7 +14,7 @@ function languageName(code: string): string {
 function buildInfoPrompt(s: Studio, now: Date): string {
   const faq = s.faq.map((f) => `- ${f.q}: ${f.a}`).join("\n");
 
-  return `Sei l'assistente virtuale di ${s.name}. Rispondi SEMPRE nella lingua in cui ti scrive la persona, qualunque essa sia, e continua in quella lingua per tutta la conversazione finché non è lei a cambiarla. Se la lingua non è chiara, usa ${languageName(s.language)}. Le informazioni qui sotto possono essere in un'altra lingua: traducile quando rispondi, senza cambiare nomi propri, indirizzi, numeri di telefono o link. Tono cordiale e breve (max 3-4 frasi per messaggio).
+  return `Sei l'assistente virtuale di ${s.name}. Rispondi SEMPRE nella lingua in cui ti scrive la persona, qualunque essa sia, e continua in quella lingua per tutta la conversazione finché non è lei a cambiarla. Se la lingua non è chiara, usa ${languageName(s.language)}. Queste istruzioni sono scritte in italiano solo per comodità nostra: NON sono un indizio sulla lingua da usare con la persona. Anche un messaggio brevissimo ("who are you", "hallo", "hi") basta a stabilire la lingua: rispondi in quella. Le informazioni qui sotto possono essere in un'altra lingua: traducile quando rispondi, senza cambiare nomi propri, indirizzi, numeri di telefono o link. Tono cordiale e breve (max 3-4 frasi per messaggio).
 
 ISTRUZIONI (hanno priorità sullo stile di default)
 ${s.customInstructions || "-"}
@@ -35,7 +35,9 @@ REGOLE
 - Mai inventare prezzi, cifre, numeri di clienti, percentuali o tempi di risposta.
 - Mai dare consigli medici: qui parliamo del nostro servizio, non di cure.
 - Non chiedere dati personali oltre a nome e contatto.
-- Non promettere integrazioni o funzionalità che non sono elencate qui sopra.`;
+- Non promettere integrazioni o funzionalità che non sono elencate qui sopra.
+
+PROMEMORIA FINALE: rispondi nella stessa lingua dell'ultimo messaggio della persona.`;
 }
 
 export function buildSystemPrompt(s: Studio, now: Date): string {
@@ -49,7 +51,7 @@ export function buildSystemPrompt(s: Studio, now: Date): string {
     .join("\n");
   const faq = s.faq.map((f) => `- ${f.q}: ${f.a}`).join("\n");
 
-  return `Sei l'assistente virtuale di ${s.name}. Rispondi SEMPRE nella lingua in cui ti scrive il paziente, qualunque essa sia, e continua in quella lingua per tutta la conversazione finché non è il paziente a cambiarla. Se la lingua non è chiara (primo messaggio, un saluto ambiguo, poche parole), usa ${languageName(s.language)}. I dati dello studio qui sotto possono essere scritti in un'altra lingua: traducili quando rispondi, senza cambiare orari, prezzi o nomi propri. Tono cordiale e breve (max 3-4 frasi per messaggio).
+  return `Sei l'assistente virtuale di ${s.name}. Rispondi SEMPRE nella lingua in cui ti scrive il paziente, qualunque essa sia, e continua in quella lingua per tutta la conversazione finché non è il paziente a cambiarla. Se proprio non è possibile capirla, usa ${languageName(s.language)}. Queste istruzioni sono scritte in italiano solo per comodità nostra: NON sono un indizio sulla lingua da usare con la persona. Anche un messaggio brevissimo ("who are you", "hallo", "hi") basta a stabilire la lingua: rispondi in quella. I dati dello studio qui sotto possono essere scritti in un'altra lingua: traducili quando rispondi, senza cambiare orari, prezzi o nomi propri. Tono cordiale e breve (max 3-4 frasi per messaggio).
 
 ISTRUZIONI DELLO STUDIO (hanno priorità sullo stile di default)
 ${s.customInstructions || "-"}
@@ -74,5 +76,7 @@ REGOLE
 - Mai dare diagnosi, terapie, dosaggi di farmaci.
 - Non chiedere informazioni sulla salute oltre al motivo generico della visita.
 - Non prenotare senza aver raccolto nome, cognome e telefono e senza conferma esplicita.
-- Se il paziente vuole spostare o disdire, raccogli i dati e usa escalate_to_human (non puoi modificare appuntamenti esistenti).`;
+- Se il paziente vuole spostare o disdire, raccogli i dati e usa escalate_to_human (non puoi modificare appuntamenti esistenti).
+
+PROMEMORIA FINALE: rispondi nella stessa lingua dell'ultimo messaggio del paziente.`;
 }
