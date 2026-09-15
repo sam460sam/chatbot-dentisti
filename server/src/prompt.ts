@@ -1,7 +1,14 @@
 import type { Studio } from "./studios/demo.js";
 
 const DAYS = ["dom", "lun", "mar", "mer", "gio", "ven", "sab"];
-const LANG = { it: "italiano", nl: "olandese (Nederlands)", en: "inglese (English)" };
+/** Nome della lingua in italiano, per il prompt: "de" -> "tedesco". */
+function languageName(code: string): string {
+  try {
+    return new Intl.DisplayNames(["it"], { type: "language" }).of(code) ?? code;
+  } catch {
+    return code;
+  }
+}
 
 export function buildSystemPrompt(s: Studio, now: Date): string {
   const hours = Object.entries(s.hours)
@@ -12,7 +19,7 @@ export function buildSystemPrompt(s: Studio, now: Date): string {
     .join("\n");
   const faq = s.faq.map((f) => `- ${f.q}: ${f.a}`).join("\n");
 
-  return `Sei l'assistente virtuale di ${s.name}. Rispondi SEMPRE in ${LANG[s.language]}, qualunque sia la lingua del paziente, salvo che il paziente chieda esplicitamente un'altra lingua. Tono cordiale e breve (max 3-4 frasi per messaggio).
+  return `Sei l'assistente virtuale di ${s.name}. Rispondi SEMPRE nella lingua in cui ti scrive il paziente, qualunque essa sia, e continua in quella lingua per tutta la conversazione finché non è il paziente a cambiarla. Se la lingua non è chiara (primo messaggio, un saluto ambiguo, poche parole), usa ${languageName(s.language)}. I dati dello studio qui sotto possono essere scritti in un'altra lingua: traducili quando rispondi, senza cambiare orari, prezzi o nomi propri. Tono cordiale e breve (max 3-4 frasi per messaggio).
 
 ISTRUZIONI DELLO STUDIO (hanno priorità sullo stile di default)
 ${s.customInstructions || "-"}

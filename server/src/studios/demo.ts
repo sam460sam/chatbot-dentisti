@@ -1,8 +1,12 @@
 export type Studio = {
   id: string;
   name: string;
-  /** lingua delle risposte: "it" | "nl" | "en" */
-  language: "it" | "nl" | "en";
+  /**
+   * Lingua di partenza dell'assistente (codice ISO: "it", "nl", "en", "de", "fr", ...).
+   * L'assistente risponde comunque nella lingua in cui scrive il paziente;
+   * questa serve per il primo messaggio e per le note nel calendario dello studio.
+   */
+  language: string;
   /** testo libero scritto dal dentista: tono, cose da dire/non dire, tu/lei */
   customInstructions: string;
   address: string;
