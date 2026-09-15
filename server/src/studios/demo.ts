@@ -1,3 +1,5 @@
+import { twinbyteStudio } from "./twinbyte.js";
+
 export type Studio = {
   id: string;
   name: string;
@@ -23,6 +25,8 @@ export type Studio = {
   googleCalendarId?: string;
   /** email/numero della segreteria per l'escalation */
   handoffContact: string;
+  /** false per chi non prende appuntamenti (es. il nostro sito vetrina): l'assistente informa e basta */
+  booking?: boolean;
 };
 
 export const demoStudio: Studio = {
@@ -130,6 +134,7 @@ export const dentalDemo: Studio = {
 
 export const studios: Record<string, Studio> = {
   demo: demoStudio,
+  twinbyte: twinbyteStudio,
   "tandarts-demo": tandartsDemo,
   "dental-demo": dentalDemo,
 };
