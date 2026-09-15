@@ -233,6 +233,8 @@ export const en: Translation = {
     callback: 'Call back — urgent request',
     tryHere: 'The chat bubble in the bottom right is the real assistant. Try it.',
   },
+  widgetHello:
+    'Hi! I can answer questions about Twinbyte — how the assistant is set up, the 14-day trial, privacy. What would you like to know?',
   wa: {
     generic: 'Hello Twinbyte, I have a question about your digital assistant.',
     trial:

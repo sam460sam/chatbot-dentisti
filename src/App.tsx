@@ -17,7 +17,7 @@ export function App() {
     page === 'privacy' ? t.meta.privacyTitle : t.meta.title,
     page === 'privacy' ? t.meta.privacyDescription : t.meta.description,
   )
-  useAssistantWidget(lang)
+  useAssistantWidget(lang, t.widgetHello)
 
   return (
     <div className="flex min-h-screen flex-col">

@@ -8,7 +8,7 @@ import type { Lang } from './i18n'
  * it never competes with the first render. The widget mounts itself in a shadow
  * root and is injected only once per page load.
  */
-export function useAssistantWidget(lang: Lang) {
+export function useAssistantWidget(lang: Lang, hello: string) {
   useEffect(() => {
     if (!SITE.widget.enabled) return
     if (document.querySelector('script[data-twinbyte-widget]')) return
@@ -26,6 +26,7 @@ export function useAssistantWidget(lang: Lang) {
       script.dataset.lang = lang
       script.dataset.color = SITE.widget.color
       script.dataset.privacy = window.location.origin + pathFor(lang, 'privacy')
+      script.dataset.hello = hello
       document.body.appendChild(script)
     }
 

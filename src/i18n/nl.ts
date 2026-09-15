@@ -233,6 +233,8 @@ export const nl: Translation = {
     callback: 'Terugbellen — spoedvraag',
     tryHere: 'De chatbubbel rechtsonder is de echte assistent. Probeer hem gerust.',
   },
+  widgetHello:
+    'Hallo! Ik beantwoord vragen over Twinbyte — hoe de assistent wordt ingesteld, de proefperiode van 14 dagen, privacy. Wat wilt u weten?',
   wa: {
     generic: 'Hallo Twinbyte, ik heb een vraag over jullie digitale assistent.',
     trial:

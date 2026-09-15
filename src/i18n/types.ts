@@ -79,5 +79,7 @@ export interface Translation {
     callback: string
     tryHere: string
   }
+  /** primo messaggio della chat sul nostro sito */
+  widgetHello: string
   wa: { generic: string; trial: string; websites: string }
 }
