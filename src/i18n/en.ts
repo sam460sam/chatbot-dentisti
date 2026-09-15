@@ -25,7 +25,7 @@ export const en: Translation = {
     note: 'No commitment. If it turns out not to help your practice, we remove it for free.',
     bullets: [
       'Books into the Google Calendar you already use',
-      'Answers in Dutch, English and Italian',
+      'Answers patients in their own language',
       'Urgent requests are handed to your staff, not answered by the AI',
     ],
   },
@@ -60,8 +60,8 @@ export const en: Translation = {
         body: 'Evenings, weekends, holidays. A patient who would otherwise have called tomorrow — or called someone else — books tonight.',
       },
       {
-        title: 'Three languages, one assistant',
-        body: 'Patients write in Dutch, English or Italian and get the answer in the same language. Useful in practices with international patients.',
+        title: 'It speaks your patients\u2019 language',
+        body: 'We set the assistant up in your practice\u2019s main language, and when a patient asks to be helped in another one it switches over. Useful in any practice with international patients.',
       },
       {
         title: 'Urgencies reach a human',
@@ -136,6 +136,10 @@ export const en: Translation = {
         a: 'You tell us and we remove the assistant from your site. During the trial there is nothing to cancel; afterwards the subscription runs month by month.',
       },
       {
+        q: 'Which languages does it speak?',
+        a: 'We configure the assistant in the language your practice works in, and a patient who asks to continue in another language gets answered in that one. We work mainly with practices in the United Kingdom, Italy and the Netherlands, but the assistant is not limited to those languages.',
+      },
+      {
         q: 'Who is behind Twinbyte?',
         a: 'Anna and Samuele. Two people, which means you always talk to the person who set up your assistant — no ticket system in between.',
       },
@@ -148,6 +152,7 @@ export const en: Translation = {
     email: 'Send an email',
     emailSubject: 'Question about the Twinbyte assistant',
     note: 'You will always get a reply from Anna or Samuele — there is no call centre behind this.',
+    regions: 'We work with practices in the United Kingdom, Italy and the Netherlands, and we work remotely.',
   },
   footer: {
     tagline: 'AI assistant for dental practices and websites for small businesses.',

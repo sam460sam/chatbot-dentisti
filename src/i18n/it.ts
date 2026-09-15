@@ -25,7 +25,7 @@ export const it: Translation = {
     note: 'Senza impegno. Se non è utile allo studio lo rimuoviamo gratuitamente.',
     bullets: [
       'Scrive nel Google Calendar che usate già',
-      'Risponde in italiano, inglese e olandese',
+      'Risponde ai pazienti nella loro lingua',
       'Le urgenze passano allo staff, non le gestisce l’AI',
     ],
   },
@@ -60,8 +60,8 @@ export const it: Translation = {
         body: 'Sere, weekend, festivi. Il paziente che avrebbe chiamato domani — o avrebbe chiamato un altro studio — prenota stasera.',
       },
       {
-        title: 'Tre lingue, un assistente',
-        body: 'I pazienti scrivono in italiano, inglese o olandese e ricevono la risposta nella stessa lingua. Utile negli studi con pazienti stranieri.',
+        title: 'Parla la lingua dei vostri pazienti',
+        body: 'Configuriamo l\u2019assistente nella lingua in cui lavora lo studio e, se un paziente chiede di essere seguito in un\u2019altra lingua, passa alla sua. Utile in qualsiasi studio con pazienti stranieri.',
       },
       {
         title: 'Le urgenze arrivano a una persona',
@@ -136,6 +136,10 @@ export const it: Translation = {
         a: 'Ce lo dite e togliamo l’assistente dal sito. Durante la prova non c’è nulla da disdire; dopo, l’abbonamento è mese per mese.',
       },
       {
+        q: 'In quali lingue risponde?',
+        a: 'Configuriamo l\u2019assistente nella lingua in cui lavora lo studio, e a un paziente che chiede di proseguire in un\u2019altra lingua risponde in quella. Lavoriamo soprattutto con studi nel Regno Unito, in Italia e nei Paesi Bassi, ma l\u2019assistente non è limitato a queste lingue.',
+      },
+      {
         q: 'Chi c’è dietro Twinbyte?',
         a: 'Anna e Samuele. Siamo in due, quindi parlate sempre con chi ha configurato il vostro assistente: nessun sistema di ticket in mezzo.',
       },
@@ -148,6 +152,7 @@ export const it: Translation = {
     email: 'Scrivici un’email',
     emailSubject: 'Domanda sull’assistente Twinbyte',
     note: 'Vi risponde sempre Anna o Samuele: dietro non c’è nessun call center.',
+    regions: 'Lavoriamo con studi nel Regno Unito, in Italia e nei Paesi Bassi, e lavoriamo da remoto.',
   },
   footer: {
     tagline: 'Assistente AI per studi dentistici e siti web per piccole aziende.',

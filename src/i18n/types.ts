@@ -55,6 +55,7 @@ export interface Translation {
     email: string
     emailSubject: string
     note: string
+    regions: string
   }
   footer: { tagline: string; privacy: string; rights: string }
   privacyPage: {

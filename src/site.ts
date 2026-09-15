@@ -4,8 +4,7 @@ export const SITE = {
   /** International format without "+" or spaces, as wa.me requires. */
   whatsappNumber: '31645745163',
   whatsappDisplay: '+31 6 45745163',
-  /** TODO: replace with the final Cloudflare Pages domain (or a custom domain). */
-  baseUrl: 'https://twinbyte.pages.dev',
+  baseUrl: 'https://twinbyte.online',
   lastUpdated: '2026-09-15',
   /** Live assistant widget on this site. Set enabled: false to take it off. */
   widget: {

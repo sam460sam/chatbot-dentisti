@@ -25,7 +25,7 @@ export const nl: Translation = {
     note: 'Vrijblijvend. Blijkt het niets voor uw praktijk, dan halen we het kosteloos weer weg.',
     bullets: [
       'Plant in de Google Agenda die u al gebruikt',
-      'Antwoordt in het Nederlands, Engels en Italiaans',
+      'Antwoordt patiënten in hun eigen taal',
       'Spoedgevallen gaan naar uw medewerkers, niet naar de AI',
     ],
   },
@@ -60,8 +60,8 @@ export const nl: Translation = {
         body: 'Avonden, weekenden, feestdagen. Een patiënt die anders morgen zou bellen — of een andere praktijk zou bellen — plant vanavond.',
       },
       {
-        title: 'Drie talen, één assistent',
-        body: 'Patiënten schrijven in het Nederlands, Engels of Italiaans en krijgen antwoord in dezelfde taal. Handig in praktijken met internationale patiënten.',
+        title: 'Hij spreekt de taal van uw patiënt',
+        body: 'We stellen de assistent in op de taal waarin uw praktijk werkt, en als een patiënt vraagt om verder te gaan in een andere taal, schakelt hij over. Handig in elke praktijk met internationale patiënten.',
       },
       {
         title: 'Spoed komt bij een mens terecht',
@@ -136,6 +136,10 @@ export const nl: Translation = {
         a: 'U geeft het aan en wij halen de assistent van uw site. Tijdens de proefperiode valt er niets op te zeggen; daarna loopt het abonnement per maand.',
       },
       {
+        q: 'In welke talen antwoordt de assistent?',
+        a: 'We stellen de assistent in op de taal waarin uw praktijk werkt, en een patiënt die vraagt om in een andere taal verder te gaan, krijgt in die taal antwoord. We werken vooral met praktijken in het Verenigd Koninkrijk, Italië en Nederland, maar de assistent is niet tot die talen beperkt.',
+      },
+      {
         q: 'Wie zit er achter Twinbyte?',
         a: 'Anna en Samuele. Met z’n tweeën, dus u spreekt altijd degene die uw assistent heeft ingericht — geen ticketsysteem ertussen.',
       },
@@ -148,6 +152,7 @@ export const nl: Translation = {
     email: 'Stuur een e-mail',
     emailSubject: 'Vraag over de Twinbyte-assistent',
     note: 'U krijgt altijd antwoord van Anna of Samuele — er zit geen callcenter achter.',
+    regions: 'We werken met praktijken in het Verenigd Koninkrijk, Italië en Nederland, en we werken op afstand.',
   },
   footer: {
     tagline: 'AI-assistent voor tandartspraktijken en websites voor kleine bedrijven.',

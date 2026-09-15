@@ -279,7 +279,8 @@ export function Home({ t }: { t: Translation }) {
                   {t.contact.note}
                 </p>
                 <p className="mt-4 text-[15px] text-white/50">{t.demo.tryHere}</p>
-                <p className="mt-6 text-sm text-white/40">
+                <p className="mt-6 text-[15px] text-white/55">{t.contact.regions}</p>
+                <p className="mt-3 text-sm text-white/40">
                   {SITE.email} · WhatsApp {SITE.whatsappDisplay}
                 </p>
               </div>
