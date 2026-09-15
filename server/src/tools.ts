@@ -7,6 +7,13 @@ export function calendarFor(studio: Studio): CalendarProvider {
   return studio.googleCalendarId && googleConfigured() ? googleCalendar : memoryCalendar;
 }
 
+/** I tool disponibili per uno studio: chi non prende appuntamenti vede solo l'escalation. */
+export function toolsFor(studio: Studio): Anthropic.Tool[] {
+  return studio.booking === false
+    ? toolDefinitions.filter((t) => t.name === "escalate_to_human")
+    : toolDefinitions;
+}
+
 export const toolDefinitions: Anthropic.Tool[] = [
   {
     name: "get_available_slots",

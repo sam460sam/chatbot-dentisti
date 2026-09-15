@@ -8,7 +8,10 @@ type Props = {
   color: string;
   privacyUrl: string;
   studioName: string;
-  lang: "it" | "nl" | "en";
+  /** codice lingua dell'interfaccia; per le lingue senza traduzione si usa l'inglese */
+  lang: string;
+  /** primo messaggio, se lo studio ne vuole uno diverso da quello di default */
+  hello?: string;
 };
 
 const T = {
@@ -19,13 +22,13 @@ const T = {
 
 const sessionId = `s_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
-export function ChatWidget({ studioId, apiUrl, privacyUrl, studioName, lang }: Props) {
-  const t = T[lang] ?? T.it;
+export function ChatWidget({ studioId, apiUrl, privacyUrl, studioName, lang, hello }: Props) {
+  const t = T[lang.slice(0, 2).toLowerCase() as keyof typeof T] ?? T.en;
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [msgs, setMsgs] = useState<Msg[]>([
-    { role: "bot", text: t.hello(studioName) },
+    { role: "bot", text: hello || t.hello(studioName) },
   ]);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);

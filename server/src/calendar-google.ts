@@ -92,14 +92,25 @@ export const googleCalendar: CalendarProvider = {
   },
 };
 
-const CALLBACK_TITLE = { it: "DA RICHIAMARE", nl: "TERUGBELLEN", en: "CALL BACK" } as const;
+const CALLBACK_TITLE: Record<string, string> = {
+  it: "DA RICHIAMARE",
+  nl: "TERUGBELLEN",
+  en: "CALL BACK",
+  de: "RÜCKRUF",
+  fr: "RAPPELER",
+  es: "LLAMAR",
+};
+
+/** Le note in agenda restano nella lingua dello studio; inglese per le lingue non mappate. */
+const callbackTitle = (language: string) =>
+  CALLBACK_TITLE[language.slice(0, 2).toLowerCase()] ?? CALLBACK_TITLE.en;
 
 /** Segna nel calendario dello studio una richiesta da gestire a mano (urgenze, modifiche, domande senza risposta). */
 export async function addCallbackNote(studio: Studio, reason: string, contact?: string): Promise<string> {
   const now = new Date();
   const end = new Date(now.getTime() + 30 * 60000);
   const ev = await call<{ id: string }>("POST", `/calendars/${encodeURIComponent(studio.googleCalendarId!)}/events`, {
-    summary: `${CALLBACK_TITLE[studio.language]} – ${contact?.trim() || "?"}`,
+    summary: `${callbackTitle(studio.language)} – ${contact?.trim() || "?"}`,
     description: `${reason}\n\n(segnalazione dell'assistente virtuale)`,
     start: { dateTime: now.toISOString() },
     end: { dateTime: end.toISOString() },

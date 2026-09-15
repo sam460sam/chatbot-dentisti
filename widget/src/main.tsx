@@ -12,7 +12,8 @@ const config = {
   color: script?.dataset.color ?? "#1f6f8b",
   privacyUrl: script?.dataset.privacy ?? "#",
   studioName: script?.dataset.name ?? "lo studio",
-  lang: (script?.dataset.lang ?? "it") as "it" | "nl" | "en",
+  lang: script?.dataset.lang ?? "it",
+  hello: script?.dataset.hello || undefined,
 };
 
 const host = document.createElement("div");

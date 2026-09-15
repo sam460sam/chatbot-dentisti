@@ -5,7 +5,7 @@ import { cors } from "hono/cors";
 import { serve } from "@hono/node-server";
 import { studios } from "./studios/demo.js";
 import { buildSystemPrompt } from "./prompt.js";
-import { toolDefinitions, executeTool } from "./tools.js";
+import { toolsFor, executeTool } from "./tools.js";
 import { loadSession, saveSession, cleanupOldSessions } from "./store.js";
 
 const client = new Anthropic(); // legge ANTHROPIC_API_KEY
@@ -45,7 +45,7 @@ app.post("/chat", async (c) => {
       model: MODEL,
       max_tokens: 800,
       system,
-      tools: toolDefinitions,
+      tools: toolsFor(studio),
       messages: history,
     });
 

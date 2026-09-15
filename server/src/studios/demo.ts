@@ -1,8 +1,14 @@
+import { twinbyteStudio } from "./twinbyte.js";
+
 export type Studio = {
   id: string;
   name: string;
-  /** lingua delle risposte: "it" | "nl" | "en" */
-  language: "it" | "nl" | "en";
+  /**
+   * Lingua di partenza dell'assistente (codice ISO: "it", "nl", "en", "de", "fr", ...).
+   * L'assistente risponde comunque nella lingua in cui scrive il paziente;
+   * questa serve per il primo messaggio e per le note nel calendario dello studio.
+   */
+  language: string;
   /** testo libero scritto dal dentista: tono, cose da dire/non dire, tu/lei */
   customInstructions: string;
   address: string;
@@ -19,6 +25,8 @@ export type Studio = {
   googleCalendarId?: string;
   /** email/numero della segreteria per l'escalation */
   handoffContact: string;
+  /** false per chi non prende appuntamenti (es. il nostro sito vetrina): l'assistente informa e basta */
+  booking?: boolean;
 };
 
 export const demoStudio: Studio = {
@@ -126,6 +134,7 @@ export const dentalDemo: Studio = {
 
 export const studios: Record<string, Studio> = {
   demo: demoStudio,
+  twinbyte: twinbyteStudio,
   "tandarts-demo": tandartsDemo,
   "dental-demo": dentalDemo,
 };
