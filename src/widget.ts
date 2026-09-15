@@ -27,6 +27,7 @@ export function useAssistantWidget(lang: Lang, hello: string) {
       script.dataset.color = SITE.widget.color
       script.dataset.privacy = window.location.origin + pathFor(lang, 'privacy')
       script.dataset.hello = hello
+      script.dataset.logo = `${window.location.origin}/icon-192.png`
       document.body.appendChild(script)
     }
 
