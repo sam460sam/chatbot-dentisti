@@ -125,7 +125,7 @@ export function Hero({ t }: { t: Translation }) {
       {scrollDriven && (
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-white"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-surface"
         />
       )}
     </section>

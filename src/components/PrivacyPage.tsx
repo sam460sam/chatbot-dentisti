@@ -31,7 +31,7 @@ export function PrivacyPage({ t }: { t: Translation }) {
         <p className="mt-12">
           <Link
             to={pathFor(lang, 'home')}
-            className="inline-flex items-center gap-2 font-semibold text-accent hover:text-accent-dark"
+            className="inline-flex items-center gap-2 font-semibold text-accent-bright hover:text-white"
           >
             <ArrowLeft size={18} aria-hidden="true" />
             {t.privacyPage.back}

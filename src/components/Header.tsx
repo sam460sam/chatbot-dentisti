@@ -36,28 +36,19 @@ export function Header({ t }: { t: Translation }) {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         solid
-          ? 'border-b border-ink/10 bg-white'
+          ? 'border-b border-white/10 bg-surface'
           : 'on-dark border-b border-transparent'
       }`}
     >
       <div className="container-page flex h-16 items-center justify-between gap-4 sm:h-[72px]">
         <Link to={home} className="flex items-center" aria-label="Twinbyte">
-          {/* Both variants ship so switching over the hero never flashes. */}
-          <img
-            src="/logo.png"
-            alt="Twinbyte"
-            width={640}
-            height={175}
-            decoding="async"
-            className={`h-8 w-auto sm:h-9 ${solid ? '' : 'hidden'}`}
-          />
           <img
             src="/logo-white.png"
             alt="Twinbyte"
             width={640}
             height={175}
             decoding="async"
-            className={`h-8 w-auto sm:h-9 ${solid ? 'hidden' : ''}`}
+            className="h-8 w-auto sm:h-9"
           />
         </Link>
 
@@ -67,7 +58,7 @@ export function Header({ t }: { t: Translation }) {
               key={l.id}
               to={l.to}
               className={`text-[14px] font-medium transition-colors ${
-                solid ? 'text-ink-soft hover:text-accent-dark' : 'text-white/65 hover:text-white'
+                solid ? 'text-ink-soft hover:text-accent-bright' : 'text-white/65 hover:text-white'
               }`}
             >
               {l.label}
@@ -78,9 +69,7 @@ export function Header({ t }: { t: Translation }) {
         <div className="flex items-center gap-1.5">
           <nav
             aria-label={t.nav.language}
-            className={`flex items-center rounded-lg p-0.5 ${
-              solid ? 'bg-ink/[0.06]' : 'bg-white/10'
-            }`}
+            className="flex items-center rounded-lg bg-white/10 p-0.5"
           >
             {LANGS.map((l) => (
               <Link
@@ -91,12 +80,8 @@ export function Header({ t }: { t: Translation }) {
                 aria-label={LANG_LABELS[l]}
                 className={`rounded-md px-2 py-1 text-[11px] font-bold uppercase tracking-wide transition-colors ${
                   l === lang
-                    ? solid
-                      ? 'bg-white text-accent-dark shadow-sm'
-                      : 'bg-white/90 text-night'
-                    : solid
-                      ? 'text-ink-muted hover:text-ink'
-                      : 'text-white/60 hover:text-white'
+                    ? 'bg-white/90 text-night'
+                    : 'text-white/60 hover:text-white'
                 }`}
               >
                 {l}
@@ -106,7 +91,7 @@ export function Header({ t }: { t: Translation }) {
 
           <button
             type="button"
-            className={`-mr-2 rounded-lg p-2 lg:hidden ${solid ? 'text-ink' : 'text-white'}`}
+            className="-mr-2 rounded-lg p-2 text-white lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
@@ -127,7 +112,7 @@ export function Header({ t }: { t: Translation }) {
         <nav
           id="mobile-menu"
           aria-label="Main"
-          className="border-t border-ink/10 bg-white lg:hidden"
+          className="border-t border-white/10 bg-surface lg:hidden"
         >
           <ul className="container-page flex flex-col py-2">
             {links.map((l) => (
@@ -135,7 +120,7 @@ export function Header({ t }: { t: Translation }) {
                 <Link
                   to={l.to}
                   onClick={() => setOpen(false)}
-                  className="block border-b border-ink/5 py-3.5 text-[15px] font-medium text-ink-soft last:border-0"
+                  className="block border-b border-white/5 py-3.5 text-[15px] font-medium text-ink-soft last:border-0"
                 >
                   {l.label}
                 </Link>

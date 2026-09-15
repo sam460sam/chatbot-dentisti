@@ -4,10 +4,17 @@ export default {
   theme: {
     extend: {
       colors: {
+        /* Text on dark ground. */
         ink: {
-          DEFAULT: '#101722',
-          soft: '#3c4757',
-          muted: '#657181',
+          DEFAULT: '#e9f0f4',
+          soft: '#a9bdc7',
+          muted: '#7c929d',
+        },
+        /* Surfaces, from the page ground up to a raised card. */
+        surface: {
+          sunken: '#080d13',
+          DEFAULT: '#0d141c',
+          raised: '#121b25',
         },
         night: {
           DEFAULT: '#070c16',

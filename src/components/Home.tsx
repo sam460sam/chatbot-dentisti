@@ -43,8 +43,8 @@ function Section({
     tone === 'dark'
       ? 'on-dark dark-ground text-white'
       : tone === 'tint'
-        ? 'bg-[#f6f8f9]'
-        : 'bg-white'
+        ? 'bg-surface-sunken'
+        : 'bg-surface'
 
   return (
     <section id={id} aria-labelledby={`${id}-title`} className={`section relative ${skin}`}>
@@ -83,7 +83,7 @@ export function Home({ t }: { t: Translation }) {
                 <li className="card group h-full" onMouseMove={spotlight}>
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute -right-3 -top-7 text-[120px] font-extrabold leading-none text-ink/[0.06] transition-colors group-hover:text-accent/15"
+                    className="pointer-events-none absolute -right-3 -top-7 text-[120px] font-extrabold leading-none text-white/[0.06] transition-colors group-hover:text-accent-bright/15"
                   >
                     {index + 1}
                   </span>
@@ -151,7 +151,7 @@ export function Home({ t }: { t: Translation }) {
               {t.websites.items.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-3 rounded-xl border border-ink/10 bg-white p-4 text-[15px] text-ink-soft"
+                  className="flex items-start gap-3 rounded-xl border border-white/10 bg-surface-raised p-4 text-[15px] text-ink-soft"
                 >
                   <Check size={18} className="mt-0.5 shrink-0 text-accent" aria-hidden="true" />
                   <span>{item}</span>
@@ -175,13 +175,13 @@ export function Home({ t }: { t: Translation }) {
       {/* Free trial */}
       <Section id="trial" kicker="05" title={t.trial.title} lead={t.trial.lead} tone="tint">
         <div className="grid gap-12 lg:grid-cols-[1fr_0.85fr]">
-          <ol className="relative space-y-8 before:absolute before:left-[15px] before:top-2 before:h-[calc(100%-1rem)] before:w-px before:bg-gradient-to-b before:from-accent before:via-accent/40 before:to-transparent">
+          <ol className="relative space-y-8 before:absolute before:left-[15px] before:top-2 before:h-[calc(100%-1rem)] before:w-px before:bg-gradient-to-b before:from-accent-bright before:via-accent/40 before:to-transparent">
             {t.trial.steps.map((step, index) => (
               <Reveal key={step} delay={index * 90}>
                 <li className="relative flex gap-5">
                   <span
                     aria-hidden="true"
-                    className="z-10 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent text-[13px] font-bold text-white ring-4 ring-[#f6f8f9]"
+                    className="z-10 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent text-[13px] font-bold text-white ring-4 ring-surface-sunken"
                   >
                     {index + 1}
                   </span>
@@ -216,12 +216,12 @@ export function Home({ t }: { t: Translation }) {
           <div>
             {t.faq.items.map((item, index) => (
             <Reveal key={item.q} delay={index * 60}>
-              <details className="group border-b border-ink/10 py-5 first:border-t">
-                <summary className="flex cursor-pointer list-none items-start justify-between gap-6 text-[17px] font-semibold tracking-tight transition-colors hover:text-accent-dark marker:content-none">
+              <details className="group border-b border-white/10 py-5 first:border-t">
+                <summary className="flex cursor-pointer list-none items-start justify-between gap-6 text-[17px] font-semibold tracking-tight transition-colors hover:text-accent-bright marker:content-none">
                   {item.q}
                   <span
                     aria-hidden="true"
-                    className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full border border-ink/15 text-accent transition-colors group-open:border-accent group-open:bg-accent group-open:text-white"
+                    className="mt-1 grid h-6 w-6 shrink-0 place-items-center rounded-full border border-white/20 text-accent-bright transition-colors group-open:border-accent group-open:bg-accent group-open:text-white"
                   >
                     <Plus size={14} className="group-open:hidden" />
                     <Minus size={14} className="hidden group-open:block" />
