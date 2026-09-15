@@ -8,15 +8,31 @@ import type { Translation } from '../i18n'
  * It replays the example conversation on a timer; with reduced motion it just
  * shows the finished state.
  */
-export function ChatMockup({ t }: { t: Translation }) {
+export function ChatMockup({
+  t,
+  progress = null,
+}: {
+  t: Translation
+  /** 0-1 while the hero is scrolled past; null when the mock plays on a timer. */
+  progress?: number | null
+}) {
   const messages = t.demo.messages
   const still = prefersReducedMotion()
-  const [shown, setShown] = useState(still ? messages.length : 0)
+  const [shown, setShown] = useState(still ? messages.length : 2)
   const [typing, setTyping] = useState(false)
   const timers = useRef<number[]>([])
 
+  // Scroll-driven: the conversation advances with the page, not with a clock.
   useEffect(() => {
-    if (still) return
+    if (progress === null) return
+    // the last stretch of the scroll is spent on the finished state
+    const eased = Math.min(progress / 0.82, 1)
+    setTyping(false)
+    setShown(Math.max(2, Math.round(eased * messages.length)))
+  }, [progress, messages.length])
+
+  useEffect(() => {
+    if (still || progress !== null) return
     const at = (ms: number, fn: () => void) => timers.current.push(window.setTimeout(fn, ms))
 
     const run = () => {
@@ -43,7 +59,7 @@ export function ChatMockup({ t }: { t: Translation }) {
       timers.current.forEach(clearTimeout)
       timers.current = []
     }
-  }, [messages, still])
+  }, [messages, still, progress])
 
   const done = shown >= messages.length
 
