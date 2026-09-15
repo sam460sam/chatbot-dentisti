@@ -41,18 +41,13 @@ function Section({
 }) {
   const skin =
     tone === 'dark'
-      ? 'on-dark bg-night text-white'
+      ? 'on-dark dark-ground text-white'
       : tone === 'tint'
         ? 'bg-[#f6f8f9]'
         : 'bg-white'
 
   return (
     <section id={id} aria-labelledby={`${id}-title`} className={`section relative ${skin}`}>
-      {tone === 'dark' && (
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute -right-24 top-0 h-80 w-80 animate-drift rounded-full bg-accent/20 blur-[110px]" />
-        </div>
-      )}
       <div className="container-page relative">
         <Reveal>
           <p className={`section-kicker ${tone === 'dark' ? 'text-accent-bright' : ''}`}>{kicker}</p>
@@ -198,10 +193,6 @@ export function Home({ t }: { t: Translation }) {
 
           <Reveal delay={160}>
             <div className="on-dark relative overflow-hidden rounded-2xl bg-night p-8 text-white shadow-float">
-              <div
-                aria-hidden="true"
-                className="absolute -right-16 -top-16 h-56 w-56 animate-drift rounded-full bg-accent/30 blur-[90px]"
-              />
               <div className="relative">
                 <span className="icon-badge-dark">
                   <MessageCircle size={21} aria-hidden="true" />
@@ -264,13 +255,6 @@ export function Home({ t }: { t: Translation }) {
       <Section id="contact" kicker="07" title={t.contact.title} lead={t.contact.lead} tone="tint">
         <Reveal>
           <div className="on-dark relative overflow-hidden rounded-3xl bg-night p-8 text-white shadow-float sm:p-12">
-            <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-              <div className="absolute -left-20 bottom-0 h-72 w-72 animate-drift rounded-full bg-accent/25 blur-[100px]" />
-              <div
-                className="absolute -right-10 -top-16 h-64 w-64 animate-drift rounded-full bg-accent-bright/15 blur-[100px]"
-                style={{ animationDelay: '-8s' }}
-              />
-            </div>
 
             <div className="relative grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
               <div>

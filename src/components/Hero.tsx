@@ -8,23 +8,7 @@ export function Hero({ t }: { t: Translation }) {
   const { lang } = useRoute()
 
   return (
-    <section className="on-dark relative overflow-hidden bg-night text-white">
-      {/* Depth: aurora blobs, perspective floor, grain */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-40 -top-40 h-[30rem] w-[30rem] animate-drift rounded-full bg-accent/35 blur-[110px]" />
-        <div
-          className="absolute -right-32 top-10 h-[26rem] w-[26rem] animate-drift rounded-full bg-accent-bright/20 blur-[120px]"
-          style={{ animationDelay: '-6s' }}
-        />
-        <div
-          className="absolute bottom-0 left-1/3 h-[22rem] w-[22rem] animate-drift rounded-full bg-indigo-500/10 blur-[120px]"
-          style={{ animationDelay: '-12s' }}
-        />
-        <div className="absolute inset-x-0 bottom-0 h-[42%] [perspective:600px]">
-          <div className="grid-floor h-full w-full origin-bottom [transform:rotateX(72deg)_scale(1.6)]" />
-        </div>
-      </div>
-
+    <section className="on-dark hero-ground relative overflow-hidden text-white">
       <div className="container-page relative grid items-center gap-16 pb-28 pt-14 sm:pt-20 lg:grid-cols-[1.02fr_0.98fr] lg:gap-10 lg:pb-36 lg:pt-24">
         <div>
           <span className="eyebrow border-white/15 text-white/60">
@@ -71,11 +55,8 @@ export function Hero({ t }: { t: Translation }) {
           </ul>
         </div>
 
-        <div className="stage">
-          {/* Fixed 3D angle: the mock does not move, only the conversation plays. */}
-          <div className="tilt tilt-hero relative">
-            <ChatMockup t={t} />
-          </div>
+        <div className="relative">
+          <ChatMockup t={t} />
         </div>
       </div>
 

@@ -48,9 +48,9 @@ export function ChatMockup({ t }: { t: Translation }) {
   const done = shown >= messages.length
 
   return (
-    <div className="stage-3d">
+    <div>
       {/* Browser frame */}
-      <div className="w-full overflow-hidden rounded-2xl border border-white/10 bg-night-card/90 shadow-float backdrop-blur-xl">
+      <div className="w-full overflow-hidden rounded-2xl border border-white/10 bg-night-card/90 shadow-float">
         <div className="flex items-center gap-2 border-b border-white/10 bg-white/5 px-4 py-3">
           <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
           <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
@@ -118,10 +118,10 @@ export function ChatMockup({ t }: { t: Translation }) {
 
       {/* Calendar card: sits under the frame so it never covers the conversation */}
       <div
-        className={`mt-5 w-[262px] rounded-xl border border-white/12 bg-night-soft/95 p-4 shadow-float backdrop-blur-xl transition-all duration-700 sm:w-[290px] ${
+        className={`mt-5 w-[262px] rounded-xl border border-white/12 bg-night-soft/95 p-4 shadow-float transition-all duration-700 sm:w-[290px] ${
           done ? 'opacity-100' : 'opacity-0'
         }`}
-        style={{ transform: `translateZ(55px) translateY(${done ? '0px' : '14px'})` }}
+        style={{ transform: `translateY(${done ? '0px' : '14px'})` }}
         aria-hidden="true"
       >
         <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-white/40">
@@ -137,8 +137,8 @@ export function ChatMockup({ t }: { t: Translation }) {
 
       {/* Urgency hand-off card */}
       <div
-        className="absolute -right-3 -top-7 hidden items-center gap-2 rounded-xl border border-white/12 bg-night-soft/95 px-3.5 py-2.5 shadow-float backdrop-blur-xl sm:flex lg:-right-10"
-        style={{ transform: 'translateZ(90px)' }}
+        className="absolute -right-3 -top-7 hidden items-center gap-2 rounded-xl border border-white/12 bg-night-soft/95 px-3.5 py-2.5 shadow-float sm:flex lg:-right-10"
+        
         aria-hidden="true"
       >
         <PhoneCall size={14} className="text-accent-bright" />
