@@ -57,6 +57,29 @@ export const it: Translation = {
       quote: 'Chiedi un preventivo',
     },
   },
+  scenes: {
+    afterHours: {
+      eyebrow: 'Fuori orario',
+      lead: 'Mentre siete chiusi,',
+      accent: 'qualcuno',
+      tail: 'risponde lo stesso',
+      body: 'Le domande che arrivano a mezzanotte sono quelle di cui non venite mai a sapere. Ricevono una risposta, e un appuntamento, prima che riapriate.',
+    },
+    calendar: {
+      eyebrow: 'Nella vostra agenda',
+      lead: 'L\u2019appuntamento \u00e8',
+      accent: 'gi\u00e0',
+      tail: 'in agenda',
+      body: 'Nessuna casella da svuotare, nessun foglietto da passare. Lo slot \u00e8 occupato nell\u2019agenda che usate gi\u00e0, con nome e numero sopra.',
+    },
+    handover: {
+      eyebrow: 'Quando conta',
+      lead: 'Quello che \u00e8 delicato passa a',
+      accent: 'una persona',
+      tail: '',
+      body: 'Urgente, insolito o fuori da quello che sa: l\u2019assistente si ferma, prende i dati e mette un richiamo nella vostra agenda. Chiude il cerchio qualcuno del vostro team.',
+    },
+  },
   how: {
     title: 'Come funziona',
     lead: 'Tre passaggi, e il lavoro da parte vostra è quasi tutto nel primo.',

@@ -65,6 +65,56 @@ function Section({
   )
 }
 
+
+/** A full-width illustration with the headline set over it. */
+function Scene({
+  image,
+  content,
+  align = 'left',
+}: {
+  image: string
+  content: Translation['scenes']['afterHours']
+  align?: 'left' | 'right'
+}) {
+  return (
+    <section className="relative isolate overflow-hidden bg-surface-sunken">
+      <img
+        src={image}
+        alt=""
+        width={1600}
+        height={1000}
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <div
+        aria-hidden="true"
+        className={`absolute inset-0 ${
+          align === 'right'
+            ? 'bg-gradient-to-l from-surface-sunken/95 via-surface-sunken/70 to-transparent'
+            : 'bg-gradient-to-r from-surface-sunken/95 via-surface-sunken/70 to-transparent'
+        }`}
+      />
+
+      <div className="container-page relative py-24 sm:py-32 lg:py-40">
+        <div className={`max-w-xl ${align === 'right' ? 'ml-auto text-right' : ''}`}>
+          <p className="text-[11px] font-bold uppercase tracking-[0.22em] text-accent-bright">
+            {content.eyebrow}
+          </p>
+          <h2 className="mt-5 text-[30px] font-extrabold leading-[1.06] tracking-[-0.03em] sm:text-[42px] lg:text-[52px]">
+            {content.lead}{' '}
+            <span className="serif text-accent-bright">{content.accent}</span>
+            {content.tail ? ` ${content.tail}` : ''}
+          </h2>
+          <p className="mt-6 text-[16px] leading-relaxed text-ink-soft sm:text-[17px]">
+            {content.body}
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 const HOW_ICONS = [Settings2, Code2, CalendarCheck]
 const BENEFIT_ICONS = [PhoneCall, Clock, Languages, Siren]
 const SECURITY_ICONS = [ShieldCheck, Bot, FileText]
@@ -131,6 +181,8 @@ export function Home({ t }: { t: Translation }) {
         </div>
       </section>
 
+      <Scene image="/scene-after-hours.jpg" content={t.scenes.afterHours} />
+
       {/* How it works */}
       <Section id="how" kicker="01" title={t.how.title} lead={t.how.lead}>
         <ol className="grid gap-6 md:grid-cols-3">
@@ -159,6 +211,8 @@ export function Home({ t }: { t: Translation }) {
         </ol>
       </Section>
 
+      <Scene image="/scene-calendar.jpg" content={t.scenes.calendar} align="right" />
+
       {/* Benefits */}
       <Section id="benefits" kicker="02" title={t.benefits.title} lead={t.benefits.lead} tone="tint">
         <ul className="grid gap-6 sm:grid-cols-2">
@@ -180,6 +234,8 @@ export function Home({ t }: { t: Translation }) {
           })}
         </ul>
       </Section>
+
+      <Scene image="/scene-handover.jpg" content={t.scenes.handover} />
 
       {/* Privacy & safety — dark band */}
       <Section id="security" kicker="03" title={t.security.title} lead={t.security.lead} tone="dark">

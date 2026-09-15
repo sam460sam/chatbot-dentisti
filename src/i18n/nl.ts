@@ -57,6 +57,29 @@ export const nl: Translation = {
       quote: 'Vraag een offerte aan',
     },
   },
+  scenes: {
+    afterHours: {
+      eyebrow: 'Buiten openingstijden',
+      lead: 'Terwijl u gesloten bent,',
+      accent: 'antwoordt',
+      tail: 'er toch iemand',
+      body: 'De vragen die om middernacht binnenkomen zijn precies de vragen waar u nooit iets van hoort. Ze krijgen een antwoord, en een afspraak, voordat u weer opengaat.',
+    },
+    calendar: {
+      eyebrow: 'In uw agenda',
+      lead: 'De afspraak staat er',
+      accent: 'al',
+      tail: 'in',
+      body: 'Geen inbox om leeg te maken, geen briefjes om door te geven. De plek is bezet in de agenda die u al gebruikt, met naam en nummer erbij.',
+    },
+    handover: {
+      eyebrow: 'Als het ertoe doet',
+      lead: 'Alles wat gevoelig is gaat naar',
+      accent: 'een mens',
+      tail: '',
+      body: 'Dringend, ongewoon of buiten zijn kennis: de assistent stopt, noteert de gegevens en zet een terugbelafspraak in uw agenda. Iemand van uw team maakt het af.',
+    },
+  },
   how: {
     title: 'Hoe het werkt',
     lead: 'Drie stappen, en het werk aan uw kant zit vooral in de eerste.',

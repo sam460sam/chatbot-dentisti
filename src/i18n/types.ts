@@ -49,6 +49,12 @@ export interface Translation {
     assistant: { tag: string; title: string; body: string; points: string[]; cta: string; quote: string }
     websites: { tag: string; title: string; body: string; points: string[]; cta: string; quote: string }
   }
+  /** Full-width scenes: an illustration with a headline over it. */
+  scenes: {
+    afterHours: { eyebrow: string; lead: string; accent: string; tail: string; body: string }
+    calendar: { eyebrow: string; lead: string; accent: string; tail: string; body: string }
+    handover: { eyebrow: string; lead: string; accent: string; tail: string; body: string }
+  }
   how: { title: string; lead: string; steps: TitledItem[] }
   benefits: { title: string; lead: string; items: TitledItem[] }
   security: { title: string; lead: string; items: TitledItem[] }

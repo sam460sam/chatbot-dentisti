@@ -57,6 +57,29 @@ export const en: Translation = {
       quote: 'Ask for a quote',
     },
   },
+  scenes: {
+    afterHours: {
+      eyebrow: 'After hours',
+      lead: 'While you are closed,',
+      accent: 'someone',
+      tail: 'still answers',
+      body: 'The questions that arrive at midnight are the ones you never hear about. They get an answer, and a booking, before you open again.',
+    },
+    calendar: {
+      eyebrow: 'In your calendar',
+      lead: 'The appointment is',
+      accent: 'already',
+      tail: 'in the diary',
+      body: 'No inbox to empty, no notes to pass on. The slot is taken in the calendar you already use, with a name and a number on it.',
+    },
+    handover: {
+      eyebrow: 'When it matters',
+      lead: 'Anything delicate goes to',
+      accent: 'a person',
+      tail: '',
+      body: 'Urgent, unusual, or outside what it knows: the assistant stops, takes the details and puts a call back in your calendar. Someone on your team closes it.',
+    },
+  },
   how: {
     title: 'How it works',
     lead: 'Three steps, and the work on your side is mostly the first one.',
