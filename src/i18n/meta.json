@@ -1,0 +1,20 @@
+{
+  "en": {
+    "title": "Twinbyte — AI assistant for dental practices",
+    "description": "An AI assistant on your practice website that answers patient questions 24/7 and books appointments straight into your Google Calendar. 14 days free, no commitment.",
+    "privacyTitle": "Privacy statement — Twinbyte",
+    "privacyDescription": "How Twinbyte handles personal data. No cookies, no analytics, no tracking on this website."
+  },
+  "nl": {
+    "title": "Twinbyte — AI-assistent voor tandartspraktijken",
+    "description": "Een AI-assistent op uw praktijkwebsite die 24/7 vragen van patiënten beantwoordt en afspraken direct in uw Google Agenda zet. 14 dagen gratis, vrijblijvend.",
+    "privacyTitle": "Privacyverklaring — Twinbyte",
+    "privacyDescription": "Hoe Twinbyte omgaat met persoonsgegevens. Geen cookies, geen analytics, geen tracking op deze website."
+  },
+  "it": {
+    "title": "Twinbyte — Assistente AI per studi dentistici",
+    "description": "Un assistente AI sul sito dello studio che risponde ai pazienti 24 ore su 24 e fissa gli appuntamenti direttamente nel Google Calendar dello studio. 14 giorni di prova gratuita, senza impegno.",
+    "privacyTitle": "Informativa privacy — Twinbyte",
+    "privacyDescription": "Come Twinbyte tratta i dati personali. Nessun cookie, nessuna analisi statistica, nessun tracciamento su questo sito."
+  }
+}
