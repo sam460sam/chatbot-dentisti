@@ -7,6 +7,7 @@ import { studios } from "./studios/demo.js";
 import { buildSystemPrompt } from "./prompt.js";
 import { toolsFor, executeTool } from "./tools.js";
 import { loadSession, saveSession, cleanupOldSessions } from "./store.js";
+import { rateLimited, rateLimitMessage } from "./ratelimit.js";
 
 const client = new Anthropic(); // legge ANTHROPIC_API_KEY
 const MODEL = process.env.CLAUDE_MODEL ?? "claude-sonnet-5";
@@ -32,6 +33,12 @@ app.post("/chat", async (c) => {
   if (!message?.trim()) return c.json({ error: "messaggio vuoto" }, 400);
 
   if (!sessionId || sessionId.length > 80) return c.json({ error: "sessionId non valido" }, 400);
+
+  const ip = (c.req.header("cf-connecting-ip") ?? c.req.header("x-forwarded-for") ?? "unknown").split(",")[0].trim();
+  if (rateLimited(sessionId, ip)) {
+    console.log("[RATELIMIT]", studio.id, ip);
+    return c.json({ reply: rateLimitMessage(studio.language) }, 429);
+  }
   const history = await loadSession(sessionId);
   history.push({ role: "user", content: message.trim() });
 
