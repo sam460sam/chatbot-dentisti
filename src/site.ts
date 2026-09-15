@@ -11,12 +11,7 @@ export const SITE = {
     enabled: true,
     src: 'https://chatbot-dentisti.vercel.app/widget.js',
     api: 'https://chatbot-dentisti-production.up.railway.app',
-    /**
-     * TODO: switch to 'twinbyte' once the backend branch
-     * claude/assistant-any-language is deployed on Railway. Until then the
-     * assistant here answers as the demo dental practice.
-     */
-    studio: 'demo',
+    studio: 'twinbyte',
     name: 'Twinbyte',
     color: '#1f6f8b',
   },
