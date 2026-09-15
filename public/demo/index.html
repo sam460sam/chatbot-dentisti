@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#F4F6F3">
+<meta name="robots" content="noindex">
+<title>Riverside Dental Practice · Richmond</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect width='34' height='34' rx='9' fill='%2312403B'/%3E%3Cpath d='M9 7c2.5-2 5.4-1.3 8 0 2.6-1.3 5.5-2 8 0 3 2.4 2.2 7.6.8 11.4-1 2.8-1.4 5.4-2 8.4-.5 2.3-3 2.4-3.6.1L19 22c-.6-2-3.4-2-4 0l-1.2 4.9c-.6 2.3-3.1 2.2-3.6-.1-.6-3-1-5.6-2-8.4C6.8 14.6 6 9.4 9 7z' fill='none' stroke='white' stroke-width='2.2'/%3E%3C/svg%3E">
+<style>
+/* Self-hosted: Bricolage Grotesque and Figtree (SIL Open Font License 1.1).
+   No requests to third-party servers, no cookies. */
+@font-face{font-family:'Bricolage Grotesque';font-style:normal;font-weight:200 800;font-display:swap;src:url('./fonts/bricolage-latin.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Bricolage Grotesque';font-style:normal;font-weight:200 800;font-display:swap;src:url('./fonts/bricolage-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:300 900;font-display:swap;src:url('./fonts/figtree-latin.woff2') format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:300 900;font-display:swap;src:url('./fonts/figtree-latin-ext.woff2') format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+</style>
+<style>
+:root{--bg:#F4F6F3;--river:#12403B;--sage:#E1E9E3;--sage2:#CFDCD3;--ink:#0F2421;--mute:#5E716C;--brass:#B98A33}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Figtree,system-ui,sans-serif;color:var(--ink);background:var(--bg);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.disp{font-family:'Bricolage Grotesque',Figtree,sans-serif}
+.wrap{max-width:560px;margin:0 auto;padding:0 22px}
+.top{display:flex;align-items:center;justify-content:space-between;padding:18px 0;padding-top:max(18px,env(safe-area-inset-top))}
+.mark{display:flex;align-items:center;gap:10px;font-weight:750;font-size:20px;letter-spacing:-.02em}
+.mark small{display:block;font-family:Figtree;font-weight:500;font-size:12px;color:var(--mute);letter-spacing:0}
+.callbtn{border:1px solid var(--sage2);background:#fff;border-radius:999px;padding:9px 14px;font-weight:600;font-size:14px;text-decoration:none;color:var(--river)}
+.hero{padding:34px 0 26px}
+.hero h1{font-size:clamp(40px,11vw,58px);line-height:.98;letter-spacing:-.035em;font-weight:650;margin:0 0 18px}
+.hero p{font-size:17px;line-height:1.55;color:var(--mute);margin:0 0 26px;max-width:34ch}
+.slot{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--river);color:#fff;border:0;border-radius:22px;padding:16px 18px}
+.slot .dot{width:10px;height:10px;border-radius:50%;background:#7fd6a4;box-shadow:0 0 0 5px rgba(127,214,164,.18);flex:none}
+.slot b{display:block;font-weight:600;font-size:16px;color:#fff}
+.slot span.s{display:block;font-size:13px;color:#c9ddd7}
+.slot i{margin-left:auto;font-style:normal;background:#fff;color:var(--river);border-radius:999px;padding:8px 13px;font-size:13px;font-weight:600;white-space:nowrap}
+.river{display:block;width:100%;height:34px;margin:30px 0 8px}
+.sec{padding:18px 0}
+.sec h2{font-size:22px;letter-spacing:-.02em;margin:0 0 10px;font-weight:650}
+.row{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--sage2);font-size:15px}
+.row>span:last-child{color:var(--mute);text-align:right}
+.row em{display:block;font-style:normal;font-size:13px;color:var(--mute)}
+.foot{font-size:12px;color:var(--mute);padding:26px 0 120px}
+.launch{position:fixed;right:18px;bottom:max(22px,env(safe-area-inset-bottom));z-index:20;display:flex;align-items:center;gap:10px;background:var(--ink);color:#fff;border:0;border-radius:999px;padding:10px 18px 10px 10px;font-weight:600;font-size:15px;box-shadow:0 12px 30px rgba(15,36,33,.28)}
+.ava{width:34px;height:34px;border-radius:50%;background:var(--sage);display:grid;place-items:center;flex:none}
+.panel{position:fixed;inset:0;z-index:30;background:var(--bg);display:none;flex-direction:column;height:100dvh}
+.panel.open{display:flex;animation:up .32s cubic-bezier(.2,.8,.2,1)}
+@media(min-width:700px){.panel{inset:auto 24px 24px auto;width:410px;height:min(740px,calc(100dvh - 48px));border-radius:28px;box-shadow:0 30px 80px rgba(15,36,33,.3);overflow:hidden}}
+@keyframes up{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+.ph{background:var(--river);color:#fff;padding:14px 16px 16px;padding-top:max(14px,env(safe-area-inset-top))}
+.phr{display:flex;align-items:center;gap:12px}
+.phr .ava{background:rgba(255,255,255,.12)}
+.ph h3{margin:0;font-size:17px;font-weight:650;letter-spacing:-.01em;color:#fff}
+.ph p{margin:2px 0 0;font-size:12.5px;color:#b9d1ca}
+.x{margin-left:auto;width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;display:grid;place-items:center}
+.track{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:14px}
+.track:empty{display:none}
+.step{background:rgba(255,255,255,.08);border-radius:12px;padding:8px 9px;min-width:0}
+.step small{display:block;font-size:10.5px;color:#a9c4bc}
+.step b{display:block;font-size:12.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#fff}
+.step.on{background:rgba(255,255,255,.22)}
+.step.done b{color:#9fe3bb}
+.track.ok .step{background:rgba(127,214,164,.2)}
+.log{flex:1;overflow-y:auto;padding:18px 14px 8px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch}
+.log>*{flex-shrink:0}
+.note{align-self:center;font-size:11.5px;color:var(--mute);background:var(--sage);border-radius:999px;padding:6px 12px;margin-bottom:4px;text-align:center}
+.b{max-width:84%;padding:11px 14px;border-radius:20px;font-size:15.5px;line-height:1.42;animation:pop .22s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.b.bot{align-self:flex-start;background:#fff;border:1px solid var(--sage2);border-bottom-left-radius:6px}
+.b.me{align-self:flex-end;background:var(--river);color:#fff;border-bottom-right-radius:6px}
+.typing{align-self:flex-start;display:flex;gap:5px;padding:14px 16px;background:#fff;border:1px solid var(--sage2);border-radius:20px;border-bottom-left-radius:6px}
+.typing span{width:7px;height:7px;border-radius:50%;background:var(--mute);animation:bl 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+@keyframes bl{0%,60%,100%{opacity:.25;transform:none}30%{opacity:1;transform:translateY(-3px)}}
+.wid{align-self:stretch;animation:pop .25s ease-out}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--river);background:transparent;color:var(--river);border-radius:999px;padding:9px 14px;font-weight:600;font-size:14px}
+.chip:active{background:var(--sage)}
+.svc{display:flex;flex-direction:column;gap:7px}
+.svc button{display:flex;justify-content:space-between;align-items:center;gap:12px;background:#fff;border:1px solid var(--sage2);border-radius:16px;padding:12px 14px;text-align:left;color:var(--ink)}
+.svc b{font-weight:600;font-size:15px}.svc em{display:block;font-style:normal;font-size:12.5px;color:var(--mute)}
+.svc span{font-weight:600;font-size:14px;color:var(--river);white-space:nowrap}
+.whead{font-size:13px;color:var(--mute);margin:0 0 8px 2px}
+.days{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 6px;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.day{flex:none;width:74px;background:#fff;border:1px solid var(--sage2);border-radius:18px;padding:10px 0 9px;text-align:center;color:var(--ink)}
+.day small{display:block;font-size:12px;color:var(--mute)}
+.day b{display:block;font-family:'Bricolage Grotesque',sans-serif;font-size:28px;font-weight:650;line-height:1.1;letter-spacing:-.03em}
+.day i{display:block;font-style:normal;font-size:11px;color:var(--brass);font-weight:600;margin-top:2px}
+.times{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.time{background:#fff;border:1px solid var(--sage2);border-radius:12px;padding:10px 0;font-weight:600;font-size:14.5px;font-variant-numeric:tabular-nums;color:var(--ink)}
+.time:active,.day:active,.svc button:active{transform:scale(.97)}
+.form{background:#fff;border:1px solid var(--sage2);border-radius:20px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.form label{font-size:12px;color:var(--mute);display:flex;flex-direction:column;gap:4px}
+.form input{border:1px solid var(--sage2);border-radius:12px;padding:11px 12px;font-size:16px;background:var(--bg);color:var(--ink)}
+.pbtn{border:0;border-radius:14px;padding:13px 14px;background:var(--river);color:#fff;font-weight:600;font-size:15px}
+.pbtn:disabled{opacity:.4}
+.sbtn{border:1px solid var(--sage2);border-radius:14px;padding:12px 14px;background:transparent;font-weight:600;font-size:15px;color:var(--river)}
+.sum{background:#fff;border:1px solid var(--sage2);border-radius:22px;overflow:hidden}
+.sum h4{margin:0;padding:14px 16px;border-bottom:1px dashed var(--sage2);font-size:20px;font-weight:650;letter-spacing:-.02em}
+.sum dl{margin:0;padding:8px 16px 4px;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+.sum dt{color:var(--mute)}.sum dd{margin:0;text-align:right;font-weight:600}
+.sum .acts{display:grid;grid-template-columns:1fr 1.4fr;gap:8px;padding:12px 16px 16px}
+.ticket{background:var(--river);color:#fff;border-radius:24px;overflow:hidden}
+.ticket .t1{padding:18px 18px 16px}
+.ticket .ok{display:inline-flex;align-items:center;gap:6px;background:rgba(127,214,164,.2);color:#b6f0cf;border-radius:999px;padding:5px 10px;font-size:12.5px;font-weight:600}
+.ticket .big{font-family:'Bricolage Grotesque',sans-serif;font-size:52px;font-weight:650;letter-spacing:-.04em;line-height:1;margin:14px 0 4px;font-variant-numeric:tabular-nums;color:#fff}
+.ticket .t1 p{margin:0;font-size:15px;color:#d5e5e0}
+.perf{height:0;border-top:2px dashed rgba(255,255,255,.25);margin:0 18px;position:relative}
+.perf:before,.perf:after{content:"";position:absolute;top:-12px;width:22px;height:22px;border-radius:50%;background:var(--bg)}
+.perf:before{left:-30px}.perf:after{right:-30px}
+.ticket .t2{padding:14px 18px;font-size:13.5px;display:flex;flex-direction:column;gap:3px;color:#d5e5e0}
+.ticket .acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 18px 18px}
+.ticket .acts button,.ticket .acts a{border:0;border-radius:14px;padding:12px;font-weight:600;font-size:14px;text-align:center;text-decoration:none}
+.ticket .acts button{background:#fff;color:var(--river)}
+.ticket .acts a{background:rgba(255,255,255,.16);color:#fff}
+.bar{display:flex;gap:8px;padding:10px 12px;padding-bottom:max(12px,env(safe-area-inset-bottom));border-top:1px solid var(--sage2);background:var(--bg)}
+.bar input{flex:1;border:1px solid var(--sage2);background:#fff;border-radius:999px;padding:12px 16px;font-size:16px;min-width:0;color:var(--ink)}
+.send{width:46px;height:46px;border-radius:50%;border:0;background:var(--river);color:#fff;display:grid;place-items:center;flex:none}
+.send:disabled{opacity:.35}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="mark disp"><span data-logo></span><div>Riverside<small>Dental Practice</small></div></div>
+    <a class="callbtn" href="tel:02079460123">Call us</a>
+  </header>
+  <section class="hero">
+    <h1 class="disp">Unhurried dentistry by the river in Richmond.</h1>
+    <p>Check-ups, hygiene, white fillings, whitening and implants. New patients welcome, no referral needed.</p>
+    <button class="slot" id="slotBtn">
+      <span class="dot"></span>
+      <span><b>Next hygiene slot</b><span class="s" id="slotText"></span></span>
+      <i>Book in chat</i>
+    </button>
+    <svg class="river" viewBox="0 0 400 34" preserveAspectRatio="none" aria-hidden="true"><path d="M0 17c33 0 33-12 66-12s33 24 67 24 33-24 67-24 33 24 67 24 33-24 66-24 34 12 67 12" fill="none" stroke="#CFDCD3" stroke-width="2"/></svg>
+  </section>
+  <section class="sec"><h2 class="disp">Treatments</h2><div id="svcList"></div></section>
+  <section class="sec"><h2 class="disp">Opening hours</h2>
+    <div class="row"><span>Monday to Thursday</span><span>8:30 – 18:00</span></div>
+    <div class="row"><span>Friday</span><span>8:30 – 13:00</span></div>
+    <div class="row"><span>Weekends</span><span>Closed</span></div>
+  </section>
+  <section class="sec"><h2 class="disp">Find us</h2>
+    <div class="row"><span>Address</span><span>14 Bridge Street, Richmond TW9 1TQ</span></div>
+    <div class="row"><span>Phone</span><span>020 7946 0123</span></div>
+  </section>
+  <p class="foot">Demo practice. Bookings go to a test diary and no real appointment is made.</p>
+</div>
+
+<button class="launch" id="launch"><span class="ava" data-logo="22"></span>Ask or book</button>
+
+<div class="panel" id="panel" role="dialog" aria-label="Chat with Riverside assistant">
+  <div class="ph">
+    <div class="phr">
+      <div class="ava" data-logo="24" data-color="#fff"></div>
+      <div><h3>Riverside assistant</h3><p>Virtual assistant, not a person. Replies instantly.</p></div>
+      <button class="x" id="closeBtn" aria-label="Close chat"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="track" id="track" aria-label="Booking progress"></div>
+  </div>
+  <div class="log" id="log"><div class="note">Chats are used only to manage your booking. Privacy notice</div></div>
+  <div class="bar">
+    <input id="msg" placeholder="Ask a question or book" aria-label="Message" autocomplete="off">
+    <button class="send" id="sendBtn" aria-label="Send" disabled><svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 15V3M4 8l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </div>
+</div>
+
+<script>
+const PHONE = "020 7946 0123";
+const ADDRESS = "14 Bridge Street, Richmond TW9 1TQ";
+const SERVICES = [
+  { id: "checkup", name: "Check-up", detail: "Exam and advice", mins: 30, price: "£65", re: /check|exam/ },
+  { id: "hygiene", name: "Hygiene clean", detail: "Scale and polish", mins: 45, price: "£75", re: /hygien|clean|scale|polish/ },
+  { id: "filling", name: "White filling", detail: "Tooth-coloured", mins: 60, price: "from £120", re: /fill/ },
+  { id: "whitening", name: "Whitening consultation", detail: "Shade check and plan", mins: 30, price: "£45", re: /whiten/ },
+  { id: "implant", name: "Implant consultation", detail: "Assessment and quote", mins: 45, price: "£95", re: /implant/ },
+];
+const svcById = (id) => SERVICES.find((s) => s.id === id);
+
+/* logo */
+const logo = (size = 34, color = "#12403B") => `<svg width="${size}" height="${size}" viewBox="0 0 34 34" aria-hidden="true"><path d="M9 7c2.5-2 5.4-1.3 8 0 2.6-1.3 5.5-2 8 0 3 2.4 2.2 7.6.8 11.4-1 2.8-1.4 5.4-2 8.4-.5 2.3-3 2.4-3.6.1L19 22c-.6-2-3.4-2-4 0l-1.2 4.9c-.6 2.3-3.1 2.2-3.6-.1-.6-3-1-5.6-2-8.4C6.8 14.6 6 9.4 9 7z" fill="none" stroke="${color}" stroke-width="2.2" stroke-linejoin="round"/><path d="M10.5 16c2 1.4 4.3-1.4 6.5 0s4.5-1.4 6.5 0" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round"/></svg>`;
+document.querySelectorAll("[data-logo]").forEach((el) => (el.innerHTML = logo(+el.dataset.logo || 34, el.dataset.color)));
+
+/* diary */
+const pad = (n) => String(n).padStart(2, "0");
+const toISO = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const fromISO = (iso) => { const [y, m, d] = iso.split("-").map(Number); return new Date(y, m - 1, d); };
+const fmt = (iso, o) => fromISO(iso).toLocaleDateString("en-GB", o);
+const longDay = (iso) => fmt(iso, { weekday: "long", day: "numeric", month: "long" });
+const DIARY = (() => {
+  const days = [], d = new Date(); d.setHours(0, 0, 0, 0);
+  while (days.length < 10) {
+    d.setDate(d.getDate() + 1);
+    const wd = d.getDay(); if (wd === 0 || wd === 6) continue;
+    const end = wd === 5 ? 780 : 1080, times = [];
+    for (let m = 510; m + 45 <= end; m += 45) {
+      if ((d.getDate() * 31 + m * 7 + d.getMonth() * 13) % 10 < 4) continue;
+      times.push(`${pad(Math.floor(m / 60))}:${pad(m % 60)}`);
+    }
+    if (times.length) days.push({ iso: toISO(d), times });
+  }
+  return days;
+})();
+
+/* page */
+document.getElementById("slotText").textContent = `${fmt(DIARY[0].iso, { weekday: "long", day: "numeric", month: "short" })} at ${DIARY[0].times[0]}`;
+document.getElementById("svcList").innerHTML = SERVICES.map((s) => `<div class="row"><span>${s.name}<em>${s.detail}, ${s.mins} min</em></span><span>${s.price}</span></div>`).join("");
+
+/* chat state */
+const S = { step: "idle", busy: false, started: false, b: { service: null, date: null, time: null, name: null, phone: null, ok: false } };
+const $ = (id) => document.getElementById(id);
+const log = $("log"), input = $("msg"), sendBtn = $("sendBtn");
+const el = (html) => { const t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstElementChild; };
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const scroll = () => requestAnimationFrame(() => log.scrollTo({ top: log.scrollHeight, behavior: "smooth" }));
+const first = () => (S.b.name || "").split(" ")[0];
+
+function renderTrack() {
+  const b = S.b, t = $("track");
+  if (!b.service && !b.date) { t.innerHTML = ""; return; }
+  const steps = [
+    ["Treatment", b.service && svcById(b.service).name],
+    ["Day", b.date && fmt(b.date, { weekday: "short", day: "numeric", month: "short" })],
+    ["Time", b.time],
+    ["Details", b.name && b.phone ? first() : null],
+  ];
+  const active = steps.findIndex((s) => !s[1]);
+  t.className = "track" + (b.ok ? " ok" : "");
+  t.innerHTML = steps.map(([l, v], i) => `<div class="step ${v ? "done" : ""} ${i === active ? "on" : ""}"><small>${l}</small><b>${v ? esc(v) : "—"}</b></div>`).join("");
+}
+
+function bubble(role, text) { log.appendChild(el(`<div class="b ${role}">${esc(text)}</div>`)); scroll(); }
+function clearLive() { log.querySelectorAll(".wid.live").forEach((w) => w.remove()); }
+function syncSend() { sendBtn.disabled = S.busy || !input.value.trim(); }
+
+function bot(text, widget) {
+  S.busy = true; syncSend();
+  const typing = el(`<div class="typing" aria-label="Assistant is typing"><span></span><span></span><span></span></div>`);
+  log.appendChild(typing); scroll();
+  setTimeout(() => {
+    typing.remove();
+    bubble("bot", text);
+    if (widget) { log.appendChild(widget); scroll(); }
+    S.busy = false; syncSend(); renderTrack();
+  }, 650 + Math.min(text.length * 9, 700));
+}
+
+function user(text, action) {
+  if (S.busy || !text.trim()) return;
+  clearLive();
+  bubble("me", text.trim());
+  input.value = ""; syncSend();
+  if (action) action(); else handle(text.trim());
+}
+
+/* widgets */
+function chips(items) {
+  const w = el(`<div class="wid live chips"></div>`);
+  items.forEach(([label, action]) => {
+    const c = el(`<button class="chip">${esc(label)}</button>`);
+    c.onclick = () => user(label, action);
+    w.appendChild(c);
+  });
+  return w;
+}
+function treatmentsW() {
+  const w = el(`<div class="wid live svc"></div>`);
+  SERVICES.forEach((s) => {
+    const btn = el(`<button><span><b>${s.name}</b><em>${s.detail}, ${s.mins} min</em></span><span>${s.price}</span></button>`);
+    btn.onclick = () => user(`I'd like a ${s.name.toLowerCase()}`, () => chooseService(s));
+    w.appendChild(btn);
+  });
+  return w;
+}
+function daysW() {
+  const w = el(`<div class="wid live"><p class="whead">Next available days</p><div class="days"></div></div>`);
+  const row = w.querySelector(".days");
+  DIARY.forEach((d) => {
+    const btn = el(`<button class="day"><small>${fmt(d.iso, { weekday: "short" })}</small><b>${fmt(d.iso, { day: "numeric" })}</b><small>${fmt(d.iso, { month: "short" })}</small><i>${d.times.length} free</i></button>`);
+    btn.onclick = () => user(longDay(d.iso), () => chooseDay(d));
+    row.appendChild(btn);
+  });
+  return w;
+}
+function timesW(d) {
+  const w = el(`<div class="wid live"><p class="whead">${longDay(d.iso)}</p><div class="times"></div></div>`);
+  const g = w.querySelector(".times");
+  d.times.forEach((t) => {
+    const btn = el(`<button class="time">${t}</button>`);
+    btn.onclick = () => user(t, () => chooseTime(t));
+    g.appendChild(btn);
+  });
+  return w;
+}
+function contactW() {
+  const w = el(`<div class="wid live form">
+    <label>Full name<input name="n" autocomplete="name" value="${esc(S.b.name || "")}"></label>
+    <label>Mobile number<input name="p" type="tel" inputmode="tel" autocomplete="tel" value="${esc(S.b.phone || "")}"></label>
+    <button class="pbtn" disabled>Send details</button></div>`);
+  const n = w.querySelector("[name=n]"), p = w.querySelector("[name=p]"), btn = w.querySelector("button");
+  const check = () => (btn.disabled = n.value.trim().length < 2 || p.value.replace(/\D/g, "").length < 10);
+  n.oninput = p.oninput = check; check();
+  btn.onclick = () => user(`${n.value.trim()}, ${p.value.trim()}`, () => setContact(n.value.trim(), p.value.trim()));
+  return w;
+}
+function summaryW() {
+  const b = S.b, s = svcById(b.service);
+  const w = el(`<div class="wid live sum"><h4 class="disp">${s.name}</h4><dl>
+    <dt>Day</dt><dd>${longDay(b.date)}</dd>
+    <dt>Time</dt><dd>${b.time} (${s.mins} min)</dd>
+    <dt>Name</dt><dd>${esc(b.name)}</dd>
+    <dt>Mobile</dt><dd>${esc(b.phone)}</dd>
+    <dt>Price</dt><dd>${s.price}</dd></dl>
+    <div class="acts"><button class="sbtn">Change</button><button class="pbtn">Confirm booking</button></div></div>`);
+  const [chg, ok] = w.querySelectorAll(".acts button");
+  chg.onclick = () => user("I'd like to change something", changeBooking);
+  ok.onclick = () => user("Yes, please confirm", confirmBooking);
+  return w;
+}
+function ticketW() {
+  const b = S.b, s = svcById(b.service);
+  const w = el(`<div class="wid ticket">
+    <div class="t1"><span class="ok"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M3 7.4l2.6 2.6L11 4.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Booked</span>
+    <div class="big">${b.time}</div><p>${longDay(b.date)}</p></div>
+    <div class="perf"></div>
+    <div class="t2"><span>${s.name} for ${esc(b.name)}</span><span>${ADDRESS}</span></div>
+    <div class="acts"><button>Add to calendar</button><a target="_blank" rel="noopener" href="https://maps.google.com/?q=${encodeURIComponent(ADDRESS)}">Directions</a></div></div>`);
+  w.querySelector("button").onclick = downloadIcs;
+  return w;
+}
+function downloadIcs() {
+  const b = S.b, s = svcById(b.service);
+  const st = new Date(`${b.date}T${b.time}:00`), en = new Date(st.getTime() + s.mins * 60000);
+  const f = (d) => `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+  const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Riverside Dental//Demo//EN", "BEGIN:VEVENT", `UID:${Date.now()}@riverside-demo`,
+    `DTSTART:${f(st)}`, `DTEND:${f(en)}`, `SUMMARY:${s.name} - Riverside Dental Practice`, `LOCATION:${ADDRESS}`, "END:VEVENT", "END:VCALENDAR"].join("\r\n");
+  const a = document.createElement("a");
+  a.href = "data:text/calendar;charset=utf-8," + encodeURIComponent(ics);
+  a.download = "riverside-appointment.ics";
+  document.body.appendChild(a); a.click(); a.remove();
+}
+
+/* flow */
+const MAIN = () => chips([["Book an appointment", askTreatment], ["Prices", prices], ["Opening hours", hours]]);
+function askTreatment() { S.step = "idle"; bot("Happy to help. Which treatment would you like?", treatmentsW()); }
+function prices() { bot(`A check-up is £65, a hygiene clean is £75 and white fillings start at £120. Tap one to book.`, treatmentsW()); }
+function hours() { bot("We're open Monday to Thursday 8:30 to 18:00, and Friday 8:30 to 13:00. We're closed at weekends.", chips([["Book an appointment", askTreatment], ["Where are you?", where]])); }
+function where() { bot(`We're at ${ADDRESS}, a short walk from Richmond station.`, chips([["Book an appointment", askTreatment]])); }
+
+function chooseService(s) {
+  S.b.service = s.id; S.b.date = null; S.b.time = null; S.step = "day";
+  bot(`A ${s.name.toLowerCase()} takes ${s.mins} minutes and costs ${s.price}. Which day suits you?`, daysW());
+}
+function chooseDay(d) {
+  S.b.date = d.iso; S.b.time = null; S.step = "time";
+  bot(`Here's what's free on ${longDay(d.iso)}. Which time works for you?`, timesW(d));
+}
+function chooseTime(t) {
+  S.b.time = t;
+  if (S.b.name && S.b.phone) { S.step = "confirm"; return bot(`${t} it is. Here's your updated booking. Shall I confirm it?`, summaryW()); }
+  S.step = "contact";
+  bot(`${t} is free. Could I take your full name and mobile number?`, contactW());
+}
+function setContact(name, phone) {
+  S.b.name = name.replace(/\b\w/g, (c) => c.toUpperCase()); S.b.phone = phone;
+  if (!S.b.date || !S.b.time) { S.step = "day"; return bot(`Thanks, ${first()}. Which day suits you?`, daysW()); }
+  S.step = "confirm";
+  bot(`Thanks, ${first()}. Here's your booking. Shall I confirm it?`, summaryW());
+}
+function confirmBooking() {
+  S.b.ok = true; S.step = "done";
+  bot(`You're booked in, ${first()}. A confirmation is on its way to ${S.b.phone}. See you then!`, ticketW());
+}
+function changeBooking() {
+  S.step = "change";
+  const d = DIARY.find((x) => x.iso === S.b.date);
+  bot("No problem. What would you like to change?", chips([
+    ["Treatment", askTreatment],
+    ["Day", () => { S.step = "day"; bot("Which day would suit you better?", daysW()); }],
+    ["Time", () => { S.step = "time"; bot("Which time would you prefer?", timesW(d)); }],
+    ["My details", () => { S.step = "contact"; bot("Sure, update your details below.", contactW()); }],
+  ]));
+}
+
+function matchService(t) { return SERVICES.find((s) => s.re.test(t)); }
+function matchDay(t) {
+  if (/tomorrow/.test(t)) return DIARY.find((d) => d.iso === toISO(new Date(Date.now() + 864e5)));
+  const wd = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"].findIndex((w) => t.includes(w) || t.includes(w.slice(0, 3) + " "));
+  if (wd >= 0) return DIARY.find((d) => fromISO(d.iso).getDay() === wd);
+  const n = t.match(/\b(\d{1,2})(st|nd|rd|th)?\b/);
+  if (n) return DIARY.find((d) => fromISO(d.iso).getDate() === +n[1]);
+}
+function matchTime(t) {
+  let m = t.match(/(\d{1,2})[:.](\d{2})\s*(am|pm)?/) || t.match(/(\d{1,2})()\s*(am|pm)/);
+  if (!m) return null;
+  let h = +m[1]; const min = m[2] || "00";
+  if (m[3] === "pm" && h < 12) h += 12;
+  return `${pad(h)}:${min}`;
+}
+function parseContact(text) {
+  const pm = text.match(/\+?\d[\d\s-]{8,}\d/);
+  if (!pm) return null;
+  const name = text.replace(pm[0], " ").replace(/my name is|name is|i'm|i am|my (mobile|number|phone)( number)?( is)?|mobile|phone|number|and|,|\./gi, " ").replace(/\s+/g, " ").trim();
+  return name.length >= 2 ? { name, phone: pm[0].trim() } : null;
+}
+
+function handle(text) {
+  const t = text.toLowerCase();
+  if (S.step === "day") { const d = matchDay(t); if (d) return chooseDay(d); }
+  if (S.step === "time") {
+    const tm = matchTime(t), d = DIARY.find((x) => x.iso === S.b.date);
+    if (tm && d) return d.times.includes(tm) ? chooseTime(tm) : bot(`Sorry, ${tm} isn't free that day. These times are available:`, timesW(d));
+    const nd = matchDay(t); if (nd) return chooseDay(nd);
+  }
+  if (S.step === "contact") {
+    const c = parseContact(text); if (c) return setContact(c.name, c.phone);
+    if (!matchService(t)) return bot("Could you share your full name and a mobile number?", contactW());
+  }
+  if (S.step === "confirm") {
+    if (/^(yes|yep|yeah|confirm|ok|sure|please)/.test(t)) return confirmBooking();
+    if (/change|^no/.test(t)) return changeBooking();
+  }
+  if (/pain|swell|emergenc|bleed|broke|knock|abscess/.test(t))
+    return bot(`Sorry you're in discomfort. Please call us on ${PHONE} so we can see you quickly. If we're closed, call NHS 111.`, chips([["Book an appointment", askTreatment]]));
+  if (/nhs/.test(t)) return bot("We're a private practice, so we don't offer NHS treatment. New patients are always welcome.", chips([["Book an appointment", askTreatment], ["Prices", prices]]));
+  const s = matchService(t);
+  if (s && !/price|cost|how much/.test(t)) return chooseService(s);
+  if (/price|cost|how much|fee|expensive/.test(t)) return prices();
+  if (/book|appointment|slot|see (a|the) dentist|come in/.test(t)) return askTreatment();
+  if (/hour|open|close/.test(t)) return hours();
+  if (/where|address|park|find you|direction|station/.test(t)) return where();
+  if (/thank/.test(t)) return bot("You're welcome. Anything else I can help with?", S.b.ok ? null : MAIN());
+  if (/^(hi|hello|hey|good (morning|afternoon|evening))/.test(t)) return bot("Hello! Would you like to book, or do you have a question?", MAIN());
+  bot(`I can help with bookings, prices, opening hours and directions. For anything else, please call ${PHONE}.`, MAIN());
+}
+
+/* open / close */
+function openChat(starter) {
+  $("panel").classList.add("open");
+  $("launch").style.display = "none";
+  if (!S.started) {
+    S.started = true;
+    if (starter) { bubble("bot", "Hi, I'm Riverside's virtual assistant. I can answer questions or book you in."); setTimeout(() => user(starter), 400); }
+    else bot("Hi, I'm Riverside's virtual assistant. I can answer questions or book you in.", MAIN());
+  } else if (starter) user(starter);
+}
+$("launch").onclick = () => openChat();
+$("slotBtn").onclick = () => openChat("I'd like to book a hygiene clean");
+$("closeBtn").onclick = () => { $("panel").classList.remove("open"); $("launch").style.display = ""; };
+input.oninput = syncSend;
+input.onkeydown = (e) => { if (e.key === "Enter") user(input.value); };
+sendBtn.onclick = () => user(input.value);
+</script>
+</body>
+</html>

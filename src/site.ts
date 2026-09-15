@@ -16,10 +16,15 @@ export const SITE = {
     name: 'Twinbyte',
     color: '#0d9488',
   },
+  /**
+   * Live demo practice, served from this site (public/demo).
+   * TODO: Dutch and Italian versions of the demo page — both point at the
+   * English one for now.
+   */
   demo: {
-    en: 'https://chatbot-dentisti.vercel.app/demo-en.html',
-    nl: 'https://chatbot-dentisti.vercel.app/demo-nl.html',
-    it: 'https://chatbot-dentisti.vercel.app/demo-it.html',
+    en: '/demo/',
+    nl: '/demo/',
+    it: '/demo/',
   },
 } as const
 
