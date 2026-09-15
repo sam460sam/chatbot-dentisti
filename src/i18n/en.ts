@@ -18,15 +18,15 @@ export const en: Translation = {
   },
   hero: {
     eyebrow: 'Twinbyte — Anna & Samuele',
-    title: 'Your business answers customers 24/7, even when nobody can pick up',
-    lead: 'We put a digital assistant on your website, answering customers around the clock. It handles the questions you get every day — opening hours, services, prices, what to bring — and books appointments straight into the calendar you already use.',
+    title: 'Answer every customer, even when you cannot pick up',
+    lead: 'A missed call does not leave a message — it calls the next business on the list. We put a digital assistant on your website that replies in seconds at any hour, answers with your information, and books the appointment into the calendar you already use.',
     ctaTrial: 'Start the 14-day free trial',
-    ctaDemo: 'See the live demo',
-    note: 'No commitment. If it turns out not to help your business, we remove it for free.',
+    ctaDemo: 'See it book an appointment',
+    note: 'No card, no contract. If it does not earn its place in two weeks, we remove it the same day.',
     bullets: [
-      'Books into the calendar you already use',
-      'Answers customers in their own language',
-      'Anything sensitive is handed to your team, not answered by the assistant',
+      'Books into the calendar you already use — nothing new to learn',
+      'Replies in your customer’s language, whoever writes',
+      'Urgent or unusual goes to your team, with name and number',
     ],
   },
   split: {
@@ -34,22 +34,22 @@ export const en: Translation = {
     lead: 'Most clients start with one and add the other later. Pick the one you came for.',
     assistant: {
       tag: 'Digital assistant',
-      title: 'Answers and books, around the clock',
-      body: 'Sits on the website you already have and handles the questions and the bookings you would otherwise take by phone.',
+      title: 'Stop losing the calls you never hear',
+      body: 'It sits on the website you already have and handles the questions and bookings you would otherwise take by phone — evenings, weekends, while you are with a customer.',
       points: [
-        'Answers only from your own information',
-        'Books into the calendar you already use',
-        'Hands anything sensitive to your team',
+        'Answers in seconds, from your information only',
+        'Books straight into your existing calendar',
+        'Hands anything sensitive to a person on your team',
       ],
       cta: 'See how it works',
       quote: 'Start the free trial',
     },
     websites: {
       tag: 'Websites',
-      title: 'A site that loads fast and gets used',
-      body: 'For businesses whose customers look them up on a phone before they call. Built to be read in ten seconds, not admired.',
+      title: 'A site people read, not one they admire',
+      body: 'For businesses whose customers check them on a phone before deciding to call. Opening hours, what you do and how to reach you, findable in ten seconds.',
       points: [
-        'Mobile-first, fast on a bad connection',
+        'Fast on a phone, even on a bad connection',
         'No CMS to learn — you tell us, we update it',
         'The assistant can be added to it later',
       ],
@@ -162,24 +162,32 @@ export const en: Translation = {
     quoteNote: 'Price and timing after a ten-minute call: it depends on how many pages you need and whether you already have text and photos.',
   },
   trial: {
-    title: 'The 14-day free trial',
-    lead: 'Two weeks on your own website, at no cost and with nothing to sign up front.',
+    title: 'Two weeks, on your own website, at no cost',
+    lead: 'We are new, and we would rather prove it on your site than promise it in a meeting.',
     steps: [
-      'We configure the assistant with your hours, services and FAQ and place it on your site.',
-      'It runs for 14 days. You see the real conversations and the real bookings, not a demo.',
-      'We go through the results together and you decide whether it is worth keeping.',
-      'If you keep it, it becomes a monthly subscription. If not, we remove it the same day, free of charge.',
+      'You send your opening hours, your services and the five questions customers ask most. That is your part, about twenty minutes.',
+      'We configure the assistant and put it on your site. One line of code, nothing else changes.',
+      'It runs for 14 days. You read the real conversations and see the real bookings, not a demo.',
+      'We look at the results together. Keep it and it becomes a monthly subscription; if not, we remove it the same day, free.',
     ],
     cta: 'Start the free trial on WhatsApp',
-    note: 'We talk about the monthly price after the trial, once we both know what your business actually uses.',
+    note: 'No card, no contract, nothing to cancel. We agree the monthly price after the trial, once we both know how much your business actually uses it.',
   },
   faq: {
     title: 'Frequently asked questions',
     lead: 'If something is missing, just ask us on WhatsApp.',
     items: [
       {
+        q: 'My customers hate chatbots. Why would this be different?',
+        a: 'Because most of them are not answering, they are deflecting — endless menus to avoid a human. This one answers the question, books the appointment and, the moment it cannot help, takes a name and a number and passes it to you. Customers are told from the first line that it is not a person.',
+      },
+      {
         q: 'What stops it from saying the wrong thing?',
-        a: 'It answers from the information you give us — your hours, your services, your prices — and nothing else. When it does not know, it says so, takes a name and a number and hands the question to you instead of inventing an answer.',
+        a: 'It answers from the information you give us — your hours, your services, your prices — and nothing else. When it does not know, it says so, takes the details and hands the question to you instead of inventing an answer.',
+      },
+      {
+        q: 'What does it cost?',
+        a: 'We do not publish a price, because we do not know yet how much your business will use it. Two weeks of real conversations tell us both, and then we agree a monthly figure. Comparable tools on the market sit roughly between €30 and €150 a month; we will be honest about where you land before you commit to anything.',
       },
       {
         q: 'What happens with urgent or unusual requests?',
@@ -187,11 +195,11 @@ export const en: Translation = {
       },
       {
         q: 'Does it work with our current website?',
-        a: 'Yes, as long as we can add one line of code to it. That is the case for almost every site — WordPress, Wix, Squarespace, Shopify or a custom build.',
+        a: 'Yes, as long as we can add one line of code to it. That is the case for almost every site — WordPress, Wix, Squarespace, Shopify or a custom build. Your site otherwise stays exactly as it is.',
       },
       {
         q: 'Do we have to change our calendar or software?',
-        a: 'No. We set the assistant up around the calendar you already work with: with Google Calendar it is ready to go, and for other booking software we look at the integration together before the trial starts. Appointments appear as ordinary events and you can move or cancel them as always.',
+        a: 'No. We set the assistant up around the calendar you already work with: with Google Calendar it is ready to go, and for other booking software we look at the integration together before the trial starts. Appointments appear as ordinary events you can move or cancel as always.',
       },
       {
         q: 'Which languages does it speak?',
@@ -207,7 +215,7 @@ export const en: Translation = {
       },
       {
         q: 'Who is behind Twinbyte?',
-        a: 'Anna and Samuele. Two people, which means you always talk to the person who set up your assistant — no ticket system in between.',
+        a: 'Anna and Samuele. Two people, which means you always talk to whoever set up your assistant — no ticket system in between.',
       },
     ],
   },

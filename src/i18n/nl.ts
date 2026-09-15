@@ -18,15 +18,15 @@ export const nl: Translation = {
   },
   hero: {
     eyebrow: 'Twinbyte — Anna & Samuele',
-    title: 'Uw bedrijf geeft 24/7 antwoord, ook als niemand kan opnemen',
-    lead: 'Wij zetten een digitale assistent op uw website, die op elk uur antwoord geeft. Hij behandelt de vragen die u dagelijks krijgt — openingstijden, diensten, prijzen, wat mee te nemen — en plant afspraken rechtstreeks in de agenda die u al gebruikt.',
+    title: 'Beantwoord elke klant, ook als u niet kunt opnemen',
+    lead: 'Een gemiste oproep spreekt geen bericht in — die belt het volgende bedrijf op de lijst. Wij zetten een digitale assistent op uw website die binnen seconden antwoordt, op elk uur, met uw eigen informatie, en de afspraak in de agenda zet die u al gebruikt.',
     ctaTrial: 'Start 14 dagen gratis',
-    ctaDemo: 'Bekijk de demo',
-    note: 'Vrijblijvend. Blijkt het niets voor uw bedrijf, dan halen we het kosteloos weer weg.',
+    ctaDemo: 'Zie hem een afspraak inplannen',
+    note: 'Geen creditcard, geen contract. Verdient hij in twee weken zijn plek niet, dan halen we hem dezelfde dag weg.',
     bullets: [
-      'Plant in de agenda die u al gebruikt',
-      'Antwoordt klanten in hun eigen taal',
-      'Gevoelige vragen gaan naar uw team, niet naar de assistent',
+      'Plant in de agenda die u al gebruikt — niets nieuws te leren',
+      'Antwoordt in de taal van uw klant, wie er ook schrijft',
+      'Spoed of iets ongewoons gaat naar uw team, met naam en nummer',
     ],
   },
   split: {
@@ -34,22 +34,22 @@ export const nl: Translation = {
     lead: 'De meeste klanten beginnen met één en voegen de andere later toe. Kies waarvoor u hier bent.',
     assistant: {
       tag: 'Digitale assistent',
-      title: 'Geeft antwoord en plant in, op elk uur',
-      body: 'Staat op de website die u al heeft en behandelt de vragen en afspraken die u anders telefonisch aanneemt.',
+      title: 'Verlies niet langer de oproepen die u nooit hoort',
+      body: 'Hij staat op de website die u al heeft en behandelt de vragen en afspraken die u anders telefonisch aanneemt: ’s avonds, in het weekend, terwijl u bij een klant bent.',
       points: [
-        'Antwoordt alleen met uw eigen informatie',
-        'Plant in de agenda die u al gebruikt',
-        'Geeft alles wat gevoelig is door aan uw team',
+        'Antwoordt binnen seconden, alleen met uw informatie',
+        'Plant rechtstreeks in uw bestaande agenda',
+        'Geeft alles wat gevoelig is door aan iemand van uw team',
       ],
       cta: 'Bekijk hoe het werkt',
       quote: 'Start de gratis proefperiode',
     },
     websites: {
       tag: 'Websites',
-      title: 'Een site die snel laadt en gebruikt wordt',
-      body: 'Voor bedrijven waarvan klanten eerst op hun telefoon kijken voordat ze bellen. Gemaakt om in tien seconden gelezen te worden.',
+      title: 'Een site die mensen lezen, niet bewonderen',
+      body: 'Voor bedrijven waarvan klanten eerst op hun telefoon kijken voordat ze besluiten te bellen. Openingstijden, wat u doet en hoe men u bereikt, binnen tien seconden te vinden.',
       points: [
-        'Mobile-first, snel ook bij slecht bereik',
+        'Snel op de telefoon, ook bij slecht bereik',
         'Geen CMS om te leren: u zegt het, wij passen het aan',
         'De assistent kan er later bij',
       ],
@@ -162,24 +162,32 @@ export const nl: Translation = {
     quoteNote: 'Prijs en planning na een telefoontje van tien minuten: het hangt af van hoeveel pagina\u2019s u nodig heeft en of u al teksten en foto\u2019s heeft.',
   },
   trial: {
-    title: 'De gratis proefperiode van 14 dagen',
-    lead: 'Twee weken op uw eigen website, kosteloos en zonder dat u vooraf iets tekent.',
+    title: 'Twee weken, op uw eigen website, kosteloos',
+    lead: 'Wij zijn nieuw, en bewijzen het liever op uw site dan het in een gesprek te beloven.',
     steps: [
-      'Wij richten de assistent in met uw openingstijden, diensten en veelgestelde vragen en plaatsen hem op uw site.',
-      'Hij draait 14 dagen. U ziet echte gesprekken en echte afspraken, geen demo.',
-      'We nemen de resultaten samen door en u beslist of het de moeite waard is.',
-      'Houdt u het, dan wordt het een maandabonnement. Zo niet, dan halen we het dezelfde dag kosteloos weg.',
+      'U stuurt uw openingstijden, uw diensten en de vijf vragen die klanten het vaakst stellen. Dat is uw deel: zo’n twintig minuten.',
+      'Wij richten de assistent in en zetten hem op uw site. Eén regel code, verder verandert er niets.',
+      'Hij draait 14 dagen. U leest de echte gesprekken en ziet de echte afspraken, geen demo.',
+      'We bekijken de resultaten samen. Houdt u hem, dan wordt het een maandabonnement; zo niet, dan halen we hem dezelfde dag kosteloos weg.',
     ],
     cta: 'Start de proefperiode via WhatsApp',
-    note: 'Over de maandprijs praten we na de proefperiode, als we allebei weten wat uw bedrijf er werkelijk mee doet.',
+    note: 'Geen creditcard, geen contract, niets op te zeggen. De maandprijs spreken we na de proefperiode af, als we allebei weten hoeveel uw bedrijf hem werkelijk gebruikt.',
   },
   faq: {
     title: 'Veelgestelde vragen',
     lead: 'Staat uw vraag er niet bij? Stel hem gerust via WhatsApp.',
     items: [
       {
+        q: 'Mijn klanten hebben een hekel aan chatbots. Waarom zou dit anders zijn?',
+        a: 'Omdat de meeste geen antwoord geven maar afhouden: eindeloze menu’s om een mens te vermijden. Deze beantwoordt de vraag, plant de afspraak en geeft, zodra hij niet kan helpen, naam en nummer door aan u. De klant krijgt vanaf de eerste regel te horen dat het geen persoon is.',
+      },
+      {
         q: 'Wat voorkomt dat hij iets verkeerds zegt?',
-        a: 'Hij antwoordt op basis van de informatie die u ons geeft — uw tijden, uw diensten, uw prijzen — en niets anders. Weet hij iets niet, dan zegt hij dat, noteert naam en nummer en legt de vraag bij u neer in plaats van een antwoord te verzinnen.',
+        a: 'Hij antwoordt op basis van de informatie die u ons geeft — uw tijden, uw diensten, uw prijzen — en niets anders. Weet hij iets niet, dan zegt hij dat, noteert de gegevens en legt de vraag bij u neer in plaats van een antwoord te verzinnen.',
+      },
+      {
+        q: 'Wat kost het?',
+        a: 'We publiceren geen prijs, omdat we nog niet weten hoeveel uw bedrijf hem gebruikt. Twee weken echte gesprekken vertellen dat ons allebei, en daarna spreken we een maandbedrag af. Vergelijkbare tools in de markt zitten ruwweg tussen de 30 en 150 euro per maand; we zeggen u eerlijk waar u uitkomt voordat u zich ergens aan verbindt.',
       },
       {
         q: 'Wat gebeurt er bij dringende of ongewone vragen?',
@@ -187,11 +195,11 @@ export const nl: Translation = {
       },
       {
         q: 'Werkt het met onze huidige website?',
-        a: 'Ja, zolang we er één regel code aan kunnen toevoegen. Dat kan bij vrijwel elke site — WordPress, Wix, Squarespace, Shopify of maatwerk.',
+        a: 'Ja, zolang we er één regel code aan kunnen toevoegen. Dat kan bij vrijwel elke site — WordPress, Wix, Squarespace, Shopify of maatwerk. Verder blijft uw site precies zoals hij is.',
       },
       {
         q: 'Moeten we onze agenda of software aanpassen?',
-        a: 'Nee. We stellen de assistent in op de agenda waarmee u al werkt: met Google Agenda is het meteen klaar, en voor andere boekingssoftware bekijken we de koppeling samen vóór de proefperiode. Afspraken verschijnen als gewone items en u kunt ze verzetten of annuleren zoals altijd.',
+        a: 'Nee. We stellen de assistent in op de agenda waarmee u al werkt: met Google Agenda is het meteen klaar, en voor andere boekingssoftware bekijken we de koppeling samen vóór de proefperiode. Afspraken verschijnen als gewone items die u kunt verzetten of annuleren zoals altijd.',
       },
       {
         q: 'In welke talen antwoordt de assistent?',
