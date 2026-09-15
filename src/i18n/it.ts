@@ -29,6 +29,34 @@ export const it: Translation = {
       'Le richieste delicate passano al vostro team, non le gestisce l’assistente',
     ],
   },
+  split: {
+    title: 'Due servizi, fatti bene entrambi',
+    lead: 'Di solito si parte da uno e si aggiunge l\u2019altro più avanti. Scegliete quello per cui siete qui.',
+    assistant: {
+      tag: 'Assistente digitale',
+      title: 'Risponde e prenota, a qualsiasi ora',
+      body: 'Sta sul sito che avete già e gestisce le domande e le prenotazioni che altrimenti prendereste al telefono.',
+      points: [
+        'Risponde solo con le vostre informazioni',
+        'Scrive nell\u2019agenda che usate già',
+        'Passa al vostro team tutto ciò che è delicato',
+      ],
+      cta: 'Guarda come funziona',
+      quote: 'Inizia la prova gratuita',
+    },
+    websites: {
+      tag: 'Siti web',
+      title: 'Un sito veloce, che la gente usa davvero',
+      body: 'Per chi ha clienti che lo cercano dal telefono prima di chiamare. Fatto per essere letto in dieci secondi, non ammirato.',
+      points: [
+        'Mobile-first, veloce anche con poca linea',
+        'Nessun CMS da imparare: ce lo dite e aggiorniamo noi',
+        'L\u2019assistente si può aggiungere in seguito',
+      ],
+      cta: 'Guarda cosa realizziamo',
+      quote: 'Chiedi un preventivo',
+    },
+  },
   how: {
     title: 'Come funziona',
     lead: 'Tre passaggi, e il lavoro da parte vostra è quasi tutto nel primo.',
@@ -98,6 +126,17 @@ export const it: Translation = {
     ],
     tags: ['Mobile-first', 'Veloce di base', 'Pronto per l’assistente'],
     cta: 'Chiedi informazioni su un sito',
+    includesTitle: 'Cosa comprende un sito',
+    includes: [
+      'Pagine scritte insieme a voi — parole vostre, niente testo riempitivo',
+      'Impostato bene per Google: titoli, descrizioni, la vostra attività sulla mappa',
+      'Contatti che la gente usa davvero: WhatsApp, telefono, email',
+      'Hosting su piano gratuito, quindi nessun canone mensile di hosting',
+      'Niente cookie e niente tracciamento, quindi nessun banner in faccia al cliente',
+    ],
+    whoTitle: 'Per chi va bene',
+    who: 'Negozi, officine, artigiani, studi, centri, chiunque venga cercato dal telefono prima di essere chiamato. Se vi serve un e-commerce con centinaia di prodotti non siamo le persone giuste, e ve lo diciamo.',
+    quoteNote: 'Prezzo e tempi dopo una chiamata di dieci minuti: dipende da quante pagine servono e se avete già testi e foto.',
   },
   trial: {
     title: 'La prova gratuita di 14 giorni',
@@ -244,5 +283,6 @@ export const it: Translation = {
     trial:
       'Ciao Twinbyte, vorrei iniziare la prova gratuita di 14 giorni dell’assistente digitale per la mia attività.',
     websites: 'Ciao Twinbyte, vorrei sapere di più su un sito web per la mia azienda.',
+    websitesQuote: 'Ciao Twinbyte, vorrei un preventivo per un sito web per la mia attività.',
   },
 }

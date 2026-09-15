@@ -42,10 +42,28 @@ export interface Translation {
     note: string
     bullets: string[]
   }
+  /** The fork right under the hero: assistant on one side, websites on the other. */
+  split: {
+    title: string
+    lead: string
+    assistant: { tag: string; title: string; body: string; points: string[]; cta: string; quote: string }
+    websites: { tag: string; title: string; body: string; points: string[]; cta: string; quote: string }
+  }
   how: { title: string; lead: string; steps: TitledItem[] }
   benefits: { title: string; lead: string; items: TitledItem[] }
   security: { title: string; lead: string; items: TitledItem[] }
-  websites: { title: string; lead: string; items: string[]; tags: string[]; cta: string }
+  websites: {
+    title: string
+    lead: string
+    items: string[]
+    tags: string[]
+    cta: string
+    includesTitle: string
+    includes: string[]
+    whoTitle: string
+    who: string
+    quoteNote: string
+  }
   trial: { title: string; lead: string; steps: string[]; cta: string; note: string }
   faq: { title: string; lead: string; items: { q: string; a: string }[] }
   contact: {
@@ -81,5 +99,5 @@ export interface Translation {
   }
   /** primo messaggio della chat sul nostro sito */
   widgetHello: string
-  wa: { generic: string; trial: string; websites: string }
+  wa: { generic: string; trial: string; websites: string; websitesQuote: string }
 }

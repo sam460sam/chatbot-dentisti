@@ -29,6 +29,34 @@ export const en: Translation = {
       'Anything sensitive is handed to your team, not answered by the assistant',
     ],
   },
+  split: {
+    title: 'Two services, both done properly',
+    lead: 'Most clients start with one and add the other later. Pick the one you came for.',
+    assistant: {
+      tag: 'Digital assistant',
+      title: 'Answers and books, around the clock',
+      body: 'Sits on the website you already have and handles the questions and the bookings you would otherwise take by phone.',
+      points: [
+        'Answers only from your own information',
+        'Books into the calendar you already use',
+        'Hands anything sensitive to your team',
+      ],
+      cta: 'See how it works',
+      quote: 'Start the free trial',
+    },
+    websites: {
+      tag: 'Websites',
+      title: 'A site that loads fast and gets used',
+      body: 'For businesses whose customers look them up on a phone before they call. Built to be read in ten seconds, not admired.',
+      points: [
+        'Mobile-first, fast on a bad connection',
+        'No CMS to learn — you tell us, we update it',
+        'The assistant can be added to it later',
+      ],
+      cta: 'See what we build',
+      quote: 'Ask for a quote',
+    },
+  },
   how: {
     title: 'How it works',
     lead: 'Three steps, and the work on your side is mostly the first one.',
@@ -98,6 +126,17 @@ export const en: Translation = {
     ],
     tags: ['Mobile-first', 'Fast by default', 'Assistant-ready'],
     cta: 'Ask about a website',
+    includesTitle: 'What a site includes',
+    includes: [
+      'Pages written with you — your words, no filler text',
+      'Set up properly for Google: titles, descriptions, your business on the map',
+      'Contact routes that actually get used: WhatsApp, phone, email',
+      'Hosting on a free plan, so there is no monthly hosting bill',
+      'No cookies and no tracking, so no banner in your customer\u2019s face',
+    ],
+    whoTitle: 'Who it suits',
+    who: 'Shops, workshops, trades, practices, studios, anyone who is looked up on a phone before being called. If you need a web shop with hundreds of products, we are not the right people and we will say so.',
+    quoteNote: 'Price and timing after a ten-minute call: it depends on how many pages you need and whether you already have text and photos.',
   },
   trial: {
     title: 'The 14-day free trial',
@@ -244,5 +283,6 @@ export const en: Translation = {
     trial:
       'Hello Twinbyte, I would like to start the 14-day free trial of the digital assistant for my business.',
     websites: 'Hello Twinbyte, I would like to know more about a website for my business.',
+    websitesQuote: 'Hello Twinbyte, I would like a quote for a website for my business.',
   },
 }

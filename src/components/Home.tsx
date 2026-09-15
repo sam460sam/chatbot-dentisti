@@ -17,6 +17,7 @@ import {
   Settings2,
   ShieldCheck,
   Siren,
+  Sparkles,
 } from 'lucide-react'
 import { Hero } from './Hero'
 import { SiteMockup } from './SiteMockup'
@@ -72,6 +73,63 @@ export function Home({ t }: { t: Translation }) {
   return (
     <main id="main">
       <Hero t={t} />
+
+      {/* Two services, two routes */}
+      <section id="services" aria-labelledby="services-title" className="section bg-surface">
+        <div className="container-page">
+          <p className="section-kicker">Twinbyte</p>
+          <h2 id="services-title" className="section-title">
+            {t.split.title}
+          </h2>
+          <p className="section-lead">{t.split.lead}</p>
+
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            {[
+              { ...t.split.assistant, id: 'how', icon: MessageCircle, wa: t.wa.trial },
+              { ...t.split.websites, id: 'websites', icon: Sparkles, wa: t.wa.websitesQuote },
+            ].map((service) => (
+              <div key={service.tag} className="card flex h-full flex-col" onMouseMove={spotlight}>
+                <div className="relative flex items-center gap-3">
+                  <span className="icon-badge">
+                    <service.icon size={21} aria-hidden="true" />
+                  </span>
+                  <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-accent-bright">
+                    {service.tag}
+                  </span>
+                </div>
+
+                <h3 className="relative mt-6 text-2xl font-bold tracking-tight">{service.title}</h3>
+                <p className="relative mt-3 text-[15px] leading-relaxed text-ink-soft">
+                  {service.body}
+                </p>
+
+                <ul className="relative mt-6 grid gap-2.5">
+                  {service.points.map((point) => (
+                    <li key={point} className="flex items-start gap-2.5 text-[15px] text-ink-soft">
+                      <Check
+                        size={17}
+                        className="mt-0.5 shrink-0 text-accent-bright"
+                        aria-hidden="true"
+                      />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="relative mt-auto flex flex-col gap-3 pt-8 sm:flex-row">
+                  <a className="btn-primary" href={waLink(service.wa)} rel="noopener">
+                    {service.quote}
+                  </a>
+                  <a className="btn-ghost" href={`#${service.id}`}>
+                    {service.cta}
+                    <ArrowRight size={17} aria-hidden="true" />
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* How it works */}
       <Section id="how" kicker="01" title={t.how.title} lead={t.how.lead}>
@@ -145,30 +203,43 @@ export function Home({ t }: { t: Translation }) {
 
       {/* Websites for small businesses */}
       <Section id="websites" kicker="04" title={t.websites.title} lead={t.websites.lead}>
-        <div className="grid items-start gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-          <Reveal>
-            <ul className="grid gap-4 sm:grid-cols-2">
-              {t.websites.items.map((item) => (
+        <div className="grid items-start gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+          <div>
+            <h3 className="text-lg font-bold tracking-tight">{t.websites.includesTitle}</h3>
+            <ul className="mt-5 grid gap-3">
+              {t.websites.includes.map((item) => (
                 <li
                   key={item}
-                  className="flex items-start gap-3 rounded-xl border border-white/10 bg-surface-raised p-4 text-[15px] text-ink-soft"
+                  className="flex items-start gap-3 border-b border-white/10 pb-3 text-[15px] text-ink-soft last:border-0"
                 >
-                  <Check size={18} className="mt-0.5 shrink-0 text-accent" aria-hidden="true" />
+                  <Check size={18} className="mt-0.5 shrink-0 text-accent-bright" aria-hidden="true" />
                   <span>{item}</span>
                 </li>
               ))}
             </ul>
-          </Reveal>
 
-          <Reveal delay={120}>
-            <div className="space-y-6">
-              <SiteMockup t={t} />
-              <a className="btn-primary w-full sm:w-auto" href={waLink(t.wa.websites)} rel="noopener">
-                {t.websites.cta}
-                <ArrowRight size={18} aria-hidden="true" />
-              </a>
+            <h3 className="mt-10 text-lg font-bold tracking-tight">{t.websites.whoTitle}</h3>
+            <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-ink-soft">{t.websites.who}</p>
+          </div>
+
+          <div className="space-y-6">
+            <SiteMockup t={t} />
+            <div className="card" onMouseMove={spotlight}>
+              <p className="relative text-[15px] leading-relaxed text-ink-soft">
+                {t.websites.quoteNote}
+              </p>
+              <div className="relative mt-6 flex flex-col gap-3 sm:flex-row">
+                <a className="btn-primary" href={waLink(t.wa.websitesQuote)} rel="noopener">
+                  {t.websites.cta}
+                  <ArrowRight size={18} aria-hidden="true" />
+                </a>
+                <a className="btn-ghost" href={mailLink(t.contact.emailSubject)}>
+                  <Mail size={17} aria-hidden="true" />
+                  {t.contact.email}
+                </a>
+              </div>
             </div>
-          </Reveal>
+          </div>
         </div>
       </Section>
 

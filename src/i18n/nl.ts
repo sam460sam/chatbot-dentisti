@@ -29,6 +29,34 @@ export const nl: Translation = {
       'Gevoelige vragen gaan naar uw team, niet naar de assistent',
     ],
   },
+  split: {
+    title: 'Twee diensten, allebei goed gedaan',
+    lead: 'De meeste klanten beginnen met één en voegen de andere later toe. Kies waarvoor u hier bent.',
+    assistant: {
+      tag: 'Digitale assistent',
+      title: 'Geeft antwoord en plant in, op elk uur',
+      body: 'Staat op de website die u al heeft en behandelt de vragen en afspraken die u anders telefonisch aanneemt.',
+      points: [
+        'Antwoordt alleen met uw eigen informatie',
+        'Plant in de agenda die u al gebruikt',
+        'Geeft alles wat gevoelig is door aan uw team',
+      ],
+      cta: 'Bekijk hoe het werkt',
+      quote: 'Start de gratis proefperiode',
+    },
+    websites: {
+      tag: 'Websites',
+      title: 'Een site die snel laadt en gebruikt wordt',
+      body: 'Voor bedrijven waarvan klanten eerst op hun telefoon kijken voordat ze bellen. Gemaakt om in tien seconden gelezen te worden.',
+      points: [
+        'Mobile-first, snel ook bij slecht bereik',
+        'Geen CMS om te leren: u zegt het, wij passen het aan',
+        'De assistent kan er later bij',
+      ],
+      cta: 'Bekijk wat we bouwen',
+      quote: 'Vraag een offerte aan',
+    },
+  },
   how: {
     title: 'Hoe het werkt',
     lead: 'Drie stappen, en het werk aan uw kant zit vooral in de eerste.',
@@ -98,6 +126,17 @@ export const nl: Translation = {
     ],
     tags: ['Mobile-first', 'Standaard snel', 'Klaar voor de assistent'],
     cta: 'Vraag naar een website',
+    includesTitle: 'Wat een site omvat',
+    includes: [
+      'Pagina\u2019s samen met u geschreven — uw woorden, geen opvultekst',
+      'Goed ingesteld voor Google: titels, omschrijvingen, uw bedrijf op de kaart',
+      'Contactwegen die echt gebruikt worden: WhatsApp, telefoon, e-mail',
+      'Hosting op een gratis plan, dus geen maandelijkse hostingrekening',
+      'Geen cookies en geen tracking, dus geen banner voor de neus van uw klant',
+    ],
+    whoTitle: 'Voor wie het past',
+    who: 'Winkels, garages, vakmensen, praktijken, studio\u2019s: iedereen die op een telefoon wordt opgezocht voordat er gebeld wordt. Heeft u een webshop met honderden producten nodig, dan zijn wij niet de juiste partij en zeggen we dat.',
+    quoteNote: 'Prijs en planning na een telefoontje van tien minuten: het hangt af van hoeveel pagina\u2019s u nodig heeft en of u al teksten en foto\u2019s heeft.',
   },
   trial: {
     title: 'De gratis proefperiode van 14 dagen',
@@ -244,5 +283,6 @@ export const nl: Translation = {
     trial:
       'Hallo Twinbyte, ik wil graag de gratis proefperiode van 14 dagen starten voor de digitale assistent van mijn bedrijf.',
     websites: 'Hallo Twinbyte, ik wil graag meer weten over een website voor mijn bedrijf.',
+    websitesQuote: 'Hallo Twinbyte, ik wil graag een offerte voor een website voor mijn bedrijf.',
   },
 }
