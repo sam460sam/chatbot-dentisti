@@ -8,7 +8,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
-const BASE = 'https://twinbyteservices.com'
+const BASE = 'https://twinbyte.online'
 const LANGS = ['en', 'nl', 'it']
 
 const meta = JSON.parse(await readFile(join(root, 'src/i18n/meta.json'), 'utf8'))

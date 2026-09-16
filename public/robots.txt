@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://twinbyteservices.com/sitemap.xml
+Sitemap: https://twinbyte.online/sitemap.xml

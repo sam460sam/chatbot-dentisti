@@ -2,31 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://twinbyteservices.com/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://twinbyteservices.com/"/>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://twinbyteservices.com/nl"/>
-    <xhtml:link rel="alternate" hreflang="it" href="https://twinbyteservices.com/it"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://twinbyteservices.com/"/>
+    <loc>https://twinbyte.online/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://twinbyte.online/"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://twinbyte.online/nl"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://twinbyte.online/it"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://twinbyte.online/"/>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://twinbyteservices.com/nl</loc>
+    <loc>https://twinbyte.online/nl</loc>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://twinbyteservices.com/it</loc>
+    <loc>https://twinbyte.online/it</loc>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://twinbyteservices.com/privacy</loc>
+    <loc>https://twinbyte.online/privacy</loc>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://twinbyteservices.com/nl/privacy</loc>
+    <loc>https://twinbyte.online/nl/privacy</loc>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://twinbyteservices.com/it/privacy</loc>
+    <loc>https://twinbyte.online/it/privacy</loc>
     <priority>0.3</priority>
   </url>
 </urlset>
