@@ -18,7 +18,6 @@ export const en: Translation = {
     skip: 'Skip to content',
   },
   hero: {
-    eyebrow: 'Twinbyte — Anna & Samuele',
     title: 'Answer every customer, even when you cannot pick up',
     lead: 'A missed call does not leave a message — it calls the next business on the list. We put a digital assistant on your website that replies in seconds at any hour, answers with your information, and books the appointment into the calendar you already use.',
     ctaQuote: 'See what it would cost you',

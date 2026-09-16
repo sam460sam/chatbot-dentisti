@@ -18,7 +18,6 @@ export const it: Translation = {
     skip: 'Vai al contenuto',
   },
   hero: {
-    eyebrow: 'Twinbyte — Anna e Samuele',
     title: 'Rispondete a ogni cliente, anche quando non potete rispondere',
     lead: 'Una chiamata persa non lascia un messaggio: chiama il prossimo della lista. Mettiamo sul vostro sito un assistente digitale che risponde in pochi secondi a qualsiasi ora, con le vostre informazioni, e fissa l’appuntamento nell’agenda che usate già.',
     ctaQuote: 'Scoprite quanto costa per voi',

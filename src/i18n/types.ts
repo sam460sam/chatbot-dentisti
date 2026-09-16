@@ -36,7 +36,6 @@ export interface Translation {
     skip: string
   }
   hero: {
-    eyebrow: string
     title: string
     lead: string
     ctaQuote: string

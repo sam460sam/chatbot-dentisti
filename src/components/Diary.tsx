@@ -13,7 +13,7 @@ const BOOKED = 1 // the 10:00 row
 
 export function Diary({ t }: { t: Translation }) {
   return (
-    <div className="border-x border-b border-ink bg-paper">
+    <div className="plate-teal border border-ink bg-paper">
       <p className="t-label border-b border-paper-edge px-2 py-1">{t.demo.calendarTitle}</p>
 
       <ul role="list" className="px-2 py-1">

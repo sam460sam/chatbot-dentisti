@@ -18,7 +18,6 @@ export const nl: Translation = {
     skip: 'Naar de inhoud',
   },
   hero: {
-    eyebrow: 'Twinbyte — Anna & Samuele',
     title: 'Beantwoord elke klant, ook als u niet kunt opnemen',
     lead: 'Een gemiste oproep spreekt geen bericht in — die belt het volgende bedrijf op de lijst. Wij zetten een digitale assistent op uw website die binnen seconden antwoordt, op elk uur, met uw eigen informatie, en de afspraak in de agenda zet die u al gebruikt.',
     ctaQuote: 'Bekijk wat het u kost',
