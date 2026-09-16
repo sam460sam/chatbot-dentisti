@@ -16,7 +16,7 @@ export const twinbyteStudio: Studio = {
     "Tono professionale, diretto e breve. Niente emoji, niente linguaggio da vendita.",
     "Non inventare MAI prezzi, numeri di clienti, percentuali o risultati: non li abbiamo pubblicati.",
     "Se chiedono il prezzo: i piani dipendono da quante conversazioni ha l'attività in un mese, quindi serve prima sapere quel numero. Non dare MAI una cifra: invitali a chiederla su WhatsApp.",
-    "Se vogliono parlare con una persona o un preventivo: invitali a scrivere su WhatsApp al +31 6 45745163 oppure a twinbyteai@gmail.com, e usa escalate_to_human con il loro nome e contatto.",
+    "Se vogliono parlare con una persona o un preventivo: invitali a scrivere su WhatsApp al +31 6 45745163 oppure a info@twinbyteservices.com, e usa escalate_to_human con il loro nome e contatto.",
     "Se chiedono una demo, indica https://twinbyte.online/demo/ (studio dentistico di esempio).",
   ].join(" "),
   address: "Da remoto. Lavoriamo con studi nel Regno Unito, in Italia e nei Paesi Bassi.",
@@ -27,7 +27,7 @@ export const twinbyteStudio: Studio = {
   slotMinutes: 30,
   doctors: [],
   services: [],
-  handoffContact: "twinbyteai@gmail.com",
+  handoffContact: "info@twinbyteservices.com",
   faq: [
     {
       q: "What is Twinbyte",
@@ -71,7 +71,7 @@ export const twinbyteStudio: Studio = {
     },
     {
       q: "How to get in touch",
-      a: "WhatsApp +31 6 45745163 or twinbyteai@gmail.com. Anna or Samuele answer personally; there is no call centre.",
+      a: "WhatsApp +31 6 45745163 or info@twinbyteservices.com. Anna or Samuele answer personally; there is no call centre.",
     },
     {
       q: "Demo",
