@@ -22,7 +22,7 @@ export function Hero({ t }: { t: Translation }) {
     <>
       <section className="band-paper pt-9">
         <div className="container-page grid items-start gap-5 lg:grid-cols-[1.05fr_0.95fr] lg:gap-6">
-          <div>
+          <div className="enter">
             <p className="t-label">{t.hero.eyebrow}</p>
 
             <h1 className="t-display mt-2">{t.hero.title}</h1>
@@ -57,7 +57,9 @@ export function Hero({ t }: { t: Translation }) {
             </ul>
           </div>
 
-          <ChatMockup t={t} />
+          <div className="plate-ink">
+            <ChatMockup t={t} />
+          </div>
         </div>
       </section>
 
@@ -65,7 +67,7 @@ export function Hero({ t }: { t: Translation }) {
       <section className="band-deep" aria-labelledby="daystrip-title">
         <div className="container-page">
           <p className="t-label">{t.dayStrip.eyebrow}</p>
-          <h2 id="daystrip-title" className="t-h2 mt-2 max-w-none">
+          <h2 id="daystrip-title" className="t-h2 mt-2 max-w-none break-words">
             {t.dayStrip.title}
           </h2>
 

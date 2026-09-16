@@ -49,10 +49,10 @@ export function ChatMockup({ t }: { t: Translation }) {
   const done = shown >= messages.length
 
   return (
-    <div>
+    <div className="bg-paper">
       <section
         aria-label={t.demo.tag}
-        className="border border-ink bg-paper"
+        className="border-x border-t border-ink bg-paper"
       >
         <header className="flex items-center justify-between gap-2 border-b border-paper-edge px-2 py-1">
           <p className="t-label">{t.demo.tag}</p>

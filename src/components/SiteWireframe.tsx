@@ -26,7 +26,7 @@ export function SiteWireframe({ t }: { t: Translation }) {
     <div className="flex items-end gap-2">
       {/* Desktop */}
       <div className="min-w-0 flex-1">
-        <div className="border border-ink bg-paper">
+        <div className="plate-verm border border-ink bg-paper">
           <div className="flex items-center gap-0.5 border-b border-paper-edge px-1 py-0.5">
             <span aria-hidden="true" className="h-0.5 w-0.5 rounded-sm bg-ink/30" />
             <span aria-hidden="true" className="h-0.5 w-0.5 rounded-sm bg-ink/30" />

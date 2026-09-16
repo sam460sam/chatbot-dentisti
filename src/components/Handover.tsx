@@ -27,13 +27,13 @@ export function Handover({ t }: { t: Translation }) {
 
         <div className="mt-3 grid gap-2 sm:grid-cols-2">
           {/* Yes — it books */}
-          <div className="mark-in border border-ink-edge bg-teal/20 p-2">
+          <div className="mark-in border border-teal-bright bg-teal/25 p-2">
             <p className="text-micro font-bold uppercase text-teal-bright">{t.demo.yes}</p>
             <p className="mt-1 text-small text-paper">{t.demo.books}</p>
           </div>
 
           {/* No — it takes the details and hands over */}
-          <div className="mark-out border border-ink-edge bg-verm/25 p-2">
+          <div className="mark-out border border-verm-bright bg-verm/30 p-2">
             <p className="text-micro font-bold uppercase text-verm-bright">{t.demo.no}</p>
             <p className="mt-1 text-small text-paper">{t.demo.toAPerson}</p>
 
