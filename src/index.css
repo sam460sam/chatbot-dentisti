@@ -197,7 +197,7 @@
      not by rhythm: paper is neutral, teal is the assistant, terracotta is the
      websites, ink is the one plate that earns going dark. */
   .band {
-    @apply scroll-mt-8 py-8 sm:py-9;
+    @apply scroll-mt-8 py-6 sm:py-8 lg:py-9;
   }
 
   .band-paper {
@@ -276,10 +276,14 @@
     box-shadow: 10px 10px 0 #F5F2EC;
   }
 
+  /* Only the offset shrinks on a phone. `currentColor` was wrong here: it
+     resolves to the inherited TEXT colour, so every plate turned the same
+     muddy grey and the terracotta one stopped being terracotta at all. */
   @media (max-width: 640px) {
-    .plate-ink, .plate-teal, .plate-verm, .plate-paper {
-      box-shadow: 6px 6px 0 currentColor;
-    }
+    .plate-ink { box-shadow: 6px 6px 0 #17160F; }
+    .plate-teal { box-shadow: 6px 6px 0 #0E5266; }
+    .plate-verm { box-shadow: 6px 6px 0 #A14531; }
+    .plate-paper { box-shadow: 6px 6px 0 #F5F2EC; }
   }
 
   /* ------------------------------------------------------------- entrance

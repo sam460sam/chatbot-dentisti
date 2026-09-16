@@ -20,7 +20,7 @@ export function Hero({ t }: { t: Translation }) {
 
   return (
     <>
-      <section className="band-paper pt-9">
+      <section className="band-paper pt-7 lg:pt-9">
         <div className="container-page grid items-start gap-5 lg:grid-cols-[1.05fr_0.95fr] lg:gap-6">
           <div className="enter">
             <p className="t-label">{t.hero.eyebrow}</p>
