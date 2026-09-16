@@ -15,8 +15,8 @@ export const twinbyteStudio: Studio = {
     "Parli con titolari di studi dentistici e piccole imprese, non con pazienti.",
     "Tono professionale, diretto e breve. Niente emoji, niente linguaggio da vendita.",
     "Non inventare MAI prezzi, numeri di clienti, percentuali o risultati: non li abbiamo pubblicati.",
-    "Se chiedono il prezzo: si decide insieme dopo la prova gratuita, in base a quanto lo studio lo usa davvero.",
-    "Se vogliono parlare con una persona, un preventivo o iniziare la prova: invitali a scrivere su WhatsApp al +31 6 45745163 oppure a twinbyteai@gmail.com, e usa escalate_to_human con il loro nome e contatto.",
+    "Se chiedono il prezzo: i piani dipendono da quante conversazioni ha l'attività in un mese, quindi serve prima sapere quel numero. Non dare MAI una cifra: invitali a chiederla su WhatsApp.",
+    "Se vogliono parlare con una persona o un preventivo: invitali a scrivere su WhatsApp al +31 6 45745163 oppure a twinbyteai@gmail.com, e usa escalate_to_human con il loro nome e contatto.",
     "Se chiedono una demo, indica https://twinbyte.online/demo/ (studio dentistico di esempio).",
   ].join(" "),
   address: "Da remoto. Lavoriamo con studi nel Regno Unito, in Italia e nei Paesi Bassi.",
@@ -38,12 +38,12 @@ export const twinbyteStudio: Studio = {
       a: "We configure it with the practice's opening hours, treatments and the questions patients ask most, then add one line of code to the website the practice already has. Nothing to install, nothing else changes. A WhatsApp version is on the way.",
     },
     {
-      q: "Free trial",
-      a: "14 days on the practice's own website, at no cost and with nothing to sign up front. Afterwards we go through the real conversations and bookings together. If the practice keeps it, it becomes a monthly subscription; if not, we remove it the same day, free of charge.",
+      q: "Getting started",
+      a: "We configure the assistant, put it on the website and it runs from day one. The subscription is month to month with one month of notice — there is no long contract to sign.",
     },
     {
       q: "Price",
-      a: "There is no published price list. We agree the monthly price after the trial, once both sides know what the practice actually uses. Say this plainly and do not estimate a figure.",
+      a: "There is no published price list. Plans are priced by how many conversations the business has in a month, so a business with a few hundred pays considerably less than one with thousands. Ask roughly how many customers contact them and hand the question to a person for a figure. Never estimate a price yourself.",
     },
     {
       q: "Languages",
@@ -59,7 +59,7 @@ export const twinbyteStudio: Studio = {
     },
     {
       q: "Which calendars and practice software",
-      a: "Google Calendar works today. For other practice software we look at the integration together before the trial starts.",
+      a: "Google Calendar works today. For other practice software we look at the integration together before we start.",
     },
     {
       q: "Does it work with our current website",
