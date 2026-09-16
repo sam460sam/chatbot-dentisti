@@ -12,6 +12,8 @@ type Props = {
   lang: string;
   /** primo messaggio, se lo studio ne vuole uno diverso da quello di default */
   hello?: string;
+  /** logo da mostrare sul pulsante della chat, al posto dell'icona di default */
+  logo?: string;
 };
 
 const T = {
@@ -22,7 +24,7 @@ const T = {
 
 const sessionId = `s_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
-export function ChatWidget({ studioId, apiUrl, privacyUrl, studioName, lang, hello }: Props) {
+export function ChatWidget({ studioId, apiUrl, privacyUrl, studioName, lang, hello, logo }: Props) {
   const t = T[lang.slice(0, 2).toLowerCase() as keyof typeof T] ?? T.en;
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
@@ -123,8 +125,29 @@ export function ChatWidget({ studioId, apiUrl, privacyUrl, studioName, lang, hel
         </section>
       )}
 
-      <button className={`dc-launcher${open ? " dc-open" : ""}`} onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-label="Apri chat">
-        {open ? "×" : t.open}
+      <button
+        className={`dc-launcher${open ? " dc-open" : ""}`}
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-label={t.open}
+        title={t.open}
+      >
+        {open ? (
+          <span className="dc-x" aria-hidden="true">×</span>
+        ) : logo ? (
+          <img className="dc-logo" src={logo} alt="" />
+        ) : (
+          /* Nessun logo configurato: icona di chat, non la parola "Chat" */
+          <svg className="dc-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        )}
       </button>
     </div>
   );

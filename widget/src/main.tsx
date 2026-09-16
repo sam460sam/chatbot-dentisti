@@ -14,6 +14,7 @@ const config = {
   studioName: script?.dataset.name ?? "lo studio",
   lang: script?.dataset.lang ?? "it",
   hello: script?.dataset.hello || undefined,
+  logo: script?.dataset.logo || undefined,
 };
 
 const host = document.createElement("div");

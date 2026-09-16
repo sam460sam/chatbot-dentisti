@@ -17,7 +17,11 @@
   width: 60px; height: 60px; border-radius: 50%; border: 0; cursor: pointer;
   background: var(--dc-accent); color: #fff; font: inherit; font-weight: 600; font-size: 15px;
   box-shadow: 0 6px 18px rgba(29, 42, 51, 0.22);
+  display: grid; place-items: center; padding: 0; overflow: hidden;
 }
+.dc-launcher .dc-icon { width: 28px; height: 28px; }
+.dc-launcher .dc-logo { width: 100%; height: 100%; object-fit: cover; display: block; }
+.dc-launcher .dc-x { font-size: 26px; line-height: 1; }
 .dc-launcher:focus-visible { outline: 3px solid var(--dc-text); outline-offset: 2px; }
 
 .dc-panel {
