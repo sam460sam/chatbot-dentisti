@@ -201,7 +201,7 @@ export const nl: Translation = {
           'Verwerkingsverantwoordelijke: TODO_LEGAL_NAME',
           'Adres: TODO_ADDRESS',
           'BTW- / KvK-nummer: TODO_VAT_NUMBER',
-          'E-mail: twinbyteai@gmail.com',
+          'E-mail: info@twinbyteservices.com',
         ],
       },
       {
@@ -230,7 +230,7 @@ export const nl: Translation = {
       {
         title: 'Uw rechten',
         body: [
-          'U kunt ons vragen om inzage in uw gegevens, om correctie, verwijdering of beperking, om een kopie in een overdraagbaar formaat, en u kunt bezwaar maken tegen de verwerking. Stuur een bericht naar twinbyteai@gmail.com en we regelen het.',
+          'U kunt ons vragen om inzage in uw gegevens, om correctie, verwijdering of beperking, om een kopie in een overdraagbaar formaat, en u kunt bezwaar maken tegen de verwerking. Stuur een bericht naar info@twinbyteservices.com en we regelen het.',
           'Vindt u dat wij niet zorgvuldig met uw gegevens omgaan, dan kunt u een klacht indienen bij de toezichthouder in uw land. TODO_SUPERVISORY_AUTHORITY',
         ],
       },

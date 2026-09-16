@@ -1,6 +1,6 @@
 export const SITE = {
   name: 'Twinbyte',
-  email: 'twinbyteai@gmail.com',
+  email: 'info@twinbyteservices.com',
   /** International format without "+" or spaces, as wa.me requires. */
   whatsappNumber: '31645745163',
   whatsappDisplay: '+31 6 45745163',

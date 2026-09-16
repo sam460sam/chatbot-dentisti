@@ -201,7 +201,7 @@ export const it: Translation = {
           'Titolare del trattamento: TODO_LEGAL_NAME',
           'Indirizzo: TODO_ADDRESS',
           'Partita IVA / numero di registrazione: TODO_VAT_NUMBER',
-          'Email: twinbyteai@gmail.com',
+          'Email: info@twinbyteservices.com',
         ],
       },
       {
@@ -230,7 +230,7 @@ export const it: Translation = {
       {
         title: 'I vostri diritti',
         body: [
-          'Potete chiederci l’accesso ai vostri dati, la rettifica, la cancellazione o la limitazione, una copia in formato portabile, e potete opporvi al trattamento. Scrivete a twinbyteai@gmail.com e ce ne occupiamo.',
+          'Potete chiederci l’accesso ai vostri dati, la rettifica, la cancellazione o la limitazione, una copia in formato portabile, e potete opporvi al trattamento. Scrivete a info@twinbyteservices.com e ce ne occupiamo.',
           'Se ritenete che non trattiamo correttamente i vostri dati, potete presentare reclamo all’autorità di controllo del vostro Paese. TODO_SUPERVISORY_AUTHORITY',
         ],
       },

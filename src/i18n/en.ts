@@ -201,7 +201,7 @@ export const en: Translation = {
           'Controller: TODO_LEGAL_NAME',
           'Address: TODO_ADDRESS',
           'VAT / company number: TODO_VAT_NUMBER',
-          'Email: twinbyteai@gmail.com',
+          'Email: info@twinbyteservices.com',
         ],
       },
       {
@@ -230,7 +230,7 @@ export const en: Translation = {
       {
         title: 'Your rights',
         body: [
-          'You can ask us for access to your data, for correction, deletion or restriction, for a copy in a portable format, and you can object to processing. Write to twinbyteai@gmail.com and we will take care of it.',
+          'You can ask us for access to your data, for correction, deletion or restriction, for a copy in a portable format, and you can object to processing. Write to info@twinbyteservices.com and we will take care of it.',
           'If you believe we handle your data incorrectly, you can lodge a complaint with your national data protection authority. TODO_SUPERVISORY_AUTHORITY',
         ],
       },
