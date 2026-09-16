@@ -60,7 +60,7 @@ export function Hero({ t }: { t: Translation }) {
 
   return (
     <section className="on-dark hero-ground relative text-white">
-      <div id="hero-runway" className={scrollDriven ? 'h-[230vh]' : ''}>
+      <div id="hero-runway" className={scrollDriven ? 'h-[185vh]' : ''}>
         <div
           className={
             scrollDriven

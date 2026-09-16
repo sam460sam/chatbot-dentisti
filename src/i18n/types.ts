@@ -51,17 +51,15 @@ export interface Translation {
   }
   /** Full-width scenes: an illustration with a headline over it. */
   scenes: {
-    afterHours: { eyebrow: string; lead: string; accent: string; tail: string; body: string }
     calendar: { eyebrow: string; lead: string; accent: string; tail: string; body: string }
     handover: { eyebrow: string; lead: string; accent: string; tail: string; body: string }
   }
-  how: { title: string; lead: string; steps: TitledItem[] }
+  how: { title: string; lead: string }
   benefits: { title: string; lead: string; items: TitledItem[] }
   security: { title: string; lead: string; items: TitledItem[] }
   websites: {
     title: string
     lead: string
-    items: string[]
     tags: string[]
     cta: string
     includesTitle: string
@@ -70,7 +68,7 @@ export interface Translation {
     who: string
     quoteNote: string
   }
-  trial: { title: string; lead: string; steps: string[]; cta: string; note: string }
+  trial: { steps: string[]; cta: string; note: string }
   faq: { title: string; lead: string; items: { q: string; a: string }[] }
   contact: {
     title: string

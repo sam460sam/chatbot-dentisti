@@ -58,13 +58,6 @@ export const it: Translation = {
     },
   },
   scenes: {
-    afterHours: {
-      eyebrow: 'Fuori orario',
-      lead: 'Mentre siete chiusi,',
-      accent: 'qualcuno',
-      tail: 'risponde lo stesso',
-      body: 'Le domande che arrivano a mezzanotte sono quelle di cui non venite mai a sapere. Ricevono una risposta, e un appuntamento, prima che riapriate.',
-    },
     calendar: {
       eyebrow: 'Nella vostra agenda',
       lead: 'L\u2019appuntamento \u00e8',
@@ -82,21 +75,7 @@ export const it: Translation = {
   },
   how: {
     title: 'Come funziona',
-    lead: 'Tre passaggi, e il lavoro da parte vostra è quasi tutto nel primo.',
-    steps: [
-      {
-        title: 'Lo configuriamo con i vostri dati',
-        body: 'Ci mandate orari, servizi e le domande che i clienti fanno più spesso. Costruiamo l’assistente intorno a quelle informazioni, così le risposte sono le vostre e non un testo generico.',
-      },
-      {
-        title: 'Lo inseriamo sul vostro sito',
-        body: 'Una riga di codice sul sito che avete già. Niente da installare, il resto del sito non cambia. La versione WhatsApp è in arrivo.',
-      },
-      {
-        title: 'I clienti prenotano da soli',
-        body: 'L’assistente controlla le disponibilità, chiede nome e numero di telefono e crea l’appuntamento nell’agenda che usate già. Il controllo resta interamente vostro.',
-      },
-    ],
+    lead: 'Due settimane sul vostro sito, a costo zero. Siamo nuovi, e preferiamo dimostrarlo sul vostro sito piuttosto che prometterlo a parole.',
   },
   benefits: {
     title: 'Cosa ci guadagna la vostra attività',
@@ -113,10 +92,6 @@ export const it: Translation = {
       {
         title: 'Parla la lingua dei vostri clienti',
         body: 'Configuriamo l’assistente nella lingua in cui lavorate e, se un cliente chiede di essere seguito in un’altra lingua, passa alla sua. Utile ovunque i clienti non siano tutti del posto.',
-      },
-      {
-        title: 'Le richieste delicate arrivano a una persona',
-        body: 'Su ciò che è urgente, insolito o fuori da quello che sa, l’assistente non improvvisa: prende nome e numero e crea un evento "da richiamare" nella vostra agenda, così se ne occupa qualcuno del vostro team.',
       },
     ],
   },
@@ -141,12 +116,6 @@ export const it: Translation = {
   websites: {
     title: 'Siti web per piccole aziende',
     lead: 'Oltre all’assistente realizziamo siti web: quelli che servono davvero a una piccola azienda, non una vetrina per noi.',
-    items: [
-      'Veloci prima di tutto sul telefono, perché è lì che sono i vostri clienti',
-      'Una struttura chiara: cosa fate, dove siete, come vi si contatta',
-      'L’assistente si può aggiungere in un secondo momento, sullo stesso sito',
-      'Nessun CMS da imparare: ci dite cosa cambia e lo aggiorniamo noi',
-    ],
     tags: ['Mobile-first', 'Veloce di base', 'Pronto per l’assistente'],
     cta: 'Chiedi informazioni su un sito',
     includesTitle: 'Cosa comprende un sito',
@@ -162,8 +131,6 @@ export const it: Translation = {
     quoteNote: 'Prezzo e tempi dopo una chiamata di dieci minuti: dipende da quante pagine servono e se avete già testi e foto.',
   },
   trial: {
-    title: 'Due settimane, sul vostro sito, a costo zero',
-    lead: 'Siamo nuovi, e preferiamo dimostrarlo sul vostro sito piuttosto che prometterlo a parole.',
     steps: [
       'Ci mandate orari, servizi e le cinque domande che i clienti fanno più spesso. È la vostra parte: venti minuti circa.',
       'Configuriamo l’assistente e lo mettiamo sul vostro sito. Una riga di codice, il resto non cambia.',
@@ -190,10 +157,6 @@ export const it: Translation = {
         a: 'Non pubblichiamo un prezzo, perché non sappiamo ancora quanto la vostra attività lo userà. Due settimane di conversazioni vere lo dicono a entrambi, e poi concordiamo una cifra mensile. Strumenti simili sul mercato stanno indicativamente fra i 30 e i 150 euro al mese; vi diremo con onestà dove vi collocate prima che vi impegniate a qualcosa.',
       },
       {
-        q: 'Cosa succede con le richieste urgenti o insolite?',
-        a: 'L’assistente non improvvisa. Prende nome e numero di telefono e crea un evento "da richiamare" nella vostra agenda, così il vostro team può intervenire in fretta. Lo stesso vale quando un cliente vuole spostare o disdire un appuntamento.',
-      },
-      {
         q: 'Funziona con il sito che abbiamo già?',
         a: 'Sì, se possiamo aggiungerci una riga di codice. È possibile su quasi tutti i siti — WordPress, Wix, Squarespace, Shopify o sviluppati su misura. Per il resto il vostro sito resta esattamente com’è.',
       },
@@ -202,20 +165,8 @@ export const it: Translation = {
         a: 'No. Configuriamo l’assistente sull’agenda con cui lavorate già: con Google Calendar è pronto, per altri gestionali valutiamo insieme l’integrazione prima della prova. Gli appuntamenti compaiono come eventi normali e potete spostarli o cancellarli come sempre.',
       },
       {
-        q: 'In quali lingue risponde?',
-        a: 'Configuriamo l’assistente nella lingua in cui lavorate, e a un cliente che scrive in un’altra lingua risponde in quella. Non è limitato a un elenco ristretto, il che conta se i vostri clienti arrivano da ovunque.',
-      },
-      {
-        q: 'Per che tipo di attività è pensato?',
-        a: 'Per chiunque riceva sempre le stesse domande e prenda appuntamenti: studi dentistici e medici, saloni, officine, studi professionali, personal trainer, consulenti, centri assistenza. Abbiamo iniziato dagli studi dentistici ed è lì che l’assistente è più collaudato; per il resto funziona allo stesso modo.',
-      },
-      {
         q: 'E se volessimo smettere?',
         a: 'Ce lo dite e togliamo l’assistente dal sito. Durante la prova non c’è nulla da disdire; dopo, l’abbonamento è mese per mese.',
-      },
-      {
-        q: 'Chi c’è dietro Twinbyte?',
-        a: 'Anna e Samuele. Siamo in due, quindi parlate sempre con chi ha configurato il vostro assistente: nessun sistema di ticket in mezzo.',
       },
     ],
   },

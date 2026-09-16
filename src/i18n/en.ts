@@ -58,13 +58,6 @@ export const en: Translation = {
     },
   },
   scenes: {
-    afterHours: {
-      eyebrow: 'After hours',
-      lead: 'While you are closed,',
-      accent: 'someone',
-      tail: 'still answers',
-      body: 'The questions that arrive at midnight are the ones you never hear about. They get an answer, and a booking, before you open again.',
-    },
     calendar: {
       eyebrow: 'In your calendar',
       lead: 'The appointment is',
@@ -82,21 +75,7 @@ export const en: Translation = {
   },
   how: {
     title: 'How it works',
-    lead: 'Three steps, and the work on your side is mostly the first one.',
-    steps: [
-      {
-        title: 'We set it up with your details',
-        body: 'You send us your opening hours, what you offer and the questions customers ask most often. We configure the assistant around them, so the answers are yours and not generic filler.',
-      },
-      {
-        title: 'We put it on your website',
-        body: 'One line of code on the site you already have. Nothing to install, nothing else changes. A WhatsApp version is on the way.',
-      },
-      {
-        title: 'Customers book themselves',
-        body: 'The assistant checks your availability, asks for a name and a phone number and creates the appointment in the calendar you already use. You keep full control of it.',
-      },
-    ],
+    lead: 'Two weeks on your own website, at no cost. We are new, and we would rather prove it on your site than promise it in a meeting.',
   },
   benefits: {
     title: 'What your business gets out of it',
@@ -113,10 +92,6 @@ export const en: Translation = {
       {
         title: 'It speaks your customers’ language',
         body: 'We set the assistant up in the language you work in, and when a customer asks to be helped in another one it switches over. Useful anywhere your customers are not all local.',
-      },
-      {
-        title: 'Sensitive requests reach a person',
-        body: 'On anything urgent, unusual or outside what it knows, the assistant does not improvise. It takes the name and number and creates a "call back" event in your calendar, so someone on your team follows up.',
       },
     ],
   },
@@ -141,12 +116,6 @@ export const en: Translation = {
   websites: {
     title: 'Websites for small businesses',
     lead: 'Besides the assistant we build websites — the kind a small business actually needs, not a showcase for us.',
-    items: [
-      'Fast on a phone first, because that is where your customers are',
-      'A clear structure: what you do, where you are, how to reach you',
-      'The assistant can be added later, on the same site',
-      'No CMS to learn: you tell us what changed, we update it',
-    ],
     tags: ['Mobile-first', 'Fast by default', 'Assistant-ready'],
     cta: 'Ask about a website',
     includesTitle: 'What a site includes',
@@ -162,8 +131,6 @@ export const en: Translation = {
     quoteNote: 'Price and timing after a ten-minute call: it depends on how many pages you need and whether you already have text and photos.',
   },
   trial: {
-    title: 'Two weeks, on your own website, at no cost',
-    lead: 'We are new, and we would rather prove it on your site than promise it in a meeting.',
     steps: [
       'You send your opening hours, your services and the five questions customers ask most. That is your part, about twenty minutes.',
       'We configure the assistant and put it on your site. One line of code, nothing else changes.',
@@ -190,10 +157,6 @@ export const en: Translation = {
         a: 'We do not publish a price, because we do not know yet how much your business will use it. Two weeks of real conversations tell us both, and then we agree a monthly figure. Comparable tools on the market sit roughly between €30 and €150 a month; we will be honest about where you land before you commit to anything.',
       },
       {
-        q: 'What happens with urgent or unusual requests?',
-        a: 'The assistant does not improvise. It takes the name and phone number and creates a "call back" event in your calendar so your team can react quickly. The same happens when a customer wants to move or cancel an appointment.',
-      },
-      {
         q: 'Does it work with our current website?',
         a: 'Yes, as long as we can add one line of code to it. That is the case for almost every site — WordPress, Wix, Squarespace, Shopify or a custom build. Your site otherwise stays exactly as it is.',
       },
@@ -202,20 +165,8 @@ export const en: Translation = {
         a: 'No. We set the assistant up around the calendar you already work with: with Google Calendar it is ready to go, and for other booking software we look at the integration together before the trial starts. Appointments appear as ordinary events you can move or cancel as always.',
       },
       {
-        q: 'Which languages does it speak?',
-        a: 'We configure the assistant in the language you work in, and a customer who writes in another language is answered in that one. It is not limited to a short list, which matters if your customers come from anywhere.',
-      },
-      {
-        q: 'What kind of businesses is this for?',
-        a: 'Anyone whose customers ask the same questions and book appointments: dental and medical practices, salons, garages, studios, trainers, consultants, repair shops. We started with dental practices and that is where the assistant is most tested — the rest works the same way.',
-      },
-      {
         q: 'What if we want to stop?',
         a: 'You tell us and we remove the assistant from your site. During the trial there is nothing to cancel; afterwards the subscription runs month by month.',
-      },
-      {
-        q: 'Who is behind Twinbyte?',
-        a: 'Anna and Samuele. Two people, which means you always talk to whoever set up your assistant — no ticket system in between.',
       },
     ],
   },

@@ -3,10 +3,8 @@ import {
   ArrowRight,
   ArrowUpRight,
   Bot,
-  CalendarCheck,
   Check,
   Clock,
-  Code2,
   FileText,
   Languages,
   Mail,
@@ -14,9 +12,7 @@ import {
   Minus,
   PhoneCall,
   Plus,
-  Settings2,
   ShieldCheck,
-  Siren,
   Sparkles,
 } from 'lucide-react'
 import { Hero } from './Hero'
@@ -73,7 +69,7 @@ function Scene({
   align = 'left',
 }: {
   image: string
-  content: Translation['scenes']['afterHours']
+  content: Translation['scenes']['calendar']
   align?: 'left' | 'right'
 }) {
   return (
@@ -115,8 +111,7 @@ function Scene({
   )
 }
 
-const HOW_ICONS = [Settings2, Code2, CalendarCheck]
-const BENEFIT_ICONS = [PhoneCall, Clock, Languages, Siren]
+const BENEFIT_ICONS = [PhoneCall, Clock, Languages]
 const SECURITY_ICONS = [ShieldCheck, Bot, FileText]
 
 export function Home({ t }: { t: Translation }) {
@@ -181,41 +176,49 @@ export function Home({ t }: { t: Translation }) {
         </div>
       </section>
 
-      <Scene image="/scene-after-hours.jpg" content={t.scenes.afterHours} />
 
-      {/* How it works */}
-      <Section id="how" kicker="01" title={t.how.title} lead={t.how.lead}>
-        <ol className="grid gap-6 md:grid-cols-3">
-          {t.how.steps.map((step, index) => {
-            const Icon = HOW_ICONS[index]
-            return (
-              <Reveal key={step.title} delay={index * 110}>
-                <li className="card group h-full" onMouseMove={spotlight}>
+      {/* How it works, and the two weeks that come first */}
+      <Section id="how" kicker="01" title={t.how.title} lead={t.how.lead} tone="tint">
+        <div className="grid gap-12 lg:grid-cols-[1fr_0.85fr]">
+          <ol className="relative space-y-8 before:absolute before:left-[15px] before:top-2 before:h-[calc(100%-1rem)] before:w-px before:bg-gradient-to-b before:from-accent-bright before:via-accent/40 before:to-transparent">
+            {t.trial.steps.map((step, index) => (
+              <Reveal key={step} delay={index * 90}>
+                <li className="relative flex gap-5">
                   <span
                     aria-hidden="true"
-                    className="pointer-events-none absolute -right-3 -top-7 text-[120px] font-extrabold leading-none text-white/[0.06] transition-colors group-hover:text-accent-bright/15"
+                    className="z-10 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent text-[13px] font-bold text-white ring-4 ring-surface-sunken"
                   >
                     {index + 1}
                   </span>
-                  <span className="icon-badge">
-                    <Icon size={21} aria-hidden="true" />
-                  </span>
-                  <h3 className="relative mt-6 text-lg font-bold tracking-tight">{step.title}</h3>
-                  <p className="relative mt-3 text-[15px] leading-relaxed text-ink-soft">
-                    {step.body}
-                  </p>
+                  <p className="pt-1 text-[16px] leading-relaxed text-ink-soft">{step}</p>
                 </li>
               </Reveal>
-            )
-          })}
-        </ol>
+            ))}
+          </ol>
+
+          <Reveal delay={160}>
+            <div className="on-dark relative overflow-hidden rounded-2xl bg-night p-8 text-white shadow-float">
+              <div className="relative">
+                <span className="icon-badge-dark">
+                  <MessageCircle size={21} aria-hidden="true" />
+                </span>
+                {/* PRICE_TODO: insert the monthly subscription price here once it is decided. */}
+                <p className="mt-6 text-[15px] leading-relaxed text-white/70">{t.trial.note}</p>
+                <a className="btn-primary mt-8 w-full" href={waLink(t.wa.trial)} rel="noopener">
+                  {t.trial.cta}
+                  <ArrowUpRight size={17} aria-hidden="true" />
+                </a>
+              </div>
+            </div>
+          </Reveal>
+        </div>
       </Section>
 
       <Scene image="/scene-calendar.jpg" content={t.scenes.calendar} align="right" />
 
       {/* Benefits */}
-      <Section id="benefits" kicker="02" title={t.benefits.title} lead={t.benefits.lead} tone="tint">
-        <ul className="grid gap-6 sm:grid-cols-2">
+      <Section id="benefits" kicker="02" title={t.benefits.title} lead={t.benefits.lead}>
+        <ul className="grid gap-6 md:grid-cols-3">
           {t.benefits.items.map((item, index) => {
             const Icon = BENEFIT_ICONS[index]
             return (
@@ -299,47 +302,9 @@ export function Home({ t }: { t: Translation }) {
         </div>
       </Section>
 
-      {/* Free trial */}
-      <Section id="trial" kicker="05" title={t.trial.title} lead={t.trial.lead} tone="tint">
-        <div className="grid gap-12 lg:grid-cols-[1fr_0.85fr]">
-          <ol className="relative space-y-8 before:absolute before:left-[15px] before:top-2 before:h-[calc(100%-1rem)] before:w-px before:bg-gradient-to-b before:from-accent-bright before:via-accent/40 before:to-transparent">
-            {t.trial.steps.map((step, index) => (
-              <Reveal key={step} delay={index * 90}>
-                <li className="relative flex gap-5">
-                  <span
-                    aria-hidden="true"
-                    className="z-10 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent text-[13px] font-bold text-white ring-4 ring-surface-sunken"
-                  >
-                    {index + 1}
-                  </span>
-                  <p className="pt-1 text-[16px] leading-relaxed text-ink-soft">{step}</p>
-                </li>
-              </Reveal>
-            ))}
-          </ol>
-
-          <Reveal delay={160}>
-            <div className="on-dark relative overflow-hidden rounded-2xl bg-night p-8 text-white shadow-float">
-              <div className="relative">
-                <span className="icon-badge-dark">
-                  <MessageCircle size={21} aria-hidden="true" />
-                </span>
-                {/* PRICE_TODO: insert the monthly subscription price here once it is decided. */}
-                <p className="mt-6 text-[15px] leading-relaxed text-white/70">{t.trial.note}</p>
-                <a className="btn-primary mt-8 w-full" href={waLink(t.wa.trial)} rel="noopener">
-                  {t.trial.cta}
-                  <ArrowUpRight size={17} aria-hidden="true" />
-                </a>
-                <p className="mt-4 text-center text-[13px] text-white/40">{t.hero.note}</p>
-              </div>
-            </div>
-          </Reveal>
-        </div>
-      </Section>
-
       {/* FAQ */}
-      <Section id="faq" kicker="06" title={t.faq.title} lead={t.faq.lead}>
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_0.6fr]">
+      <Section id="faq" kicker="05" title={t.faq.title} lead={t.faq.lead} tone="tint">
+        <div className="max-w-3xl">
           <div>
             {t.faq.items.map((item, index) => (
             <Reveal key={item.q} delay={index * 60}>
@@ -360,26 +325,11 @@ export function Home({ t }: { t: Translation }) {
             ))}
           </div>
 
-          <Reveal delay={120}>
-            <aside className="card sticky top-28" onMouseMove={spotlight}>
-              <span className="icon-badge">
-                <MessageCircle size={21} aria-hidden="true" />
-              </span>
-              <p className="relative mt-6 text-[15px] leading-relaxed text-ink-soft">{t.faq.lead}</p>
-              <a
-                className="btn-primary relative mt-6 w-full"
-                href={waLink(t.wa.generic)}
-                rel="noopener"
-              >
-                {t.contact.whatsapp}
-              </a>
-            </aside>
-          </Reveal>
         </div>
       </Section>
 
       {/* Contact */}
-      <Section id="contact" kicker="07" title={t.contact.title} lead={t.contact.lead} tone="tint">
+      <Section id="contact" kicker="06" title={t.contact.title} lead={t.contact.lead}>
         <Reveal>
           <div className="on-dark relative overflow-hidden rounded-3xl bg-night p-8 text-white shadow-float sm:p-12">
 

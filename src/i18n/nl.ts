@@ -58,13 +58,6 @@ export const nl: Translation = {
     },
   },
   scenes: {
-    afterHours: {
-      eyebrow: 'Buiten openingstijden',
-      lead: 'Terwijl u gesloten bent,',
-      accent: 'antwoordt',
-      tail: 'er toch iemand',
-      body: 'De vragen die om middernacht binnenkomen zijn precies de vragen waar u nooit iets van hoort. Ze krijgen een antwoord, en een afspraak, voordat u weer opengaat.',
-    },
     calendar: {
       eyebrow: 'In uw agenda',
       lead: 'De afspraak staat er',
@@ -82,21 +75,7 @@ export const nl: Translation = {
   },
   how: {
     title: 'Hoe het werkt',
-    lead: 'Drie stappen, en het werk aan uw kant zit vooral in de eerste.',
-    steps: [
-      {
-        title: 'Wij richten het in met uw gegevens',
-        body: 'U stuurt ons uw openingstijden, wat u aanbiedt en de vragen die klanten het vaakst stellen. Daar bouwen wij de assistent omheen, zodat de antwoorden van u zijn en niet uit een standaardtekst komen.',
-      },
-      {
-        title: 'Wij plaatsen het op uw website',
-        body: 'Eén regel code op de site die u al heeft. Niets te installeren, verder verandert er niets. Een WhatsApp-versie volgt binnenkort.',
-      },
-      {
-        title: 'Klanten plannen zelf',
-        body: 'De assistent kijkt wanneer u beschikbaar bent, vraagt om een naam en een telefoonnummer en zet de afspraak in de agenda die u al gebruikt. U houdt die volledig in eigen hand.',
-      },
-    ],
+    lead: 'Twee weken op uw eigen website, kosteloos. Wij zijn nieuw, en bewijzen het liever op uw site dan het in een gesprek te beloven.',
   },
   benefits: {
     title: 'Wat uw bedrijf eraan heeft',
@@ -113,10 +92,6 @@ export const nl: Translation = {
       {
         title: 'Hij spreekt de taal van uw klant',
         body: 'We stellen de assistent in op de taal waarin u werkt, en als een klant vraagt om verder te gaan in een andere taal, schakelt hij over. Handig overal waar uw klanten niet allemaal van hier zijn.',
-      },
-      {
-        title: 'Gevoelige vragen komen bij een mens terecht',
-        body: 'Bij alles wat dringend of ongewoon is, of buiten zijn kennis valt, gaat de assistent niet zelf aan de slag. Hij noteert naam en nummer en maakt een "terugbellen"-afspraak in uw agenda, zodat iemand van uw team het oppakt.',
       },
     ],
   },
@@ -141,12 +116,6 @@ export const nl: Translation = {
   websites: {
     title: 'Websites voor kleine bedrijven',
     lead: 'Naast de assistent bouwen we websites — het soort site dat een klein bedrijf echt nodig heeft, geen etalage voor onszelf.',
-    items: [
-      'Snel op de telefoon in de eerste plaats, want daar zitten uw klanten',
-      'Een heldere opbouw: wat u doet, waar u zit, hoe men u bereikt',
-      'De assistent kan er later op dezelfde site bij',
-      'Geen CMS om te leren: u zegt wat er verandert, wij passen het aan',
-    ],
     tags: ['Mobile-first', 'Standaard snel', 'Klaar voor de assistent'],
     cta: 'Vraag naar een website',
     includesTitle: 'Wat een site omvat',
@@ -162,8 +131,6 @@ export const nl: Translation = {
     quoteNote: 'Prijs en planning na een telefoontje van tien minuten: het hangt af van hoeveel pagina\u2019s u nodig heeft en of u al teksten en foto\u2019s heeft.',
   },
   trial: {
-    title: 'Twee weken, op uw eigen website, kosteloos',
-    lead: 'Wij zijn nieuw, en bewijzen het liever op uw site dan het in een gesprek te beloven.',
     steps: [
       'U stuurt uw openingstijden, uw diensten en de vijf vragen die klanten het vaakst stellen. Dat is uw deel: zo’n twintig minuten.',
       'Wij richten de assistent in en zetten hem op uw site. Eén regel code, verder verandert er niets.',
@@ -190,10 +157,6 @@ export const nl: Translation = {
         a: 'We publiceren geen prijs, omdat we nog niet weten hoeveel uw bedrijf hem gebruikt. Twee weken echte gesprekken vertellen dat ons allebei, en daarna spreken we een maandbedrag af. Vergelijkbare tools in de markt zitten ruwweg tussen de 30 en 150 euro per maand; we zeggen u eerlijk waar u uitkomt voordat u zich ergens aan verbindt.',
       },
       {
-        q: 'Wat gebeurt er bij dringende of ongewone vragen?',
-        a: 'De assistent gaat niet zelf aan de slag. Hij noteert naam en telefoonnummer en maakt een "terugbellen"-afspraak in uw agenda, zodat uw team snel kan reageren. Hetzelfde gebeurt als een klant een afspraak wil verzetten of annuleren.',
-      },
-      {
         q: 'Werkt het met onze huidige website?',
         a: 'Ja, zolang we er één regel code aan kunnen toevoegen. Dat kan bij vrijwel elke site — WordPress, Wix, Squarespace, Shopify of maatwerk. Verder blijft uw site precies zoals hij is.',
       },
@@ -202,20 +165,8 @@ export const nl: Translation = {
         a: 'Nee. We stellen de assistent in op de agenda waarmee u al werkt: met Google Agenda is het meteen klaar, en voor andere boekingssoftware bekijken we de koppeling samen vóór de proefperiode. Afspraken verschijnen als gewone items die u kunt verzetten of annuleren zoals altijd.',
       },
       {
-        q: 'In welke talen antwoordt de assistent?',
-        a: 'We stellen de assistent in op de taal waarin u werkt, en een klant die in een andere taal schrijft, krijgt in die taal antwoord. Hij is niet beperkt tot een kort lijstje, wat telt als uw klanten van overal komen.',
-      },
-      {
-        q: 'Voor wat voor bedrijven is dit bedoeld?',
-        a: 'Voor iedereen die steeds dezelfde vragen krijgt en op afspraak werkt: tandarts- en huisartspraktijken, salons, garages, adviesbureaus, trainers, reparatiebedrijven. We zijn begonnen bij tandartspraktijken en daar is de assistent het meest getest; voor de rest werkt het hetzelfde.',
-      },
-      {
         q: 'En als we willen stoppen?',
         a: 'U geeft het aan en wij halen de assistent van uw site. Tijdens de proefperiode valt er niets op te zeggen; daarna loopt het abonnement per maand.',
-      },
-      {
-        q: 'Wie zit er achter Twinbyte?',
-        a: 'Anna en Samuele. Met z’n tweeën, dus u spreekt altijd degene die uw assistent heeft ingericht — geen ticketsysteem ertussen.',
       },
     ],
   },
