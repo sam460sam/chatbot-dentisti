@@ -1,3 +1,29 @@
+/* ---------------------------------------------------------------- typefaces
+   Self-hosted. The site loads nothing from a third-party server, which is why
+   it needs no cookie banner. Bricolage sets the display, Inter the reading. */
+
+@font-face {
+  font-family: 'Bricolage';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('./fonts/bricolage-latin-var.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Bricolage';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('./fonts/bricolage-latin-ext-var.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0,
+    U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 @font-face {
   font-family: 'InterVariable';
   font-style: normal;
@@ -26,7 +52,9 @@
   font-weight: 400;
   font-display: swap;
   src: url('./fonts/instrument-serif-italic.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
 }
 
 @tailwind base;
@@ -40,141 +68,190 @@
   }
 
   body {
-    @apply bg-surface-sunken font-sans text-ink antialiased;
-    font-feature-settings: 'cv11', 'ss01';
-    font-variation-settings: 'opsz' 28;
+    @apply bg-paper font-sans text-body text-ink-soft antialiased;
+    /* tnum: times, dates and phone numbers line up in columns. */
+    font-feature-settings: 'cv11', 'ss01', 'tnum';
   }
 
   ::selection {
-    @apply bg-accent/20 text-ink;
+    @apply bg-teal text-paper;
   }
 
+  /* One focus ring for the whole site. It clears 3:1 on paper, ink, teal and
+     terracotta alike, so there is never a theme-conditional focus branch to break. */
   :focus-visible {
-    @apply rounded-md outline-none ring-2 ring-accent-bright ring-offset-2 ring-offset-surface-sunken;
+    outline: 2px solid #0E5266;
+    outline-offset: 2px;
+    border-radius: 2px;
   }
 
-  .on-dark :focus-visible {
-    @apply ring-accent-bright ring-offset-night;
+  .on-ink :focus-visible,
+  .on-flood :focus-visible {
+    outline-color: #F5F2EC;
+  }
+
+  /* Safari and VoiceOver drop the list role from any list with list-style:none,
+     which Tailwind's preflight sets on every ul and ol. */
+  [role='list'] {
+    list-style: none;
   }
 }
 
 @layer components {
   .container-page {
-    @apply mx-auto w-full max-w-content px-5 sm:px-7 lg:px-10;
+    @apply mx-auto w-full max-w-content px-2 sm:px-3 lg:px-5;
   }
 
-  .eyebrow {
-    @apply inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em];
+  /* ---------------------------------------------------------- the square corner
+     The one ownable shape. It is not in the logo; it is derived from it — the
+     bubble's tail abstracted into a corner, so the mark scales from an 8px chip
+     to a 640px panel without ever drawing a triangle.
+       .mark-in  — something is said TO you   (square bottom-left)
+       .mark-out — your turn                  (square bottom-right)  */
+  .mark-in {
+    border-radius: 10px 10px 10px 0;
   }
 
+  .mark-out {
+    border-radius: 10px 10px 0 10px;
+  }
+
+  /* ------------------------------------------------------------------ type */
+  .t-display {
+    @apply font-display text-h1 font-extrabold text-ink sm:text-display;
+    text-wrap: balance;
+  }
+
+  .t-h2 {
+    @apply max-w-title font-display text-h3 font-bold text-ink sm:text-h2;
+    text-wrap: balance;
+  }
+
+  .t-h3 {
+    @apply font-display text-h4 font-bold text-ink;
+  }
+
+  .t-lead {
+    @apply max-w-lead text-body text-ink-soft sm:text-lead;
+  }
+
+  .t-body {
+    @apply max-w-measure text-body text-ink-soft;
+  }
+
+  .t-label {
+    @apply text-label font-bold uppercase text-ink-mute;
+  }
+
+  /* The folio: a printed thumb-index, not a decorative number. */
+  .t-folio {
+    @apply font-sans text-micro font-bold uppercase text-ink-mute;
+  }
+
+  /* --------------------------------------------------------------- controls */
   .btn {
-    @apply relative inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-[15px] font-semibold transition duration-200 will-change-transform;
+    @apply mark-out inline-flex items-center justify-center gap-1 px-3 py-2 text-small font-semibold transition-colors duration-150;
   }
 
-  .btn-primary {
-    @apply btn bg-accent text-white shadow-glow hover:-translate-y-0.5 hover:bg-accent-dark;
+  .btn-teal {
+    @apply btn bg-teal text-paper hover:bg-teal-deep;
   }
 
-  .btn-ghost {
-    @apply btn border border-white/20 bg-white/[0.06] text-ink hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/10;
+  .btn-verm {
+    @apply btn bg-verm text-paper hover:bg-verm-deep;
   }
 
-  .btn-ghost-dark {
-    @apply btn border border-white/25 bg-white/10 text-white hover:-translate-y-0.5 hover:border-white/40 hover:bg-white/15;
+  .btn-line {
+    @apply btn border border-ink bg-transparent text-ink hover:bg-ink hover:text-paper;
   }
 
-  .section {
-    @apply scroll-mt-20 py-20 sm:py-28;
+  .btn-line-flood {
+    @apply btn border border-paper/60 bg-transparent text-paper hover:bg-paper hover:text-ink;
   }
 
-  .section-kicker {
-    @apply text-[11px] font-bold uppercase tracking-[0.18em] text-accent-bright;
+  /* ---------------------------------------------------------------- surfaces
+     A hairline is always `1px solid <hex>` — never rgba, never fractional.
+     Safari renders fractional and translucent hairlines at inconsistent
+     thickness across device pixel ratios, and a ruled page shows it. */
+  .rule {
+    @apply border-t border-paper-edge;
   }
 
-  .section-title {
-    @apply mt-4 max-w-3xl text-[28px] font-extrabold leading-[1.1] tracking-[-0.02em] text-ink sm:text-4xl lg:text-[44px];
+  .rule-deep {
+    @apply border-t border-paper-edge-deep;
   }
 
-  .section-lead {
-    @apply mt-4 max-w-2xl text-[17px] leading-relaxed text-ink-soft;
+  .rule-ink {
+    @apply border-t border-ink-edge;
   }
 
-  /* Card with a cursor-following highlight; --mx/--my are set in JS. */
-  .card {
-    @apply relative overflow-hidden rounded-2xl border border-white/10 bg-surface-raised p-7 transition duration-300;
+  /* A section is a band of ground. There are four, and they alternate by meaning,
+     not by rhythm: paper is neutral, teal is the assistant, terracotta is the
+     websites, ink is the one plate that earns going dark. */
+  .band {
+    @apply scroll-mt-8 py-8 sm:py-9;
   }
 
-  .card::before {
-    content: '';
-    @apply pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300;
-    background: radial-gradient(
-      420px circle at var(--mx, 50%) var(--my, 0%),
-      rgba(127, 211, 193, 0.09),
-      transparent 60%
-    );
+  .band-paper {
+    @apply band bg-paper;
   }
 
-  .card:hover {
-    @apply -translate-y-1 border-accent-bright/35;
+  .band-deep {
+    @apply band bg-paper-deep;
   }
 
-  .card:hover::before {
-    @apply opacity-100;
+  .band-teal {
+    @apply band on-flood bg-teal text-paper;
   }
 
-  .card-dark {
-    @apply relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.05] p-7 transition duration-300;
+  .band-verm {
+    @apply band on-flood bg-verm text-paper;
   }
 
-  .card-dark:hover {
-    @apply -translate-y-1 border-accent-bright/40 bg-white/[0.07];
+  .band-ink {
+    @apply band on-ink bg-ink text-paper;
   }
 
-  .icon-badge {
-    @apply grid h-11 w-11 place-items-center rounded-xl bg-accent/20 text-accent-bright ring-1 ring-accent-bright/25;
+  /* On a flood or the ink plate the heading and lead invert. */
+  .on-flood .t-h2,
+  .on-ink .t-h2,
+  .on-flood .t-h3,
+  .on-ink .t-h3 {
+    @apply text-paper;
   }
 
-  .icon-badge-dark {
-    @apply grid h-11 w-11 place-items-center rounded-xl bg-accent/15 text-accent-bright ring-1 ring-accent-bright/25;
+  .on-flood .t-lead,
+  .on-flood .t-body {
+    @apply text-paper;
   }
 
-  /* Gradient grounds instead of blurred blobs: Safari on iOS drops whole tiles
-     when it has to composite large filter:blur layers while scrolling. */
-  .hero-ground {
-    background:
-      radial-gradient(1100px 620px at 12% 0%, rgba(31, 111, 139, 0.42), transparent 62%),
-      radial-gradient(900px 700px at 92% 78%, rgba(127, 211, 193, 0.12), transparent 60%),
-      #080d13;
+  .on-ink .t-lead,
+  .on-ink .t-body {
+    @apply text-paper-dim;
   }
 
-  .dark-ground {
-    background:
-      radial-gradient(900px 500px at 88% 0%, rgba(31, 111, 139, 0.3), transparent 62%),
-      #050a0f;
+  .on-flood .t-label,
+  .on-flood .t-folio {
+    @apply text-paper;
   }
 
-  /* Editorial accent for a single word in a scene headline. */
+  .on-ink .t-label,
+  .on-ink .t-folio {
+    @apply text-paper-mute;
+  }
+
+  /* --------------------------------------------------------------- the marks
+     A 6px solid square replaces every borrowed check icon. It takes the ink of
+     whichever half of the business it belongs to. */
+  .mark {
+    @apply mt-0.5 inline-block h-0.5 w-0.5 shrink-0;
+  }
+
+  /* Editorial accent for a single word. */
   .serif {
-    font-family: 'InstrumentSerif', Georgia, 'Times New Roman', serif;
-    font-style: italic;
-    font-weight: 400;
+    @apply font-serif italic;
     letter-spacing: -0.01em;
   }
-
-  .hairline {
-    @apply h-px w-full bg-gradient-to-r from-transparent via-white/15 to-transparent;
-  }
-}
-
-@layer utilities {
-  .text-gradient {
-    @apply bg-gradient-to-br from-accent-bright via-accent to-accent-dark bg-clip-text text-transparent;
-  }
-
-
-
-
-
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -189,5 +266,4 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-
 }

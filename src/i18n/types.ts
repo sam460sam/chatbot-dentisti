@@ -54,6 +54,14 @@ export interface Translation {
     calendar: { eyebrow: string; lead: string; accent: string; tail: string; body: string }
     handover: { eyebrow: string; lead: string; accent: string; tail: string; body: string }
   }
+  /** The day strip: the hours a business is not there to answer. */
+  dayStrip: {
+    eyebrow: string
+    title: string
+    caption: string
+    legendOpen: string
+    legendShut: string
+  }
   how: { title: string; lead: string; steps: TitledItem[] }
   benefits: { title: string; lead: string; items: TitledItem[] }
   security: { title: string; lead: string; items: TitledItem[] }
@@ -78,7 +86,7 @@ export interface Translation {
     note: string
     regions: string
   }
-  footer: { tagline: string; privacy: string; rights: string }
+  footer: { tagline: string; colophon: string; privacy: string; rights: string }
   privacyPage: {
     title: string
     updated: string
@@ -99,8 +107,16 @@ export interface Translation {
     eventBadge: string
     callback: string
     tryHere: string
+    /** the handover drawing: where the assistant stops */
+    knows: string
+    yes: string
+    books: string
+    no: string
+    toAPerson: string
+    fieldName: string
+    fieldPhone: string
   }
   /** primo messaggio della chat sul nostro sito */
   widgetHello: string
-  wa: { generic: string; assistantQuote: string; websites: string; websitesQuote: string }
+  wa: { generic: string; assistantQuote: string; websitesQuote: string }
 }

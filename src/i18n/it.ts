@@ -73,6 +73,13 @@ export const it: Translation = {
       body: 'Urgente, insolito o fuori da quello che sa: l\u2019assistente si ferma, prende i dati e mette un richiamo nella vostra agenda. Chiude il cerchio qualcuno del vostro team.',
     },
   },
+  dayStrip: {
+    eyebrow: 'Un martedì',
+    title: 'Siete aperti otto di queste ore',
+    caption: 'I clienti scrivono in tutte e sedici. Chi scrive alle 21:40 non è un rompiscatole: è l’ora in cui finalmente si è seduto.',
+    legendOpen: 'Aperto — rispondete voi',
+    legendShut: 'Chiuso — risponde l’assistente',
+  },
   how: {
     title: 'Come funziona',
     lead: 'Tre passaggi, e il lavoro da parte vostra è quasi tutto nel primo.',
@@ -185,6 +192,7 @@ export const it: Translation = {
   },
   footer: {
     tagline: 'Assistente digitale per piccole attività e siti web che caricano veloci.',
+    colophon: 'Composto in Bricolage Grotesque e Inter. Fatto nei Paesi Bassi. Questo sito non usa cookie, non fa analytics e non carica pixel di tracciamento.',
     privacy: 'Informativa privacy',
     rights: 'Tutti i diritti riservati.',
   },
@@ -261,6 +269,13 @@ export const it: Translation = {
     eventBadge: 'Creato dall’assistente',
     callback: 'Da richiamare — richiesta urgente',
     tryHere: 'La bolla di chat in basso a destra è l’assistente vero. Provatelo.',
+    knows: 'Conosce la risposta?',
+    yes: 'Sì',
+    books: 'Risponde e fissa l’appuntamento.',
+    no: 'No, oppure è urgente',
+    toAPerson: 'Si ferma e prende due cose:',
+    fieldName: 'Nome',
+    fieldPhone: 'Telefono',
   },
   widgetHello:
     'Ciao! Rispondo alle domande su Twinbyte — come si configura l’assistente, quanto costa, la privacy. Cosa vuoi sapere?',
@@ -268,7 +283,6 @@ export const it: Translation = {
     generic: 'Ciao Twinbyte, ho una domanda sul vostro assistente digitale.',
     assistantQuote:
       'Ciao Twinbyte, vorrei un preventivo per l’assistente digitale per la mia attività.',
-    websites: 'Ciao Twinbyte, vorrei sapere di più su un sito web per la mia azienda.',
     websitesQuote: 'Ciao Twinbyte, vorrei un preventivo per un sito web per la mia attività.',
   },
 }

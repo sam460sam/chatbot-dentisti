@@ -70,7 +70,15 @@ export function Link({ to, onClick, children, ...rest }: LinkProps) {
         if (path && path !== window.location.pathname) navigate(path)
         if (hash) {
           requestAnimationFrame(() => {
-            document.getElementById(hash)?.scrollIntoView({ block: 'start' })
+            const target = document.getElementById(hash)
+            if (!target) return
+            target.scrollIntoView({ block: 'start' })
+            /* preventDefault threw away the focus move that native fragment
+               navigation would have done, so a keyboard user landed on the
+               section visually while their focus stayed on the header link.
+               Move it by hand; -1 keeps the section out of the tab order. */
+            target.setAttribute('tabindex', '-1')
+            target.focus({ preventScroll: true })
           })
         } else {
           window.scrollTo(0, 0)

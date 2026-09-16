@@ -1,164 +1,95 @@
 import { useEffect, useRef, useState } from 'react'
-import { CalendarCheck, PhoneCall, ShieldCheck } from 'lucide-react'
 import { prefersReducedMotion } from './motion'
+import { Diary } from './Diary'
 import type { Translation } from '../i18n'
 
-/**
- * The floating "conversation → calendar entry" mock in the hero.
- * It replays the example conversation on a timer; with reduced motion it just
- * shows the finished state.
+/*
+ * The example conversation, in the site's own grammar: which corner is square
+ * tells you who is talking. The assistant's bubbles are .mark-in (said TO you);
+ * the customer's are .mark-out (your turn).
+ *
+ * It opens on a question and its answer — never on an empty box — plays out in about
+ * three seconds, and then rests on the finished state. It used
+ * to loop forever — which meant a setState roughly once a second for as long as
+ * the tab was open, still firing while the visitor was 7000px down reading the
+ * FAQ, and a timer array that grew unbounded at about 200 entries an hour.
  */
-export function ChatMockup({
-  t,
-  progress = null,
-}: {
-  t: Translation
-  /** 0-1 while the hero is scrolled past; null when the mock plays on a timer. */
-  progress?: number | null
-}) {
+export function ChatMockup({ t }: { t: Translation }) {
   const messages = t.demo.messages
   const still = prefersReducedMotion()
   const [shown, setShown] = useState(still ? messages.length : 2)
   const [typing, setTyping] = useState(false)
   const timers = useRef<number[]>([])
 
-  // Scroll-driven: the conversation advances with the page, not with a clock.
   useEffect(() => {
-    if (progress === null) return
-    // the last stretch of the scroll is spent on the finished state
-    const eased = Math.min(progress / 0.82, 1)
-    setTyping(false)
-    setShown(Math.max(2, Math.round(eased * messages.length)))
-  }, [progress, messages.length])
-
-  useEffect(() => {
-    if (still || progress !== null) return
+    if (still) return
     const at = (ms: number, fn: () => void) => timers.current.push(window.setTimeout(fn, ms))
 
-    const run = () => {
-      let clock = 600
-      messages.forEach((message, index) => {
-        if (message.from === 'bot') {
-          at(clock, () => setTyping(true))
-          clock += 900
-        }
-        at(clock, () => {
-          setTyping(false)
-          setShown(index + 1)
-        })
-        clock += message.from === 'bot' ? 1500 : 1100
+    let clock = 500
+    messages.forEach((message, index) => {
+      if (index < 2) return
+      if (message.from === 'bot') {
+        at(clock, () => setTyping(true))
+        clock += 420
+      }
+      at(clock, () => {
+        setTyping(false)
+        setShown(index + 1)
       })
-      at(clock + 5200, () => {
-        setShown(0)
-        run()
-      })
-    }
+      clock += message.from === 'bot' ? 620 : 480
+    })
 
-    run()
+    const ids = timers.current
     return () => {
-      timers.current.forEach(clearTimeout)
+      ids.forEach(clearTimeout)
       timers.current = []
     }
-  }, [messages, still, progress])
+  }, [messages, still])
 
   const done = shown >= messages.length
 
   return (
     <div>
-      {/* Browser frame */}
-      <div className="w-full overflow-hidden rounded-2xl border border-white/10 bg-night-card/90 shadow-float">
-        <div className="flex items-center gap-2 border-b border-white/10 bg-white/5 px-4 py-3">
-          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-          <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-          <span className="ml-3 truncate rounded-md bg-black/30 px-3 py-1 text-[11px] text-white/45">
-            {t.demo.siteLabel}
-          </span>
-        </div>
+      <section
+        aria-label={t.demo.tag}
+        className="border border-ink bg-paper"
+      >
+        <header className="flex items-center justify-between gap-2 border-b border-paper-edge px-2 py-1">
+          <p className="t-label">{t.demo.tag}</p>
+          <p className="text-micro text-ink-mute">{t.demo.siteLabel}</p>
+        </header>
 
-        <div className="flex items-center justify-between px-5 pt-5">
-          <span className="eyebrow border-accent-bright/25 text-accent-bright">
-            <span className="h-1.5 w-1.5 rounded-full bg-accent-bright" />
-            {t.demo.tag}
-          </span>
-          <ShieldCheck size={16} className="text-white/25" aria-hidden="true" />
-        </div>
-
-        <div className="mt-4 flex items-center gap-3 border-b border-white/5 px-5 pb-4">
-          <img
-            src="/icon-192.png"
-            alt=""
-            width={192}
-            height={192}
-            decoding="async"
-            className="h-9 w-9 rounded-full"
-          />
-          <div className="leading-tight">
-            <p className="text-[13px] font-semibold text-white/90">{t.demo.assistant}</p>
-            <p className="flex items-center gap-1.5 text-[11px] text-white/40">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              {t.demo.online}
-            </p>
-          </div>
-        </div>
-
-        <div className="flex h-[250px] flex-col justify-end gap-2.5 overflow-hidden px-5 pb-5 pt-4">
-          {messages.slice(Math.max(0, shown - 4), shown).map((message, index) => (
-            <div
-              key={`${message.text}-${index}`}
-              className={`animate-pop max-w-[86%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-snug ${
-                message.from === 'patient'
-                  ? 'self-end rounded-br-md bg-white/10 text-white/85'
-                  : 'self-start rounded-bl-md bg-accent text-white shadow-glow'
-              }`}
-            >
-              {message.text}
-            </div>
-          ))}
+        <div className="flex flex-col gap-1 p-2">
+          {messages.slice(0, shown).map((message, index) => {
+            const fromBot = message.from === 'bot'
+            return (
+              <p
+                key={index}
+                className={`max-w-[88%] px-2 py-1 text-small animate-rise ${
+                  fromBot
+                    ? 'mark-in self-start bg-teal text-paper'
+                    : 'mark-out self-end border border-paper-edge bg-paper-deep text-ink'
+                }`}
+              >
+                {message.text}
+              </p>
+            )
+          })}
 
           {typing && (
-            <div className="flex items-center gap-1.5 self-start rounded-2xl rounded-bl-md bg-accent/25 px-3.5 py-3">
-              <span className="h-1.5 w-1.5 animate-blink rounded-full bg-white" />
-              <span
-                className="h-1.5 w-1.5 animate-blink rounded-full bg-white"
-                style={{ animationDelay: '0.2s' }}
-              />
-              <span
-                className="h-1.5 w-1.5 animate-blink rounded-full bg-white"
-                style={{ animationDelay: '0.4s' }}
-              />
-            </div>
+            <p className="mark-in self-start bg-teal px-2 py-1 text-micro uppercase text-paper">
+              {t.demo.typing}
+            </p>
           )}
         </div>
-      </div>
+      </section>
 
-      {/* Calendar card: sits under the frame so it never covers the conversation */}
+      {/* The result: the appointment lands in the diary the business already uses. */}
       <div
-        className={`mt-5 w-[262px] rounded-xl border border-white/12 bg-night-soft/95 p-4 shadow-float transition-all duration-700 sm:w-[290px] ${
-          done ? 'opacity-100' : 'opacity-0'
-        }`}
-        style={{ transform: `translateY(${done ? '0px' : '14px'})` }}
-        aria-hidden="true"
+        className={`mt-1 transition-opacity duration-500 ${done ? 'opacity-100' : 'opacity-0'}`}
+        aria-hidden={!done}
       >
-        <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-white/40">
-          <CalendarCheck size={14} className="text-accent-bright" />
-          {t.demo.calendarTitle}
-        </div>
-        <div className="mt-3 rounded-lg border-l-2 border-accent-bright bg-accent/25 px-3 py-2.5">
-          <p className="text-[13px] font-semibold text-white">{t.demo.eventTitle}</p>
-          <p className="mt-0.5 text-[11px] text-white/50">{t.demo.eventTime}</p>
-        </div>
-        <p className="mt-2 text-[11px] text-accent-bright/80">{t.demo.eventBadge}</p>
-      </div>
-
-      {/* Urgency hand-off card */}
-      <div
-        className="absolute -right-3 -top-7 hidden items-center gap-2 rounded-xl border border-white/12 bg-night-soft/95 px-3.5 py-2.5 shadow-float sm:flex lg:-right-10"
-        
-        aria-hidden="true"
-      >
-        <PhoneCall size={14} className="text-accent-bright" />
-        <span className="text-[12px] font-medium text-white/80">{t.demo.callback}</span>
+        <Diary t={t} />
       </div>
     </div>
   )

@@ -73,6 +73,13 @@ export const en: Translation = {
       body: 'Urgent, unusual, or outside what it knows: the assistant stops, takes the details and puts a call back in your calendar. Someone on your team closes it.',
     },
   },
+  dayStrip: {
+    eyebrow: 'One Tuesday',
+    title: 'You are open for eight of these hours',
+    caption: 'Customers write in all sixteen. Someone writing at 21:40 is not being difficult — that is the hour they finally sat down.',
+    legendOpen: 'Open — you answer',
+    legendShut: 'Closed — the assistant answers',
+  },
   how: {
     title: 'How it works',
     lead: 'Three steps, and the work on your side is mostly the first one.',
@@ -158,7 +165,7 @@ export const en: Translation = {
       },
       {
         q: 'What does it cost?',
-        a: 'We do not publish a price, because we do not know yet how much your business will use it. Two weeks of real conversations tell us both, and then we agree a monthly figure. Comparable tools on the market sit roughly between €30 and €150 a month; we will be honest about where you land before you commit to anything.',
+        a: 'It depends on how much your business uses it, so plans are priced by the number of conversations you have in a month: a practice handling a few hundred pays considerably less than a company handling thousands. Tell us roughly how many customers contact you and we will give you a figure before you commit to anything. Comparable tools on the market sit roughly between €30 and €150 a month.',
       },
       {
         q: 'Does it work with our current website?',
@@ -185,6 +192,7 @@ export const en: Translation = {
   },
   footer: {
     tagline: 'Digital assistant for small businesses and websites that load fast.',
+    colophon: 'Set in Bricolage Grotesque and Inter. Built in the Netherlands. This site sets no cookies, runs no analytics and loads no tracking pixels.',
     privacy: 'Privacy statement',
     rights: 'All rights reserved.',
   },
@@ -261,6 +269,13 @@ export const en: Translation = {
     eventBadge: 'Created by the assistant',
     callback: 'Call back — urgent request',
     tryHere: 'The chat bubble in the bottom right is the real assistant. Try it.',
+    knows: 'Does it know the answer?',
+    yes: 'Yes',
+    books: 'It answers, and books the appointment.',
+    no: 'No, or it is urgent',
+    toAPerson: 'It stops, and takes two things:',
+    fieldName: 'Name',
+    fieldPhone: 'Phone',
   },
   widgetHello:
     'Hi! I can answer questions about Twinbyte — how the assistant is set up, what it costs, privacy. What would you like to know?',
@@ -268,7 +283,6 @@ export const en: Translation = {
     generic: 'Hello Twinbyte, I have a question about your digital assistant.',
     assistantQuote:
       'Hello Twinbyte, I would like a price for the digital assistant for my business.',
-    websites: 'Hello Twinbyte, I would like to know more about a website for my business.',
     websitesQuote: 'Hello Twinbyte, I would like a quote for a website for my business.',
   },
 }

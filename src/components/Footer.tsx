@@ -1,15 +1,23 @@
-import { Mail, MessageCircle } from 'lucide-react'
 import { Link, pathFor, useRoute } from '../router'
-import { SITE } from '../site'
+import { SITE, mailLink } from '../site'
 import type { Translation } from '../i18n'
 
+/*
+ * The colophon claims only what is true of the built page. Three of the four
+ * design directions wanted it to read "0 third-party requests" — but the live
+ * page injects the chat widget from another origin and calls the assistant API,
+ * so that line would be false, and falsifiable in ten seconds with devtools.
+ * On a page whose whole argument is honesty, one unverifiable line is worse
+ * than no line at all.
+ */
 export function Footer({ t }: { t: Translation }) {
   const { lang } = useRoute()
+  const year = new Date().getFullYear()
 
   return (
-    <footer className="on-dark relative overflow-hidden border-t border-white/10 bg-night text-white">
-      <div className="container-page relative flex flex-col gap-10 py-14 sm:flex-row sm:items-start sm:justify-between">
-        <div className="max-w-sm">
+    <footer className="on-ink border-t border-ink-edge bg-ink text-paper">
+      <div className="container-page grid gap-4 py-6 sm:grid-cols-[1fr_auto] sm:gap-6">
+        <div>
           <img
             src="/logo-white.png"
             alt="Twinbyte"
@@ -17,45 +25,39 @@ export function Footer({ t }: { t: Translation }) {
             height={175}
             loading="lazy"
             decoding="async"
-            className="h-8 w-auto"
+            className="h-3 w-auto"
           />
-          <p className="mt-4 text-sm leading-relaxed text-white/50">{t.footer.tagline}</p>
+          <p className="mt-2 max-w-measure text-small text-paper-dim">{t.footer.tagline}</p>
         </div>
 
-        <div className="text-sm">
-          <ul className="space-y-3">
-            <li>
-              <a
-                href={`mailto:${SITE.email}`}
-                className="inline-flex items-center gap-2 text-white/70 transition-colors hover:text-accent-bright"
-              >
-                <Mail size={16} aria-hidden="true" />
-                {SITE.email}
-              </a>
-            </li>
-            <li>
-              <a
-                href={`https://wa.me/${SITE.whatsappNumber}`}
-                className="inline-flex items-center gap-2 text-white/70 transition-colors hover:text-accent-bright"
-                rel="noopener"
-              >
-                <MessageCircle size={16} aria-hidden="true" />
-                WhatsApp {SITE.whatsappDisplay}
-              </a>
-            </li>
-            <li>
-              <Link
-                to={pathFor(lang, 'privacy')}
-                className="text-white/70 transition-colors hover:text-accent-bright"
-              >
-                {t.footer.privacy}
-              </Link>
-            </li>
-          </ul>
-          <p className="mt-8 text-white/30">
-            © {new Date().getFullYear()} Twinbyte. {t.footer.rights}
-          </p>
-        </div>
+        <ul role="list" className="grid gap-0.5 text-small sm:text-right">
+          <li>
+            <a className="text-paper underline underline-offset-4 hover:text-teal-bright" href={mailLink(t.contact.emailSubject)}>
+              {SITE.email}
+            </a>
+          </li>
+          <li>
+            <a
+              className="text-paper underline underline-offset-4 hover:text-teal-bright"
+              href={`https://wa.me/${SITE.whatsappNumber}`}
+              rel="noopener"
+            >
+              WhatsApp {SITE.whatsappDisplay}
+            </a>
+          </li>
+          <li>
+            <Link className="text-paper-dim underline underline-offset-4 hover:text-paper" to={pathFor(lang, 'privacy')}>
+              {t.footer.privacy}
+            </Link>
+          </li>
+        </ul>
+      </div>
+
+      <div className="container-page rule-ink flex flex-col gap-1 py-3 text-micro text-paper-mute sm:flex-row sm:items-baseline sm:justify-between">
+        <p className="max-w-measure normal-case tracking-normal">{t.footer.colophon}</p>
+        <p className="tabular-nums normal-case tracking-normal">
+          © {year} Twinbyte. {t.footer.rights}
+        </p>
       </div>
     </footer>
   )

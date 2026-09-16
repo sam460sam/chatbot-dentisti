@@ -73,6 +73,13 @@ export const nl: Translation = {
       body: 'Dringend, ongewoon of buiten zijn kennis: de assistent stopt, noteert de gegevens en zet een terugbelafspraak in uw agenda. Iemand van uw team maakt het af.',
     },
   },
+  dayStrip: {
+    eyebrow: 'Een dinsdag',
+    title: 'U bent acht van deze uren open',
+    caption: 'Klanten schrijven in alle zestien. Wie om 21:40 schrijft is niet lastig — dat is het uur waarop hij eindelijk ging zitten.',
+    legendOpen: 'Open — u antwoordt',
+    legendShut: 'Dicht — de assistent antwoordt',
+  },
   how: {
     title: 'Hoe het werkt',
     lead: 'Drie stappen, en het werk aan uw kant zit vooral in de eerste.',
@@ -185,6 +192,7 @@ export const nl: Translation = {
   },
   footer: {
     tagline: 'Digitale assistent voor kleine bedrijven en websites die snel laden.',
+    colophon: 'Gezet uit Bricolage Grotesque en Inter. Gemaakt in Nederland. Deze site plaatst geen cookies, gebruikt geen analytics en laadt geen trackingpixels.',
     privacy: 'Privacyverklaring',
     rights: 'Alle rechten voorbehouden.',
   },
@@ -261,6 +269,13 @@ export const nl: Translation = {
     eventBadge: 'Aangemaakt door de assistent',
     callback: 'Terugbellen — spoedvraag',
     tryHere: 'De chatbubbel rechtsonder is de echte assistent. Probeer hem gerust.',
+    knows: 'Weet hij het antwoord?',
+    yes: 'Ja',
+    books: 'Hij antwoordt en zet de afspraak in de agenda.',
+    no: 'Nee, of het is dringend',
+    toAPerson: 'Hij stopt en noteert twee dingen:',
+    fieldName: 'Naam',
+    fieldPhone: 'Telefoon',
   },
   widgetHello:
     'Hallo! Ik beantwoord vragen over Twinbyte — hoe de assistent wordt ingesteld, wat het kost, privacy. Wat wilt u weten?',
@@ -268,7 +283,6 @@ export const nl: Translation = {
     generic: 'Hallo Twinbyte, ik heb een vraag over jullie digitale assistent.',
     assistantQuote:
       'Hallo Twinbyte, ik wil graag een prijs voor de digitale assistent voor mijn bedrijf.',
-    websites: 'Hallo Twinbyte, ik wil graag meer weten over een website voor mijn bedrijf.',
     websitesQuote: 'Hallo Twinbyte, ik wil graag een offerte voor een website voor mijn bedrijf.',
   },
 }
