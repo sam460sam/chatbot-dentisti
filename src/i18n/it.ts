@@ -20,9 +20,9 @@ export const it: Translation = {
     eyebrow: 'Twinbyte — Anna e Samuele',
     title: 'Rispondete a ogni cliente, anche quando non potete rispondere',
     lead: 'Una chiamata persa non lascia un messaggio: chiama il prossimo della lista. Mettiamo sul vostro sito un assistente digitale che risponde in pochi secondi a qualsiasi ora, con le vostre informazioni, e fissa l’appuntamento nell’agenda che usate già.',
-    ctaTrial: 'Prova gratis 14 giorni',
+    ctaQuote: 'Scoprite quanto costa per voi',
     ctaDemo: 'Guardalo fissare un appuntamento',
-    note: 'Nessuna carta, nessun contratto. Se in due settimane non si guadagna il posto, lo togliamo lo stesso giorno.',
+    note: 'Mese per mese, nessun contratto lungo. Lo configuriamo con le vostre informazioni e leggete le conversazioni vere dal primo giorno.',
     bullets: [
       'Scrive nell’agenda che usate già: niente di nuovo da imparare',
       'Risponde nella lingua del cliente, chiunque scriva',
@@ -42,7 +42,7 @@ export const it: Translation = {
         'Passa a una persona del vostro team tutto ciò che è delicato',
       ],
       cta: 'Guarda come funziona',
-      quote: 'Inizia la prova gratuita',
+      quote: 'Chiedi un preventivo',
     },
     websites: {
       tag: 'Siti web',
@@ -75,7 +75,21 @@ export const it: Translation = {
   },
   how: {
     title: 'Come funziona',
-    lead: 'Due settimane sul vostro sito, a costo zero. Siamo nuovi, e preferiamo dimostrarlo sul vostro sito piuttosto che prometterlo a parole.',
+    lead: 'Tre passaggi, e il lavoro da parte vostra è quasi tutto nel primo.',
+    steps: [
+      {
+        title: 'Lo configuriamo con i vostri dati',
+        body: 'Ci mandate orari, servizi e le domande che i clienti fanno più spesso. Costruiamo l’assistente intorno a quelle informazioni, così le risposte sono le vostre e non un testo generico.',
+      },
+      {
+        title: 'Lo inseriamo sul vostro sito',
+        body: 'Una riga di codice sul sito che avete già. Niente da installare, il resto del sito non cambia. La versione WhatsApp è in arrivo.',
+      },
+      {
+        title: 'I clienti prenotano da soli',
+        body: 'L’assistente controlla le disponibilità, chiede nome e numero di telefono e crea l’appuntamento nell’agenda che usate già. Il controllo resta interamente vostro.',
+      },
+    ],
   },
   benefits: {
     title: 'Cosa ci guadagna la vostra attività',
@@ -130,16 +144,6 @@ export const it: Translation = {
     who: 'Negozi, officine, artigiani, studi, centri, chiunque venga cercato dal telefono prima di essere chiamato. Se vi serve un e-commerce con centinaia di prodotti non siamo le persone giuste, e ve lo diciamo.',
     quoteNote: 'Prezzo e tempi dopo una chiamata di dieci minuti: dipende da quante pagine servono e se avete già testi e foto.',
   },
-  trial: {
-    steps: [
-      'Ci mandate orari, servizi e le cinque domande che i clienti fanno più spesso. È la vostra parte: venti minuti circa.',
-      'Configuriamo l’assistente e lo mettiamo sul vostro sito. Una riga di codice, il resto non cambia.',
-      'Resta attivo 14 giorni. Leggete le conversazioni vere e vedete le prenotazioni vere, non una demo.',
-      'Guardiamo insieme i risultati. Se lo tenete diventa un abbonamento mensile; altrimenti lo rimuoviamo lo stesso giorno, gratis.',
-    ],
-    cta: 'Inizia la prova su WhatsApp',
-    note: 'Nessuna carta, nessun contratto, niente da disdire. Il prezzo mensile lo concordiamo dopo la prova, quando sappiamo entrambi quanto lo usate davvero.',
-  },
   faq: {
     title: 'Domande frequenti',
     lead: 'Se manca qualcosa, scrivetecelo su WhatsApp.',
@@ -154,7 +158,7 @@ export const it: Translation = {
       },
       {
         q: 'Quanto costa?',
-        a: 'Non pubblichiamo un prezzo, perché non sappiamo ancora quanto la vostra attività lo userà. Due settimane di conversazioni vere lo dicono a entrambi, e poi concordiamo una cifra mensile. Strumenti simili sul mercato stanno indicativamente fra i 30 e i 150 euro al mese; vi diremo con onestà dove vi collocate prima che vi impegniate a qualcosa.',
+        a: 'Dipende da quanto la vostra attività lo usa, quindi i piani sono basati sul numero di conversazioni al mese: uno studio con qualche centinaio di contatti paga molto meno di un’azienda che ne gestisce migliaia. Diteci più o meno quanti clienti vi contattano e vi diamo una cifra prima che vi impegniate a qualcosa. Gli strumenti paragonabili sul mercato stanno più o meno tra 30 e 150 euro al mese.',
       },
       {
         q: 'Funziona con il sito che abbiamo già?',
@@ -162,11 +166,11 @@ export const it: Translation = {
       },
       {
         q: 'Dobbiamo cambiare agenda o gestionale?',
-        a: 'No. Configuriamo l’assistente sull’agenda con cui lavorate già: con Google Calendar è pronto, per altri gestionali valutiamo insieme l’integrazione prima della prova. Gli appuntamenti compaiono come eventi normali e potete spostarli o cancellarli come sempre.',
+        a: 'No. Configuriamo l’assistente sull’agenda con cui lavorate già: con Google Calendar è pronto, per altri gestionali valutiamo insieme l’integrazione prima di partire. Gli appuntamenti compaiono come eventi normali e potete spostarli o cancellarli come sempre.',
       },
       {
         q: 'E se volessimo smettere?',
-        a: 'Ce lo dite e togliamo l’assistente dal sito. Durante la prova non c’è nulla da disdire; dopo, l’abbonamento è mese per mese.',
+        a: 'Ce lo dite e togliamo l’assistente dal sito. L’abbonamento è mese per mese, con un mese di preavviso.',
       },
     ],
   },
@@ -259,11 +263,11 @@ export const it: Translation = {
     tryHere: 'La bolla di chat in basso a destra è l’assistente vero. Provatelo.',
   },
   widgetHello:
-    'Ciao! Rispondo alle domande su Twinbyte — come si configura l’assistente, la prova di 14 giorni, la privacy. Cosa vuoi sapere?',
+    'Ciao! Rispondo alle domande su Twinbyte — come si configura l’assistente, quanto costa, la privacy. Cosa vuoi sapere?',
   wa: {
     generic: 'Ciao Twinbyte, ho una domanda sul vostro assistente digitale.',
-    trial:
-      'Ciao Twinbyte, vorrei iniziare la prova gratuita di 14 giorni dell’assistente digitale per la mia attività.',
+    assistantQuote:
+      'Ciao Twinbyte, vorrei un preventivo per l’assistente digitale per la mia attività.',
     websites: 'Ciao Twinbyte, vorrei sapere di più su un sito web per la mia azienda.',
     websitesQuote: 'Ciao Twinbyte, vorrei un preventivo per un sito web per la mia attività.',
   },

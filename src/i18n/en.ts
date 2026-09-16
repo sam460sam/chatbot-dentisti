@@ -20,9 +20,9 @@ export const en: Translation = {
     eyebrow: 'Twinbyte — Anna & Samuele',
     title: 'Answer every customer, even when you cannot pick up',
     lead: 'A missed call does not leave a message — it calls the next business on the list. We put a digital assistant on your website that replies in seconds at any hour, answers with your information, and books the appointment into the calendar you already use.',
-    ctaTrial: 'Start the 14-day free trial',
+    ctaQuote: 'See what it would cost you',
     ctaDemo: 'See it book an appointment',
-    note: 'No card, no contract. If it does not earn its place in two weeks, we remove it the same day.',
+    note: 'Month to month, no long contract. We set it up with your information, and you read the real conversations from the first day.',
     bullets: [
       'Books into the calendar you already use — nothing new to learn',
       'Replies in your customer’s language, whoever writes',
@@ -42,7 +42,7 @@ export const en: Translation = {
         'Hands anything sensitive to a person on your team',
       ],
       cta: 'See how it works',
-      quote: 'Start the free trial',
+      quote: 'Ask for a price',
     },
     websites: {
       tag: 'Websites',
@@ -75,7 +75,21 @@ export const en: Translation = {
   },
   how: {
     title: 'How it works',
-    lead: 'Two weeks on your own website, at no cost. We are new, and we would rather prove it on your site than promise it in a meeting.',
+    lead: 'Three steps, and the work on your side is mostly the first one.',
+    steps: [
+      {
+        title: 'We set it up with your details',
+        body: 'You send us your opening hours, what you offer and the questions customers ask most often. We configure the assistant around them, so the answers are yours and not generic filler.',
+      },
+      {
+        title: 'We put it on your website',
+        body: 'One line of code on the site you already have. Nothing to install, nothing else changes. A WhatsApp version is on the way.',
+      },
+      {
+        title: 'Customers book themselves',
+        body: 'The assistant checks your availability, asks for a name and a phone number and creates the appointment in the calendar you already use. You keep full control of it.',
+      },
+    ],
   },
   benefits: {
     title: 'What your business gets out of it',
@@ -130,16 +144,6 @@ export const en: Translation = {
     who: 'Shops, workshops, trades, practices, studios, anyone who is looked up on a phone before being called. If you need a web shop with hundreds of products, we are not the right people and we will say so.',
     quoteNote: 'Price and timing after a ten-minute call: it depends on how many pages you need and whether you already have text and photos.',
   },
-  trial: {
-    steps: [
-      'You send your opening hours, your services and the five questions customers ask most. That is your part, about twenty minutes.',
-      'We configure the assistant and put it on your site. One line of code, nothing else changes.',
-      'It runs for 14 days. You read the real conversations and see the real bookings, not a demo.',
-      'We look at the results together. Keep it and it becomes a monthly subscription; if not, we remove it the same day, free.',
-    ],
-    cta: 'Start the free trial on WhatsApp',
-    note: 'No card, no contract, nothing to cancel. We agree the monthly price after the trial, once we both know how much your business actually uses it.',
-  },
   faq: {
     title: 'Frequently asked questions',
     lead: 'If something is missing, just ask us on WhatsApp.',
@@ -162,11 +166,11 @@ export const en: Translation = {
       },
       {
         q: 'Do we have to change our calendar or software?',
-        a: 'No. We set the assistant up around the calendar you already work with: with Google Calendar it is ready to go, and for other booking software we look at the integration together before the trial starts. Appointments appear as ordinary events you can move or cancel as always.',
+        a: 'No. We set the assistant up around the calendar you already work with: with Google Calendar it is ready to go, and for other booking software we look at the integration together before we start. Appointments appear as ordinary events you can move or cancel as always.',
       },
       {
         q: 'What if we want to stop?',
-        a: 'You tell us and we remove the assistant from your site. During the trial there is nothing to cancel; afterwards the subscription runs month by month.',
+        a: 'You tell us and we remove the assistant from your site. The subscription runs month by month, with one month of notice.',
       },
     ],
   },
@@ -259,11 +263,11 @@ export const en: Translation = {
     tryHere: 'The chat bubble in the bottom right is the real assistant. Try it.',
   },
   widgetHello:
-    'Hi! I can answer questions about Twinbyte — how the assistant is set up, the 14-day trial, privacy. What would you like to know?',
+    'Hi! I can answer questions about Twinbyte — how the assistant is set up, what it costs, privacy. What would you like to know?',
   wa: {
     generic: 'Hello Twinbyte, I have a question about your digital assistant.',
-    trial:
-      'Hello Twinbyte, I would like to start the 14-day free trial of the digital assistant for my business.',
+    assistantQuote:
+      'Hello Twinbyte, I would like a price for the digital assistant for my business.',
     websites: 'Hello Twinbyte, I would like to know more about a website for my business.',
     websitesQuote: 'Hello Twinbyte, I would like a quote for a website for my business.',
   },

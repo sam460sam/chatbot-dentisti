@@ -84,9 +84,9 @@ export function Hero({ t }: { t: Translation }) {
               </p>
 
               <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:mt-7">
-                <a className="btn-primary" href={waLink(t.wa.trial)} rel="noopener">
+                <a className="btn-primary" href={waLink(t.wa.assistantQuote)} rel="noopener">
                   <MessageCircle size={18} aria-hidden="true" />
-                  {t.hero.ctaTrial}
+                  {t.hero.ctaQuote}
                 </a>
                 <a
                   className="btn-ghost-dark"

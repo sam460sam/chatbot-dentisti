@@ -37,7 +37,7 @@ export interface Translation {
     eyebrow: string
     title: string
     lead: string
-    ctaTrial: string
+    ctaQuote: string
     ctaDemo: string
     note: string
     bullets: string[]
@@ -54,7 +54,7 @@ export interface Translation {
     calendar: { eyebrow: string; lead: string; accent: string; tail: string; body: string }
     handover: { eyebrow: string; lead: string; accent: string; tail: string; body: string }
   }
-  how: { title: string; lead: string }
+  how: { title: string; lead: string; steps: TitledItem[] }
   benefits: { title: string; lead: string; items: TitledItem[] }
   security: { title: string; lead: string; items: TitledItem[] }
   websites: {
@@ -68,7 +68,6 @@ export interface Translation {
     who: string
     quoteNote: string
   }
-  trial: { steps: string[]; cta: string; note: string }
   faq: { title: string; lead: string; items: { q: string; a: string }[] }
   contact: {
     title: string
@@ -103,5 +102,5 @@ export interface Translation {
   }
   /** primo messaggio della chat sul nostro sito */
   widgetHello: string
-  wa: { generic: string; trial: string; websites: string; websitesQuote: string }
+  wa: { generic: string; assistantQuote: string; websites: string; websitesQuote: string }
 }

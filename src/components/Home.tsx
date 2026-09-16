@@ -1,9 +1,10 @@
 import type { ReactNode } from 'react'
 import {
   ArrowRight,
-  ArrowUpRight,
   Bot,
+  CalendarCheck,
   Check,
+  Code2,
   Clock,
   FileText,
   Languages,
@@ -12,6 +13,7 @@ import {
   Minus,
   PhoneCall,
   Plus,
+  Settings2,
   ShieldCheck,
   Sparkles,
 } from 'lucide-react'
@@ -111,6 +113,7 @@ function Scene({
   )
 }
 
+const HOW_ICONS = [Settings2, Code2, CalendarCheck]
 const BENEFIT_ICONS = [PhoneCall, Clock, Languages]
 const SECURITY_ICONS = [ShieldCheck, Bot, FileText]
 
@@ -130,7 +133,7 @@ export function Home({ t }: { t: Translation }) {
 
           <div className="mt-12 grid gap-6 lg:grid-cols-2">
             {[
-              { ...t.split.assistant, id: 'how', icon: MessageCircle, wa: t.wa.trial },
+              { ...t.split.assistant, id: 'how', icon: MessageCircle, wa: t.wa.assistantQuote },
               { ...t.split.websites, id: 'websites', icon: Sparkles, wa: t.wa.websitesQuote },
             ].map((service) => (
               <div key={service.tag} className="card flex h-full flex-col" onMouseMove={spotlight}>
@@ -177,41 +180,32 @@ export function Home({ t }: { t: Translation }) {
       </section>
 
 
-      {/* How it works, and the two weeks that come first */}
-      <Section id="how" kicker="01" title={t.how.title} lead={t.how.lead} tone="tint">
-        <div className="grid gap-12 lg:grid-cols-[1fr_0.85fr]">
-          <ol className="relative space-y-8 before:absolute before:left-[15px] before:top-2 before:h-[calc(100%-1rem)] before:w-px before:bg-gradient-to-b before:from-accent-bright before:via-accent/40 before:to-transparent">
-            {t.trial.steps.map((step, index) => (
-              <Reveal key={step} delay={index * 90}>
-                <li className="relative flex gap-5">
+      {/* How it works */}
+      <Section id="how" kicker="01" title={t.how.title} lead={t.how.lead}>
+        <ol className="grid gap-6 md:grid-cols-3">
+          {t.how.steps.map((step, index) => {
+            const Icon = HOW_ICONS[index]
+            return (
+              <Reveal key={step.title} delay={index * 110}>
+                <li className="card group h-full" onMouseMove={spotlight}>
                   <span
                     aria-hidden="true"
-                    className="z-10 grid h-8 w-8 shrink-0 place-items-center rounded-full bg-accent text-[13px] font-bold text-white ring-4 ring-surface-sunken"
+                    className="pointer-events-none absolute -right-3 -top-7 text-[120px] font-extrabold leading-none text-white/[0.06] transition-colors group-hover:text-accent-bright/15"
                   >
                     {index + 1}
                   </span>
-                  <p className="pt-1 text-[16px] leading-relaxed text-ink-soft">{step}</p>
+                  <span className="icon-badge">
+                    <Icon size={21} aria-hidden="true" />
+                  </span>
+                  <h3 className="relative mt-6 text-lg font-bold tracking-tight">{step.title}</h3>
+                  <p className="relative mt-3 text-[15px] leading-relaxed text-ink-soft">
+                    {step.body}
+                  </p>
                 </li>
               </Reveal>
-            ))}
-          </ol>
-
-          <Reveal delay={160}>
-            <div className="on-dark relative overflow-hidden rounded-2xl bg-night p-8 text-white shadow-float">
-              <div className="relative">
-                <span className="icon-badge-dark">
-                  <MessageCircle size={21} aria-hidden="true" />
-                </span>
-                {/* PRICE_TODO: insert the monthly subscription price here once it is decided. */}
-                <p className="mt-6 text-[15px] leading-relaxed text-white/70">{t.trial.note}</p>
-                <a className="btn-primary mt-8 w-full" href={waLink(t.wa.trial)} rel="noopener">
-                  {t.trial.cta}
-                  <ArrowUpRight size={17} aria-hidden="true" />
-                </a>
-              </div>
-            </div>
-          </Reveal>
-        </div>
+            )
+          })}
+        </ol>
       </Section>
 
       <Scene image="/scene-calendar.jpg" content={t.scenes.calendar} align="right" />

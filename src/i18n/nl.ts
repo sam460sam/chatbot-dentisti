@@ -20,9 +20,9 @@ export const nl: Translation = {
     eyebrow: 'Twinbyte — Anna & Samuele',
     title: 'Beantwoord elke klant, ook als u niet kunt opnemen',
     lead: 'Een gemiste oproep spreekt geen bericht in — die belt het volgende bedrijf op de lijst. Wij zetten een digitale assistent op uw website die binnen seconden antwoordt, op elk uur, met uw eigen informatie, en de afspraak in de agenda zet die u al gebruikt.',
-    ctaTrial: 'Start 14 dagen gratis',
+    ctaQuote: 'Bekijk wat het u kost',
     ctaDemo: 'Zie hem een afspraak inplannen',
-    note: 'Geen creditcard, geen contract. Verdient hij in twee weken zijn plek niet, dan halen we hem dezelfde dag weg.',
+    note: 'Maand per maand, geen lang contract. Wij richten hem in met uw gegevens en u leest de echte gesprekken vanaf de eerste dag.',
     bullets: [
       'Plant in de agenda die u al gebruikt — niets nieuws te leren',
       'Antwoordt in de taal van uw klant, wie er ook schrijft',
@@ -42,7 +42,7 @@ export const nl: Translation = {
         'Geeft alles wat gevoelig is door aan iemand van uw team',
       ],
       cta: 'Bekijk hoe het werkt',
-      quote: 'Start de gratis proefperiode',
+      quote: 'Vraag een offerte aan',
     },
     websites: {
       tag: 'Websites',
@@ -75,7 +75,21 @@ export const nl: Translation = {
   },
   how: {
     title: 'Hoe het werkt',
-    lead: 'Twee weken op uw eigen website, kosteloos. Wij zijn nieuw, en bewijzen het liever op uw site dan het in een gesprek te beloven.',
+    lead: 'Drie stappen, en het werk aan uw kant zit vooral in de eerste.',
+    steps: [
+      {
+        title: 'Wij richten het in met uw gegevens',
+        body: 'U stuurt ons uw openingstijden, wat u aanbiedt en de vragen die klanten het vaakst stellen. Daar bouwen wij de assistent omheen, zodat de antwoorden van u zijn en niet uit een standaardtekst komen.',
+      },
+      {
+        title: 'Wij plaatsen het op uw website',
+        body: 'Eén regel code op de site die u al heeft. Niets te installeren, verder verandert er niets. Een WhatsApp-versie volgt binnenkort.',
+      },
+      {
+        title: 'Klanten plannen zelf',
+        body: 'De assistent kijkt wanneer u beschikbaar bent, vraagt om een naam en een telefoonnummer en zet de afspraak in de agenda die u al gebruikt. U houdt die volledig in eigen hand.',
+      },
+    ],
   },
   benefits: {
     title: 'Wat uw bedrijf eraan heeft',
@@ -130,16 +144,6 @@ export const nl: Translation = {
     who: 'Winkels, garages, vakmensen, praktijken, studio\u2019s: iedereen die op een telefoon wordt opgezocht voordat er gebeld wordt. Heeft u een webshop met honderden producten nodig, dan zijn wij niet de juiste partij en zeggen we dat.',
     quoteNote: 'Prijs en planning na een telefoontje van tien minuten: het hangt af van hoeveel pagina\u2019s u nodig heeft en of u al teksten en foto\u2019s heeft.',
   },
-  trial: {
-    steps: [
-      'U stuurt uw openingstijden, uw diensten en de vijf vragen die klanten het vaakst stellen. Dat is uw deel: zo’n twintig minuten.',
-      'Wij richten de assistent in en zetten hem op uw site. Eén regel code, verder verandert er niets.',
-      'Hij draait 14 dagen. U leest de echte gesprekken en ziet de echte afspraken, geen demo.',
-      'We bekijken de resultaten samen. Houdt u hem, dan wordt het een maandabonnement; zo niet, dan halen we hem dezelfde dag kosteloos weg.',
-    ],
-    cta: 'Start de proefperiode via WhatsApp',
-    note: 'Geen creditcard, geen contract, niets op te zeggen. De maandprijs spreken we na de proefperiode af, als we allebei weten hoeveel uw bedrijf hem werkelijk gebruikt.',
-  },
   faq: {
     title: 'Veelgestelde vragen',
     lead: 'Staat uw vraag er niet bij? Stel hem gerust via WhatsApp.',
@@ -154,7 +158,7 @@ export const nl: Translation = {
       },
       {
         q: 'Wat kost het?',
-        a: 'We publiceren geen prijs, omdat we nog niet weten hoeveel uw bedrijf hem gebruikt. Twee weken echte gesprekken vertellen dat ons allebei, en daarna spreken we een maandbedrag af. Vergelijkbare tools in de markt zitten ruwweg tussen de 30 en 150 euro per maand; we zeggen u eerlijk waar u uitkomt voordat u zich ergens aan verbindt.',
+        a: 'Dat hangt af van hoeveel uw bedrijf hem gebruikt, dus de abonnementen gaan per aantal gesprekken per maand: een praktijk met een paar honderd contacten betaalt aanzienlijk minder dan een bedrijf met duizenden. Laat ons ongeveer weten hoeveel klanten u benaderen, dan geven wij u een bedrag voordat u zich ergens aan verbindt. Vergelijkbare tools in de markt zitten ruwweg tussen de 30 en 150 euro per maand.',
       },
       {
         q: 'Werkt het met onze huidige website?',
@@ -162,11 +166,11 @@ export const nl: Translation = {
       },
       {
         q: 'Moeten we onze agenda of software aanpassen?',
-        a: 'Nee. We stellen de assistent in op de agenda waarmee u al werkt: met Google Agenda is het meteen klaar, en voor andere boekingssoftware bekijken we de koppeling samen vóór de proefperiode. Afspraken verschijnen als gewone items die u kunt verzetten of annuleren zoals altijd.',
+        a: 'Nee. We stellen de assistent in op de agenda waarmee u al werkt: met Google Agenda is het meteen klaar, en voor andere boekingssoftware bekijken we de koppeling samen voordat we beginnen. Afspraken verschijnen als gewone items die u kunt verzetten of annuleren zoals altijd.',
       },
       {
         q: 'En als we willen stoppen?',
-        a: 'U geeft het aan en wij halen de assistent van uw site. Tijdens de proefperiode valt er niets op te zeggen; daarna loopt het abonnement per maand.',
+        a: 'U geeft het aan en wij halen de assistent van uw site. Het abonnement loopt per maand, met een maand opzegtermijn.',
       },
     ],
   },
@@ -259,11 +263,11 @@ export const nl: Translation = {
     tryHere: 'De chatbubbel rechtsonder is de echte assistent. Probeer hem gerust.',
   },
   widgetHello:
-    'Hallo! Ik beantwoord vragen over Twinbyte — hoe de assistent wordt ingesteld, de proefperiode van 14 dagen, privacy. Wat wilt u weten?',
+    'Hallo! Ik beantwoord vragen over Twinbyte — hoe de assistent wordt ingesteld, wat het kost, privacy. Wat wilt u weten?',
   wa: {
     generic: 'Hallo Twinbyte, ik heb een vraag over jullie digitale assistent.',
-    trial:
-      'Hallo Twinbyte, ik wil graag de gratis proefperiode van 14 dagen starten voor de digitale assistent van mijn bedrijf.',
+    assistantQuote:
+      'Hallo Twinbyte, ik wil graag een prijs voor de digitale assistent voor mijn bedrijf.',
     websites: 'Hallo Twinbyte, ik wil graag meer weten over een website voor mijn bedrijf.',
     websitesQuote: 'Hallo Twinbyte, ik wil graag een offerte voor een website voor mijn bedrijf.',
   },
