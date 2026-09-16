@@ -44,7 +44,7 @@ export default {
           DEFAULT: '#F5F2EC', deep: '#EAE5DA', edge: '#D9D4C8',
           'edge-deep': '#CFC9BB', dim: '#B4AFA3', mute: '#9A9488',
         },
-        ink: { DEFAULT: '#17160F', soft: '#4A4740', mute: '#6E6A60', edge: '#3F3C33' },
+        ink: { DEFAULT: '#17160F', soft: '#4A4740', mute: '#66625A', edge: '#3F3C33' },
         teal: { DEFAULT: '#0E5266', deep: '#0A3F4F', bright: '#59B9CC' },
         verm: { DEFAULT: '#A8371F', fill: '#C8622F', deep: '#8C2C17', bright: '#D96A46' },
       },

@@ -14,6 +14,7 @@ export const nl: Translation = {
     openMenu: 'Menu openen',
     closeMenu: 'Menu sluiten',
     language: 'Taal',
+    main: 'Hoofdnavigatie',
     skip: 'Naar de inhoud',
   },
   hero: {
@@ -31,7 +32,6 @@ export const nl: Translation = {
   },
   split: {
     title: 'Twee diensten, allebei goed gedaan',
-    lead: 'De meeste klanten beginnen met één en voegen de andere later toe. Kies waarvoor u hier bent.',
     assistant: {
       tag: 'Digitale assistent',
       title: 'Verlies niet langer de oproepen die u nooit hoort',
@@ -58,13 +58,6 @@ export const nl: Translation = {
     },
   },
   scenes: {
-    calendar: {
-      eyebrow: 'In uw agenda',
-      lead: 'De afspraak staat er',
-      accent: 'al',
-      tail: 'in',
-      body: 'Geen inbox om leeg te maken, geen briefjes om door te geven. De plek is bezet in de agenda die u al gebruikt, met naam en nummer erbij.',
-    },
     handover: {
       eyebrow: 'Als het ertoe doet',
       lead: 'Alles wat gevoelig is gaat naar',
@@ -137,7 +130,6 @@ export const nl: Translation = {
   websites: {
     title: 'Websites voor kleine bedrijven',
     lead: 'Naast de assistent bouwen we websites — het soort site dat een klein bedrijf echt nodig heeft, geen etalage voor onszelf.',
-    tags: ['Mobile-first', 'Standaard snel', 'Klaar voor de assistent'],
     cta: 'Vraag naar een website',
     includesTitle: 'Wat een site omvat',
     includes: [
@@ -183,8 +175,6 @@ export const nl: Translation = {
   },
   contact: {
     title: 'Neem contact op',
-    lead: 'Via WhatsApp bereikt u ons het snelst. Liever op papier? Dan kan het net zo goed per e-mail.',
-    whatsapp: 'Stuur een WhatsApp',
     email: 'Stuur een e-mail',
     emailSubject: 'Vraag over de Twinbyte-assistent',
     note: 'U krijgt altijd antwoord van Anna of Samuele — er zit geen callcenter achter.',
@@ -216,8 +206,15 @@ export const nl: Translation = {
         title: 'Deze website',
         body: [
           'Deze website gebruikt geen cookies. Er wordt niets opgeslagen voor statistieken, advertenties of profilering, en daarom is er ook geen cookiebanner om weg te klikken.',
-          'We gebruiken geen analytics- of trackingtools, en er worden geen lettertypen of scripts van servers van derden geladen.',
+          'We gebruiken geen analytics en geen trackingtools, en de lettertypen worden vanaf dit domein geladen.',
           'De site draait op Cloudflare Pages. Zoals elke webserver verwerkt de hostingpartij technische gegevens van het verzoek, zoals IP-adres en browsertype, om de pagina’s te kunnen tonen en de dienst tegen misbruik te beschermen.',
+        ],
+      },
+      {
+        title: 'De assistent op deze pagina',
+        body: [
+          'De chatbubbel rechtsonder is onze eigen assistent, en het enige op deze pagina dat uw browser ergens anders vandaan haalt. Het script komt van een server die wij bij Vercel draaien en de antwoorden van een server bij Railway. Omdat uw browser die rechtstreeks opvraagt, zien die twee partijen uw IP-adres en browsertype.',
+          'Opent u de chat, dan gaat wat u typt naar die server om beantwoord te worden, samen met de taal van de pagina. Zet er niets in wat u ons niet ook per e-mail zou sturen — voor een afspraak of een offerte kunt u ons beter via WhatsApp of op info@twinbyteservices.com bereiken.',
         ],
       },
       {
@@ -239,7 +236,8 @@ export const nl: Translation = {
         title: 'Uw rechten',
         body: [
           'U kunt ons vragen om inzage in uw gegevens, om correctie, verwijdering of beperking, om een kopie in een overdraagbaar formaat, en u kunt bezwaar maken tegen de verwerking. Stuur een bericht naar info@twinbyteservices.com en we regelen het.',
-          'Vindt u dat wij niet zorgvuldig met uw gegevens omgaan, dan kunt u een klacht indienen bij de toezichthouder in uw land. TODO_SUPERVISORY_AUTHORITY',
+          'Vindt u dat wij niet zorgvuldig met uw gegevens omgaan, dan kunt u een klacht indienen bij de toezichthouder in uw land.',
+          'TODO_SUPERVISORY_AUTHORITY',
         ],
       },
       {
@@ -261,8 +259,6 @@ export const nl: Translation = {
       { from: 'bot', text: 'Genoteerd: donderdag de 18e om 10:30. Het staat nu in uw agenda.' },
     ],
     typing: 'typt',
-    assistant: 'Digitale assistent',
-    online: 'altijd aan',
     calendarTitle: 'Uw agenda',
     eventTitle: 'Afspraak — Laura Bakker',
     eventTime: 'do 18 sep · 10:30 – 11:00',

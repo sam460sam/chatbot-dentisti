@@ -1,6 +1,8 @@
 /* ---------------------------------------------------------------- typefaces
-   Self-hosted. The site loads nothing from a third-party server, which is why
-   it needs no cookie banner. Bricolage sets the display, Inter the reading. */
+   Self-hosted, so no font request leaves for another origin and no cookie is
+   set — which is why there is no banner. The chat widget IS loaded from another
+   origin; the privacy statement names it. Bricolage sets the display, Inter the
+   reading. */
 
 @font-face {
   font-family: 'Bricolage';
@@ -172,7 +174,7 @@
   }
 
   .btn-line-flood {
-    @apply btn border border-paper/60 bg-transparent text-paper hover:bg-paper hover:text-ink;
+    @apply btn border border-paper bg-transparent text-paper hover:bg-paper hover:text-ink;
   }
 
   /* ---------------------------------------------------------------- surfaces

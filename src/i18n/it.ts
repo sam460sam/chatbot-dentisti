@@ -14,6 +14,7 @@ export const it: Translation = {
     openMenu: 'Apri il menu',
     closeMenu: 'Chiudi il menu',
     language: 'Lingua',
+    main: 'Navigazione principale',
     skip: 'Vai al contenuto',
   },
   hero: {
@@ -31,7 +32,6 @@ export const it: Translation = {
   },
   split: {
     title: 'Due servizi, fatti bene entrambi',
-    lead: 'Di solito si parte da uno e si aggiunge l’altro più avanti. Scegliete quello per cui siete qui.',
     assistant: {
       tag: 'Assistente digitale',
       title: 'Smettete di perdere le chiamate che non sentite',
@@ -58,13 +58,6 @@ export const it: Translation = {
     },
   },
   scenes: {
-    calendar: {
-      eyebrow: 'Nella vostra agenda',
-      lead: 'L\u2019appuntamento \u00e8',
-      accent: 'gi\u00e0',
-      tail: 'in agenda',
-      body: 'Nessuna casella da svuotare, nessun foglietto da passare. Lo slot \u00e8 occupato nell\u2019agenda che usate gi\u00e0, con nome e numero sopra.',
-    },
     handover: {
       eyebrow: 'Quando conta',
       lead: 'Quello che \u00e8 delicato passa a',
@@ -137,7 +130,6 @@ export const it: Translation = {
   websites: {
     title: 'Siti web per piccole aziende',
     lead: 'Oltre all’assistente realizziamo siti web: quelli che servono davvero a una piccola azienda, non una vetrina per noi.',
-    tags: ['Mobile-first', 'Veloce di base', 'Pronto per l’assistente'],
     cta: 'Chiedi informazioni su un sito',
     includesTitle: 'Cosa comprende un sito',
     includes: [
@@ -183,8 +175,6 @@ export const it: Translation = {
   },
   contact: {
     title: 'Parliamone',
-    lead: 'Su WhatsApp ci raggiungete più in fretta. Se preferite mettere tutto per iscritto, va benissimo anche l’email.',
-    whatsapp: 'Scrivici su WhatsApp',
     email: 'Scrivici un’email',
     emailSubject: 'Domanda sull’assistente Twinbyte',
     note: 'Vi risponde sempre Anna o Samuele: dietro non c’è nessun call center.',
@@ -216,8 +206,15 @@ export const it: Translation = {
         title: 'Questo sito',
         body: [
           'Questo sito non usa cookie. Non viene salvato nulla per statistiche, pubblicità o profilazione, ed è per questo che non trovate un banner cookie da chiudere.',
-          'Non usiamo strumenti di analisi o tracciamento e non carichiamo font o script da server di terze parti.',
+          'Non usiamo analytics né strumenti di tracciamento, e i font sono serviti da questo dominio.',
           'Il sito è ospitato su Cloudflare Pages. Come qualsiasi server web, il fornitore di hosting tratta dati tecnici della richiesta, come indirizzo IP e tipo di browser, per mostrare le pagine e proteggere il servizio da abusi.',
+        ],
+      },
+      {
+        title: 'L’assistente su questa pagina',
+        body: [
+          'La bolla di chat in basso a destra è il nostro assistente, ed è l’unica cosa di questa pagina che il vostro browser carica da un altro server. Lo script arriva da un server che gestiamo su Vercel e le risposte da un server su Railway. Poiché è il vostro browser a richiederli direttamente, quei due fornitori vedono il vostro indirizzo IP e il tipo di browser.',
+          'Se aprite la chat, quello che scrivete viene inviato a quel server per ricevere una risposta, insieme alla lingua della pagina. Non scriveteci nulla che non ci mandereste anche per e-mail — per un appuntamento o un preventivo scriveteci su WhatsApp o a info@twinbyteservices.com.',
         ],
       },
       {
@@ -239,7 +236,8 @@ export const it: Translation = {
         title: 'I vostri diritti',
         body: [
           'Potete chiederci l’accesso ai vostri dati, la rettifica, la cancellazione o la limitazione, una copia in formato portabile, e potete opporvi al trattamento. Scrivete a info@twinbyteservices.com e ce ne occupiamo.',
-          'Se ritenete che non trattiamo correttamente i vostri dati, potete presentare reclamo all’autorità di controllo del vostro Paese. TODO_SUPERVISORY_AUTHORITY',
+          'Se ritenete che non trattiamo correttamente i vostri dati, potete presentare reclamo all’autorità di controllo del vostro Paese.',
+          'TODO_SUPERVISORY_AUTHORITY',
         ],
       },
       {
@@ -261,8 +259,6 @@ export const it: Translation = {
       { from: 'bot', text: 'Fissato: giovedì 18 alle 10:30. È già nella vostra agenda.' },
     ],
     typing: 'sta scrivendo',
-    assistant: 'Assistente digitale',
-    online: 'sempre attivo',
     calendarTitle: 'La vostra agenda',
     eventTitle: 'Appuntamento — Laura Bianchi',
     eventTime: 'gio 18 set · 10:30 – 11:00',

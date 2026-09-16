@@ -29,7 +29,7 @@ export function Diary({ t }: { t: Translation }) {
                 <span className="block truncate text-small font-semibold text-paper">
                   {t.demo.eventTitle}
                 </span>
-                <span className="block text-micro text-paper/80">{t.demo.eventBadge}</span>
+                <span className="block text-micro text-paper">{t.demo.eventTime}</span>
               </span>
             ) : (
               <span aria-hidden="true" className="h-3 flex-1" />

@@ -23,6 +23,10 @@ export function ChatMockup({ t }: { t: Translation }) {
 
   useEffect(() => {
     if (still) return
+    /* messages changes identity on a language switch; without this the new
+       thread renders in full and is then collapsed back by the old timers. */
+    setShown(2)
+    setTyping(false)
     const at = (ms: number, fn: () => void) => timers.current.push(window.setTimeout(fn, ms))
 
     let clock = 500

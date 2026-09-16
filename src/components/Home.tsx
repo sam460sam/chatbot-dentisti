@@ -142,9 +142,6 @@ export function Home({ t }: { t: Translation }) {
       {/* ------------------------------------- where it stops — the ink plate */}
       <section id="security" aria-labelledby="security-title" className="band-ink">
         <div className="container-page">
-          <h2 id="security-title" className="sr-only">
-            {t.scenes.handover.lead} {t.scenes.handover.accent}
-          </h2>
           <Handover t={t} />
 
           <div className="mt-8 rule-ink pt-4">

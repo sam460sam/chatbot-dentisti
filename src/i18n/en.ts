@@ -14,6 +14,7 @@ export const en: Translation = {
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
     language: 'Language',
+    main: 'Main',
     skip: 'Skip to content',
   },
   hero: {
@@ -31,7 +32,6 @@ export const en: Translation = {
   },
   split: {
     title: 'Two services, both done properly',
-    lead: 'Most clients start with one and add the other later. Pick the one you came for.',
     assistant: {
       tag: 'Digital assistant',
       title: 'Stop losing the calls you never hear',
@@ -58,13 +58,6 @@ export const en: Translation = {
     },
   },
   scenes: {
-    calendar: {
-      eyebrow: 'In your calendar',
-      lead: 'The appointment is',
-      accent: 'already',
-      tail: 'in the diary',
-      body: 'No inbox to empty, no notes to pass on. The slot is taken in the calendar you already use, with a name and a number on it.',
-    },
     handover: {
       eyebrow: 'When it matters',
       lead: 'Anything delicate goes to',
@@ -137,7 +130,6 @@ export const en: Translation = {
   websites: {
     title: 'Websites for small businesses',
     lead: 'Besides the assistant we build websites — the kind a small business actually needs, not a showcase for us.',
-    tags: ['Mobile-first', 'Fast by default', 'Assistant-ready'],
     cta: 'Ask about a website',
     includesTitle: 'What a site includes',
     includes: [
@@ -183,8 +175,6 @@ export const en: Translation = {
   },
   contact: {
     title: 'Talk to us',
-    lead: 'WhatsApp is the fastest way to reach us. Email works just as well if you prefer it in writing.',
-    whatsapp: 'Message us on WhatsApp',
     email: 'Send an email',
     emailSubject: 'Question about the Twinbyte assistant',
     note: 'You will always get a reply from Anna or Samuele — there is no call centre behind this.',
@@ -216,8 +206,15 @@ export const en: Translation = {
         title: 'This website',
         body: [
           'This website uses no cookies. Nothing is stored for analytics, advertising or profiling, which is why there is no cookie banner to click away.',
-          'We use no analytics or tracking tools, and no fonts or scripts are loaded from third-party servers.',
+          'We use no analytics and no tracking tools, and the fonts are served from this domain.',
           'The site is hosted on Cloudflare Pages. Like any web server, the hosting provider processes technical request data such as IP address and browser type in order to deliver the pages and protect the service against abuse.',
+        ],
+      },
+      {
+        title: 'The assistant on this page',
+        body: [
+          'The chat bubble in the bottom right is our own assistant, and it is the one thing on this page that your browser loads from somewhere else. The script comes from a server we run at Vercel, and the answers from a server we run at Railway. Because your browser requests them directly, those two providers see your IP address and browser type.',
+          'If you open the chat, what you type is sent to that server to be answered, together with the language of the page. Please do not put anything in it you would not send us by email — for a booking or an offer, write to us on WhatsApp or at info@twinbyteservices.com instead.',
         ],
       },
       {
@@ -239,7 +236,8 @@ export const en: Translation = {
         title: 'Your rights',
         body: [
           'You can ask us for access to your data, for correction, deletion or restriction, for a copy in a portable format, and you can object to processing. Write to info@twinbyteservices.com and we will take care of it.',
-          'If you believe we handle your data incorrectly, you can lodge a complaint with your national data protection authority. TODO_SUPERVISORY_AUTHORITY',
+          'If you believe we handle your data incorrectly, you can lodge a complaint with your national data protection authority.',
+          'TODO_SUPERVISORY_AUTHORITY',
         ],
       },
       {
@@ -261,8 +259,6 @@ export const en: Translation = {
       { from: 'bot', text: 'Booked: Thursday the 18th at 10:30. It is in your calendar now.' },
     ],
     typing: 'typing',
-    assistant: 'Digital assistant',
-    online: 'always on',
     calendarTitle: 'Your calendar',
     eventTitle: 'Appointment — Laura Bakker',
     eventTime: 'Thu 18 Sept · 10:30 – 11:00',

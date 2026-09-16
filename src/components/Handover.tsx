@@ -14,7 +14,7 @@ export function Handover({ t }: { t: Translation }) {
     <div className="grid gap-4 lg:grid-cols-[0.9fr_1.1fr] lg:gap-6">
       <div>
         <p className="t-label">{t.scenes.handover.eyebrow}</p>
-        <h2 className="t-h2 mt-2">
+        <h2 id="security-title" className="t-h2 mt-2">
           {t.scenes.handover.lead} <span className="serif text-teal-bright">{t.scenes.handover.accent}</span>
           {t.scenes.handover.tail ? ` ${t.scenes.handover.tail}` : ''}
         </h2>
@@ -27,21 +27,21 @@ export function Handover({ t }: { t: Translation }) {
 
         <div className="mt-3 grid gap-2 sm:grid-cols-2">
           {/* Yes — it books */}
-          <div className="mark-in border border-teal-bright bg-teal/25 p-2">
-            <p className="text-micro font-bold uppercase text-teal-bright">{t.demo.yes}</p>
+          <div className="mark-in border border-teal-bright bg-teal p-2">
+            <p className="text-micro font-bold uppercase text-paper">{t.demo.yes}</p>
             <p className="mt-1 text-small text-paper">{t.demo.books}</p>
           </div>
 
           {/* No — it takes the details and hands over */}
-          <div className="mark-out border border-verm-bright bg-verm/30 p-2">
-            <p className="text-micro font-bold uppercase text-verm-bright">{t.demo.no}</p>
+          <div className="mark-out border border-paper p-2">
+            <p className="text-micro font-bold uppercase text-paper">{t.demo.no}</p>
             <p className="mt-1 text-small text-paper">{t.demo.toAPerson}</p>
 
             <div className="mt-2 grid gap-1">
               {[t.demo.fieldName, t.demo.fieldPhone].map((label) => (
                 <div key={label} className="flex items-center gap-1">
                   <span className="text-micro uppercase text-paper-mute">{label}</span>
-                  <span aria-hidden="true" className="h-2 flex-1 border border-ink-edge" />
+                  <span aria-hidden="true" className="h-2 flex-1 border border-paper/50" />
                 </div>
               ))}
             </div>

@@ -31,6 +31,8 @@ export interface Translation {
     openMenu: string
     closeMenu: string
     language: string
+    /** accessible name for the main navigation landmark */
+    main: string
     skip: string
   }
   hero: {
@@ -45,13 +47,11 @@ export interface Translation {
   /** The fork right under the hero: assistant on one side, websites on the other. */
   split: {
     title: string
-    lead: string
     assistant: { tag: string; title: string; body: string; points: string[]; cta: string; quote: string }
     websites: { tag: string; title: string; body: string; points: string[]; cta: string; quote: string }
   }
   /** Full-width scenes: an illustration with a headline over it. */
   scenes: {
-    calendar: { eyebrow: string; lead: string; accent: string; tail: string; body: string }
     handover: { eyebrow: string; lead: string; accent: string; tail: string; body: string }
   }
   /** The day strip: the hours a business is not there to answer. */
@@ -68,7 +68,6 @@ export interface Translation {
   websites: {
     title: string
     lead: string
-    tags: string[]
     cta: string
     includesTitle: string
     includes: string[]
@@ -79,8 +78,6 @@ export interface Translation {
   faq: { title: string; lead: string; items: { q: string; a: string }[] }
   contact: {
     title: string
-    lead: string
-    whatsapp: string
     email: string
     emailSubject: string
     note: string
@@ -99,8 +96,6 @@ export interface Translation {
     siteLabel: string
     messages: { from: 'patient' | 'bot'; text: string }[]
     typing: string
-    assistant: string
-    online: string
     calendarTitle: string
     eventTitle: string
     eventTime: string

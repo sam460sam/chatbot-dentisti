@@ -66,7 +66,7 @@ export function Header({ t }: { t: Translation }) {
           />
         </Link>
 
-        <nav aria-label="Main" className="hidden items-center gap-3 lg:flex">
+        <nav aria-label={t.nav.main} className="hidden items-center gap-3 lg:flex">
           {links.map((l) => (
             <Link
               key={l.id}
@@ -117,7 +117,7 @@ export function Header({ t }: { t: Translation }) {
       />
 
       {open && (
-        <nav id="mobile-menu" aria-label="Main" className="border-t border-paper-edge bg-paper lg:hidden">
+        <nav id="mobile-menu" aria-label={t.nav.main} className="border-t border-paper-edge bg-paper lg:hidden">
           <ul role="list" className="container-page flex flex-col py-1">
             {links.map((l) => (
               <li key={l.id}>
