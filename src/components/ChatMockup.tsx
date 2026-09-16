@@ -8,6 +8,10 @@ import type { Translation } from '../i18n'
  * tells you who is talking. The assistant's bubbles are .mark-in (said TO you);
  * the customer's are .mark-out (your turn).
  *
+ * The customer's bubbles carry a near-black hairline. They used to be a pale fill
+ * on a pale panel — 1.12:1 — so on a real screen only the assistant's side of the
+ * conversation was visible and the mock looked broken.
+ *
  * It opens on a question and its answer — never on an empty box — plays out in about
  * three seconds, and then rests on the finished state. It used
  * to loop forever — which meant a setState roughly once a second for as long as
@@ -72,7 +76,7 @@ export function ChatMockup({ t }: { t: Translation }) {
                 className={`max-w-[88%] px-2 py-1 text-small animate-rise ${
                   fromBot
                     ? 'mark-in self-start bg-teal text-paper'
-                    : 'mark-out self-end border border-paper-edge bg-paper-deep text-ink'
+                    : 'mark-out self-end border border-ink bg-paper-deep text-ink'
                 }`}
               >
                 {message.text}

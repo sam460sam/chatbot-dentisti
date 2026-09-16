@@ -45,8 +45,14 @@ export default {
           'edge-deep': '#CFC9BB', dim: '#B4AFA3', mute: '#9A9488',
         },
         ink: { DEFAULT: '#17160F', soft: '#4A4740', mute: '#66625A', edge: '#3F3C33' },
-        teal: { DEFAULT: '#0E5266', deep: '#0A3F4F', bright: '#59B9CC' },
-        verm: { DEFAULT: '#A8371F', fill: '#C8622F', deep: '#8C2C17', bright: '#D96A46' },
+        /* `mid` exists because the strip needs two bars that are unmistakable at a
+           glance: ink against teal measured 2.09:1, which on a laptop at an angle
+           reads as one colour. mid against ink is 3.82:1 and still visible on the
+           beige ground at 3.78:1. */
+        teal: { DEFAULT: '#0E5266', deep: '#0A3F4F', mid: '#1D7D96', bright: '#59B9CC' },
+        /* Pulled back from a fully saturated #A8371F: at flood scale it was the
+           loudest thing on the page. Still 5.51:1 under paper text. */
+        verm: { DEFAULT: '#A14531', fill: '#C8622F', deep: '#853727', bright: '#D96A46' },
       },
       fontFamily: {
         display: ['Bricolage', 'Georgia', 'serif'],

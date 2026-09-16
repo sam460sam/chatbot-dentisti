@@ -41,7 +41,7 @@ export function DayStrip({ t }: { t: Translation }) {
             <div key={hour} className="flex flex-col items-center gap-1">
               <div
                 className={`h-6 w-full transition-colors duration-500 sm:h-7 ${
-                  open ? 'bg-ink' : resolved ? 'bg-teal' : 'bg-paper-edge-deep'
+                  open ? 'bg-ink' : resolved ? 'bg-teal-mid' : 'bg-paper-edge-deep'
                 }`}
                 style={{ transitionDelay: open ? '0ms' : `${i * 26}ms` }}
               />
@@ -60,7 +60,7 @@ export function DayStrip({ t }: { t: Translation }) {
           {t.dayStrip.legendOpen}
         </li>
         <li className="flex items-center gap-1 text-small text-ink-soft">
-          <span aria-hidden="true" className="h-0.5 w-2 bg-teal" />
+          <span aria-hidden="true" className="h-0.5 w-2 bg-teal-mid" />
           {t.dayStrip.legendShut}
         </li>
       </ul>
