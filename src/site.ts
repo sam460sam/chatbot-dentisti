@@ -24,8 +24,8 @@ export const SITE = {
    */
   demo: {
     en: '/demo/',
-    nl: '/demo/',
-    it: '/demo/',
+    nl: '/demo/nl/',
+    it: '/demo/it/',
   },
 } as const
 
