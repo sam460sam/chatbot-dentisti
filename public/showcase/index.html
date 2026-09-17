@@ -260,11 +260,11 @@ footer a{color:var(--dim)}
       <h3>No 3D engine runs in your browser.</h3>
       <div class="spec" id="spec">
         <div><b>Object</b><span>Modelled and lit in Blender</span></div>
-        <div><b>Render</b><span>Cycles, <span id="nframes">120</span> frames, one full turn</span></div>
+        <div><b>Render</b><span>Cycles, 240 frames, one full turn</span></div>
         <div><b>Delivery</b><span>WebP with transparency, two sizes</span></div>
         <div><b>Playback</b><span>One canvas, one drawImage per scroll frame</span></div>
         <div><b>Libraries</b><span>None</span></div>
-        <div><b>Sequence weight</b><span>1.5 MB at 900px · 1.0 MB at 560px</span></div>
+        <div><b>Sequence weight</b><span>3.9 MB at 1100px · 1.0 MB at 560px</span></div>
       </div>
       <p class="lede">
         The whole thing is one HTML file, one canvas and a folder of images. No
@@ -296,7 +296,9 @@ footer a{color:var(--dim)}
 
 <script>
 (function () {
-  var FRAMES = 120;
+  /* Desktop gets the full turn, a phone gets every second frame of the same
+     turn. Half the weight, and at a phone's scroll distance the step is the
+     same size. */
   var canvas = document.getElementById('seq');
   var ctx = canvas.getContext('2d', { alpha: true });
   var runway = document.getElementById('runway');
@@ -304,29 +306,19 @@ footer a{color:var(--dim)}
   var cue = document.getElementById('cue');
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Two sizes. The phone never downloads the desktop set. */
-  var wide = Math.max(window.innerWidth, window.innerHeight) > 900 && window.devicePixelRatio > 1.4
-    ? true : window.innerWidth >= 820;
+  var wide = window.innerWidth >= 820;
   var DIR = wide ? './frames' : './frames-sm';
-  var SIDE = wide ? 900 : 560;
+  var FRAMES = wide ? 240 : 120;
 
   var imgs = new Array(FRAMES);
   var ready = new Array(FRAMES);
-  var have = 0;
-  var current = -1;
-  var pending = false;
+  var current = -1;          /* the frame on the canvas right now */
+  var shown = 0;             /* the eased position, a float */
+  var target = 0;            /* where the scrollbar says we should be */
+  var raf = null;
 
   function path(i) {
     return DIR + '/' + String(i + 1).padStart(3, '0') + '.webp';
-  }
-
-  function fit() {
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    var w = canvas.clientWidth, h = canvas.clientHeight;
-    canvas.width = Math.round(w * dpr);
-    canvas.height = Math.round(h * dpr);
-    current = -1;
-    draw(progress());
   }
 
   function progress() {
@@ -347,8 +339,8 @@ footer a{color:var(--dim)}
     return -1;
   }
 
-  function draw(p) {
-    var want = Math.min(FRAMES - 1, Math.max(0, Math.round(p * (FRAMES - 1))));
+  function paint(index) {
+    var want = Math.min(FRAMES - 1, Math.max(0, Math.round(index)));
     var use = nearest(want);
     if (use < 0 || use === current) return;
     current = use;
@@ -356,6 +348,27 @@ footer a{color:var(--dim)}
     var s = Math.min(cw, ch) * (cw > ch ? 0.70 : 0.92);
     ctx.clearRect(0, 0, cw, ch);
     ctx.drawImage(imgs[use], (cw - s) / 2, (ch - s) / 2 - ch * 0.15, s, s);
+  }
+
+  /* The turn follows the scrollbar instead of being pinned to it. A wheel notch
+     moves several frames at once; jumping straight there is what made the
+     rotation look like it was skipping. This eases in, keeps turning for a
+     moment after the wheel stops, and settles exactly. */
+  function tick() {
+    var gap = target - shown;
+    if (Math.abs(gap) < 0.4) {
+      shown = target;
+      paint(shown);
+      raf = null;
+      return;
+    }
+    shown += gap * 0.2;
+    paint(shown);
+    raf = requestAnimationFrame(tick);
+  }
+
+  function pump() {
+    if (raf === null) raf = requestAnimationFrame(tick);
   }
 
   function beat(p) {
@@ -368,33 +381,36 @@ footer a{color:var(--dim)}
   }
 
   function onScroll() {
-    if (pending) return;
-    pending = true;
-    requestAnimationFrame(function () {
-      pending = false;
-      var p = progress();
-      draw(p);
-      beat(p);
-    });
+    var p = progress();
+    target = p * (FRAMES - 1);
+    beat(p);
+    pump();
   }
 
-  /* Load the first frame, show it, then walk the rest in order. Nothing waits
-     on everything: the nearest loaded frame is drawn until its neighbour lands. */
+  function fit() {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(canvas.clientWidth * dpr);
+    canvas.height = Math.round(canvas.clientHeight * dpr);
+    current = -1;
+    paint(shown);
+  }
+
   function load(i, then) {
     var im = new Image();
     im.decoding = 'async';
-    im.onload = function () {
-      imgs[i] = im; ready[i] = true; have++;
-      if (then) then();
-    };
+    im.onload = function () { imgs[i] = im; ready[i] = true; if (then) then(); };
     im.onerror = function () { if (then) then(); };
     im.src = path(i);
   }
 
+  /* Coarse to fine: every eighth frame, then every fourth, then the rest. The
+     turn is complete early and only gets smoother, instead of being unusable
+     until the last frame lands. */
   function chain(order, k) {
     if (k >= order.length) return;
     load(order[k], function () {
-      draw(progress());
+      current = -1;
+      paint(shown);
       chain(order, k + 1);
     });
   }
@@ -402,13 +418,16 @@ footer a{color:var(--dim)}
   function start() {
     fit();
     load(0, function () {
-      draw(progress());
-      beat(progress());
-      if (still) return;               /* one still frame is the whole show */
-      var order = [];
-      /* coarse pass first, so a half-loaded page already turns */
-      for (var s = 8; s >= 1; s = s >> 1) {
-        for (var i = 0; i < FRAMES; i += s) if (order.indexOf(i) < 0) order.push(i);
+      var p = progress();
+      target = shown = p * (FRAMES - 1);
+      paint(shown);
+      beat(p);
+      if (still) return;
+      var order = [], seen = {};
+      for (var step = 8; step >= 1; step = step >> 1) {
+        for (var i = 0; i < FRAMES; i += step) {
+          if (!seen[i]) { seen[i] = 1; order.push(i); }
+        }
       }
       chain(order, 0);
     });
