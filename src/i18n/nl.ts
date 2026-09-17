@@ -78,8 +78,8 @@ export const nl: Translation = {
   },
   dayStrip: {
     eyebrow: 'Een dinsdag',
-    title: 'U bent acht van deze uren open',
-    caption: 'Klanten schrijven in alle zestien. Wie om 21:40 schrijft is niet lastig — dat is het uur waarop hij eindelijk ging zitten.',
+    title: 'U bent acht van deze vierentwintig uren open',
+    caption: 'De andere zestien zijn van niemand. Wie om 21:40 schrijft is niet lastig — dat is het uur waarop hij eindelijk ging zitten.',
     legendOpen: 'Open — u antwoordt',
     legendShut: 'Dicht — de assistent antwoordt',
   },

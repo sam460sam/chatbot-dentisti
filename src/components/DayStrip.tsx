@@ -3,18 +3,24 @@ import type { Translation } from '../i18n'
 import { prefersReducedMotion } from './motion'
 
 /*
- * The signature object (assistant ink only — terracotta means websites): one ordinary Tuesday, 07:00 to 23:00, sixteen cells.
- * Eight of them are inside opening hours. The other eight are the ones this
- * business is not there for — and the only number on the strip is a count of
- * its own cells, so it claims nothing we cannot show.
+ * The signature object: one ordinary Tuesday, midnight to midnight, twenty-four
+ * cells. Eight of them are inside opening hours. The other sixteen are the ones
+ * this business is not there for — and the only number on the strip is a count
+ * of its own cells, so it claims nothing we cannot show.
+ *
+ * Blue is the hour you answer. White is the hour nobody does.
+ *
+ * The white cells carry a near-black hairline, and they need it: white on the
+ * beige ground is 1.24:1, so without the outline two thirds of the strip would
+ * be an invisible gap. Both kinds of cell carry the same border so the two never
+ * differ by a pixel.
  *
  * It resolves on a load timer, never on scroll. Nothing here gates visibility:
  * every cell is painted and readable at first paint, and the animation only
  * changes the fill of the closed hours. Motion may add to something already
  * visible; it may never decide whether it is visible.
  */
-const START_HOUR = 7
-const HOURS = 16
+const HOURS = 24
 const OPEN_FROM = 9
 const OPEN_TO = 17 // exclusive — 09:00 to 17:00 is eight cells
 
@@ -30,7 +36,7 @@ export function DayStrip({ t }: { t: Translation }) {
     return () => clearTimeout(id)
   }, [])
 
-  const hours = Array.from({ length: HOURS }, (_, i) => START_HOUR + i)
+  const hours = Array.from({ length: HOURS }, (_, i) => i)
 
   return (
     <div>
@@ -40,14 +46,14 @@ export function DayStrip({ t }: { t: Translation }) {
           return (
             <div key={hour} className="flex flex-col items-center gap-1">
               <div
-                className={`h-6 w-full transition-colors duration-500 sm:h-7 ${
-                  open ? 'bg-ink' : resolved ? 'bg-teal-mid' : 'bg-paper-edge-deep'
+                className={`h-6 w-full border border-ink transition-colors duration-500 sm:h-7 ${
+                  open ? 'bg-teal' : resolved ? 'bg-white' : 'bg-paper-edge-deep'
                 }`}
-                style={{ transitionDelay: open ? '0ms' : `${i * 26}ms` }}
+                style={{ transitionDelay: open ? '0ms' : `${i * 18}ms` }}
               />
-              {/* Only every third hour is labelled: sixteen labels at 390px is a smear. */}
+              {/* Only every fourth hour is labelled: twenty-four labels at 390px is a smear. */}
               <span className="text-micro tabular-nums text-ink-mute">
-                {i % 3 === 0 ? `${String(hour).padStart(2, '0')}` : ' '}
+                {i % 4 === 0 ? `${String(hour).padStart(2, '0')}` : ' '}
               </span>
             </div>
           )
@@ -56,11 +62,11 @@ export function DayStrip({ t }: { t: Translation }) {
 
       <ul role="list" className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
         <li className="flex items-center gap-1 text-small text-ink-soft">
-          <span aria-hidden="true" className="h-0.5 w-2 bg-ink" />
+          <span aria-hidden="true" className="h-1 w-2 border border-ink bg-teal" />
           {t.dayStrip.legendOpen}
         </li>
         <li className="flex items-center gap-1 text-small text-ink-soft">
-          <span aria-hidden="true" className="h-0.5 w-2 bg-teal-mid" />
+          <span aria-hidden="true" className="h-1 w-2 border border-ink bg-white" />
           {t.dayStrip.legendShut}
         </li>
       </ul>

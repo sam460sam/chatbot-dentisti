@@ -78,8 +78,8 @@ export const en: Translation = {
   },
   dayStrip: {
     eyebrow: 'One Tuesday',
-    title: 'You are open for eight of these hours',
-    caption: 'Customers write in all sixteen. Someone writing at 21:40 is not being difficult — that is the hour they finally sat down.',
+    title: 'You are open for eight of these twenty-four hours',
+    caption: 'The other sixteen belong to nobody. Someone writing at 21:40 is not being difficult — that is the hour they finally sat down.',
     legendOpen: 'Open — you answer',
     legendShut: 'Closed — the assistant answers',
   },

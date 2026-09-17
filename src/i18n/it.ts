@@ -78,8 +78,8 @@ export const it: Translation = {
   },
   dayStrip: {
     eyebrow: 'Un martedì',
-    title: 'Siete aperti otto di queste ore',
-    caption: 'I clienti scrivono in tutte e sedici. Chi scrive alle 21:40 non è un rompiscatole: è l’ora in cui finalmente si è seduto.',
+    title: 'Siete aperti otto di queste ventiquattro ore',
+    caption: 'Le altre sedici non sono di nessuno. Chi scrive alle 21:40 non è un rompiscatole: è l’ora in cui finalmente si è seduto.',
     legendOpen: 'Aperto — rispondete voi',
     legendShut: 'Chiuso — risponde l’assistente',
   },
