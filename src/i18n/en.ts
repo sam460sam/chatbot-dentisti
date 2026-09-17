@@ -29,6 +29,17 @@ export const en: Translation = {
       'Urgent or unusual goes to your team, with name and number',
     ],
   },
+  heroSite: {
+    url: 'your-business.com',
+    name: 'Your business',
+    tagline: 'The page your customers land on before they call.',
+    hours: 'Open Mon–Fri · 09:00–17:00',
+    address: 'Kerkstraat 12, Groningen',
+    nav: ['What we do', 'Prices', 'Find us'],
+    call: 'Call now',
+    book: 'Book online',
+    phoneLabel: 'On the phone, 23:47',
+  },
   split: {
     title: 'Two services, both done properly',
     assistant: {

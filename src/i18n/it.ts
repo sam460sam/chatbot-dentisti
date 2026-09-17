@@ -29,6 +29,17 @@ export const it: Translation = {
       'Urgenze e casi strani passano al vostro team, con nome e numero',
     ],
   },
+  heroSite: {
+    url: 'iltuolocale.it',
+    name: 'La tua attività',
+    tagline: 'La pagina che i clienti guardano prima di chiamarti.',
+    hours: 'Aperto lun–ven · 09:00–17:00',
+    address: 'Via Roma 12, Castelfranco Veneto',
+    nav: ['Cosa facciamo', 'Prezzi', 'Dove siamo'],
+    call: 'Chiama ora',
+    book: 'Prenota online',
+    phoneLabel: 'Sul telefono, 23:47',
+  },
   split: {
     title: 'Due servizi, fatti bene entrambi',
     assistant: {

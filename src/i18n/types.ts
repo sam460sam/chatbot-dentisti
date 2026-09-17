@@ -43,6 +43,19 @@ export interface Translation {
     note: string
     bullets: string[]
   }
+  /** The example small-business site drawn inside the hero stage. It is a mock,
+      not a real customer: the name is deliberately generic. */
+  heroSite: {
+    url: string
+    name: string
+    tagline: string
+    hours: string
+    address: string
+    nav: string[]
+    call: string
+    book: string
+    phoneLabel: string
+  }
   /** The fork right under the hero: assistant on one side, websites on the other. */
   split: {
     title: string

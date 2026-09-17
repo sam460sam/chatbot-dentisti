@@ -29,6 +29,17 @@ export const nl: Translation = {
       'Spoed of iets ongewoons gaat naar uw team, met naam en nummer',
     ],
   },
+  heroSite: {
+    url: 'uw-bedrijf.nl',
+    name: 'Uw bedrijf',
+    tagline: 'De pagina waar uw klanten landen voordat ze bellen.',
+    hours: 'Open ma–vr · 09:00–17:00',
+    address: 'Kerkstraat 12, Groningen',
+    nav: ['Wat we doen', 'Tarieven', 'Route'],
+    call: 'Bel nu',
+    book: 'Online afspraak',
+    phoneLabel: 'Op de telefoon, 23:47',
+  },
   split: {
     title: 'Twee diensten, allebei goed gedaan',
     assistant: {

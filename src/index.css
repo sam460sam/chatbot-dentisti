@@ -329,3 +329,422 @@
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ============================================================== THE HERO STAGE
+   The rest of the page draws depth with a hard offset plate — print out of
+   register, zero blur. The hero is the single exception and it is deliberate:
+   the hero is a photograph of the product, the rest of the page is the document.
+
+   What is still forbidden here, because it is what made whole sections render
+   white on an iPhone on this project: `filter`, `backdrop-filter`, 3D
+   transforms, a persistent `will-change`, and anything that gates visibility on
+   an IntersectionObserver. The grain below is a static SVG image the browser
+   rasterises once per tile — not a live filter on a live layer. The float is one
+   transform on one element, and `prefers-reduced-motion` stops it. */
+
+.band-hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(760px 460px at 92% 0%, rgba(14, 82, 102, 0.07), transparent 66%),
+    radial-gradient(760px 520px at 2% 100%, rgba(161, 69, 49, 0.07), transparent 66%),
+    radial-gradient(1000px 700px at 62% 46%, #FFFDF9 0%, rgba(255, 253, 249, 0) 62%),
+    linear-gradient(180deg, #F7F4EF 0%, #F5F2EC 50%, #EAE5DA 100%);
+}
+
+.band-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.11;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+.band-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.stage {
+  position: relative;
+  padding-bottom: 26px;
+}
+
+.stage-light {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  top: -14%;
+  bottom: 4%;
+  pointer-events: none;
+  background: radial-gradient(58% 54% at 52% 44%, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0) 72%);
+}
+
+.stage-float {
+  position: relative;
+  animation: stagefloat 9s ease-in-out infinite alternate;
+}
+
+@keyframes stagefloat {
+  from { transform: translateY(0); }
+  to { transform: translateY(-10px); }
+}
+
+.stage-floor {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 0;
+  height: 46px;
+  pointer-events: none;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(23, 22, 15, 0.20), rgba(23, 22, 15, 0) 72%);
+}
+
+/* ------------------------------------------------------ the site, in a window */
+.browser {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #17160F;
+  border-radius: 12px;
+  background: #F5F2EC;
+  box-shadow:
+    0 34px 58px -34px rgba(23, 22, 15, 0.55),
+    0 6px 16px -8px rgba(23, 22, 15, 0.22);
+}
+
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-bottom: 1px solid #D9D4C8;
+  background: #EAE5DA;
+}
+
+.browser-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.browser-dots i {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #CFC9BB;
+}
+
+.browser-url {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #66625A;
+}
+
+.browser-page {
+  padding: 18px 20px 22px;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 11px;
+  border-bottom: 1px solid #D9D4C8;
+}
+
+.site-mark {
+  font-family: 'Bricolage', Georgia, serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #17160F;
+}
+
+.site-links {
+  display: flex;
+  gap: 13px;
+  font-size: 11px;
+  color: #66625A;
+}
+
+.site-body {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 20px;
+  align-items: center;
+  padding-top: 16px;
+}
+
+.site-hours {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #A14531;
+}
+
+.site-title {
+  margin-top: 7px;
+  font-family: 'Bricolage', Georgia, serif;
+  font-size: 32px;
+  line-height: 34px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #17160F;
+}
+
+.site-lead {
+  margin-top: 7px;
+  max-width: 26ch;
+  font-size: 12.5px;
+  line-height: 19px;
+  color: #4A4740;
+}
+
+.site-btns {
+  display: flex;
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.site-btn-fill,
+.site-btn-line {
+  border-radius: 10px 10px 0 10px;
+  padding: 7px 13px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.site-btn-fill {
+  background: #A14531;
+  color: #F5F2EC;
+}
+
+.site-btn-line {
+  border: 1px solid #17160F;
+  color: #17160F;
+}
+
+.site-addr {
+  margin-top: 11px;
+  font-size: 10px;
+  color: #66625A;
+}
+
+/* No stock photograph stands in for a business we have not met. The block is
+   the terracotta ink, ruled — plainly a drawing, not a claim. */
+.site-art {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+  align-self: stretch;
+  min-height: 158px;
+  padding: 14px;
+  border-radius: 10px 10px 10px 0;
+  background: linear-gradient(160deg, #B24F38 0%, #A14531 58%, #853727 100%);
+}
+
+.site-art-rule {
+  display: block;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(245, 242, 236, 0.58);
+}
+
+.site-art-rule:nth-child(2) { width: 72%; }
+.site-art-rule:nth-child(3) { width: 44%; }
+
+.site-launcher {
+  position: absolute;
+  right: 13px;
+  bottom: 13px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px 999px 4px 999px;
+  background: #0E5266;
+  color: #F5F2EC;
+  box-shadow: 0 8px 16px -8px rgba(23, 22, 15, 0.6);
+}
+
+.site-cells {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #D9D4C8;
+}
+
+.site-cell {
+  border-radius: 10px 10px 10px 0;
+  background: #EFEBE2;
+  padding: 10px 11px;
+}
+
+.site-cell b {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #66625A;
+}
+
+.site-cell span {
+  display: block;
+  margin-top: 5px;
+  font-size: 11.5px;
+  line-height: 16px;
+  color: #17160F;
+}
+
+/* --------------------------------------------- the conversation, on a phone */
+.phone {
+  position: absolute;
+  left: -58px;
+  top: 40px;
+  width: 204px;
+  padding: 7px;
+  border: 1px solid #17160F;
+  border-radius: 28px;
+  background: #17160F;
+  transform: rotate(-3deg);
+  box-shadow: 0 26px 44px -22px rgba(23, 22, 15, 0.62);
+}
+
+/* Fixed height, thread pinned to the bottom. Anchored the other way round the
+   phone grew upward as the messages arrived and ended up sitting over the
+   window's address bar — the one element in the composition that moved. */
+.phone-screen {
+  display: flex;
+  flex-direction: column;
+  height: 324px;
+  overflow: hidden;
+  padding: 12px 10px;
+  border-radius: 22px;
+  background: #F5F2EC;
+}
+
+/* The thread is pinned to the bottom of the screen and clipped at the top, the
+   way a real conversation sits in a phone. The gradient at the top edge is what
+   makes the clip read as scroll rather than as a rendering fault. */
+.phone-thread {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.phone-thread > div {
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.phone-thread::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 24px;
+  pointer-events: none;
+  background: linear-gradient(180deg, #F5F2EC 0%, rgba(245, 242, 236, 0) 100%);
+}
+
+.phone-label {
+  margin-bottom: 8px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #66625A;
+}
+
+/* Below the two-column breakpoint the phone stops being an overlay and joins
+   the flow: on a 390px screen an absolutely positioned phone sits on top of the
+   page it is meant to be standing in front of, and both become unreadable. */
+@media (max-width: 1023px) {
+  .phone {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: 190px;
+    margin: -38px 10px 0 auto;
+    transform: rotate(-2deg);
+  }
+
+  .phone-screen {
+    height: 290px;
+  }
+
+  .stage {
+    padding-bottom: 0;
+  }
+
+  .stage-floor {
+    bottom: 6px;
+  }
+
+  /* The phone overlaps the corner the launcher sits in, and half a teal disc
+     peeking out from behind it reads as a bug. On a phone the phone IS the
+     chat, so the launcher has nothing left to say. */
+  .site-launcher {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .site-body {
+    grid-template-columns: 1fr;
+  }
+
+  .site-cells {
+    display: none;
+  }
+
+  .site-art {
+    min-height: 74px;
+  }
+
+  .site-lead {
+    max-width: none;
+  }
+
+  .phone {
+    width: 168px;
+  }
+}
+
+/* The phone is absolutely placed, the page inside the window is not: in a
+   language whose lead wraps to one more line the cell row climbed under the
+   phone and lost its first label. A floor under the body keeps the row below
+   the phone in every language. */
+@media (min-width: 1024px) {
+  .site-body {
+    min-height: 300px;
+  }
+}
+
+/* ----------------------------------------------------------- the fact strip */
+.facts {
+  display: grid;
+  gap: 8px;
+  border-top: 1px solid #D9D4C8;
+  padding-top: 20px;
+}
+
+@media (min-width: 640px) {
+  .facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+}
