@@ -9,6 +9,7 @@ export const en: Translation = {
     benefits: 'What you get',
     security: 'Privacy & safety',
     websites: 'Websites',
+    prices: 'Prices',
     faq: 'FAQ',
     contact: 'Contact',
     openMenu: 'Open menu',
@@ -39,6 +40,57 @@ export const en: Translation = {
     call: 'Call now',
     book: 'Book online',
     phoneLabel: 'On the phone, 23:47',
+  },
+  pricing: {
+    eyebrow: 'What it costs',
+    title: 'The whole price list, on the page',
+    lead: 'No call needed to find out what you would pay. These are launch prices — they go up once we have a portfolio, and whoever signs now keeps theirs.',
+    launch: {
+      tag: 'Launch offer — first three clients',
+      body: 'The assistant comes free with a website: no setup fee, and the first three months on us. The normal monthly fee starts in month four.',
+    },
+    setupLabel: 'To set up',
+    monthLabel: 'Per month',
+    plans: [
+      {
+        name: 'One-page site',
+        setup: '\u20AC590',
+        month: '\u20AC19',
+        points: ['Everything on one screen: hours, address, one tap to call', 'Written in your language', 'Hosting and small changes included'],
+      },
+      {
+        name: 'Full site',
+        setup: '\u20AC990',
+        month: '\u20AC29',
+        points: ['Up to five pages', 'Findable on Google, in every language you sell in', 'Hosting and small changes included'],
+      },
+      {
+        name: 'Assistant',
+        setup: '\u20AC240',
+        month: '\u20AC109',
+        points: ['300 conversations a month', 'Books into the calendar you already use', 'One language'],
+      },
+      {
+        name: 'Assistant Pro',
+        setup: '\u20AC340',
+        month: '\u20AC169',
+        points: ['1,000 conversations a month', 'WhatsApp as well as the website', 'Every language your customers write in'],
+      },
+    ],
+    bundle: {
+      tag: 'Both together',
+      name: 'Full site + Assistant',
+      setup: '\u20AC860',
+      month: '\u20AC109',
+      body: 'Thirty per cent off the setup, and the site\u2019s monthly fee is on us for as long as you keep the assistant. Building them together is genuinely less work for us, so you keep the difference.',
+    },
+    fine: [
+      'Conversations beyond your plan: \u20AC0.08 each. We tell you before you go over, never after.',
+      'Extra page on a full site: \u20AC140.',
+      'Month to month, one month\u2019s notice. No long contract, ever.',
+      'Prices in euro, per business. VAT, where it applies, is shown on the quote.',
+    ],
+    cta: 'Ask for a quote',
   },
   split: {
     title: 'Two services, both done properly',
@@ -167,7 +219,7 @@ export const en: Translation = {
       },
       {
         q: 'What does it cost?',
-        a: 'It depends on how much your business uses it, so plans are priced by the number of conversations you have in a month: a practice handling a few hundred pays considerably less than a company handling thousands. Tell us roughly how many customers contact you and we will give you a figure before you commit to anything. Comparable tools on the market sit roughly between €30 and €150 a month.',
+        a: 'The whole price list is on this page — nothing is held back until a phone call. The assistant is €240 to set up and €109 a month for 300 conversations; sites start at €590. Take both and the setup drops thirty per cent and the site’s monthly fee is on us.',
       },
       {
         q: 'Does it work with our current website?',

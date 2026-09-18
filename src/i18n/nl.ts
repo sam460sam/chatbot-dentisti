@@ -9,6 +9,7 @@ export const nl: Translation = {
     benefits: 'Wat het oplevert',
     security: 'Privacy & veiligheid',
     websites: 'Websites',
+    prices: 'Tarieven',
     faq: 'Veelgestelde vragen',
     contact: 'Contact',
     openMenu: 'Menu openen',
@@ -39,6 +40,57 @@ export const nl: Translation = {
     call: 'Bel nu',
     book: 'Online afspraak',
     phoneLabel: 'Op de telefoon, 23:47',
+  },
+  pricing: {
+    eyebrow: 'Wat het kost',
+    title: 'De hele prijslijst, gewoon op de pagina',
+    lead: 'Geen telefoontje nodig om te weten wat u betaalt. Dit zijn introductieprijzen \u2014 ze gaan omhoog zodra we een portfolio hebben, en wie nu tekent houdt de zijne.',
+    launch: {
+      tag: 'Introductieaanbod \u2014 eerste drie klanten',
+      body: 'De assistent krijgt u gratis bij een website: geen installatiekosten, en de eerste drie maanden zijn van ons. Vanaf de vierde maand geldt het normale maandbedrag.',
+    },
+    setupLabel: 'Eenmalig',
+    monthLabel: 'Per maand',
+    plans: [
+      {
+        name: 'E\u00e9npagina-site',
+        setup: '\u20AC590',
+        month: '\u20AC19',
+        points: ['Alles op \u00e9\u00e9n scherm: openingstijden, adres, \u00e9\u00e9n tik om te bellen', 'Geschreven in uw eigen taal', 'Hosting en kleine wijzigingen inbegrepen'],
+      },
+      {
+        name: 'Volledige site',
+        setup: '\u20AC990',
+        month: '\u20AC29',
+        points: ['Tot vijf pagina\u2019s', 'Vindbaar op Google, in elke taal waarin u verkoopt', 'Hosting en kleine wijzigingen inbegrepen'],
+      },
+      {
+        name: 'Assistent',
+        setup: '\u20AC240',
+        month: '\u20AC109',
+        points: ['300 gesprekken per maand', 'Plant in de agenda die u al gebruikt', '\u00c9\u00e9n taal'],
+      },
+      {
+        name: 'Assistent Pro',
+        setup: '\u20AC340',
+        month: '\u20AC169',
+        points: ['1.000 gesprekken per maand', 'Ook via WhatsApp, niet alleen de website', 'Elke taal waarin uw klanten schrijven'],
+      },
+    ],
+    bundle: {
+      tag: 'Allebei samen',
+      name: 'Volledige site + Assistent',
+      setup: '\u20AC860',
+      month: '\u20AC109',
+      body: 'Dertig procent van de eenmalige kosten eraf, en het maandbedrag van de site is van ons zolang u de assistent houdt. Ze samen bouwen is voor ons echt minder werk, dus het verschil is voor u.',
+    },
+    fine: [
+      'Gesprekken boven uw pakket: \u20AC0,08 per stuk. We zeggen het voordat u eroverheen gaat, niet erna.',
+      'Extra pagina op een volledige site: \u20AC140.',
+      'Maand per maand, \u00e9\u00e9n maand opzegtermijn. Nooit een lang contract.',
+      'Prijzen in euro, zakelijk. Btw wordt, waar van toepassing, op de offerte vermeld.',
+    ],
+    cta: 'Vraag een offerte',
   },
   split: {
     title: 'Twee diensten, allebei goed gedaan',
@@ -167,7 +219,7 @@ export const nl: Translation = {
       },
       {
         q: 'Wat kost het?',
-        a: 'Dat hangt af van hoeveel uw bedrijf hem gebruikt, dus de abonnementen gaan per aantal gesprekken per maand: een praktijk met een paar honderd contacten betaalt aanzienlijk minder dan een bedrijf met duizenden. Laat ons ongeveer weten hoeveel klanten u benaderen, dan geven wij u een bedrag voordat u zich ergens aan verbindt. Vergelijkbare tools in de markt zitten ruwweg tussen de 30 en 150 euro per maand.',
+        a: 'De hele prijslijst staat op deze pagina — er wordt niets achtergehouden tot een telefoongesprek. De assistent kost €240 eenmalig en €109 per maand voor 300 gesprekken; sites beginnen bij €590. Neemt u allebei, dan gaat er dertig procent van de eenmalige kosten af en is het maandbedrag van de site van ons.',
       },
       {
         q: 'Werkt het met onze huidige website?',

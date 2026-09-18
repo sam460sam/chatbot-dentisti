@@ -1,4 +1,5 @@
 import { Hero } from './Hero'
+import { Pricing } from './Pricing'
 import { Handover } from './Handover'
 import { SiteWireframe } from './SiteWireframe'
 import { Mark, Bubble, Window, Arrow, Mail, Person } from './marks'
@@ -230,6 +231,8 @@ export function Home({ t }: { t: Translation }) {
       </Band>
 
       {/* ----------------------------------------------------------- FAQ */}
+      <Pricing t={t} />
+
       <section id="faq" aria-labelledby="faq-title" className="band-deep">
         <div className="container-page">
           <div className="border-t-2 border-ink pt-2">

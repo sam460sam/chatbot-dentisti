@@ -9,6 +9,7 @@ export const it: Translation = {
     benefits: 'Cosa ottenete',
     security: 'Privacy e sicurezza',
     websites: 'Siti web',
+    prices: 'Prezzi',
     faq: 'Domande frequenti',
     contact: 'Contatti',
     openMenu: 'Apri il menu',
@@ -39,6 +40,57 @@ export const it: Translation = {
     call: 'Chiama ora',
     book: 'Prenota online',
     phoneLabel: 'Sul telefono, 23:47',
+  },
+  pricing: {
+    eyebrow: 'Quanto costa',
+    title: 'Il listino completo, scritto sulla pagina',
+    lead: 'Non serve una telefonata per sapere quanto spendete. Questi sono prezzi di lancio \u2014 saliranno quando avremo un portfolio, e chi firma adesso tiene i suoi.',
+    launch: {
+      tag: 'Offerta di lancio \u2014 primi tre clienti',
+      body: 'L\u2019assistente \u00e8 incluso con il sito: nessun costo di attivazione e primi tre mesi offerti. Dal quarto mese parte il canone normale.',
+    },
+    setupLabel: 'Attivazione',
+    monthLabel: 'Al mese',
+    plans: [
+      {
+        name: 'Sito una pagina',
+        setup: '\u20AC490',
+        month: '\u20AC19',
+        points: ['Tutto su una schermata: orari, indirizzo, un tocco per chiamare', 'Scritto nella vostra lingua', 'Hosting e piccole modifiche inclusi'],
+      },
+      {
+        name: 'Sito completo',
+        setup: '\u20AC890',
+        month: '\u20AC29',
+        points: ['Fino a cinque pagine', 'Trovabile su Google, in ogni lingua in cui vendete', 'Hosting e piccole modifiche inclusi'],
+      },
+      {
+        name: 'Assistente',
+        setup: '\u20AC190',
+        month: '\u20AC89',
+        points: ['300 conversazioni al mese', 'Fissa nell\u2019agenda che usate gi\u00e0', 'Una lingua'],
+      },
+      {
+        name: 'Assistente Pro',
+        setup: '\u20AC290',
+        month: '\u20AC139',
+        points: ['1.000 conversazioni al mese', 'Anche su WhatsApp, non solo sul sito', 'Tutte le lingue in cui vi scrivono'],
+      },
+    ],
+    bundle: {
+      tag: 'Tutti e due insieme',
+      name: 'Sito completo + Assistente',
+      setup: '\u20AC750',
+      month: '\u20AC89',
+      body: 'Trenta per cento in meno sull\u2019attivazione, e il canone del sito lo offriamo noi finch\u00e9 tenete l\u2019assistente. Costruirli insieme per noi \u00e8 davvero meno lavoro, quindi la differenza resta a voi.',
+    },
+    fine: [
+      'Conversazioni oltre il piano: \u20AC0,08 l\u2019una. Ve lo diciamo prima di superare la soglia, non dopo.',
+      'Pagina aggiuntiva su un sito completo: \u20AC120.',
+      'Mese per mese, un mese di preavviso. Mai un contratto lungo.',
+      'Prezzi in euro, per aziende. L\u2019IVA, dove dovuta, \u00e8 indicata in preventivo.',
+    ],
+    cta: 'Chiedete un preventivo',
   },
   split: {
     title: 'Due servizi, fatti bene entrambi',
@@ -167,7 +219,7 @@ export const it: Translation = {
       },
       {
         q: 'Quanto costa?',
-        a: 'Dipende da quanto la vostra attività lo usa, quindi i piani sono basati sul numero di conversazioni al mese: uno studio con qualche centinaio di contatti paga molto meno di un’azienda che ne gestisce migliaia. Diteci più o meno quanti clienti vi contattano e vi diamo una cifra prima che vi impegniate a qualcosa. Gli strumenti paragonabili sul mercato stanno più o meno tra 30 e 150 euro al mese.',
+        a: 'Il listino completo è su questa pagina: non teniamo niente nascosto fino alla telefonata. L’assistente costa €190 di attivazione e €89 al mese per 300 conversazioni; i siti partono da €490. Prendendo tutti e due, l’attivazione cala del trenta per cento e il canone del sito lo offriamo noi.',
       },
       {
         q: 'Funziona con il sito che abbiamo già?',

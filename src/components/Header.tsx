@@ -3,7 +3,7 @@ import { Menu, Close } from './marks'
 import { Link, pathFor, useRoute } from '../router'
 import { LANGS, LANG_LABELS, type Translation } from '../i18n'
 
-const SECTIONS = ['how', 'benefits', 'security', 'websites', 'faq', 'contact'] as const
+const SECTIONS = ['how', 'benefits', 'security', 'websites', 'prices', 'faq', 'contact'] as const
 
 export function Header({ t }: { t: Translation }) {
   const { lang, page } = useRoute()

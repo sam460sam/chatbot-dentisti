@@ -26,6 +26,7 @@ export interface Translation {
     benefits: string
     security: string
     websites: string
+    prices: string
     faq: string
     contact: string
     openMenu: string
@@ -65,6 +66,21 @@ export interface Translation {
   /** Full-width scenes: an illustration with a headline over it. */
   scenes: {
     handover: { eyebrow: string; lead: string; accent: string; tail: string; body: string }
+  }
+  /** The published price list. Numbers differ by market: the Italian page
+      carries Italian prices, the Dutch and English pages carry the NL/UK ones. */
+  pricing: {
+    eyebrow: string
+    title: string
+    lead: string
+    launch: { tag: string; body: string }
+    setupLabel: string
+    monthLabel: string
+    /** fixed order: one-page site, full site, assistant, assistant pro */
+    plans: { name: string; setup: string; month: string; points: string[] }[]
+    bundle: { tag: string; name: string; setup: string; month: string; body: string }
+    fine: string[]
+    cta: string
   }
   /** The day strip: the hours a business is not there to answer. */
   dayStrip: {
