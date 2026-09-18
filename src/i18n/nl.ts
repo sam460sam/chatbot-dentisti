@@ -47,7 +47,18 @@ export const nl: Translation = {
     lead: 'Geen telefoontje nodig om te weten wat u betaalt. Dit zijn introductieprijzen \u2014 ze gaan omhoog zodra we een portfolio hebben, en wie nu tekent houdt de zijne.',
     launch: {
       tag: 'Introductieaanbod \u2014 eerste drie klanten',
-      body: 'De assistent krijgt u gratis bij een website: geen installatiekosten, en de eerste drie maanden zijn van ons. Vanaf de vierde maand geldt het normale maandbedrag.',
+      body: 'Volledige site + Assistent, met de installatiekosten van de assistent eraf en de eerste drie maanden van ons. Vanaf maand vier geldt het normale bundelbedrag. Drie klanten, daarna is het weg.',
+      rows: [
+        { label: 'Eenmalig', value: '\u20AC690', was: 'in plaats van \u20AC1.230' },
+        { label: 'Eerste drie maanden', value: '\u20AC0', was: 'in plaats van \u20AC138 per maand' },
+        { label: 'Vanaf maand vier', value: '\u20AC109', was: 'in plaats van \u20AC138' },
+      ],
+      savingLabel: 'Bespaard in de eerste drie maanden',
+      saving: '\u20AC954',
+    },
+    bar: {
+      text: 'Eerste drie klanten: de assistent krijgt u gratis bij een website.',
+      cta: 'Bekijk de tarieven',
     },
     setupLabel: 'Eenmalig',
     monthLabel: 'Per maand',
@@ -74,6 +85,7 @@ export const nl: Translation = {
         name: 'Assistent Pro',
         setup: '\u20AC340',
         month: '\u20AC169',
+        plus: 'Alles uit Assistent, plus:',
         points: ['1.000 gesprekken per maand', 'Ook via WhatsApp, niet alleen de website', 'Elke taal waarin uw klanten schrijven'],
       },
     ],

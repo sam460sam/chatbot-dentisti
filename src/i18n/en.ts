@@ -47,7 +47,18 @@ export const en: Translation = {
     lead: 'No call needed to find out what you would pay. These are launch prices — they go up once we have a portfolio, and whoever signs now keeps theirs.',
     launch: {
       tag: 'Launch offer — first three clients',
-      body: 'The assistant comes free with a website: no setup fee, and the first three months on us. The normal monthly fee starts in month four.',
+      body: 'Full site + Assistant, with the assistant\u2019s setup fee taken off and the first three months on us. From month four the normal bundle fee starts. Three clients, then it is gone.',
+      rows: [
+        { label: 'To set up', value: '\u20AC690', was: 'instead of \u20AC1,230' },
+        { label: 'First three months', value: '\u20AC0', was: 'instead of \u20AC138 a month' },
+        { label: 'From month four', value: '\u20AC109', was: 'instead of \u20AC138' },
+      ],
+      savingLabel: 'Saved in the first three months',
+      saving: '\u20AC954',
+    },
+    bar: {
+      text: 'First three clients: the assistant comes free with a website.',
+      cta: 'See the prices',
     },
     setupLabel: 'To set up',
     monthLabel: 'Per month',
@@ -74,6 +85,7 @@ export const en: Translation = {
         name: 'Assistant Pro',
         setup: '\u20AC340',
         month: '\u20AC169',
+        plus: 'Everything in Assistant, plus:',
         points: ['1,000 conversations a month', 'WhatsApp as well as the website', 'Every language your customers write in'],
       },
     ],

@@ -47,7 +47,18 @@ export const it: Translation = {
     lead: 'Non serve una telefonata per sapere quanto spendete. Questi sono prezzi di lancio \u2014 saliranno quando avremo un portfolio, e chi firma adesso tiene i suoi.',
     launch: {
       tag: 'Offerta di lancio \u2014 primi tre clienti',
-      body: 'L\u2019assistente \u00e8 incluso con il sito: nessun costo di attivazione e primi tre mesi offerti. Dal quarto mese parte il canone normale.',
+      body: 'Sito completo + Assistente, con l\u2019attivazione dell\u2019assistente azzerata e i primi tre mesi offerti. Dal quarto mese parte il canone del pacchetto. Tre clienti, poi finisce.',
+      rows: [
+        { label: 'Attivazione', value: '\u20AC620', was: 'invece di \u20AC1.080' },
+        { label: 'Primi tre mesi', value: '\u20AC0', was: 'invece di \u20AC118 al mese' },
+        { label: 'Dal quarto mese', value: '\u20AC89', was: 'invece di \u20AC118' },
+      ],
+      savingLabel: 'Risparmio nei primi tre mesi',
+      saving: '\u20AC814',
+    },
+    bar: {
+      text: 'Primi tre clienti: l\u2019assistente \u00e8 incluso con il sito.',
+      cta: 'Vedi i prezzi',
     },
     setupLabel: 'Attivazione',
     monthLabel: 'Al mese',
@@ -74,6 +85,7 @@ export const it: Translation = {
         name: 'Assistente Pro',
         setup: '\u20AC290',
         month: '\u20AC139',
+        plus: 'Tutto quello che c’è in Assistente, più:',
         points: ['1.000 conversazioni al mese', 'Anche su WhatsApp, non solo sul sito', 'Tutte le lingue in cui vi scrivono'],
       },
     ],

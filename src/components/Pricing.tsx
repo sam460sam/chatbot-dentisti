@@ -35,6 +35,29 @@ export function Pricing({ t }: { t: Translation }) {
         <div className="mt-5 border border-ink bg-ink px-3 py-3 plate-teal sm:px-4 sm:py-4">
           <p className="t-label text-paper-mute">{p.launch.tag}</p>
           <p className="mt-1 max-w-measure text-body text-paper">{p.launch.body}</p>
+
+          <dl className="mt-3 grid gap-2 border-t border-ink-edge pt-3 sm:grid-cols-3">
+            {p.launch.rows.map((row) => (
+              <div key={row.label}>
+                <dt className="text-micro uppercase tracking-[0.14em] text-paper-mute">
+                  {row.label}
+                </dt>
+                <dd className="mt-0.5 font-display text-h3 font-bold tabular-nums text-paper">
+                  {row.value}
+                </dd>
+                <dd className="text-small text-paper-dim line-through decoration-paper-mute">
+                  {row.was}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <p className="mt-3 flex flex-wrap items-baseline gap-x-2 border-t border-ink-edge pt-3">
+            <span className="t-label text-paper-mute">{p.launch.savingLabel}</span>
+            <span className="font-display text-h3 font-bold tabular-nums text-teal-bright">
+              {p.launch.saving}
+            </span>
+          </p>
         </div>
 
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -72,7 +95,11 @@ export function Pricing({ t }: { t: Translation }) {
                   </div>
                 </dl>
 
-                <ul role="list" className="mt-3 grid gap-1">
+                {plan.plus && (
+                  <p className="mt-3 text-small font-semibold text-ink">{plan.plus}</p>
+                )}
+
+                <ul role="list" className={`grid gap-1 ${plan.plus ? 'mt-1' : 'mt-3'}`}>
                   {plan.points.map((point) => (
                     <li key={point} className="flex items-start gap-1 text-small text-ink-soft">
                       <Mark tone={teal ? 'teal' : 'verm'} />

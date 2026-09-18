@@ -73,11 +73,20 @@ export interface Translation {
     eyebrow: string
     title: string
     lead: string
-    launch: { tag: string; body: string }
+    launch: {
+      tag: string
+      body: string
+      /** what the first three actually pay, next to what it would cost */
+      rows: { label: string; value: string; was: string }[]
+      savingLabel: string
+      saving: string
+    }
+    /** the one-line version that sits at the top of the first screen */
+    bar: { text: string; cta: string }
     setupLabel: string
     monthLabel: string
     /** fixed order: one-page site, full site, assistant, assistant pro */
-    plans: { name: string; setup: string; month: string; points: string[] }[]
+    plans: { name: string; setup: string; month: string; plus?: string; points: string[] }[]
     bundle: { tag: string; name: string; setup: string; month: string; body: string }
     fine: string[]
     cta: string
