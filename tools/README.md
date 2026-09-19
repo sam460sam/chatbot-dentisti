@@ -36,3 +36,45 @@ Writes two sets of WebP with alpha — 900px for desktop, 560px for phones, abou
 downloads the large set.
 
 Nothing here runs at build time. Re-run it only when the object changes.
+
+## hdri/ — the room the object is standing in
+
+Three studio environments, 2K `.hdr`, from Poly Haven (CC0, so they can live in
+the repository and be re-used without asking anyone):
+
+| file | what it gives |
+|---|---|
+| `studio_small_09_2k.hdr` | tight three-softbox studio — the default, and what `showcase-seq-a.py` loads |
+| `brown_photostudio_02_2k.hdr` | warmer, one large source, longer falloff |
+| `photo_studio_01_2k.hdr` | cooler and broader, softer edges |
+
+A lacquered surface with nothing around it renders as flat plastic: what makes
+it read as lacquer is a real softbox with a real falloff rolling across a corner
+as the object turns. `film_transparent` keeps the room itself out of the frame —
+it is only ever seen in the reflections.
+
+Swap one in without editing the file:
+
+    HDRI=tools/hdri/brown_photostudio_02_2k.hdr python3 tools/showcase-seq-a.py -- proof
+
+## showcase-seq-a.py — sequence A, "the case"
+
+150 frames at 960px, Cycles CPU, 40 samples with denoising: about 35 seconds a
+frame on four cores, so roughly an hour and a half for the sequence.
+
+    python3 tools/showcase-seq-a.py -- proof          # frames 86 and 150 only
+    python3 tools/showcase-seq-a.py -- range 1 150    # the whole thing
+
+It also writes `anchors.json` — where each part is in the frame, as a fraction,
+for every frame — so the page can hang a caption off a moving part instead of
+guessing at a position.
+
+Every look decision is an environment variable with the approved value as its
+default, so a change can be tested against a single frame before it costs an
+hour: `C_TEAL`, `C_VERM`, `COAT`, `EXPO`, `HDRI`, `HDRI_S`, `HDRI_ROT`,
+`LAMP_S`, `R1`, `R2`, `AIM_Z`, `PROOF_FRAMES`, `TAG`.
+
+One warning worth the line: the brand teal does not survive being lit. Base
+colour `#03455C` under this rig lands at roughly `#22596F` on the flat faces,
+which is the teal the brand actually uses. Setting the base to the brand hex
+makes the render pale blue.
