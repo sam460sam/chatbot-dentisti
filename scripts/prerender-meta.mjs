@@ -8,7 +8,11 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
-const BASE = 'https://twinbyte.online'
+// Read, not repeated. The address used to be written out in five files and a
+// move would have left some of them behind.
+const siteTs = await readFile(join(root, 'src/site.ts'), 'utf8')
+const BASE = (siteTs.match(/baseUrl:\s*'([^']+)'/) || [])[1]
+if (!BASE) throw new Error('src/site.ts: baseUrl not found — nothing to stamp the canonical tags with')
 const LANGS = ['en', 'nl', 'it']
 
 const meta = JSON.parse(await readFile(join(root, 'src/i18n/meta.json'), 'utf8'))
@@ -66,6 +70,10 @@ for (const lang of LANGS) {
         /<meta property="og:url" content="[^"]*" \/>/,
         `<meta property="og:url" content="${BASE}${path}" />`,
       )
+      .replace(
+        /<meta property="og:image" content="[^"]*" \/>/,
+        `<meta property="og:image" content="${BASE}/og.png" />`,
+      )
       .replace(/<!-- alt:start -->[\s\S]*?<!-- alt:end -->/, alternates)
 
     const outDir = join(root, 'dist', path === '/' ? '.' : path)
@@ -74,3 +82,34 @@ for (const lang of LANGS) {
     console.log(`prerendered ${path}`)
   }
 }
+
+// robots.txt and the sitemap, written from the same address as the canonical
+// tags rather than kept by hand in public/ where they drifted out of step.
+const pages = []
+for (const page of ['home', 'privacy']) {
+  for (const lang of LANGS) pages.push({ lang, page, path: pathFor(lang, page) })
+}
+
+await writeFile(
+  join(root, 'dist/robots.txt'),
+  `User-agent: *\nAllow: /\n\nSitemap: ${BASE}/sitemap.xml\n`,
+  'utf8',
+)
+
+const urls = pages
+  .map(({ lang, page, path }) => {
+    const alts = [
+      ...LANGS.map((l) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${BASE}${pathFor(l, page)}"/>`),
+      `    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE}${pathFor('en', page)}"/>`,
+    ].join('\n')
+    const priority = page === 'privacy' ? '0.3' : lang === 'en' ? '1.0' : '0.9'
+    return `  <url>\n    <loc>${BASE}${path}</loc>\n${alts}\n    <priority>${priority}</priority>\n  </url>`
+  })
+  .join('\n')
+
+await writeFile(
+  join(root, 'dist/sitemap.xml'),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls}\n</urlset>\n`,
+  'utf8',
+)
+console.log('wrote robots.txt and sitemap.xml for ' + BASE)
