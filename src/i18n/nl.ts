@@ -142,6 +142,26 @@ export const nl: Translation = {
       body: 'Dringend, ongewoon of buiten zijn kennis: de assistent stopt, noteert de gegevens en zet een terugbelafspraak in uw agenda. Iemand van uw team maakt het af.',
     },
   },
+  assembly: {
+    title: 'Hoe we het bouwen',
+    beats: [
+      {
+        kick: 'Hoe we werken',
+        title: 'Elk onderdeel op maat.',
+        body: 'Een site is een stapel kleine beslissingen: de woorden, de openingstijden, de knop, dat wat antwoordt. Elke beslissing nemen we bewust.',
+      },
+      {
+        kick: 'In elkaar gezet',
+        title: 'Niets van de plank.',
+        body: 'Geen sjabloon met uw logo erin geplakt. De onderdelen zijn gesneden voor uw bedrijf en met de hand gemonteerd, in de volgorde waarin ze horen.',
+      },
+      {
+        kick: 'Opgeleverd',
+        title: 'Dicht, getest, van u.',
+        body: 'Eén afgewerkt geheel dat werkt op een telefoon, voor een prijs die op de pagina staat, per maand opzegbaar.',
+      },
+    ],
+  },
   dayStrip: {
     eyebrow: 'Een dinsdag',
     title: 'U bent acht van deze vierentwintig uren open',

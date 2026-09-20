@@ -95,6 +95,11 @@ export interface Translation {
     fine: string[]
     cta: string
   }
+  /** The object that comes together on scroll, and the three passages over it. */
+  assembly: {
+    title: string
+    beats: { kick: string; title: string; body: string }[]
+  }
   /** The day strip: the hours a business is not there to answer. */
   dayStrip: {
     eyebrow: string

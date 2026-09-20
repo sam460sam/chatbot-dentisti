@@ -101,3 +101,18 @@ camera and that contract is gone.
 Then copy that sequence's `anchors.json` in beside its frames — the page fetches
 `<name>/anchors.json`, and without it the labels and the live button simply do
 not appear.
+
+## explode-cut.py — an object that comes together on scroll
+
+The third sequence on `/showcase` and the one on the home page are not frame
+sequences. Each is two photographs on black — the object pulled apart, and the
+object finished — cut into layers by this script, which also works out where
+each layer sits once the stack is closed:
+
+    pip install pillow numpy
+    python3 tools/explode-cut.py
+
+The cut rows are chosen by hand in `SPECS`, in the valleys of the picture where
+the fewest pixels are lit. Output: WebP layers with alpha and a `layers.json`
+per object (`public/assembly/laptop/` + `src/assembly/laptop.json` for the home
+page, `public/showcase/burger/` for the showcase). About 100–200 KB per object.
