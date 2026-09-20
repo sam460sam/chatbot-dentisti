@@ -155,6 +155,7 @@ export const nl: Translation = {
         body: 'Eén afgewerkt geheel dat werkt op een telefoon, voor een prijs die op de pagina staat, per maand opzegbaar.',
       },
     ],
+    pins: ['Uw pagina\u2019s', 'De assistent', 'Hosting inbegrepen', 'Werkt op een telefoon', 'Prijs op de pagina', 'Per maand opzegbaar'],
   },
   dayStrip: {
     eyebrow: 'Een dinsdag',

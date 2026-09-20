@@ -155,6 +155,7 @@ export const en: Translation = {
         body: 'One finished thing that works on a phone, at a price on the page, month to month.',
       },
     ],
+    pins: ['Your pages', 'The assistant', 'Hosting, included', 'Works on a phone', 'Price on the page', 'Month to month'],
   },
   dayStrip: {
     eyebrow: 'One Tuesday',

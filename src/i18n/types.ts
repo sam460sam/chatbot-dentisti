@@ -99,6 +99,9 @@ export interface Translation {
   assembly: {
     title: string
     beats: { kick: string; title: string; body: string }[]
+    /** three labels on the parts while the object is open, three under it once
+        it is closed; desktop only */
+    pins: [string, string, string, string, string, string]
   }
   /** The day strip: the hours a business is not there to answer. */
   dayStrip: {

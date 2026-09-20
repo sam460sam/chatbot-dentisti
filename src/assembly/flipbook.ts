@@ -23,7 +23,8 @@ export interface FlipbookConfig {
 export function mountFlipbook(runway: HTMLElement, cfg: FlipbookConfig): () => void {
   const canvas = runway.querySelector<HTMLCanvasElement>('canvas')!
   const ctx = canvas.getContext('2d', { alpha: true })!
-  const beats = Array.from(runway.querySelectorAll<HTMLElement>('.asm-beat'))
+  /* passages and pins alike: anything that says when it is on */
+  const beats = Array.from(runway.querySelectorAll<HTMLElement | SVGElement>('[data-from]'))
 
   const wide = window.innerWidth >= 1024
   const DIR = cfg.dir + (wide ? '' : '-sm')

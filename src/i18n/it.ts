@@ -155,6 +155,7 @@ export const it: Translation = {
         body: 'Una cosa finita che funziona sul telefono, a un prezzo scritto sulla pagina, mese per mese.',
       },
     ],
+    pins: ['Le vostre pagine', 'L\u2019assistente', 'Hosting incluso', 'Funziona sul telefono', 'Prezzo sulla pagina', 'Mese per mese'],
   },
   dayStrip: {
     eyebrow: 'Un martedì',
