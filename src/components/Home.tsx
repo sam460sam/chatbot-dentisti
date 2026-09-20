@@ -7,6 +7,7 @@ import { Handover } from './Handover'
 import { SiteWireframe } from './SiteWireframe'
 import { Mark, Bubble, Window, Arrow, ArrowOut, Mail, Person } from './marks'
 import { SITE, mailLink, waLink } from '../site'
+import { useRoute } from '../router'
 import type { Translation } from '../i18n'
 
 /*
@@ -58,6 +59,7 @@ function Band({
 }
 
 export function Home({ t }: { t: Translation }) {
+  const { lang } = useRoute()
   return (
     <main id="main">
       <Hero t={t} />
@@ -247,7 +249,7 @@ export function Home({ t }: { t: Translation }) {
                 {t.websites.cta}
                 <Arrow />
               </a>
-              <a className="btn-line" href="/showcase/">
+              <a className="btn-line" href={lang === 'en' ? '/showcase/' : `/showcase/${lang}/`}>
                 {t.websites.showcase}
                 <ArrowOut />
               </a>

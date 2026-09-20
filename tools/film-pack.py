@@ -8,7 +8,10 @@ public/showcase/index.html already plays (DIR/001.webp ... and DIR-sm/).
     python3 tools/film-pack.py in.mp4 public/showcase/frames-c [--frames 96] [--size 900] [--until 72] [--wide]
 
 --wide keeps the film's own width instead of cropping a square: for an object
-that ends up wider than it is tall. --until keeps only the first N frames of the film: a generated film usually
+that ends up wider than it is tall. A wide set also gets a bounds.json: where
+the object is in every frame, so the page can keep it framed on a phone.
+--bounds alone recomputes that file from frames already written. --resm
+rebuilds DIR-sm from the frames already in DIR. --until keeps only the first N frames of the film: a generated film usually
 finishes the move early and then holds, and the hold is one frame, not thirty.
 The frames are never upscaled past the film's own height.
 """
@@ -30,6 +33,62 @@ try:
 except ImportError:
     FF = 'ffmpeg'
 
+def bounds(out):
+    """Where the object is in every frame, as [x, y, w, h] in the frame's own
+    pixels, smoothed over a few neighbours so the framing glides rather than
+    jumps when a screw appears. Written next to the frames."""
+    import json
+    names = sorted(f for f in os.listdir(out) if f.endswith('.webp'))
+    raw = []
+    W = H = 0
+    for f in names:
+        a = np.asarray(Image.open(os.path.join(out, f)).convert('RGBA'))[:, :, 3]
+        H, W = a.shape
+        ys, xs = np.where(a > 0)
+        raw.append([int(xs.min()), int(ys.min()), int(xs.max()) + 1, int(ys.max()) + 1] if len(xs) else [0, 0, W, H])
+    arr = np.array(raw, dtype=float)
+    k = 4
+    sm = np.array([arr[max(0, i - k):i + k + 1].mean(axis=0) for i in range(len(arr))])
+    boxes = [[round(x0), round(y0), round(x1 - x0), round(y1 - y0)] for x0, y0, x1, y1 in sm]
+    with open(os.path.join(out, 'bounds.json'), 'w') as fh:
+        json.dump({'w': W, 'h': H, 'boxes': boxes}, fh)
+    print(f'bounds.json: {len(boxes)} boxes')
+
+
+def harden(r):
+    ch = r.split()
+    return Image.merge('RGBA', ch[:3] + (ch[3].point(lambda v: 255 if v > 127 else 0),))
+
+
+def small(out):
+    """DIR-sm: every second frame of DIR at 560 wide, renumbered from 001 —
+    the layout the pages expect. A phone plays half the frames and, at a
+    phone's scroll distance, the step between two is the same size on screen."""
+    names = sorted(f for f in os.listdir(out) if f.endswith('.webp'))
+    os.makedirs(out + '-sm', exist_ok=True)
+    for f in os.listdir(out + '-sm'):
+        os.remove(os.path.join(out + '-sm', f))
+    n = 0
+    for i, f in enumerate(names):
+        if i % 2:
+            continue
+        n += 1
+        im = Image.open(os.path.join(out, f)).convert('RGBA')
+        w, h = im.size
+        px = min(560, w)
+        r = harden(im.resize((px, round(h * px / w)), Image.LANCZOS)) if w != px else im
+        r.save(os.path.join(out + '-sm', f'{n:03d}.webp'), 'WEBP', quality=quality, method=5)
+    print(f'{n} frames -> {out}-sm')
+
+
+if '--bounds' in sys.argv:
+    bounds(out)
+    sys.exit(0)
+
+if '--resm' in sys.argv:
+    small(out)
+    sys.exit(0)
+
 tmp = tempfile.mkdtemp()
 subprocess.run([FF, '-hide_banner', '-loglevel', 'error', '-i', src, os.path.join(tmp, '%04d.png')], check=True)
 names = sorted(os.listdir(tmp))
@@ -41,7 +100,6 @@ if until:
 idx = np.linspace(0, len(names) - 1, want).round().astype(int)
 
 os.makedirs(out, exist_ok=True)
-os.makedirs(out + '-sm', exist_ok=True)
 
 # A generated film's black is not quite black: compression noise and a faint
 # floor sit a few levels above it, so the cut is made above them and the
@@ -63,14 +121,13 @@ for n, i in enumerate(idx, 1):
     rgb = np.asarray(im)
     a = (matte(rgb) * 255).astype(np.uint8)
     rgba = Image.fromarray(np.dstack([rgb, a]), 'RGBA')
-    for d, px in ((out, min(size, w)), (out + '-sm', min(560, w))):
-        r = rgba
-        if w != px:
-            r = rgba.resize((px, round(h * px / w)), Image.LANCZOS)
-            # resampling softens the alpha again; cut it back to hard
-            ch = r.split()
-            r = Image.merge('RGBA', ch[:3] + (ch[3].point(lambda v: 255 if v > 127 else 0),))
-        r.save(os.path.join(d, f'{n:03d}.webp'), 'WEBP', quality=quality, method=5)
+    px = min(size, w)
+    r = harden(rgba.resize((px, round(h * px / w)), Image.LANCZOS)) if w != px else rgba
+    r.save(os.path.join(out, f'{n:03d}.webp'), 'WEBP', quality=quality, method=5)
 
-tot = sum(os.path.getsize(os.path.join(out, f)) for f in os.listdir(out))
+small(out)
+
+if wide:
+    bounds(out)
+tot = sum(os.path.getsize(os.path.join(out, f)) for f in os.listdir(out) if f.endswith('.webp'))
 print(f'{want} frames -> {out} ({tot // 1024} KB) and {out}-sm')

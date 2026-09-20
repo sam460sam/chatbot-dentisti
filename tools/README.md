@@ -115,7 +115,11 @@ script cuts the film into the frames the pages play:
     python3 tools/film-pack.py laptop.mp4 public/assembly/laptop --frames 100 --wide
 
 Square crop by default, `--wide` keeps the film's own width; the black is
-keyed to alpha so the frames sit on the page's ink. `--until` drops the tail
-of a film that finishes its move early and then holds. Two sizes are written,
-`DIR/` and `DIR-sm/`, as for the rendered sequences. Frames are never
-upscaled past the film's own height, so a 480p film gives 854px frames.
+keyed to a hard alpha so the frames sit on black. `--until` drops the tail of
+a film that finishes its move early and then holds. `DIR-sm/` holds every
+second frame at 560px, as for the rendered sequences: a phone plays half the
+frames, and a `-sm` set with all of them would end the film halfway. A wide
+set also gets `bounds.json`, where the object is in every frame, so the home
+page can keep it framed on a phone. `--resm` and `--bounds` rebuild those two
+things from frames already written. Frames are never upscaled past the
+film's own height, so a 480p film gives 854px frames.

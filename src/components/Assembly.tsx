@@ -37,7 +37,7 @@ export function Assembly({ t }: { t: Translation }) {
 
   useEffect(() => {
     if (still || !runway.current) return
-    return mountFlipbook(runway.current, { dir: DIR, frames: FRAMES })
+    return mountFlipbook(runway.current, { dir: DIR, frames: FRAMES, bounds: true })
   }, [still])
 
   const a = t.assembly

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Menu, Close } from './marks'
-import { Link, pathFor, useRoute } from '../router'
+import { Link, pathFor, rememberLang, useRoute } from '../router'
 import { LANGS, LANG_LABELS, type Translation } from '../i18n'
 
 const SECTIONS = ['how', 'benefits', 'security', 'websites', 'prices', 'faq', 'contact'] as const
@@ -87,6 +87,7 @@ export function Header({ t }: { t: Translation }) {
                 hrefLang={l}
                 aria-current={l === lang ? 'true' : undefined}
                 aria-label={LANG_LABELS[l]}
+                onClick={() => rememberLang(l)}
                 className={`px-1 py-0.5 text-micro font-bold uppercase transition-colors ${
                   l === lang ? 'bg-paper text-ink' : 'text-paper-mute hover:text-paper'
                 }`}

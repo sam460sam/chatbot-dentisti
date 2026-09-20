@@ -26,6 +26,40 @@ export function pathFor(lang: Lang, page: Page): string {
   return prefix + suffix || '/'
 }
 
+const LANG_KEY = 'twinbyte-lang'
+
+/** The visitor picked a language by hand: keep it, and stop guessing. */
+export function rememberLang(lang: Lang): void {
+  try {
+    localStorage.setItem(LANG_KEY, lang)
+  } catch {
+    // private mode, blocked storage: the guess below runs again next time
+  }
+}
+
+/**
+ * On the root path, with no choice remembered, go to the browser's language
+ * if it is one of ours. Only the root: a shared link to /nl or /it is a
+ * choice already made, and English stays English.
+ */
+export function followBrowserLanguage(): void {
+  if (window.location.pathname !== '/') return
+  try {
+    if (localStorage.getItem(LANG_KEY)) return
+  } catch {
+    // fall through
+  }
+  const wanted = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language]
+  for (const tag of wanted) {
+    const code = (tag || '').slice(0, 2).toLowerCase()
+    if (code === 'en') return
+    if (code === 'nl' || code === 'it') {
+      window.history.replaceState({}, '', `/${code}`)
+      return
+    }
+  }
+}
+
 const RouteContext = createContext<Route>({ lang: 'en', page: 'home' })
 
 export function useRoute(): Route {

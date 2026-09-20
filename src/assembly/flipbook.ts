@@ -18,6 +18,16 @@
 export interface FlipbookConfig {
   dir: string
   frames: number
+  /** DIR/bounds.json exists: where the object is in every frame, so the
+      canvas can zoom to it instead of showing the whole (mostly empty) film.
+      On a phone this is the difference between a laptop and a black square. */
+  bounds?: boolean
+}
+
+interface Bounds {
+  w: number
+  h: number
+  boxes: number[][]
 }
 
 export function mountFlipbook(runway: HTMLElement, cfg: FlipbookConfig): () => void {
@@ -25,6 +35,8 @@ export function mountFlipbook(runway: HTMLElement, cfg: FlipbookConfig): () => v
   const ctx = canvas.getContext('2d', { alpha: true })!
   /* passages and pins alike: anything that says when it is on */
   const beats = Array.from(runway.querySelectorAll<HTMLElement | SVGElement>('[data-from]'))
+  const svg = runway.querySelector<SVGSVGElement>('svg.asm-pins')
+  let bounds: Bounds | null = null
 
   const wide = window.innerWidth >= 1024
   const DIR = cfg.dir + (wide ? '' : '-sm')
@@ -35,7 +47,6 @@ export function mountFlipbook(runway: HTMLElement, cfg: FlipbookConfig): () => v
   let shown = 0
   let target = 0
   let raf: number | null = null
-  let box = { x: 0, y: 0, s: 0 }
   let alive = true
 
   const path = (i: number) => `${DIR}/${String(i + 1).padStart(3, '0')}.webp`
@@ -61,17 +72,46 @@ export function mountFlipbook(runway: HTMLElement, cfg: FlipbookConfig): () => v
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     canvas.width = Math.round(canvas.clientWidth * dpr)
     canvas.height = Math.round(canvas.clientHeight * dpr)
-    const s = Math.min(canvas.width, canvas.height)
-    box = { s, x: Math.round((canvas.width - s) / 2), y: Math.round((canvas.height - s) / 2) }
   }
+
+  /* The frame on a phone is every second one of the renderer's. */
+  const toRender = (i: number) => Math.round((i * (cfg.frames - 1)) / (FRAMES - 1))
 
   function paint(index: number) {
     const want = Math.min(FRAMES - 1, Math.max(0, Math.round(index)))
     const use = nearest(want)
     if (use < 0 || use === current) return
     current = use
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.drawImage(imgs[use]!, box.x, box.y, box.s, box.s)
+    const img = imgs[use]!
+    const cw = canvas.width
+    const ch = canvas.height
+    const iw = img.naturalWidth
+    const ih = img.naturalHeight
+
+    /* Contain the whole frame, or, with bounds, the object with a little air
+       around it: never closer than 2.2x the whole-frame fit, which is where
+       a 854px frame starts to look soft. */
+    let s = Math.min(cw / iw, ch / ih)
+    let cx = iw / 2
+    let cy = ih / 2
+    if (bounds) {
+      const k = iw / bounds.w
+      const [bx, by, bw, bh] = bounds.boxes[Math.min(bounds.boxes.length - 1, toRender(use))]
+      s = Math.min(Math.min(cw / (bw * k * 1.16), ch / (bh * k * 1.16)), s * 2.2)
+      cx = (bx + bw / 2) * k
+      cy = (by + bh / 2) * k
+    }
+    const dx = cw / 2 - cx * s
+    const dy = ch / 2 - cy * s
+    ctx.clearRect(0, 0, cw, ch)
+    ctx.drawImage(img, dx, dy, iw * s, ih * s)
+
+    /* The pins are drawn in the film's own pixels: show them the same window. */
+    if (svg && bounds) {
+      const k = iw / bounds.w
+      const u = k * s
+      svg.setAttribute('viewBox', `${(-dx / u).toFixed(1)} ${(-dy / u).toFixed(1)} ${(cw / u).toFixed(1)} ${(ch / u).toFixed(1)}`)
+    }
   }
 
   function beat(p: number) {
@@ -129,6 +169,17 @@ export function mountFlipbook(runway: HTMLElement, cfg: FlipbookConfig): () => v
   }
 
   measure()
+  if (cfg.bounds) {
+    fetch(`${cfg.dir}/bounds.json`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j: Bounds | null) => {
+        if (!alive || !j || !j.boxes) return
+        bounds = j
+        current = -1
+        paint(shown)
+      })
+      .catch(() => {})
+  }
   load(0, () => {
     const p = progress()
     target = shown = p * (FRAMES - 1)

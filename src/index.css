@@ -988,12 +988,14 @@
     radial-gradient(60% 46% at 50% 108%, rgba(161, 69, 49, 0.18), rgba(161, 69, 49, 0) 70%);
 }
 
+/* Square on a phone, wide on a desktop; the player frames the object inside
+   whatever shape it gets. */
 .asm-stage {
   position: absolute;
   left: 50%;
-  top: 12vh;
-  width: min(96vw, 100vh);
-  aspect-ratio: 16 / 9;
+  top: 8vh;
+  width: min(94vw, 52vh);
+  aspect-ratio: 1 / 1;
   transform: translateX(-50%);
 }
 
@@ -1097,6 +1099,7 @@
     right: 4vw;
     top: 50%;
     width: min(56vw, 150vh);
+    aspect-ratio: 16 / 9;
     transform: translateY(-50%);
   }
 
