@@ -25,7 +25,10 @@ want = int(sys.argv[sys.argv.index('--frames') + 1]) if '--frames' in sys.argv e
 size = int(sys.argv[sys.argv.index('--size') + 1]) if '--size' in sys.argv else 900
 until = int(sys.argv[sys.argv.index('--until') + 1]) if '--until' in sys.argv else None
 wide = '--wide' in sys.argv
-quality = int(sys.argv[sys.argv.index('--quality') + 1]) if '--quality' in sys.argv else 78
+quality = int(sys.argv[sys.argv.index('--quality') + 1]) if '--quality' in sys.argv else 86
+# --lift 0.85: a gamma under 1 brightens the mid-tones of a dark object on
+# black without touching the black itself or clipping the highlights.
+lift = float(sys.argv[sys.argv.index('--lift') + 1]) if '--lift' in sys.argv else 1.0
 
 try:
     import imageio_ffmpeg
@@ -47,8 +50,13 @@ def bounds(out):
         ys, xs = np.where(a > 0)
         raw.append([int(xs.min()), int(ys.min()), int(xs.max()) + 1, int(ys.max()) + 1] if len(xs) else [0, 0, W, H])
     arr = np.array(raw, dtype=float)
+    # The union of the neighbours, not their average: an average lags a fast
+    # move and the framing cuts the object. A union can only be too generous.
     k = 4
-    sm = np.array([arr[max(0, i - k):i + k + 1].mean(axis=0) for i in range(len(arr))])
+    sm = []
+    for i in range(len(arr)):
+        w = arr[max(0, i - k):i + k + 1]
+        sm.append([w[:, 0].min(), w[:, 1].min(), w[:, 2].max(), w[:, 3].max()])
     boxes = [[round(x0), round(y0), round(x1 - x0), round(y1 - y0)] for x0, y0, x1, y1 in sm]
     with open(os.path.join(out, 'bounds.json'), 'w') as fh:
         json.dump({'w': W, 'h': H, 'boxes': boxes}, fh)
@@ -120,6 +128,8 @@ for n, i in enumerate(idx, 1):
         w = h = s
     rgb = np.asarray(im)
     a = (matte(rgb) * 255).astype(np.uint8)
+    if lift != 1.0:
+        rgb = (255 * (rgb / 255.0) ** lift).round().astype(np.uint8)
     rgba = Image.fromarray(np.dstack([rgb, a]), 'RGBA')
     px = min(size, w)
     r = harden(rgba.resize((px, round(h * px / w)), Image.LANCZOS)) if w != px else rgba

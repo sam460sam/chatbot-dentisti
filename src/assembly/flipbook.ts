@@ -42,8 +42,15 @@ export function mountFlipbook(runway: HTMLElement, cfg: FlipbookConfig): () => v
   let bounds: Bounds | null = null
 
   const wide = window.innerWidth >= 1024
-  const DIR = cfg.dir + (wide ? '' : '-sm')
   const FRAMES = wide ? cfg.frames : Math.ceil(cfg.frames / 2)
+  /* A phone plays every second frame, but a phone with a sharp screen draws
+     the stage at two or three device pixels per CSS pixel, and the 560px set
+     went soft there. Take the small set only where it is genuinely enough. */
+  const dpr = Math.min(window.devicePixelRatio || 1, 3)
+  const small = !wide && canvas.clientWidth * dpr < 700
+  const DIR = cfg.dir + (small ? '-sm' : '')
+  /* The frame on a phone is every second one of the renderer's. */
+  const toRender = (i: number) => Math.round((i * (cfg.frames - 1)) / (FRAMES - 1))
 
   const imgs: (HTMLImageElement | undefined)[] = new Array(FRAMES)
   let current = -1
@@ -52,7 +59,7 @@ export function mountFlipbook(runway: HTMLElement, cfg: FlipbookConfig): () => v
   let raf: number | null = null
   let alive = true
 
-  const path = (i: number) => `${DIR}/${String(i + 1).padStart(3, '0')}.webp`
+  const path = (i: number) => `${DIR}/${String((small || wide ? i : toRender(i)) + 1).padStart(3, '0')}.webp`
 
   function progress(): number {
     const r = runway.getBoundingClientRect()
@@ -72,13 +79,10 @@ export function mountFlipbook(runway: HTMLElement, cfg: FlipbookConfig): () => v
   }
 
   function measure() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+    const dpr = Math.min(window.devicePixelRatio || 1, 3)
     canvas.width = Math.round(canvas.clientWidth * dpr)
     canvas.height = Math.round(canvas.clientHeight * dpr)
   }
-
-  /* The frame on a phone is every second one of the renderer's. */
-  const toRender = (i: number) => Math.round((i * (cfg.frames - 1)) / (FRAMES - 1))
 
   function paint(index: number) {
     const want = Math.min(FRAMES - 1, Math.max(0, Math.round(index)))
@@ -100,13 +104,15 @@ export function mountFlipbook(runway: HTMLElement, cfg: FlipbookConfig): () => v
     if (bounds) {
       const k = iw / bounds.w
       const [bx, by, bw, bh] = bounds.boxes[Math.min(bounds.boxes.length - 1, toRender(use))]
-      s = Math.min(Math.min(cw / (bw * k * 1.16), ch / (bh * k * 1.16)), s * 2.2)
+      s = Math.min(Math.min(cw / (bw * k * 1.12), ch / (bh * k * 1.12)), s * 2.2)
       cx = (bx + bw / 2) * k
       cy = (by + bh / 2) * k
     }
     const dx = cw / 2 - cx * s
     const dy = ch / 2 - cy * s
     ctx.clearRect(0, 0, cw, ch)
+    ctx.imageSmoothingEnabled = true
+    ctx.imageSmoothingQuality = 'high'
     ctx.drawImage(img, dx, dy, iw * s, ih * s)
 
     /* The pins are drawn in the film's own pixels: show them the same window. */
