@@ -73,6 +73,13 @@
     @apply bg-paper font-sans text-body text-ink-soft antialiased;
     /* tnum: times, dates and phone numbers line up in columns. */
     font-feature-settings: 'cv11', 'ss01', 'tnum';
+    /* Dutch builds words like "verwerkersovereenkomst", and one of them in a
+       three-column grid was wider than its column and pushed the whole page
+       sideways on a tablet. Hyphenation breaks it properly (the html element
+       carries the language, so the browser uses the right dictionary); the
+       break-word is the fallback for a word no dictionary will split. */
+    hyphens: auto;
+    overflow-wrap: break-word;
   }
 
   ::selection {
@@ -372,14 +379,18 @@
   padding-bottom: 26px;
 }
 
+/* The glow used to hang 10% past the stage on each side, which put it past the
+   right edge of a phone and gave /nl a nine-pixel horizontal scrollbar on a
+   tablet. It stays inside now and the gradient is widened to match, so the
+   falloff looks the same without anything sticking out of the page. */
 .stage-light {
   position: absolute;
-  left: -10%;
-  right: -10%;
+  left: 0;
+  right: 0;
   top: -14%;
   bottom: 4%;
   pointer-events: none;
-  background: radial-gradient(58% 54% at 52% 44%, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0) 72%);
+  background: radial-gradient(74% 54% at 52% 44%, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0) 72%);
 }
 
 .stage-float {

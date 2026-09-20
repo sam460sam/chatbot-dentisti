@@ -78,3 +78,26 @@ One warning worth the line: the brand teal does not survive being lit. Base
 colour `#03455C` under this rig lands at roughly `#22596F` on the flat faces,
 which is the teal the brand actually uses. Setting the base to the brand hex
 makes the render pale blue.
+
+## showcase-seq-b.py — sequence B, "the page"
+
+84 frames, same size and sampling as sequence A, so about three quarters of an
+hour.
+
+    python3 tools/showcase-seq-b.py -- proof
+    python3 tools/showcase-seq-b.py -- range 1 84
+
+The camera in this one never moves and never turns. That is not a style choice:
+it is what lets the renderer write down the two corners of the call button, in
+frame fractions, for every frame — and the page lay a real `<a href>` on exactly
+that rectangle. The button you can see is the button you can press. Move the
+camera and that contract is gone.
+
+## Packing a sequence
+
+    NAME=frames   FRAMES=/path/to/a OUT=./public/showcase python3 tools/showcase-pack.py
+    NAME=frames-b FRAMES=/path/to/b OUT=./public/showcase python3 tools/showcase-pack.py
+
+Then copy that sequence's `anchors.json` in beside its frames — the page fetches
+`<name>/anchors.json`, and without it the labels and the live button simply do
+not appear.

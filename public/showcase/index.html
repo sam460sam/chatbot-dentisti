@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Twinbyte — the object</title>
-<meta name="description" content="A scroll-driven product page built the way the big product launches build theirs: a 3D object rendered to a frame sequence and played on a canvas. Made by Twinbyte.">
+<title>Twinbyte — two sequences</title>
+<meta name="description" content="A scroll-driven product page built the way the big product launches build theirs: two 3D sequences rendered to still frames and played on a canvas by the scrollbar. Made by Twinbyte.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="/icon-32.png">
 
@@ -35,7 +35,7 @@ a{color:inherit}
 
 /* --- grain: one static SVG tile, rasterised once. Not a live filter. --- */
 .grain{
-  position:fixed;inset:0;z-index:3;pointer-events:none;opacity:.14;
+  position:fixed;inset:0;z-index:3;pointer-events:none;opacity:.09;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size:160px 160px;
 }
@@ -55,9 +55,11 @@ a{color:inherit}
 
 /* ---------------------------------------------------------- the runway */
 .runway{position:relative;height:400vh}
+.runway.short{height:300vh}
 .sticky{position:sticky;top:0;height:100vh;overflow:hidden}
 
-#seq{
+/* both sequences, not just the one that used to carry an id */
+.sticky canvas{
   position:absolute;inset:0;width:100%;height:100%;
   display:block;
 }
@@ -74,6 +76,7 @@ a{color:inherit}
   position:absolute;left:0;right:0;bottom:7vh;
   padding:0 20px;
   text-align:center;
+  pointer-events:none;
 }
 .beat .kick{
   font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-weight:800;
@@ -134,6 +137,31 @@ html:not(.js) .beat{position:static;margin:60px 0}
 }
 @media(max-width:819px){.pin{display:none}}
 
+/* ------------------------------------------------- the pressable button */
+/* The button in the second sequence is rendered, not drawn in CSS. The only
+   honest way to make it pressable is to lay a real link over exactly where it
+   was drawn — and the renderer wrote down where that is, for every frame. */
+.hotspot{
+  position:absolute;left:0;top:0;width:0;height:0;
+  border-radius:10px 10px 0 10px;
+  opacity:0;pointer-events:none;
+  /* visibility, not just opacity: a transparent link is still in the tab order,
+     and a keyboard would land on a button that is not on screen yet. */
+  visibility:hidden;
+  transition:opacity .3s ease;
+  outline-offset:4px;
+}
+.hotspot.on{opacity:1;pointer-events:auto;visibility:visible}
+.hotspot:hover,.hotspot:focus-visible{
+  box-shadow:0 0 0 2px var(--verm-hi);
+}
+.hotspot b{
+  position:absolute;left:50%;top:calc(100% + 44px);transform:translateX(-50%);
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;
+  color:var(--verm-hi);white-space:nowrap;
+}
+@media(max-width:819px){.hotspot b{font-size:10px;letter-spacing:.14em}}
+
 /* ------------------------------------------------------------ sections */
 section.blk{padding:112px 0;border-top:1px solid #2A2720}
 h3{
@@ -184,7 +212,7 @@ footer a{color:var(--dim)}
   .runway{height:auto}
   .sticky{position:static;height:auto;padding:110px 0 60px}
   .beat{position:static;margin:52px 0}
-  #seq{position:static;height:auto;aspect-ratio:1/1}
+  .sticky canvas{position:static;height:auto;aspect-ratio:1/1}
   .scrollcue{display:none}
 }
 </style>
@@ -202,7 +230,7 @@ footer a{color:var(--dim)}
 <!-- ============================================================ the runway -->
 <div class="runway" id="runway">
   <div class="sticky">
-    <canvas id="seq" width="900" height="900" aria-label="A case in the brand teal turns, opens, and three facts fan out of it; a card runs across them and a terracotta one follows"></canvas>
+    <canvas width="900" height="900" aria-label="A case in the brand teal turns, opens, and three facts fan out of it; a card runs across them and a terracotta one follows"></canvas>
     <div class="glow" aria-hidden="true"></div>
     <div class="pins" id="pins" aria-hidden="true">
       <div class="pin" data-anchor="plate0" data-from="64" data-to="150"><i></i><em></em><span>Opening hours<b>Read off the page, not typed twice</b></span></div>
@@ -235,7 +263,45 @@ footer a{color:var(--dim)}
       <p>Opening hours, where you are, one tap to call — on the first screen, on an old phone, on a bad connection. Built with the assistant, the pair costs about a third less.</p>
     </div>
 
-    <p class="scrollcue" id="cue">scroll</p>
+    <p class="scrollcue">scroll</p>
+  </div>
+</div>
+
+<!-- ========================================================= the second one -->
+<div class="runway short" id="runway-b">
+  <div class="sticky">
+    <canvas width="900" height="900" aria-label="A terracotta message bubble opens into a small business page: a header, two lines of copy, opening hours, an address, and a call button that the bubble itself becomes"></canvas>
+    <div class="glow" aria-hidden="true"></div>
+
+    <div class="pins" aria-hidden="true">
+      <div class="pin v" data-anchor="head" data-from="46" data-to="84"><i></i><em></em><span>Your name<b>Not a template with your logo dropped in</b></span></div>
+      <div class="pin" data-anchor="facts" data-from="58" data-to="84"><i></i><em></em><span>Hours and address<b>Above the fold, on any phone</b></span></div>
+    </div>
+
+    <a class="hotspot" data-from="74"
+       href="https://wa.me/31645745163?text=I%20pressed%20the%20button%20on%20your%20showcase%20page."
+       rel="noopener" target="_blank"
+       aria-label="Message Twinbyte on WhatsApp — this is the rendered button, and it is a real link">
+      <b>press it — it is a real link</b>
+    </a>
+
+    <div class="beat" data-from="0.00" data-to="0.24">
+      <p class="kick v">The other ink</p>
+      <h2>One bubble. One page.</h2>
+      <p>The same shape the assistant speaks in is the shape the page is built from. Two services, one object.</p>
+    </div>
+
+    <div class="beat" data-from="0.28" data-to="0.58">
+      <p class="kick v">What goes on it</p>
+      <h2>Your name, your hours, your address.</h2>
+      <p>Not a slideshow, not a stock photo of someone else's shop. The four things a customer opens your page to find, in the order they look for them.</p>
+    </div>
+
+    <div class="beat" data-from="0.62" data-to="1.00">
+      <p class="kick v">And the last thing</p>
+      <h2>One tap to call.</h2>
+      <p>The button below is not a picture of a button. The camera never moves in this sequence, so we know the exact rectangle it lands on — and a real link sits on it.</p>
+    </div>
   </div>
 </div>
 
@@ -252,8 +318,13 @@ footer a{color:var(--dim)}
         it stays smooth on a phone.
       </p>
       <p class="lede">
-        We built the object in Blender, lit it, rendered the turn, and wired it to the
-        scroll. If you sell something you can photograph, we can do this for your page.
+        We built both objects in Blender from code, lit them in a measured studio, and
+        wired them to the scroll. The second sequence goes one further: the camera never
+        moves, so we know the exact rectangle the call button lands on, and there is a
+        real link sitting on it. The button you can see is the button you can press.
+      </p>
+      <p class="lede">
+        If you sell something you can photograph, we can do this for your page.
       </p>
     </div>
   </section>
@@ -296,12 +367,12 @@ footer a{color:var(--dim)}
       <p class="eyebrow">How this page was made</p>
       <h3>No 3D engine runs in your browser.</h3>
       <div class="spec" id="spec">
-        <div><b>Object</b><span>Modelled and lit in Blender</span></div>
-        <div><b>Render</b><span>Cycles, 240 frames, one full turn</span></div>
+        <div><b>Object</b><span>Modelled in Blender from code, lit with a measured studio</span></div>
+        <div><b>Render</b><span>Cycles on CPU, 234 frames across two sequences</span></div>
         <div><b>Delivery</b><span>WebP with transparency, two sizes</span></div>
         <div><b>Playback</b><span>One canvas, one drawImage per scroll frame</span></div>
         <div><b>Libraries</b><span>None</span></div>
-        <div><b>Sequence weight</b><span>3.9 MB at 1100px · 1.0 MB at 560px</span></div>
+        <div><b>Sequence weight</b><span>Under 5 MB at 960px &middot; under 1.5 MB at 560px</span></div>
       </div>
       <p class="lede">
         The whole thing is one HTML file, one canvas and a folder of images. No
@@ -332,203 +403,230 @@ footer a{color:var(--dim)}
 </footer>
 
 <script>
+/* One runway is a sticky screen with a canvas on it, a frame sequence played by
+   the scrollbar, passages that come and go, and labels pinned to parts of the
+   object. There are two of them on this page and they differ only in their
+   settings, so this is written once and called twice. */
 (function () {
-  /* Desktop gets the full turn, a phone gets every second frame of the same
-     turn. Half the weight, and at a phone's scroll distance the step is the
-     same size. */
-  var canvas = document.getElementById('seq');
-  var ctx = canvas.getContext('2d', { alpha: true });
-  var runway = document.getElementById('runway');
-  var beats = [].slice.call(document.querySelectorAll('.beat'));
-  var cue = document.getElementById('cue');
-  var pinbox = document.getElementById('pins');
-  var pins = [].slice.call(document.querySelectorAll('.pin'));
-  var anchors = null;          /* filled in when anchors.json lands */
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   var wide = window.innerWidth >= 820;
-  var DIR = wide ? './frames' : './frames-sm';
-  var FRAMES = wide ? 150 : 75;
+  var live = [];
 
-  var imgs = new Array(FRAMES);
-  var ready = new Array(FRAMES);
-  var current = -1;          /* the frame on the canvas right now */
-  var shown = 0;             /* the eased position, a float */
-  var target = 0;            /* where the scrollbar says we should be */
-  var raf = null;
+  function Runway(cfg) {
+    var runway = document.getElementById(cfg.runway);
+    if (!runway) return;
+    var canvas = runway.querySelector('canvas');
+    var ctx = canvas.getContext('2d', { alpha: true });
+    var beats = [].slice.call(runway.querySelectorAll('.beat'));
+    var pins = [].slice.call(runway.querySelectorAll('.pin'));
+    var hot = runway.querySelector('.hotspot');
+    var cue = runway.querySelector('.scrollcue');
 
-  function path(i) {
-    return DIR + '/' + String(i + 1).padStart(3, '0') + '.webp';
-  }
+    /* Desktop gets every frame, a phone every second one of the same sequence:
+       half the weight, and at a phone's scroll distance the step between two
+       frames is the same size on screen. */
+    var DIR = cfg.dir + (wide ? '' : '-sm');
+    var FRAMES = wide ? cfg.frames : Math.ceil(cfg.frames / 2);
 
-  function progress() {
-    if (still) return 0;
-    var r = runway.getBoundingClientRect();
-    var span = r.height - window.innerHeight;
-    if (span <= 0) return 0;
-    var p = -r.top / span;
-    return p < 0 ? 0 : p > 1 ? 1 : p;
-  }
+    var imgs = new Array(FRAMES);
+    var ready = new Array(FRAMES);
+    var current = -1;        /* the frame on the canvas right now */
+    var shown = 0;           /* the eased position, a float */
+    var target = 0;          /* where the scrollbar says we should be */
+    var raf = null;
+    var anchors = null;      /* filled in when anchors.json lands */
+    var box = { x: 0, y: 0, s: 0 };
 
-  function nearest(i) {
-    if (ready[i]) return i;
-    for (var d = 1; d < FRAMES; d++) {
-      if (i - d >= 0 && ready[i - d]) return i - d;
-      if (i + d < FRAMES && ready[i + d]) return i + d;
+    function path(i) {
+      return DIR + '/' + String(i + 1).padStart(3, '0') + '.webp';
     }
-    return -1;
-  }
 
-  /* Where the object is allowed to be drawn. Worked out once per layout, not
-     per frame, and never guessed: the old code drew it at a fixed fraction of
-     the canvas with a fixed offset upward, so on a short window the top of the
-     object was cut off by the edge and on a tall one it ran into the text. */
-  var box = { x: 0, y: 0, s: 0 };
-
-  function measure() {
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = Math.round(canvas.clientWidth * dpr);
-    canvas.height = Math.round(canvas.clientHeight * dpr);
-
-    var cw = canvas.width, ch = canvas.height;
-    var margin = Math.round(28 * dpr);
-    var gap = Math.round(30 * dpr);
-
-    /* the highest top edge among the passages, so the object clears the tallest
-       one rather than the one that happens to be showing */
-    var ceiling = ch;
-    for (var i = 0; i < beats.length; i++) {
-      var r = beats[i].getBoundingClientRect();
-      if (r.height > 0) ceiling = Math.min(ceiling, r.top * dpr);
+    function progress() {
+      if (still) return 0;
+      var r = runway.getBoundingClientRect();
+      var span = r.height - window.innerHeight;
+      if (span <= 0) return 0;
+      var p = -r.top / span;
+      return p < 0 ? 0 : p > 1 ? 1 : p;
     }
-    var bottom = ceiling - gap;
-    if (!(bottom > margin + 60 * dpr) || bottom > ch) bottom = ch - margin;
 
-    var band = bottom - margin;
-    var s = Math.max(60, Math.min(cw - 2 * margin, band));
-    box = { s: s, x: Math.round((cw - s) / 2), y: Math.round(margin + (band - s) / 2) };
-  }
+    function nearest(i) {
+      if (ready[i]) return i;
+      for (var d = 1; d < FRAMES; d++) {
+        if (i - d >= 0 && ready[i - d]) return i - d;
+        if (i + d < FRAMES && ready[i + d]) return i + d;
+      }
+      return -1;
+    }
 
-  function paint(index) {
-    var want = Math.min(FRAMES - 1, Math.max(0, Math.round(index)));
-    var use = nearest(want);
-    if (use < 0 || use === current) return;
-    current = use;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(imgs[use], box.x, box.y, box.s, box.s);
-    place(use);
-  }
+    /* Where the object is allowed to be drawn. Worked out once per layout, not
+       per frame, and never guessed: drawing it at a fixed fraction of the canvas
+       with a fixed offset cut the top off on a short window and ran it into the
+       text on a tall one. */
+    function measure() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(canvas.clientWidth * dpr);
+      canvas.height = Math.round(canvas.clientHeight * dpr);
 
-  /* A pin sits on the part it names. The renderer wrote down where every part
-     landed in every frame, so this is a lookup, not a guess — which is why the
-     label keeps touching the plate while the plate is still moving. */
-  function place(use) {
-    if (!anchors || !box.s) return;
-    var dpr = canvas.width / canvas.clientWidth;
-    var f = String(Math.round(use * (anchors.frames - 1) / (FRAMES - 1)) + 1);
-    var col = (box.x + box.s) / dpr + 22;       /* one column, right of the object */
-    var live = [];
+      var cw = canvas.width, ch = canvas.height;
+      var margin = Math.round((cfg.margin || 28) * dpr);
+      var gap = Math.round(30 * dpr);
 
-    for (var i = 0; i < pins.length; i++) {
-      var pin = pins[i];
-      var track = anchors.anchors[pin.dataset.anchor];
-      var a = track && track[f];
-      var on = !!a
-        && use >= (pin.dataset.from - 1) * (FRAMES - 1) / (anchors.frames - 1)
-        && use <= (pin.dataset.to - 1) * (FRAMES - 1) / (anchors.frames - 1);
-      if (on !== pin.classList.contains('on')) pin.classList.toggle('on', on);
-      if (!on) continue;
-      live.push({
-        el: pin,
-        x: (box.x + a[0] * box.s) / dpr,
-        y: (box.y + a[1] * box.s) / dpr,
-        h: pin.offsetHeight || 34
+      /* The highest top edge among the passages, so the object clears the
+         tallest one rather than the one that happens to be showing.
+         offsetTop, not getBoundingClientRect: the rect is relative to the
+         viewport, and the second runway is measured while it is still a
+         screen or two below it — every passage read as far off the bottom,
+         no ceiling was found, and the object was drawn over its own text. */
+      var ceiling = ch;
+      for (var i = 0; i < beats.length; i++) {
+        var b = beats[i];
+        if (b.offsetHeight > 0) ceiling = Math.min(ceiling, b.offsetTop * dpr);
+      }
+      var bottom = ceiling - gap;
+      if (!(bottom > margin + 60 * dpr) || bottom > ch) bottom = ch - margin;
+
+      var band = bottom - margin;
+      var s = Math.max(60, Math.min(cw - 2 * margin, band));
+      box = { s: s, x: Math.round((cw - s) / 2), y: Math.round(margin + (band - s) / 2) };
+    }
+
+    function paint(index) {
+      var want = Math.min(FRAMES - 1, Math.max(0, Math.round(index)));
+      var use = nearest(want);
+      if (use < 0 || use === current) return;
+      current = use;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(imgs[use], box.x, box.y, box.s, box.s);
+      place(use);
+    }
+
+    /* Frame numbers in the markup are the renderer's, 1 to cfg.frames. On a
+       phone the page plays half of them, so everything that reads a frame
+       number converts first. */
+    function toCanvas(f) { return (f - 1) * (FRAMES - 1) / (cfg.frames - 1); }
+    function toRender(i) { return String(Math.round(i * (cfg.frames - 1) / (FRAMES - 1)) + 1); }
+
+    /* A pin sits on the part it names. The renderer wrote down where every part
+       landed in every frame, so this is a lookup, not a guess — which is why a
+       label keeps touching its plate while the plate is still moving. */
+    function place(use) {
+      if (!anchors || !box.s) return;
+      var dpr = canvas.width / canvas.clientWidth;
+      var f = toRender(use);
+      var col = (box.x + box.s) / dpr + 22;     /* one column, right of the object */
+      var on = [];
+
+      for (var i = 0; i < pins.length; i++) {
+        var pin = pins[i];
+        var track = anchors.anchors[pin.dataset.anchor];
+        var a = track && track[f];
+        var show = !!a && use >= toCanvas(+pin.dataset.from) && use <= toCanvas(+pin.dataset.to);
+        if (show !== pin.classList.contains('on')) pin.classList.toggle('on', show);
+        if (!show) continue;
+        on.push({
+          el: pin,
+          x: (box.x + a[0] * box.s) / dpr,
+          y: (box.y + a[1] * box.s) / dpr,
+          h: pin.offsetHeight || 34
+        });
+      }
+
+      /* Two parts can land a few pixels apart and their labels would sit on top
+         of each other. Nearest-first, each one takes the place it wants and the
+         next is pushed clear of it. */
+      on.sort(function (a, b) { return a.y - b.y; });
+      var floor = -1e9;
+      for (var k = 0; k < on.length; k++) {
+        var it = on[k];
+        var top = it.y - it.h / 2;
+        if (top < floor) top = floor;
+        floor = top + it.h + 10;
+        var lead = col - it.x;
+        if (lead < 16) lead = 16;
+        it.el.style.left = Math.round(it.x) + 'px';
+        it.el.style.top = Math.round(top) + 'px';
+        it.el.firstElementChild.nextElementSibling.style.width = Math.round(lead) + 'px';
+      }
+
+      /* The button in the second sequence is rendered, so the only way to make
+         it pressable is to lay a real link over exactly where it was drawn.
+         The renderer wrote the corners down for the same reason. */
+      if (hot && anchors.anchors.btn_tl && anchors.anchors.btn_br) {
+        var tl = anchors.anchors.btn_tl[f], br = anchors.anchors.btn_br[f];
+        var seated = use >= toCanvas(+hot.dataset.from);
+        hot.classList.toggle('on', !!(tl && br && seated));
+        if (tl && br && seated) {
+          hot.style.left = Math.round((box.x + tl[0] * box.s) / dpr) + 'px';
+          hot.style.top = Math.round((box.y + tl[1] * box.s) / dpr) + 'px';
+          hot.style.width = Math.round((br[0] - tl[0]) * box.s / dpr) + 'px';
+          hot.style.height = Math.round((br[1] - tl[1]) * box.s / dpr) + 'px';
+        }
+      }
+    }
+
+    /* The sequence follows the scrollbar instead of being pinned to it. A wheel
+       notch moves several frames at once; jumping straight there is what made
+       the motion look like it was skipping. This eases in, keeps going for a
+       moment after the wheel stops, and settles exactly. */
+    function tick() {
+      var gap = target - shown;
+      if (Math.abs(gap) < 0.4) {
+        shown = target;
+        paint(shown);
+        raf = null;
+        return;
+      }
+      shown += gap * 0.2;
+      paint(shown);
+      raf = requestAnimationFrame(tick);
+    }
+
+    function pump() { if (raf === null) raf = requestAnimationFrame(tick); }
+
+    function beat(p) {
+      for (var i = 0; i < beats.length; i++) {
+        var b = beats[i];
+        var on = p >= parseFloat(b.dataset.from) && p <= parseFloat(b.dataset.to);
+        if (on !== b.classList.contains('on')) b.classList.toggle('on', on);
+      }
+      if (cue) cue.style.opacity = p > 0.02 ? 0 : 1;
+    }
+
+    function onScroll() {
+      var p = progress();
+      target = p * (FRAMES - 1);
+      beat(p);
+      pump();
+    }
+
+    function fit() {
+      measure();
+      current = -1;
+      paint(shown);
+      place(current < 0 ? 0 : current);
+    }
+
+    function load(i, then) {
+      var im = new Image();
+      im.decoding = 'async';
+      im.onload = function () { imgs[i] = im; ready[i] = true; if (then) then(); };
+      im.onerror = function () { if (then) then(); };
+      im.src = path(i);
+    }
+
+    /* Coarse to fine: every eighth frame, then every fourth, then the rest. The
+       sequence is complete early and only gets smoother, instead of being
+       unusable until the last frame lands. */
+    function chain(order, k) {
+      if (k >= order.length) return;
+      load(order[k], function () {
+        current = -1;
+        paint(shown);
+        chain(order, k + 1);
       });
     }
 
-    /* Two plates can land a few pixels apart and their labels would sit on top
-       of each other. Nearest-first, each one takes the place it wants and the
-       next is pushed clear of it. */
-    live.sort(function (a, b) { return a.y - b.y; });
-    var floor = -1e9;
-    for (var k = 0; k < live.length; k++) {
-      var it = live[k];
-      var top = it.y - it.h / 2;
-      if (top < floor) top = floor;
-      floor = top + it.h + 10;
-      var lead = col - it.x;
-      if (lead < 16) lead = 16;
-      it.el.style.left = Math.round(it.x) + 'px';
-      it.el.style.top = Math.round(top) + 'px';
-      it.el.firstElementChild.nextElementSibling.style.width = Math.round(lead) + 'px';
-    }
-  }
-
-  /* The turn follows the scrollbar instead of being pinned to it. A wheel notch
-     moves several frames at once; jumping straight there is what made the
-     rotation look like it was skipping. This eases in, keeps turning for a
-     moment after the wheel stops, and settles exactly. */
-  function tick() {
-    var gap = target - shown;
-    if (Math.abs(gap) < 0.4) {
-      shown = target;
-      paint(shown);
-      raf = null;
-      return;
-    }
-    shown += gap * 0.2;
-    paint(shown);
-    raf = requestAnimationFrame(tick);
-  }
-
-  function pump() {
-    if (raf === null) raf = requestAnimationFrame(tick);
-  }
-
-  function beat(p) {
-    for (var i = 0; i < beats.length; i++) {
-      var b = beats[i];
-      var on = p >= parseFloat(b.dataset.from) && p <= parseFloat(b.dataset.to);
-      if (on !== b.classList.contains('on')) b.classList.toggle('on', on);
-    }
-    if (cue) cue.style.opacity = p > 0.02 ? 0 : 1;
-  }
-
-  function onScroll() {
-    var p = progress();
-    target = p * (FRAMES - 1);
-    beat(p);
-    pump();
-  }
-
-  function fit() {
-    measure();
-    current = -1;
-    paint(shown);
-    place(current < 0 ? 0 : current);
-  }
-
-  function load(i, then) {
-    var im = new Image();
-    im.decoding = 'async';
-    im.onload = function () { imgs[i] = im; ready[i] = true; if (then) then(); };
-    im.onerror = function () { if (then) then(); };
-    im.src = path(i);
-  }
-
-  /* Coarse to fine: every eighth frame, then every fourth, then the rest. The
-     turn is complete early and only gets smoother, instead of being unusable
-     until the last frame lands. */
-  function chain(order, k) {
-    if (k >= order.length) return;
-    load(order[k], function () {
-      current = -1;
-      paint(shown);
-      chain(order, k + 1);
-    });
-  }
-
-  function start() {
     fit();
     load(0, function () {
       var p = progress();
@@ -544,16 +642,22 @@ footer a{color:var(--dim)}
       }
       chain(order, 0);
     });
-    if (!still && wide && window.fetch) {
-      fetch('./anchors.json').then(function (r) { return r.ok ? r.json() : null; })
+
+    if (!still && (pins.length || hot) && window.fetch) {
+      fetch(cfg.dir + '/anchors.json').then(function (r) { return r.ok ? r.json() : null; })
         .then(function (j) { if (j && j.anchors) { anchors = j; place(current < 0 ? 0 : current); } })
         .catch(function () {});
     }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', fit);
+
+    live.push({ onScroll: onScroll, fit: fit });
   }
 
-  start();
+  Runway({ runway: 'runway', dir: './frames', frames: 150 });
+  Runway({ runway: 'runway-b', dir: './frames-b', frames: 84, margin: 34 });
+
+  function all(fn) { for (var i = 0; i < live.length; i++) live[i][fn](); }
+  window.addEventListener('scroll', function () { all('onScroll'); }, { passive: true });
+  window.addEventListener('resize', function () { all('fit'); });
 })();
 </script>
 </body>

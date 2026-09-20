@@ -29,9 +29,11 @@ print(len(files), 'source frames')
 # the frames would be lighter still, and was rejected: lossy encoding moves a
 # flat dark field by a unit or two, which on a dark page draws a faint square
 # around the object.
+NAME = os.environ.get('NAME', 'frames')   # 'frames' or 'frames-b'
+
 sets = [
-    ('frames', None, 86, 50, 1),
-    ('frames-sm', 560, 82, 45, 2),
+    (NAME, None, 86, 50, 1),
+    (NAME + '-sm', 560, 82, 45, 2),
 ]
 
 for name, side, q, aq, step in sets:
