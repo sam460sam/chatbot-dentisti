@@ -19,16 +19,10 @@ export const en: Translation = {
     skip: 'Skip to content',
   },
   hero: {
-    title: 'Answer every customer, even when you cannot pick up',
-    lead: 'A missed call does not leave a message — it calls the next business on the list. We put a digital assistant on your website that replies in seconds at any hour, answers with your information, and books the appointment into the calendar you already use.',
-    ctaQuote: 'See what it would cost you',
-    ctaDemo: 'See it book an appointment',
-    note: 'Month to month, no long contract. We set it up with your information, and you read the real conversations from the first day.',
-    bullets: [
-      'Books into the calendar you already use — nothing new to learn',
-      'Replies in your customer’s language, whoever writes',
-      'Urgent or unusual goes to your team, with name and number',
-    ],
+    title: 'The website that books your appointments.',
+    lead: 'We build the site, and the assistant on it answers your customers and fills your calendar at any hour.',
+    ctaQuote: 'See what it costs',
+    ctaDemo: 'Watch it book one',
   },
   heroSite: {
     url: 'your-business.com',
@@ -238,6 +232,7 @@ export const en: Translation = {
     whoTitle: 'Who it suits',
     who: 'Shops, workshops, trades, practices, studios, anyone who is looked up on a phone before being called. If you need a web shop with hundreds of products, we are not the right people and we will say so.',
     quoteNote: 'Price and timing after a ten-minute call: it depends on how many pages you need and whether you already have text and photos.',
+    showcase: 'See a page built to show off',
   },
   faq: {
     title: 'Frequently asked questions',

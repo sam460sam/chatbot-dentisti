@@ -36,13 +36,13 @@ export interface Translation {
     main: string
     skip: string
   }
+  /** The first screen: two lines, one sentence, two buttons. The picture does
+      the rest. */
   hero: {
     title: string
     lead: string
     ctaQuote: string
     ctaDemo: string
-    note: string
-    bullets: string[]
   }
   /** The example small-business site drawn inside the hero stage. It is a mock,
       not a real customer: the name is deliberately generic. */
@@ -120,6 +120,8 @@ export interface Translation {
     whoTitle: string
     who: string
     quoteNote: string
+    /** link to /showcase, the scroll-driven demonstration page */
+    showcase: string
   }
   faq: { title: string; lead: string; items: { q: string; a: string }[] }
   contact: {

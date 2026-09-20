@@ -1,106 +1,59 @@
 import { HeroStage } from './HeroStage'
-import { DayStrip } from './DayStrip'
-import { Diary } from './Diary'
-import { Mark, Arrow, ArrowOut } from './marks'
+import { Arrow, ArrowOut } from './marks'
 import { SITE, waLink } from '../site'
 import { useRoute } from '../router'
 import type { Translation } from '../i18n'
 
 /*
- * One screen, one composition.
+ * The first screen, on black.
  *
- * The right column used to be a flat card of chat bubbles that stopped in mid
- * air, leaving the bottom-right quarter of the first screen empty. It said
- * "assistant" and nothing about the other half of the business.
- *
- * It is now a lit stage carrying both: the site we build, in a window, and the
- * conversation that site is having at 23:47, on a phone in front of it. The
- * three claims that used to be a bullet list under the buttons are a ruled strip
- * under the whole thing, where they read as a designed row rather than clutter.
+ * Two lines that say what the thing is, one sentence, two buttons, and the
+ * product itself: the site we build in a window, the conversation it is
+ * having on a phone in front of it, and the appointment that comes out of
+ * it. Everything that used to sit around that (three bullets, a note, a bar
+ * with the launch offer) is gone or reduced to one small line, because the
+ * picture already says it.
  */
 export function Hero({ t }: { t: Translation }) {
   const { lang } = useRoute()
 
   return (
-    <>
-      <section className="band-hero pb-7 pt-9 sm:pb-8 lg:pb-9 lg:pt-10">
-        <div className="container-page">
-          <div className="grid items-center gap-6 lg:grid-cols-[1.02fr_0.98fr] lg:gap-7">
-            <div className="enter">
-              {/* The launch offer, on the first screen. It used to be a
-                  full-width black bar above the headline, which read as a
-                  cookie notice. It is now a small tag on the headline, and it
-                  goes away by itself when the third client signs. */}
-              <a href="#prices" className="offer">
-                <span>
-                  <span aria-hidden="true" className="offer-dots">
-                    <i />
-                    <i />
-                  </span>
-                  {t.pricing.bar.text}
-                </span>
-                <span className="offer-cta">
-                  {t.pricing.bar.cta}
-                  <Arrow size={14} />
-                </span>
+    <section className="band-hero on-ink pb-8 pt-9 sm:pb-9 lg:pt-10">
+      <div className="container-page">
+        <div className="grid items-center gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-9">
+          <div className="enter">
+            <h1 className="t-display">{t.hero.title}</h1>
+
+            <p className="t-lead mt-3">{t.hero.lead}</p>
+
+            <div className="mt-5 flex flex-col gap-1 sm:flex-row sm:flex-wrap">
+              <a className="btn-teal-bright sm:whitespace-nowrap" href={waLink(t.wa.assistantQuote)} rel="noopener">
+                {t.hero.ctaQuote}
+                <Arrow />
               </a>
-
-              <h1 className="t-display mt-3">{t.hero.title}</h1>
-
-              <p className="t-lead mt-3">{t.hero.lead}</p>
-
-              <div className="mt-4 flex flex-col gap-1 sm:flex-row">
-                <a className="btn-teal sm:whitespace-nowrap" href={waLink(t.wa.assistantQuote)} rel="noopener">
-                  {t.hero.ctaQuote}
-                  <Arrow />
-                </a>
-                <a
-                  className="btn-line sm:whitespace-nowrap"
-                  href={SITE.demo[lang]}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {t.hero.ctaDemo}
-                  <ArrowOut />
-                </a>
-              </div>
-
-              <p className="mt-2 max-w-lead text-small text-ink-mute">{t.hero.note}</p>
+              <a
+                className="btn-line-flood sm:whitespace-nowrap"
+                href={SITE.demo[lang]}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t.hero.ctaDemo}
+                <ArrowOut />
+              </a>
             </div>
 
-            <HeroStage t={t} />
+            {/* The launch offer, one line. It goes away when the third client signs. */}
+            <p className="mt-3 text-small text-paper-dim">
+              {t.pricing.bar.text}{' '}
+              <a href="#prices" className="text-teal-bright underline underline-offset-4 hover:text-paper">
+                {t.pricing.bar.cta}
+              </a>
+            </p>
           </div>
 
-          <ul role="list" className="facts mt-6 lg:mt-7">
-            {t.hero.bullets.map((bullet) => (
-              <li key={bullet} className="flex items-start gap-1 text-small text-ink-soft">
-                <Mark />
-                <span>{bullet}</span>
-              </li>
-            ))}
-          </ul>
+          <HeroStage t={t} />
         </div>
-      </section>
-
-      {/* The signature object: the hours this business is not there to answer,
-          and the appointment that landed while nobody was in the shop. */}
-      <section className="band-deep" aria-labelledby="daystrip-title">
-        <div className="container-page">
-          <p className="t-label">{t.dayStrip.eyebrow}</p>
-          <h2 id="daystrip-title" className="t-h2 mt-2 max-w-none break-words">
-            {t.dayStrip.title}
-          </h2>
-
-          <div className="mt-4 grid gap-5 lg:grid-cols-[1.15fr_0.85fr] lg:items-start lg:gap-6">
-            <div>
-              <DayStrip t={t} />
-              <p className="t-body mt-3 max-w-lead">{t.dayStrip.caption}</p>
-            </div>
-
-            <Diary t={t} />
-          </div>
-        </div>
-      </section>
-    </>
+      </div>
+    </section>
   )
 }

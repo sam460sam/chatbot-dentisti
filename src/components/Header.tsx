@@ -53,11 +53,11 @@ export function Header({ t }: { t: Translation }) {
   const links = SECTIONS.map((id) => ({ id, label: t.nav[id], to: `${home}#${id}` }))
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-paper-edge bg-paper">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-ink-edge bg-black">
       <div className="container-page flex h-7 items-center justify-between gap-2">
         <Link to={home} className="flex items-center" aria-label="Twinbyte">
           <img
-            src="/logo.png"
+            src="/logo-white.png"
             alt="Twinbyte"
             width={640}
             height={175}
@@ -71,7 +71,7 @@ export function Header({ t }: { t: Translation }) {
             <Link
               key={l.id}
               to={l.to}
-              className="text-small font-medium text-ink-soft transition-colors hover:text-teal"
+              className="text-small font-medium text-paper-dim transition-colors hover:text-paper"
             >
               {l.label}
             </Link>
@@ -79,7 +79,7 @@ export function Header({ t }: { t: Translation }) {
         </nav>
 
         <div className="flex items-center gap-1">
-          <nav aria-label={t.nav.language} className="flex items-center border border-paper-edge">
+          <nav aria-label={t.nav.language} className="flex items-center border border-ink-edge">
             {LANGS.map((l) => (
               <Link
                 key={l}
@@ -88,7 +88,7 @@ export function Header({ t }: { t: Translation }) {
                 aria-current={l === lang ? 'true' : undefined}
                 aria-label={LANG_LABELS[l]}
                 className={`px-1 py-0.5 text-micro font-bold uppercase transition-colors ${
-                  l === lang ? 'bg-ink text-paper' : 'text-ink-mute hover:text-ink'
+                  l === lang ? 'bg-paper text-ink' : 'text-paper-mute hover:text-paper'
                 }`}
               >
                 {l}
@@ -98,7 +98,7 @@ export function Header({ t }: { t: Translation }) {
 
           <button
             type="button"
-            className="-mr-1 p-1 text-ink lg:hidden"
+            className="-mr-1 p-1 text-paper lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? t.nav.closeMenu : t.nav.openMenu}
@@ -117,14 +117,14 @@ export function Header({ t }: { t: Translation }) {
       />
 
       {open && (
-        <nav id="mobile-menu" aria-label={t.nav.main} className="border-t border-paper-edge bg-paper lg:hidden">
+        <nav id="mobile-menu" aria-label={t.nav.main} className="border-t border-ink-edge bg-black lg:hidden">
           <ul role="list" className="container-page flex flex-col py-1">
             {links.map((l) => (
               <li key={l.id}>
                 <Link
                   to={l.to}
                   onClick={() => setOpen(false)}
-                  className="block border-b border-paper-edge py-2 text-body font-medium text-ink last:border-0"
+                  className="block border-b border-ink-edge py-2 text-body font-medium text-paper last:border-0"
                 >
                   {l.label}
                 </Link>

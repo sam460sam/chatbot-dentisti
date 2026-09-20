@@ -19,16 +19,10 @@ export const nl: Translation = {
     skip: 'Naar de inhoud',
   },
   hero: {
-    title: 'Beantwoord elke klant, ook als u niet kunt opnemen',
-    lead: 'Een gemiste oproep spreekt geen bericht in — die belt het volgende bedrijf op de lijst. Wij zetten een digitale assistent op uw website die binnen seconden antwoordt, op elk uur, met uw eigen informatie, en de afspraak in de agenda zet die u al gebruikt.',
-    ctaQuote: 'Bekijk wat het u kost',
-    ctaDemo: 'Zie hem een afspraak inplannen',
-    note: 'Maand per maand, geen lang contract. Wij richten hem in met uw gegevens en u leest de echte gesprekken vanaf de eerste dag.',
-    bullets: [
-      'Plant in de agenda die u al gebruikt — niets nieuws te leren',
-      'Antwoordt in de taal van uw klant, wie er ook schrijft',
-      'Spoed of iets ongewoons gaat naar uw team, met naam en nummer',
-    ],
+    title: 'De website die uw afspraken inplant.',
+    lead: 'Wij bouwen de site, en de assistent erop beantwoordt uw klanten en vult uw agenda, op elk uur.',
+    ctaQuote: 'Bekijk wat het kost',
+    ctaDemo: 'Zie hem een afspraak maken',
   },
   heroSite: {
     url: 'uw-bedrijf.nl',
@@ -238,6 +232,7 @@ export const nl: Translation = {
     whoTitle: 'Voor wie het past',
     who: 'Winkels, garages, vakmensen, praktijken, studio\u2019s: iedereen die op een telefoon wordt opgezocht voordat er gebeld wordt. Heeft u een webshop met honderden producten nodig, dan zijn wij niet de juiste partij en zeggen we dat.',
     quoteNote: 'Prijs en planning na een telefoontje van tien minuten: het hangt af van hoeveel pagina\u2019s u nodig heeft en of u al teksten en foto\u2019s heeft.',
+    showcase: 'Bekijk een pagina die indruk maakt',
   },
   faq: {
     title: 'Veelgestelde vragen',

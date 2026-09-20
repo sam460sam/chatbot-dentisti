@@ -1,9 +1,11 @@
 import { Hero } from './Hero'
 import { Assembly } from './Assembly'
+import { DayStrip } from './DayStrip'
+import { Diary } from './Diary'
 import { Pricing } from './Pricing'
 import { Handover } from './Handover'
 import { SiteWireframe } from './SiteWireframe'
-import { Mark, Bubble, Window, Arrow, Mail, Person } from './marks'
+import { Mark, Bubble, Window, Arrow, ArrowOut, Mail, Person } from './marks'
 import { SITE, mailLink, waLink } from '../site'
 import type { Translation } from '../i18n'
 
@@ -62,6 +64,26 @@ export function Home({ t }: { t: Translation }) {
 
       {/* The object pulled apart and put together by the scrollbar. */}
       <Assembly t={t} />
+
+      {/* The signature object: the hours this business is not there to answer,
+          and the appointment that landed while nobody was in the shop. */}
+      <section className="band-deep" aria-labelledby="daystrip-title">
+        <div className="container-page">
+          <p className="t-label">{t.dayStrip.eyebrow}</p>
+          <h2 id="daystrip-title" className="t-h2 mt-2 max-w-none break-words">
+            {t.dayStrip.title}
+          </h2>
+
+          <div className="mt-4 grid gap-5 lg:grid-cols-[1.15fr_0.85fr] lg:items-start lg:gap-6">
+            <div>
+              <DayStrip t={t} />
+              <p className="t-body mt-3 max-w-lead">{t.dayStrip.caption}</p>
+            </div>
+
+            <Diary t={t} />
+          </div>
+        </div>
+      </section>
 
       {/* ---------------------------------------------------- the fork
           Two grounds touching with no gap and no rule between them. This is the
@@ -220,10 +242,14 @@ export function Home({ t }: { t: Translation }) {
 
             <p className="t-body mt-3 text-small">{t.websites.quoteNote}</p>
 
-            <div className="mt-2 flex flex-col gap-1 sm:flex-row">
+            <div className="mt-2 flex flex-col gap-1 sm:flex-row sm:flex-wrap">
               <a className="btn-verm" href={waLink(t.wa.websitesQuote)} rel="noopener">
                 {t.websites.cta}
                 <Arrow />
+              </a>
+              <a className="btn-line" href="/showcase/">
+                {t.websites.showcase}
+                <ArrowOut />
               </a>
               <a className="btn-line" href={mailLink(t.contact.emailSubject)}>
                 <Mail />

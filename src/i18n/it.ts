@@ -19,16 +19,10 @@ export const it: Translation = {
     skip: 'Vai al contenuto',
   },
   hero: {
-    title: 'Rispondete a ogni cliente, anche quando non potete rispondere',
-    lead: 'Una chiamata persa non lascia un messaggio: chiama il prossimo della lista. Mettiamo sul vostro sito un assistente digitale che risponde in pochi secondi a qualsiasi ora, con le vostre informazioni, e fissa l’appuntamento nell’agenda che usate già.',
-    ctaQuote: 'Scoprite quanto costa per voi',
-    ctaDemo: 'Guardalo fissare un appuntamento',
-    note: 'Mese per mese, nessun contratto lungo. Lo configuriamo con le vostre informazioni e leggete le conversazioni vere dal primo giorno.',
-    bullets: [
-      'Scrive nell’agenda che usate già: niente di nuovo da imparare',
-      'Risponde nella lingua del cliente, chiunque scriva',
-      'Urgenze e casi strani passano al vostro team, con nome e numero',
-    ],
+    title: 'Il sito che prende gli appuntamenti al posto vostro.',
+    lead: 'Il sito lo costruiamo noi. L\u2019assistente che ci mettiamo sopra risponde ai clienti e riempie la vostra agenda, a qualsiasi ora.',
+    ctaQuote: 'Guardate quanto costa',
+    ctaDemo: 'Guardatelo fissare un appuntamento',
   },
   heroSite: {
     url: 'iltuolocale.it',
@@ -238,6 +232,7 @@ export const it: Translation = {
     whoTitle: 'Per chi va bene',
     who: 'Negozi, officine, artigiani, studi, centri, chiunque venga cercato dal telefono prima di essere chiamato. Se vi serve un e-commerce con centinaia di prodotti non siamo le persone giuste, e ve lo diciamo.',
     quoteNote: 'Prezzo e tempi dopo una chiamata di dieci minuti: dipende da quante pagine servono e se avete già testi e foto.',
+    showcase: 'Guardate una pagina fatta per colpire',
   },
   faq: {
     title: 'Domande frequenti',

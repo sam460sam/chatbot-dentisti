@@ -180,6 +180,11 @@
     @apply btn border border-ink bg-transparent text-ink hover:bg-ink hover:text-paper;
   }
 
+  /* The one bright button on the black first screen. */
+  .btn-teal-bright {
+    @apply btn bg-teal-bright text-ink hover:bg-paper;
+  }
+
   .btn-line-flood {
     @apply btn border border-paper bg-transparent text-paper hover:bg-paper hover:text-ink;
   }
@@ -228,6 +233,7 @@
   }
 
   /* On a flood or the ink plate the heading and lead invert. */
+  .on-ink .t-display,
   .on-flood .t-h2,
   .on-ink .t-h2,
   .on-flood .t-h3,
@@ -337,54 +343,6 @@
   }
 }
 
-/* ------------------------------------------------------ the launch offer tag
-   One line on the headline, not a bar across the page. */
-.offer {
-  display: inline-flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 10px;
-  max-width: 100%;
-  border: 1px solid #CFC9BB;
-  border-radius: 10px 10px 10px 0;
-  padding: 7px 12px 7px 11px;
-  background: #FFFDF9;
-  font-size: 13px;
-  line-height: 18px;
-  color: #4A4740;
-  transition: border-color 150ms;
-}
-
-.offer:hover {
-  border-color: #17160F;
-}
-
-.offer-dots {
-  display: inline-flex;
-  gap: 3px;
-  margin-right: 8px;
-  vertical-align: 1px;
-}
-
-.offer-dots i {
-  display: block;
-  width: 6px;
-  height: 6px;
-  background: #0E5266;
-}
-
-.offer-dots i:last-child {
-  background: #C8622F;
-}
-
-.offer-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-weight: 600;
-  color: #0E5266;
-}
-
 /* ============================================================== THE HERO STAGE
    The rest of the page draws depth with a hard offset plate — print out of
    register, zero blur. The hero is the single exception and it is deliberate:
@@ -401,20 +359,18 @@
   position: relative;
   overflow: hidden;
   background:
-    radial-gradient(760px 460px at 92% 0%, rgba(14, 82, 102, 0.07), transparent 66%),
-    radial-gradient(760px 520px at 2% 100%, rgba(161, 69, 49, 0.07), transparent 66%),
-    radial-gradient(1000px 700px at 62% 46%, #FFFDF9 0%, rgba(255, 253, 249, 0) 62%),
-    linear-gradient(180deg, #F7F4EF 0%, #F5F2EC 50%, #EAE5DA 100%);
+    radial-gradient(640px 420px at 88% 8%, rgba(89, 185, 204, 0.16), rgba(89, 185, 204, 0) 66%),
+    radial-gradient(720px 460px at 8% 100%, rgba(217, 106, 70, 0.14), rgba(217, 106, 70, 0) 66%),
+    #000;
 }
 
-.band-hero::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.06;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
+/* The headline is one sentence and must not drop its last word: it scales
+   with the column rather than sitting at the fixed display size. */
+@media (min-width: 1024px) {
+  .band-hero .t-display {
+    font-size: clamp(54px, 4.9vw, 70px);
+    line-height: 1;
+  }
 }
 
 .band-hero > * {
@@ -427,10 +383,9 @@
   padding-bottom: 26px;
 }
 
-/* The glow used to hang 10% past the stage on each side, which put it past the
-   right edge of a phone and gave /nl a nine-pixel horizontal scrollbar on a
-   tablet. It stays inside now and the gradient is widened to match, so the
-   falloff looks the same without anything sticking out of the page. */
+/* The light stays inside the stage (past its edge it gave /nl a horizontal
+   scrollbar on a tablet). On black it is a soft teal glow behind the window,
+   not a white one. */
 .stage-light {
   position: absolute;
   left: 0;
@@ -438,7 +393,7 @@
   top: -14%;
   bottom: 4%;
   pointer-events: none;
-  background: radial-gradient(74% 54% at 52% 44%, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0) 72%);
+  background: radial-gradient(74% 54% at 52% 44%, rgba(89, 185, 204, 0.2), rgba(89, 185, 204, 0) 72%);
 }
 
 .stage-float {
@@ -458,7 +413,7 @@
   bottom: 0;
   height: 46px;
   pointer-events: none;
-  background: radial-gradient(50% 50% at 50% 50%, rgba(23, 22, 15, 0.20), rgba(23, 22, 15, 0) 72%);
+  background: radial-gradient(50% 50% at 50% 50%, rgba(89, 185, 204, 0.16), rgba(89, 185, 204, 0) 72%);
 }
 
 /* ------------------------------------------------------ the site, in a window */
