@@ -644,16 +644,22 @@ footer a{color:var(--dim)}
       im.src = path(i);
     }
 
-    /* Coarse to fine: every eighth frame, then every fourth, then the rest. The
-       sequence is complete early and only gets smoother, instead of being
-       unusable until the last frame lands. */
-    function chain(order, k) {
-      if (k >= order.length) return;
-      load(order[k], function () {
-        current = -1;
-        paint(shown);
-        chain(order, k + 1);
-      });
+    /* Coarse to fine: the last frame, every eighth, every fourth, then the
+       rest. The sequence is complete early and only gets smoother, instead of
+       being unusable until the last frame lands. Six requests in flight: one
+       at a time, a phone's latency made the object sit half-built while the
+       passages went by. */
+    function pool(order, lanes) {
+      var k = 0;
+      function next() {
+        if (k >= order.length) return;
+        load(order[k++], function () {
+          current = -1;
+          paint(shown);
+          next();
+        });
+      }
+      for (var n = 0; n < lanes; n++) next();
     }
 
     fit();
@@ -663,13 +669,14 @@ footer a{color:var(--dim)}
       paint(shown);
       beat(p);
       if (still) return;
-      var order = [], seen = {};
+      var order = [FRAMES - 1], seen = {};
+      seen[0] = 1; seen[FRAMES - 1] = 1;
       for (var step = 8; step >= 1; step = step >> 1) {
         for (var i = 0; i < FRAMES; i += step) {
           if (!seen[i]) { seen[i] = 1; order.push(i); }
         }
       }
-      chain(order, 0);
+      pool(order, 6);
     });
 
     if (!still && (pins.length || hot) && window.fetch) {

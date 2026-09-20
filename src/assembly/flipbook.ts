@@ -9,8 +9,11 @@
  * Frames are DIR/001.webp ... on a desktop and DIR-sm/ on a phone, which plays
  * every second frame of the same sequence: half the weight, and at a phone's
  * scroll distance the step between two frames is the same size on screen.
- * Loading is coarse to fine: every eighth frame, then every fourth, then the
- * rest, so the sequence is usable early and only gets smoother.
+ * Loading is coarse to fine: the first and last frame, every eighth, every
+ * fourth, then the rest, so the sequence is usable early and only gets
+ * smoother. Six requests are in flight at once: one at a time, fifty frames
+ * over a phone's latency took longer than a visitor spends on the section,
+ * and the object sat there half-built while the passages went by.
  *
  * No observer: the frame is a function of scroll position, never of whether
  * something "became visible".
@@ -159,13 +162,18 @@ export function mountFlipbook(runway: HTMLElement, cfg: FlipbookConfig): () => v
     im.src = path(i)
   }
 
-  function chain(order: number[], k: number) {
-    if (!alive || k >= order.length) return
-    load(order[k], () => {
-      current = -1
-      paint(shown)
-      chain(order, k + 1)
-    })
+  function pool(order: number[], lanes: number) {
+    let k = 0
+    const next = () => {
+      if (!alive || k >= order.length) return
+      const i = order[k++]
+      load(i, () => {
+        current = -1
+        paint(shown)
+        next()
+      })
+    }
+    for (let n = 0; n < lanes; n++) next()
   }
 
   measure()
@@ -185,8 +193,8 @@ export function mountFlipbook(runway: HTMLElement, cfg: FlipbookConfig): () => v
     target = shown = p * (FRAMES - 1)
     paint(shown)
     beat(p)
-    const order: number[] = []
-    const seen: Record<number, true> = {}
+    const order: number[] = [FRAMES - 1]
+    const seen: Record<number, true> = { 0: true, [FRAMES - 1]: true }
     for (let step = 8; step >= 1; step = step >> 1) {
       for (let i = 0; i < FRAMES; i += step) {
         if (!seen[i]) {
@@ -195,7 +203,7 @@ export function mountFlipbook(runway: HTMLElement, cfg: FlipbookConfig): () => v
         }
       }
     }
-    chain(order, 0)
+    pool(order, 6)
   })
 
   window.addEventListener('scroll', onScroll, { passive: true })
