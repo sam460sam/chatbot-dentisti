@@ -25,24 +25,27 @@ export function Hero({ t }: { t: Translation }) {
     <>
       <section className="band-hero pb-7 pt-9 sm:pb-8 lg:pb-9 lg:pt-10">
         <div className="container-page">
-          {/* The launch offer, on the first screen. It is not a floating banner:
-              it sits in the flow, above the headline, and it goes away by itself
-              when the third client signs. */}
-          <a
-            href="#prices"
-            className="mb-5 flex flex-wrap items-baseline gap-x-2 gap-y-1 border border-ink bg-ink px-2 py-1 text-small text-paper transition-colors hover:bg-ink-edge"
-          >
-            <span aria-hidden="true" className="flex shrink-0 translate-y-0.5 gap-0.5">
-              <span className="block h-1 w-1 bg-teal-bright" />
-              <span className="block h-1 w-1 bg-verm-bright" />
-            </span>
-            <span className="font-semibold">{t.pricing.bar.text}</span>
-            <span className="text-paper-dim underline underline-offset-2">{t.pricing.bar.cta} →</span>
-          </a>
-
           <div className="grid items-center gap-6 lg:grid-cols-[1.02fr_0.98fr] lg:gap-7">
             <div className="enter">
-              <h1 className="t-display">{t.hero.title}</h1>
+              {/* The launch offer, on the first screen. It used to be a
+                  full-width black bar above the headline, which read as a
+                  cookie notice. It is now a small tag on the headline, and it
+                  goes away by itself when the third client signs. */}
+              <a href="#prices" className="offer">
+                <span>
+                  <span aria-hidden="true" className="offer-dots">
+                    <i />
+                    <i />
+                  </span>
+                  {t.pricing.bar.text}
+                </span>
+                <span className="offer-cta">
+                  {t.pricing.bar.cta}
+                  <Arrow size={14} />
+                </span>
+              </a>
+
+              <h1 className="t-display mt-3">{t.hero.title}</h1>
 
               <p className="t-lead mt-3">{t.hero.lead}</p>
 

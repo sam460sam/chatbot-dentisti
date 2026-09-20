@@ -1,4 +1,5 @@
 import { Hero } from './Hero'
+import { Assembly } from './Assembly'
 import { Pricing } from './Pricing'
 import { Handover } from './Handover'
 import { SiteWireframe } from './SiteWireframe'
@@ -58,6 +59,9 @@ export function Home({ t }: { t: Translation }) {
   return (
     <main id="main">
       <Hero t={t} />
+
+      {/* The object pulled apart and put together by the scrollbar. */}
+      <Assembly t={t} />
 
       {/* ---------------------------------------------------- the fork
           Two grounds touching with no gap and no rule between them. This is the

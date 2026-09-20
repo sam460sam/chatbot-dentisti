@@ -40,6 +40,8 @@ export const it: Translation = {
     call: 'Chiama ora',
     book: 'Prenota online',
     phoneLabel: 'Sul telefono, 23:47',
+    status: 'Risponde subito',
+    input: 'Scrivi un messaggio',
   },
   pricing: {
     eyebrow: 'Quanto costa',
@@ -139,6 +141,26 @@ export const it: Translation = {
       tail: '',
       body: 'Urgente, insolito o fuori da quello che sa: l\u2019assistente si ferma, prende i dati e mette un richiamo nella vostra agenda. Chiude il cerchio qualcuno del vostro team.',
     },
+  },
+  assembly: {
+    title: 'Come lo costruiamo',
+    beats: [
+      {
+        kick: 'Come lavoriamo',
+        title: 'Ogni pezzo, fatto su misura.',
+        body: 'Un sito è una pila di piccole decisioni: le parole, gli orari, il bottone, la cosa che risponde. Ognuna la prendiamo apposta.',
+      },
+      {
+        kick: 'Montato',
+        title: 'Niente di preconfezionato.',
+        body: 'Nessun template con il vostro logo incollato sopra. I pezzi sono tagliati per la vostra attività e montati a mano, nell’ordine giusto.',
+      },
+      {
+        kick: 'Consegnato',
+        title: 'Chiuso, testato, vostro.',
+        body: 'Una cosa finita che funziona sul telefono, a un prezzo scritto sulla pagina, mese per mese.',
+      },
+    ],
   },
   dayStrip: {
     eyebrow: 'Un martedì',

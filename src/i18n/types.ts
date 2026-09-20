@@ -56,6 +56,10 @@ export interface Translation {
     call: string
     book: string
     phoneLabel: string
+    /** under the business name in the chat header */
+    status: string
+    /** placeholder in the message field */
+    input: string
   }
   /** The fork right under the hero: assistant on one side, websites on the other. */
   split: {
@@ -90,6 +94,11 @@ export interface Translation {
     bundle: { tag: string; name: string; setup: string; month: string; body: string }
     fine: string[]
     cta: string
+  }
+  /** The object that comes together on scroll, and the three passages over it. */
+  assembly: {
+    title: string
+    beats: { kick: string; title: string; body: string }[]
   }
   /** The day strip: the hours a business is not there to answer. */
   dayStrip: {

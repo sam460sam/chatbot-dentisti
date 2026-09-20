@@ -40,6 +40,8 @@ export const en: Translation = {
     call: 'Call now',
     book: 'Book online',
     phoneLabel: 'On the phone, 23:47',
+    status: 'Replies in seconds',
+    input: 'Write a message',
   },
   pricing: {
     eyebrow: 'What it costs',
@@ -139,6 +141,26 @@ export const en: Translation = {
       tail: '',
       body: 'Urgent, unusual, or outside what it knows: the assistant stops, takes the details and puts a call back in your calendar. Someone on your team closes it.',
     },
+  },
+  assembly: {
+    title: 'How we build it',
+    beats: [
+      {
+        kick: 'How we work',
+        title: 'Every part, made to fit.',
+        body: 'A site is a stack of small decisions: the words, the hours, the button, the thing that answers. We make each one on purpose.',
+      },
+      {
+        kick: 'Put together',
+        title: 'Nothing off the shelf.',
+        body: 'No template with your logo dropped in. The pieces are cut for your business and fitted by hand, in the order they belong.',
+      },
+      {
+        kick: 'Delivered',
+        title: 'Closed, tested, yours.',
+        body: 'One finished thing that works on a phone, at a price on the page, month to month.',
+      },
+    ],
   },
   dayStrip: {
     eyebrow: 'One Tuesday',

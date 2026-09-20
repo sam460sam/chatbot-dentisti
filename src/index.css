@@ -337,6 +337,54 @@
   }
 }
 
+/* ------------------------------------------------------ the launch offer tag
+   One line on the headline, not a bar across the page. */
+.offer {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  max-width: 100%;
+  border: 1px solid #CFC9BB;
+  border-radius: 10px 10px 10px 0;
+  padding: 7px 12px 7px 11px;
+  background: #FFFDF9;
+  font-size: 13px;
+  line-height: 18px;
+  color: #4A4740;
+  transition: border-color 150ms;
+}
+
+.offer:hover {
+  border-color: #17160F;
+}
+
+.offer-dots {
+  display: inline-flex;
+  gap: 3px;
+  margin-right: 8px;
+  vertical-align: 1px;
+}
+
+.offer-dots i {
+  display: block;
+  width: 6px;
+  height: 6px;
+  background: #0E5266;
+}
+
+.offer-dots i:last-child {
+  background: #C8622F;
+}
+
+.offer-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  color: #0E5266;
+}
+
 /* ============================================================== THE HERO STAGE
    The rest of the page draws depth with a hard offset plate — print out of
    register, zero blur. The hero is the single exception and it is deliberate:
@@ -364,7 +412,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.11;
+  opacity: 0.06;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 160px 160px;
 }
@@ -417,18 +465,18 @@
 .browser {
   position: relative;
   overflow: hidden;
-  border: 1px solid #17160F;
+  border: 1px solid #CFC9BB;
   border-radius: 12px;
   background: #F5F2EC;
   box-shadow:
-    0 34px 58px -34px rgba(23, 22, 15, 0.55),
-    0 6px 16px -8px rgba(23, 22, 15, 0.22);
+    0 44px 72px -40px rgba(23, 22, 15, 0.5),
+    0 2px 6px rgba(23, 22, 15, 0.08);
 }
 
 .browser-bar {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding: 9px 12px;
   border-bottom: 1px solid #D9D4C8;
   background: #EAE5DA;
@@ -441,29 +489,37 @@
 
 .browser-dots i {
   display: block;
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: #CFC9BB;
 }
 
+/* The address field is a real field: a rounded well with a lock in it. */
 .browser-url {
+  display: inline-flex;
+  flex: 1;
+  align-items: center;
+  gap: 7px;
+  max-width: 300px;
+  padding: 4px 11px;
+  border-radius: 7px;
+  background: #F5F2EC;
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   color: #66625A;
 }
 
 .browser-page {
-  padding: 18px 20px 22px;
+  padding: 18px 22px 24px;
 }
 
 .site-nav {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding-bottom: 11px;
+  gap: 14px;
+  padding-bottom: 12px;
   border-bottom: 1px solid #D9D4C8;
 }
 
@@ -477,17 +533,29 @@
 
 .site-links {
   display: flex;
-  gap: 13px;
+  flex: 1;
+  justify-content: flex-end;
+  gap: 14px;
   font-size: 11px;
   color: #66625A;
+}
+
+.site-nav-btn {
+  border-radius: 8px 8px 0 8px;
+  padding: 5px 10px;
+  background: #17160F;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #F5F2EC;
+  white-space: nowrap;
 }
 
 .site-body {
   display: grid;
   grid-template-columns: 0.95fr 1.05fr;
-  gap: 20px;
-  align-items: center;
-  padding-top: 16px;
+  gap: 22px;
+  align-items: start;
+  padding-top: 22px;
 }
 
 .site-hours {
@@ -499,7 +567,7 @@
 }
 
 .site-title {
-  margin-top: 7px;
+  margin-top: 8px;
   font-family: 'Bricolage', Georgia, serif;
   font-size: 32px;
   line-height: 34px;
@@ -509,7 +577,7 @@
 }
 
 .site-lead {
-  margin-top: 7px;
+  margin-top: 8px;
   max-width: 26ch;
   font-size: 12.5px;
   line-height: 19px;
@@ -519,7 +587,7 @@
 .site-btns {
   display: flex;
   gap: 8px;
-  margin-top: 13px;
+  margin-top: 14px;
 }
 
 .site-btn-fill,
@@ -541,40 +609,63 @@
   color: #17160F;
 }
 
-.site-addr {
-  margin-top: 11px;
-  font-size: 10px;
-  color: #66625A;
-}
-
-/* No stock photograph stands in for a business we have not met. The block is
-   the terracotta ink, ruled — plainly a drawing, not a claim. */
+/* No stock photograph stands in for a business we have not met. The picture is
+   the terracotta ink with light falling across it — plainly a drawing, not a
+   claim — and the address sits on it as a chip. */
 .site-art {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 6px;
+  position: relative;
+  overflow: hidden;
   align-self: stretch;
-  min-height: 158px;
-  padding: 14px;
+  min-height: 236px;
   border-radius: 10px 10px 10px 0;
-  background: linear-gradient(160deg, #B24F38 0%, #A14531 58%, #853727 100%);
+  background:
+    radial-gradient(90% 70% at 100% 0%, rgba(245, 242, 236, 0.22), rgba(245, 242, 236, 0) 60%),
+    radial-gradient(80% 60% at 0% 100%, #7A3222, rgba(122, 50, 34, 0) 70%),
+    linear-gradient(160deg, #C45B40 0%, #A14531 55%, #853727 100%);
 }
 
-.site-art-rule {
-  display: block;
-  height: 4px;
-  border-radius: 2px;
-  background: rgba(245, 242, 236, 0.58);
+.site-art::before {
+  content: '';
+  position: absolute;
+  right: -22%;
+  top: -34%;
+  width: 78%;
+  padding-top: 78%;
+  border-radius: 50%;
+  background: rgba(245, 242, 236, 0.12);
 }
 
-.site-art-rule:nth-child(2) { width: 72%; }
-.site-art-rule:nth-child(3) { width: 44%; }
+.site-art::after {
+  content: '';
+  position: absolute;
+  left: -30%;
+  bottom: -52%;
+  width: 90%;
+  padding-top: 90%;
+  border-radius: 50%;
+  background: rgba(23, 22, 15, 0.14);
+}
+
+.site-art-chip {
+  display: none;
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  z-index: 1;
+  border-radius: 8px 8px 8px 0;
+  padding: 5px 9px;
+  background: #F5F2EC;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #17160F;
+}
 
 .site-launcher {
   position: absolute;
-  right: 13px;
-  bottom: 13px;
+  right: 14px;
+  bottom: 14px;
   display: grid;
   place-items: center;
   width: 36px;
@@ -585,50 +676,31 @@
   box-shadow: 0 8px 16px -8px rgba(23, 22, 15, 0.6);
 }
 
-.site-cells {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid #D9D4C8;
-}
-
-.site-cell {
-  border-radius: 10px 10px 10px 0;
-  background: #EFEBE2;
-  padding: 10px 11px;
-}
-
-.site-cell b {
-  display: block;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #66625A;
-}
-
-.site-cell span {
-  display: block;
-  margin-top: 5px;
-  font-size: 11.5px;
-  line-height: 16px;
-  color: #17160F;
-}
-
 /* --------------------------------------------- the conversation, on a phone */
 .phone {
   position: absolute;
-  left: -58px;
-  top: 40px;
-  width: 204px;
-  padding: 7px;
-  border: 1px solid #17160F;
-  border-radius: 28px;
+  z-index: 2;
+  left: -54px;
+  bottom: -30px;
+  width: 220px;
+  padding: 9px;
+  border-radius: 36px;
   background: #17160F;
-  transform: rotate(-3deg);
-  box-shadow: 0 26px 44px -22px rgba(23, 22, 15, 0.62);
+  box-shadow:
+    0 34px 54px -26px rgba(23, 22, 15, 0.6),
+    0 0 0 1px #3F3C33;
+}
+
+.phone-island {
+  position: absolute;
+  left: 50%;
+  top: 19px;
+  z-index: 1;
+  width: 60px;
+  height: 17px;
+  margin-left: -30px;
+  border-radius: 999px;
+  background: #17160F;
 }
 
 /* Fixed height, thread pinned to the bottom. Anchored the other way round the
@@ -637,11 +709,77 @@
 .phone-screen {
   display: flex;
   flex-direction: column;
-  height: 324px;
+  height: 404px;
   overflow: hidden;
-  padding: 12px 10px;
-  border-radius: 22px;
+  border-radius: 28px;
   background: #F5F2EC;
+}
+
+.phone-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #17160F;
+}
+
+.phone-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 11px 0;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #D9D4C8;
+}
+
+.phone-avatar {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px 999px 4px 999px;
+  background: #0E5266;
+  color: #F5F2EC;
+}
+
+.phone-who {
+  min-width: 0;
+}
+
+.phone-who b,
+.phone-who small {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.phone-who b {
+  display: block;
+  font-size: 11.5px;
+  line-height: 14px;
+  font-weight: 700;
+  color: #17160F;
+}
+
+.phone-who small {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 9.5px;
+  line-height: 12px;
+  color: #66625A;
+}
+
+.phone-who small::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #1D7D96;
 }
 
 /* The thread is pinned to the bottom of the screen and clipped at the top, the
@@ -653,6 +791,7 @@
   flex: 1;
   min-height: 0;
   overflow: hidden;
+  padding: 10px 11px 8px;
 }
 
 .phone-thread > div {
@@ -666,35 +805,127 @@
   left: 0;
   right: 0;
   top: 0;
-  height: 24px;
+  height: 26px;
   pointer-events: none;
   background: linear-gradient(180deg, #F5F2EC 0%, rgba(245, 242, 236, 0) 100%);
 }
 
-.phone-label {
-  margin-bottom: 8px;
-  font-size: 9px;
+.phone-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 11px 12px;
+  padding: 5px 5px 5px 12px;
+  border: 1px solid #D9D4C8;
+  border-radius: 999px;
+  background: #FFFDF9;
+  font-size: 10.5px;
+  color: #9A9488;
+}
+
+.phone-input i {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #0E5266;
+  color: #F5F2EC;
+}
+
+/* ------------------------------------------- the appointment, on the calendar
+   Always in the layout; only its opacity changes when the thread finishes, so
+   the composition never shifts. */
+.stage-card {
+  position: absolute;
+  z-index: 3;
+  right: -22px;
+  bottom: 62px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  width: 248px;
+  padding: 11px 13px 11px 11px;
+  border: 1px solid #17160F;
+  border-radius: 10px 10px 10px 0;
+  background: #FFFDF9;
+  box-shadow: 0 24px 40px -24px rgba(23, 22, 15, 0.55);
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity 480ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.stage-card[data-shown='true'] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stage-card-icon {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px 8px 8px 0;
+  background: #0E5266;
+  color: #F5F2EC;
+}
+
+.stage-card-text b {
+  display: block;
+  font-size: 12px;
+  line-height: 16px;
   font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  color: #17160F;
+}
+
+.stage-card-text small {
+  display: block;
+  margin-top: 1px;
+  font-size: 11px;
+  line-height: 15px;
   color: #66625A;
+}
+
+.stage-card-text em {
+  display: block;
+  margin-top: 6px;
+  font-style: normal;
+  font-size: 9px;
+  line-height: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #0E5266;
 }
 
 /* Below the two-column breakpoint the phone stops being an overlay and joins
    the flow: on a 390px screen an absolutely positioned phone sits on top of the
-   page it is meant to be standing in front of, and both become unreadable. */
+   page it is meant to be standing in front of, and both become unreadable. It
+   stands in the middle, and the calendar card lands on its lower corner. */
 @media (max-width: 1023px) {
   .phone {
     position: relative;
     left: auto;
     bottom: auto;
-    width: 190px;
-    margin: -38px 10px 0 auto;
-    transform: rotate(-2deg);
+    width: 208px;
+    margin: -48px auto 0;
   }
 
   .phone-screen {
-    height: 290px;
+    height: 336px;
+  }
+
+  .stage-card {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    width: min(260px, 100%);
+    margin: -26px 0 0 auto;
   }
 
   .stage {
@@ -714,34 +945,43 @@
 }
 
 @media (max-width: 560px) {
-  .site-body {
-    grid-template-columns: 1fr;
+  .browser-page {
+    padding: 16px 16px 20px;
   }
 
-  .site-cells {
+  .site-nav-btn {
     display: none;
   }
 
+  .site-body {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
   .site-art {
-    min-height: 74px;
+    min-height: 96px;
+  }
+
+  .site-art-chip {
+    display: block;
+  }
+
+  .site-title {
+    font-size: 28px;
+    line-height: 30px;
   }
 
   .site-lead {
     max-width: none;
   }
-
-  .phone {
-    width: 168px;
-  }
 }
 
-/* The phone is absolutely placed, the page inside the window is not: in a
-   language whose lead wraps to one more line the cell row climbed under the
-   phone and lost its first label. A floor under the body keeps the row below
-   the phone in every language. */
+/* The phone is absolutely placed, the page inside the window is not: a floor
+   under the body keeps the window the same height in every language, so the
+   phone and the card land in the same place on /nl and /it. */
 @media (min-width: 1024px) {
   .site-body {
-    min-height: 300px;
+    min-height: 330px;
   }
 }
 
@@ -757,5 +997,133 @@
   .facts {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 24px;
+  }
+}
+
+/* ============================================================ THE ASSEMBLY
+   One photograph of the object pulled apart, cut into layers, and one of it
+   closed. The scrollbar slides the layers together and then swaps in the
+   finished thing. 2D translate and scale on a handful of images, nothing
+   else; src/assembly/engine.ts does the moving. */
+.asm {
+  position: relative;
+  background: #17160F;
+  color: #F5F2EC;
+}
+
+.asm-runway {
+  position: relative;
+  height: 240vh;
+}
+
+.asm-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.asm-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(46% 40% at 50% 40%, rgba(89, 185, 204, 0.12), rgba(89, 185, 204, 0) 70%),
+    radial-gradient(60% 46% at 50% 108%, rgba(161, 69, 49, 0.18), rgba(161, 69, 49, 0) 70%);
+}
+
+.asm-stage {
+  position: absolute;
+  left: 50%;
+  top: 7vh;
+  width: min(94vw, 58vh);
+  aspect-ratio: 1 / 1;
+  transform: translateX(-50%);
+}
+
+.asm-parts {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+}
+
+.asm-layer {
+  position: absolute;
+  display: block;
+  height: auto;
+}
+
+.asm-done {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: auto;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+}
+
+.asm-beats {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 5vh;
+  min-height: 30vh;
+  text-align: center;
+}
+
+.asm-beat {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto;
+  max-width: 46ch;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+
+.asm-beat.on {
+  opacity: 1;
+  transform: none;
+}
+
+.asm-beat .t-h2 {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 1024px) {
+  .asm-stage {
+    left: auto;
+    right: 6vw;
+    top: 50%;
+    width: min(48vw, 88vh);
+    transform: translateY(-50%);
+  }
+
+  .asm-beats {
+    left: 7vw;
+    right: auto;
+    top: 50%;
+    bottom: auto;
+    width: 36vw;
+    min-height: 0;
+    text-align: left;
+  }
+
+  .asm-beat {
+    bottom: auto;
+    top: 0;
+    transform: translateY(calc(-50% + 10px));
+    margin: 0;
+  }
+
+  .asm-beat.on {
+    transform: translateY(-50%);
+  }
+
+  .asm-beat .t-h2 {
+    margin-left: 0;
   }
 }
