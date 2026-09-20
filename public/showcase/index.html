@@ -106,27 +106,6 @@ html:not(.js) .beat{position:static;margin:60px 0}
   color:var(--mute);
 }
 
-/* ------------------------------------------------ the third one: layers
-   Not a frame sequence: one photograph of the object pulled apart, cut into
-   layers, and one of it finished. The scrollbar slides the layers together
-   and then the finished photograph takes over. */
-.asm-stage{
-  position:absolute;left:50%;top:6vh;
-  width:min(92vw,58vh);aspect-ratio:1/1;
-  transform:translateX(-50%);
-}
-.asm-parts{position:absolute;inset:0;transform-origin:50% 50%}
-.asm-layer{position:absolute;display:block;height:auto}
-.asm-done{position:absolute;left:50%;top:50%;height:auto;opacity:0;transform:translate(-50%,-50%) scale(.6)}
-@media(min-width:1024px){
-  .asm-stage{top:4vh;width:min(46vw,64vh)}
-}
-@media (prefers-reduced-motion: reduce){
-  .asm-stage{position:static;width:min(92vw,560px);margin:0 auto;transform:none}
-  .asm-parts{display:none}
-  .asm-done{position:static;opacity:1;transform:none;width:100%!important}
-}
-
 /* --------------------------------------------------------------- pins */
 /* Labels that hang off a part of the object and follow it. The position comes
    from anchors.json, baked by the renderer: for every frame it knows where each
@@ -329,25 +308,25 @@ footer a{color:var(--dim)}
 <!-- ======================================================== the third one -->
 <div class="runway short" id="runway-c">
   <div class="sticky">
-    <div class="asm-stage" id="asm-c" aria-label="A cheeseburger pulled apart into its layers, put back together, and then photographed finished" role="img"></div>
+    <canvas width="480" height="480" aria-label="A cheeseburger pulled apart into its ingredients floats on black; as the page scrolls the ingredients settle onto each other until the burger is assembled"></canvas>
     <div class="glow" aria-hidden="true"></div>
 
     <div class="beat" data-from="0.00" data-to="0.28">
       <p class="kick v">For a restaurant</p>
       <h2>What is in it, layer by layer.</h2>
-      <p>Every ingredient on its own, before it becomes the thing on the menu. One photograph, cut into eight.</p>
+      <p>Every ingredient on its own, before it becomes the thing on the menu. Two photographs: this one, and the finished burger.</p>
     </div>
 
     <div class="beat" data-from="0.32" data-to="0.68">
       <p class="kick v">Put together</p>
       <h2>In the order it goes together.</h2>
-      <p>Bun, lettuce, tomato, cheese, the patty, the onion rings, the sauce. The scrollbar does the stacking.</p>
+      <p>Bun, lettuce, tomato, cheese, the patty, the onion rings, the sauce. The film between the two photographs was generated, then cut into 72 frames the scrollbar plays.</p>
     </div>
 
     <div class="beat" data-from="0.76" data-to="1.00">
       <p class="kick v">Served</p>
       <h2>And this is the photo on the menu.</h2>
-      <p>No 3D model this time: two photographs and 300 KB. If you sell something you can photograph, we can do this for your page.</p>
+      <p>No 3D model this time: two photographs of the product and a generated film between them. If you sell something you can photograph, we can do this for your page.</p>
     </div>
   </div>
 </div>
@@ -371,10 +350,10 @@ footer a{color:var(--dim)}
         real link sitting on it. The button you can see is the button you can press.
       </p>
       <p class="lede">
-        The third one is cheaper still: no 3D model, just two photographs of a
-        burger &mdash; one pulled apart, one finished &mdash; cut into layers and put
-        back together by the scrollbar. If you sell something you can photograph,
-        we can do this for your page.
+        The third one needs no 3D model: two photographs of a burger &mdash; one
+        pulled apart, one finished &mdash; and a film generated between them, cut
+        into frames and played by the scrollbar like the other two. If you sell
+        something you can photograph, we can do this for your page.
       </p>
     </div>
   </section>
@@ -702,94 +681,10 @@ footer a{color:var(--dim)}
     live.push({ onScroll: onScroll, fit: fit });
   }
 
-  /* The third runway is not a frame sequence. One photograph of the object
-     pulled apart, cut into layers by tools/explode-cut.py, and one of it
-     finished: the layers slide to where they sit in the closed stack, then the
-     finished photograph grows in over them. 2D translate and scale only. */
-  function Assembly(cfg) {
-    var runway = document.getElementById(cfg.runway);
-    var stage = document.getElementById(cfg.stage);
-    if (!runway || !stage || !window.fetch) return;
-    var beats = [].slice.call(runway.querySelectorAll('.beat'));
-    var cue = runway.querySelector('.scrollcue');
-
-    fetch(cfg.dir + '/layers.json').then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
-      if (!data) return;
-      var F = data.frame;
-      var parts = document.createElement('div');
-      parts.className = 'asm-parts';
-      var layers = data.layers.map(function (L) {
-        var im = document.createElement('img');
-        im.className = 'asm-layer';
-        im.src = cfg.dir + '/' + L.src;
-        im.width = L.w; im.height = L.h; im.alt = '';
-        im.style.left = (L.x / F * 100) + '%';
-        im.style.top = (L.y / F * 100) + '%';
-        im.style.width = (L.w / F * 100) + '%';
-        parts.appendChild(im);
-        return im;
-      });
-      var fit = Math.min(F * 0.96 / data.done.w, F * 0.96 / data.done.h);
-      var done = document.createElement('img');
-      done.className = 'asm-done';
-      done.src = cfg.dir + '/' + data.done.src;
-      done.width = data.done.w; done.height = data.done.h; done.alt = '';
-      done.style.width = (data.done.w * fit / F * 100) + '%';
-      stage.appendChild(parts);
-      stage.appendChild(done);
-      if (still) { beat(1); return; }
-
-      var k0 = data.stack / (data.done.h * fit);
-      var scale = stage.clientWidth / F, target = 0, shown = 0, raf = null, last = -1;
-
-      function ease(t) { return t <= 0 ? 0 : t >= 1 ? 1 : t * t * (3 - 2 * t); }
-      function progress() {
-        var r = runway.getBoundingClientRect();
-        var span = r.height - window.innerHeight;
-        if (span <= 0) return 0;
-        var p = -r.top / span;
-        return p < 0 ? 0 : p > 1 ? 1 : p;
-      }
-      function paint(p) {
-        for (var i = 0; i < layers.length; i++) {
-          var L = data.layers[i];
-          var q = ease((p - (0.08 + 0.035 * i)) / (0.70 - (0.08 + 0.035 * i)));
-          layers[i].style.transform = 'translateY(' + ((L.ty - L.y) * q * scale).toFixed(2) + 'px)';
-          if (L.fade) layers[i].style.opacity = 1 - q;
-        }
-        var c = ease((p - 0.72) / 0.18);
-        parts.style.opacity = 1 - c;
-        parts.style.transform = 'scale(' + (1 + 0.16 * c).toFixed(4) + ')';
-        var d = ease((p - 0.72) / 0.14), g = ease((p - 0.72) / 0.28);
-        done.style.opacity = d;
-        done.style.transform = 'translate(-50%, -50%) scale(' + (k0 + (1 - k0) * g).toFixed(4) + ')';
-        beat(p);
-      }
-      function beat(p) {
-        for (var i = 0; i < beats.length; i++) {
-          var b = beats[i];
-          var on = p >= parseFloat(b.dataset.from) && p <= parseFloat(b.dataset.to);
-          if (on !== b.classList.contains('on')) b.classList.toggle('on', on);
-        }
-        if (cue) cue.style.opacity = p > 0.02 ? 0 : 1;
-      }
-      function tick() {
-        var gap = target - shown;
-        if (Math.abs(gap) < 0.0015) shown = target; else shown += gap * 0.22;
-        if (shown !== last) { last = shown; paint(shown); }
-        raf = shown === target ? null : requestAnimationFrame(tick);
-      }
-      target = shown = progress();
-      paint(shown);
-      live.push({
-        onScroll: function () { target = progress(); if (raf === null) raf = requestAnimationFrame(tick); },
-        fit: function () { scale = stage.clientWidth / F; last = -1; paint(shown); }
-      });
-    }).catch(function () {});
-  }
-
   Runway({ runway: 'runway', dir: './frames', frames: 150 });
-  Assembly({ runway: 'runway-c', stage: 'asm-c', dir: './burger' });
+  /* The third film was generated between two photographs, so there is no
+     anchors.json and nothing pinned: the frames alone. */
+  Runway({ runway: 'runway-c', dir: './frames-c', frames: 72, margin: 34 });
   Runway({ runway: 'runway-b', dir: './frames-b', frames: 84, margin: 34 });
 
   function all(fn) { for (var i = 0; i < live.length; i++) live[i][fn](); }
