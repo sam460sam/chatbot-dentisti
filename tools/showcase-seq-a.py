@@ -175,28 +175,28 @@ for i in range(3):
         b.matrix_parent_inverse = Matrix.Identity(4)
         b.location = (-0.10 + (1.30 - w) * 0.0, 0.29 - j * 0.155, 0.056)
 
-rail = cube('rail', 2.60, 0.18, 0.18, M_STEEL, loc=(0, -0.86, 0.52), bevel=0.012)
+rail = cube('rail', 2.60, 0.18, 0.18, M_STEEL, loc=(0, -0.55, 0.52), bevel=0.012)
 attach(rail)
 rail.location = (0.00, -40.0, 0.52)
 
 card_in = shape('card_in', 0.72, 0.14, 'bl', 0.07, M_TEAL, bevel=0.012)
-card_in.location = (-1.15, -0.86, 0.72)
+card_in.location = (-1.15, -0.55, 0.72)
 attach(card_in)
 
 card_out = shape('card_out', 0.72, 0.14, 'br', 0.07, M_VERM, bevel=0.012)
-card_out.location = (-1.15, -0.86, 0.72)
+card_out.location = (-1.15, -0.55, 0.72)
 attach(card_out)
 
 from mathutils import Matrix
 cal = shape('calendar', 1.30, 0.10, 'none', 0.14, M_PAPER, bevel=0.02, aspect=0.62)
-cal.location = (0.05, -1.42, 0.30)
+cal.location = (0.05, -1.16, 0.30)
 attach(cal)
 for k in range(5):
     sl = cube('slot%d' % k, 1.08, 0.055, 0.03, M_INK, loc=(0, 0, 0), bevel=0.003)
     sl.parent = cal
     sl.matrix_parent_inverse = Matrix.Identity(4)
     sl.location = (0, 0.16 - k * 0.08, 0.142)
-flap = cube('flap', 1.08, 0.075, 0.025, M_TEAL, loc=(0.05, -1.42 - 0.08, 0.45), bevel=0.005)
+flap = cube('flap', 1.08, 0.075, 0.025, M_TEAL, loc=(0.05, -1.16 - 0.08, 0.45), bevel=0.005)
 attach(flap)
 
 # Parked for good. They were two terracotta tabs hanging off the right edge and
@@ -226,7 +226,7 @@ ANCH = {
     'stack':  empty('a_stack', (0.00, -0.70, 0.30)),
     'card':   empty('a_card', (0, 0, 0)),
     'cal':    empty('a_cal', (0.85, -1.62, 0.26)),
-    'gate':   empty('a_gate', (1.05, -0.86, 0.40)),
+    'gate':   empty('a_gate', (1.05, -0.55, 0.40)),
     'handoff': empty('a_handoff', (0, 0, 0)),
 }
 for k, e in ANCH.items():
@@ -237,7 +237,10 @@ for i in range(3):
     ANCH['plate%d' % i].matrix_parent_inverse = plates[i].matrix_world.inverted()
 ANCH['card'].parent = card_in
 ANCH['card'].location = (0, 0, 0.09)
-ANCH['card'].matrix_parent_inverse = card_in.matrix_world.inverted()
+ANCH['card'].matrix_parent_inverse = Matrix.Identity(4)   # the card is parked
+# off-stage when this runs, so binding to its world matrix pinned the anchor to
+# a place the card never visits. Identity means "the card's own origin".
+ANCH['card'].location = (0, 0, 0.09)
 ANCH['handoff'].parent = handoff
 ANCH['handoff'].location = (0, 0, 0.09)
 ANCH['handoff'].matrix_parent_inverse = handoff.matrix_world.inverted()
@@ -379,8 +382,10 @@ key(sweep, 'location', 96, (7.0, -3.4, 1.2), 'BEZIER')
 # lid leaves the top of frame and never comes back
 key(lid, 'location', 40, (0, 0, 0.24), 'BEZIER')
 key(lid, 'rotation_euler', 40, (0, 0, 0), 'BEZIER')
-key(lid, 'location', 86, (0, 6.20, 0.34), 'BEZIER')
-key(lid, 'rotation_euler', 86, (math.radians(-10), 0, 0), 'BEZIER')
+key(lid, 'location', 52, (0, 2.10, -1.60), 'BEZIER')
+key(lid, 'rotation_euler', 52, (math.radians(-26), 0, 0), 'BEZIER')
+key(lid, 'location', 64, (0, 7.60, -7.20), 'BEZIER')
+key(lid, 'rotation_euler', 64, (math.radians(-44), 0, 0), 'BEZIER')
 
 # plates fan on three axes, staggered
 for i, pl in enumerate(plates):
@@ -394,16 +399,16 @@ key(inner, 'energy', 62, 110, 'BEZIER')
 
 key(rail, 'location', 1, (0.00, -40.0, 0.52))
 key(rail, 'location', 85, (0.00, -40.0, 0.52))
-key(rail, 'location', 86, (0.00, -0.86, 0.52))
-key(rail, 'location', 100, (0.00, -0.86, 0.52), 'BEZIER')
+key(rail, 'location', 86, (0.00, -40.0, 0.52))
+key(rail, 'location', 100, (0.00, -40.0, 0.52), 'BEZIER')
 
 # the read: the teal card runs the rail and nudges each plate it passes
-key(card_in, 'location', 1, (-1.15, -40.0, 0.72))
-key(card_in, 'location', 85, (-1.15, -40.0, 0.72))
-key(card_in, 'location', 86, (-1.15, -0.86, 0.72))
-key(card_in, 'location', 100, (-1.15, -0.86, 0.72))
-key(card_in, 'location', 118, (0.85, -0.86, 0.72))
-key(card_in, 'location', 124, (0.85, -0.86, 0.17), 'BEZIER')
+key(card_in, 'location', 1, (-0.78, -40.0, 0.72))
+key(card_in, 'location', 85, (-0.78, -40.0, 0.72))
+key(card_in, 'location', 86, (-0.78, -0.55, 0.72))
+key(card_in, 'location', 100, (-0.78, -0.55, 0.72))
+key(card_in, 'location', 118, (0.52, -0.55, 0.72))
+key(card_in, 'location', 124, (0.52, -0.55, 0.17), 'BEZIER')
 for i, pl in enumerate(plates):
     tick = 102 + i * 6
     key(pl, 'location', tick, PLATE_END[i], 'BEZIER')
@@ -413,18 +418,18 @@ key(flap, 'rotation_euler', 120, (0, 0, 0), 'BEZIER')
 key(flap, 'rotation_euler', 124, (math.radians(-78), 0, 0), 'BEZIER')
 
 # THE GATE — the terracotta card runs the same rail and nothing ticks
-key(card_out, 'location', 1, (-1.15, -40.0, 0.72))
-key(card_out, 'location', 121, (-1.15, -40.0, 0.72))
-key(card_out, 'location', 122, (-1.15, -0.86, 0.72))
-key(card_out, 'location', 140, (0.72, -0.86, 0.72))
-key(card_out, 'location', 150, (0.86, -0.86, 0.46), 'BEZIER')
+key(card_out, 'location', 1, (-0.78, -40.0, 0.72))
+key(card_out, 'location', 121, (-0.78, -40.0, 0.72))
+key(card_out, 'location', 122, (-0.78, -0.55, 0.72))
+key(card_out, 'location', 140, (0.44, -0.55, 0.72))
+key(card_out, 'location', 150, (0.56, -0.55, 0.46), 'BEZIER')
 key(card_out, 'rotation_euler', 140, (0, 0, 0), 'BEZIER')
 key(card_out, 'rotation_euler', 150, (0, math.radians(-16), 0), 'BEZIER')
 
 ONSCREEN = lambda ob, f: not (
-    (ob.name == 'lid' and f > 72) or
+    (ob.name == 'lid' and f > 50) or
     (ob.name == 'card_out' and f < 124) or
-    ob.name in ('handoff', 'gate') or
+    ob.name in ('handoff', 'gate', 'rail') or
     (ob.name == 'card_in' and f < 86) or
     (ob.name == 'rail' and f < 86))
 
@@ -490,9 +495,9 @@ def bake_anchors(path):
         for ob in PARTS:
             if ob.name == 'card_out' and f < 124:
                 continue
-            if ob.name in ('handoff', 'gate') or (ob.name == 'card_in' and f < 86):
+            if ob.name in ('handoff', 'gate', 'rail') or (ob.name == 'card_in' and f < 86):
                 continue
-            if ob.name == 'lid' and f > 70:
+            if ob.name == 'lid' and f > 50:
                 continue
             for corner in ob.bound_box:
                 w = ob.matrix_world @ Vector(corner)

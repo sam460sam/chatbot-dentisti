@@ -54,7 +54,7 @@ a{color:inherit}
 .bar a{text-decoration:none;border-bottom:1px solid #3A362C;padding-bottom:2px}
 
 /* ---------------------------------------------------------- the runway */
-.runway{position:relative;height:520vh}
+.runway{position:relative;height:400vh}
 .sticky{position:sticky;top:0;height:100vh;overflow:hidden}
 
 #seq{
@@ -102,6 +102,37 @@ html:not(.js) .beat{position:static;margin:60px 0}
   text-align:center;font-size:10px;letter-spacing:.24em;text-transform:uppercase;
   color:var(--mute);
 }
+
+/* --------------------------------------------------------------- pins */
+/* Labels that hang off a part of the object and follow it. The position comes
+   from anchors.json, baked by the renderer: for every frame it knows where each
+   part landed in the picture, as a fraction. Nothing here guesses. */
+.pins{position:absolute;inset:0;pointer-events:none}
+.pin{
+  position:absolute;left:0;top:0;
+  display:flex;align-items:center;gap:8px;
+  opacity:0;transition:opacity .35s ease;
+  white-space:nowrap;
+}
+.pin.on{opacity:1}
+.pin i{
+  width:7px;height:7px;background:var(--teal-hi);
+  border-radius:0 3px 3px 3px;flex:none;
+}
+.pin.v i{background:var(--verm-hi);border-radius:3px 0 3px 3px}
+.pin span{
+  font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:800;
+  color:var(--dim);
+}
+.pin b{
+  display:block;font-family:'Bricolage Grotesque',serif;font-weight:600;
+  font-size:15px;letter-spacing:-.01em;text-transform:none;color:var(--paper);
+  margin-top:2px;
+}
+.pin em{
+  height:1px;background:#4A453A;flex:none;display:block;
+}
+@media(max-width:819px){.pin{display:none}}
 
 /* ------------------------------------------------------------ sections */
 section.blk{padding:112px 0;border-top:1px solid #2A2720}
@@ -171,31 +202,37 @@ footer a{color:var(--dim)}
 <!-- ============================================================ the runway -->
 <div class="runway" id="runway">
   <div class="sticky">
-    <canvas id="seq" width="900" height="900" aria-label="A message bubble turning on its axis"></canvas>
+    <canvas id="seq" width="900" height="900" aria-label="A case in the brand teal turns, opens, and three facts fan out of it; a card runs across them and a terracotta one follows"></canvas>
     <div class="glow" aria-hidden="true"></div>
+    <div class="pins" id="pins" aria-hidden="true">
+      <div class="pin" data-anchor="plate0" data-from="64" data-to="150"><i></i><em></em><span>Opening hours<b>Read off the page, not typed twice</b></span></div>
+      <div class="pin" data-anchor="plate1" data-from="74" data-to="150"><i></i><em></em><span>What it costs<b>The same answer every time</b></span></div>
+      <div class="pin" data-anchor="plate2" data-from="84" data-to="150"><i></i><em></em><span>Where you are<b>And when you are open</b></span></div>
+      <div class="pin v" data-anchor="card" data-from="94" data-to="150"><i></i><em></em><span>The booking<b>Name, number, a slot</b></span></div>
+    </div>
 
-    <div class="beat" data-from="0.00" data-to="0.20">
+    <div class="beat" data-from="0.00" data-to="0.22">
       <p class="kick">Twinbyte</p>
       <h2>Two inks. One conversation.</h2>
       <p>We build the website a small business is judged on, and the assistant that answers on it when nobody is in the shop.</p>
     </div>
 
-    <div class="beat" data-from="0.22" data-to="0.45">
+    <div class="beat" data-from="0.26" data-to="0.54">
       <p class="kick">The teal one</p>
       <h2>It answers at 23:47.</h2>
       <p>Your hours, your prices, your services. It offers two slots, takes a name and a number, and puts the appointment in your calendar.</p>
     </div>
 
-    <div class="beat" data-from="0.47" data-to="0.70">
-      <p class="kick v">The terracotta one</p>
-      <h2>It is what they see first.</h2>
-      <p>Opening hours, where you are, one tap to call. On the first screen, on an old phone, on a bad connection.</p>
+    <div class="beat" data-from="0.58" data-to="0.80">
+      <p class="kick">Still the teal one</p>
+      <h2>And it books the appointment.</h2>
+      <p>Two slots, a name, a number. It goes in your calendar while you are on a roof, and you read it when you come down.</p>
     </div>
 
-    <div class="beat" data-from="0.72" data-to="1.00">
-      <p class="kick">Both</p>
-      <h2>Built together, they cost about a third less.</h2>
-      <p>Because building them together is genuinely less work for us. Month to month after that, and no long contract.</p>
+    <div class="beat" data-from="0.84" data-to="1.00">
+      <p class="kick v">The terracotta one</p>
+      <h2>And this is what they see first.</h2>
+      <p>Opening hours, where you are, one tap to call — on the first screen, on an old phone, on a bad connection. Built with the assistant, the pair costs about a third less.</p>
     </div>
 
     <p class="scrollcue" id="cue">scroll</p>
@@ -304,11 +341,14 @@ footer a{color:var(--dim)}
   var runway = document.getElementById('runway');
   var beats = [].slice.call(document.querySelectorAll('.beat'));
   var cue = document.getElementById('cue');
+  var pinbox = document.getElementById('pins');
+  var pins = [].slice.call(document.querySelectorAll('.pin'));
+  var anchors = null;          /* filled in when anchors.json lands */
   var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var wide = window.innerWidth >= 820;
   var DIR = wide ? './frames' : './frames-sm';
-  var FRAMES = wide ? 240 : 120;
+  var FRAMES = wide ? 150 : 75;
 
   var imgs = new Array(FRAMES);
   var ready = new Array(FRAMES);
@@ -376,6 +416,52 @@ footer a{color:var(--dim)}
     current = use;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(imgs[use], box.x, box.y, box.s, box.s);
+    place(use);
+  }
+
+  /* A pin sits on the part it names. The renderer wrote down where every part
+     landed in every frame, so this is a lookup, not a guess — which is why the
+     label keeps touching the plate while the plate is still moving. */
+  function place(use) {
+    if (!anchors || !box.s) return;
+    var dpr = canvas.width / canvas.clientWidth;
+    var f = String(Math.round(use * (anchors.frames - 1) / (FRAMES - 1)) + 1);
+    var col = (box.x + box.s) / dpr + 22;       /* one column, right of the object */
+    var live = [];
+
+    for (var i = 0; i < pins.length; i++) {
+      var pin = pins[i];
+      var track = anchors.anchors[pin.dataset.anchor];
+      var a = track && track[f];
+      var on = !!a
+        && use >= (pin.dataset.from - 1) * (FRAMES - 1) / (anchors.frames - 1)
+        && use <= (pin.dataset.to - 1) * (FRAMES - 1) / (anchors.frames - 1);
+      if (on !== pin.classList.contains('on')) pin.classList.toggle('on', on);
+      if (!on) continue;
+      live.push({
+        el: pin,
+        x: (box.x + a[0] * box.s) / dpr,
+        y: (box.y + a[1] * box.s) / dpr,
+        h: pin.offsetHeight || 34
+      });
+    }
+
+    /* Two plates can land a few pixels apart and their labels would sit on top
+       of each other. Nearest-first, each one takes the place it wants and the
+       next is pushed clear of it. */
+    live.sort(function (a, b) { return a.y - b.y; });
+    var floor = -1e9;
+    for (var k = 0; k < live.length; k++) {
+      var it = live[k];
+      var top = it.y - it.h / 2;
+      if (top < floor) top = floor;
+      floor = top + it.h + 10;
+      var lead = col - it.x;
+      if (lead < 16) lead = 16;
+      it.el.style.left = Math.round(it.x) + 'px';
+      it.el.style.top = Math.round(top) + 'px';
+      it.el.firstElementChild.nextElementSibling.style.width = Math.round(lead) + 'px';
+    }
   }
 
   /* The turn follows the scrollbar instead of being pinned to it. A wheel notch
@@ -419,6 +505,7 @@ footer a{color:var(--dim)}
     measure();
     current = -1;
     paint(shown);
+    place(current < 0 ? 0 : current);
   }
 
   function load(i, then) {
@@ -457,6 +544,11 @@ footer a{color:var(--dim)}
       }
       chain(order, 0);
     });
+    if (!still && wide && window.fetch) {
+      fetch('./anchors.json').then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) { if (j && j.anchors) { anchors = j; place(current < 0 ? 0 : current); } })
+        .catch(function () {});
+    }
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', fit);
   }
