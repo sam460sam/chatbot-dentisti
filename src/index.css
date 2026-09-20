@@ -1001,13 +1001,14 @@
 }
 
 /* ============================================================ THE ASSEMBLY
-   One photograph of the object pulled apart, cut into layers, and one of it
-   closed. The scrollbar slides the layers together and then swaps in the
-   finished thing. 2D translate and scale on a handful of images, nothing
-   else; src/assembly/engine.ts does the moving. */
+   A film of the object being put together, cut into frames and played on a
+   canvas by the scrollbar: one drawImage per scroll frame, nothing else.
+   src/assembly/flipbook.ts does the playing. */
+/* Pure black, not the ink: the frames are a film on black, keyed to alpha,
+   and whatever the key leaves at the edges must vanish into the ground. */
 .asm {
   position: relative;
-  background: #17160F;
+  background: #000;
   color: #F5F2EC;
 }
 
@@ -1035,31 +1036,18 @@
 .asm-stage {
   position: absolute;
   left: 50%;
-  top: 7vh;
-  width: min(94vw, 58vh);
-  aspect-ratio: 1 / 1;
+  top: 12vh;
+  width: min(96vw, 100vh);
+  aspect-ratio: 16 / 9;
   transform: translateX(-50%);
 }
 
-.asm-parts {
+.asm-stage canvas {
   position: absolute;
   inset: 0;
-  transform-origin: 50% 50%;
-}
-
-.asm-layer {
-  position: absolute;
   display: block;
-  height: auto;
-}
-
-.asm-done {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  height: auto;
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.6);
+  width: 100%;
+  height: 100%;
 }
 
 .asm-beats {
@@ -1096,9 +1084,9 @@
 @media (min-width: 1024px) {
   .asm-stage {
     left: auto;
-    right: 6vw;
+    right: 4vw;
     top: 50%;
-    width: min(48vw, 88vh);
+    width: min(56vw, 150vh);
     transform: translateY(-50%);
   }
 

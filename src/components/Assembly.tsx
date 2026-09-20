@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react'
-import { mountAssembly } from '../assembly/engine'
-import data from '../assembly/laptop.json'
+import { mountFlipbook } from '../assembly/flipbook'
 import { prefersReducedMotion } from './motion'
 import type { Translation } from '../i18n'
 
-const BASE = '/assembly/laptop/'
+const DIR = '/assembly/laptop'
+const FRAMES = 100
 const RANGES: [number, number][] = [
   [0, 0.3],
   [0.34, 0.7],
@@ -12,12 +12,13 @@ const RANGES: [number, number][] = [
 ]
 
 /*
- * The object pulled apart, put together by the scrollbar. The layers are cut
- * from one photograph by tools/explode-cut.py; the engine only moves them.
+ * The object pulled apart, put together by the scrollbar. Two photographs
+ * and a film generated between them, cut into frames by tools/film-pack.py
+ * and played on a canvas by src/assembly/flipbook.ts.
  *
- * With reduced motion the runway is not built at all: the finished object and
- * the last passage, static. Motion here adds to something already on the
- * page; it never decides whether it is visible.
+ * With reduced motion the runway is not built at all: the last frame and the
+ * last passage, static. Motion here adds to something already on the page;
+ * it never decides whether it is visible.
  */
 export function Assembly({ t }: { t: Translation }) {
   const runway = useRef<HTMLDivElement>(null)
@@ -25,22 +26,20 @@ export function Assembly({ t }: { t: Translation }) {
 
   useEffect(() => {
     if (still || !runway.current) return
-    return mountAssembly(runway.current, data)
+    return mountFlipbook(runway.current, { dir: DIR, frames: FRAMES })
   }, [still])
 
   const a = t.assembly
-  const F = data.frame
-  const fit = Math.min((F * 0.96) / data.done.w, (F * 0.96) / data.done.h)
 
   if (still) {
     return (
       <section className="asm on-ink" aria-label={a.title}>
         <div className="container-page py-8">
           <img
-            className="mx-auto block w-full max-w-[640px]"
-            src={BASE + data.done.src}
-            width={data.done.w}
-            height={data.done.h}
+            className="mx-auto block w-full max-w-[720px]"
+            src={`${DIR}/${String(FRAMES).padStart(3, '0')}.webp`}
+            width={854}
+            height={480}
             alt=""
             loading="lazy"
           />
@@ -60,27 +59,11 @@ export function Assembly({ t }: { t: Translation }) {
         <div className="asm-sticky">
           <div aria-hidden="true" className="asm-glow" />
 
-          <div aria-hidden="true" className="asm-stage">
-            <div className="asm-parts">
-              {data.layers.map((L) => (
-                <img
-                  key={L.src}
-                  className="asm-layer"
-                  src={BASE + L.src}
-                  width={L.w}
-                  height={L.h}
-                  alt=""
-                  style={{ left: `${(L.x / F) * 100}%`, top: `${(L.y / F) * 100}%`, width: `${(L.w / F) * 100}%` }}
-                />
-              ))}
-            </div>
-            <img
-              className="asm-done"
-              src={BASE + data.done.src}
-              width={data.done.w}
-              height={data.done.h}
-              alt=""
-              style={{ width: `${((data.done.w * fit) / F) * 100}%` }}
+          <div className="asm-stage">
+            <canvas
+              width={854}
+              height={480}
+              aria-label="A laptop pulled apart into its parts floats on black; as the page scrolls the parts settle into each other and the laptop closes"
             />
           </div>
 

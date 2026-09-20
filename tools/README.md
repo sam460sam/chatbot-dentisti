@@ -102,17 +102,20 @@ Then copy that sequence's `anchors.json` in beside its frames — the page fetch
 `<name>/anchors.json`, and without it the labels and the live button simply do
 not appear.
 
-## explode-cut.py — an object that comes together on scroll
+## film-pack.py — a generated film to the frames a page plays
 
-The third sequence on `/showcase` and the one on the home page are not frame
-sequences. Each is two photographs on black — the object pulled apart, and the
-object finished — cut into layers by this script, which also works out where
-each layer sits once the stack is closed:
+The third sequence on `/showcase` (the burger) and the one on the home page
+(the laptop) are not rendered in Blender. Each is two photographs on black —
+the object pulled apart, and the object finished — and a five-second film
+generated between them (Wan 3.0, first and last frame, via Higgsfield). This
+script cuts the film into the frames the pages play:
 
-    pip install pillow numpy
-    python3 tools/explode-cut.py
+    pip install pillow numpy imageio-ffmpeg
+    python3 tools/film-pack.py burger.mp4 public/showcase/frames-c --frames 72 --until 72
+    python3 tools/film-pack.py laptop.mp4 public/assembly/laptop --frames 100 --wide
 
-The cut rows are chosen by hand in `SPECS`, in the valleys of the picture where
-the fewest pixels are lit. Output: WebP layers with alpha and a `layers.json`
-per object (`public/assembly/laptop/` + `src/assembly/laptop.json` for the home
-page, `public/showcase/burger/` for the showcase). About 100–200 KB per object.
+Square crop by default, `--wide` keeps the film's own width; the black is
+keyed to alpha so the frames sit on the page's ink. `--until` drops the tail
+of a film that finishes its move early and then holds. Two sizes are written,
+`DIR/` and `DIR-sm/`, as for the rendered sequences. Frames are never
+upscaled past the film's own height, so a 480p film gives 854px frames.
