@@ -40,6 +40,8 @@ export const nl: Translation = {
     call: 'Bel nu',
     book: 'Online afspraak',
     phoneLabel: 'Op de telefoon, 23:47',
+    status: 'Antwoordt direct',
+    input: 'Schrijf een bericht',
   },
   pricing: {
     eyebrow: 'Wat het kost',

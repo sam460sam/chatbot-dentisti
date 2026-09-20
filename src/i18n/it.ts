@@ -40,6 +40,8 @@ export const it: Translation = {
     call: 'Chiama ora',
     book: 'Prenota online',
     phoneLabel: 'Sul telefono, 23:47',
+    status: 'Risponde subito',
+    input: 'Scrivi un messaggio',
   },
   pricing: {
     eyebrow: 'Quanto costa',

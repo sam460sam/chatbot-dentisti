@@ -56,6 +56,10 @@ export interface Translation {
     call: string
     book: string
     phoneLabel: string
+    /** under the business name in the chat header */
+    status: string
+    /** placeholder in the message field */
+    input: string
   }
   /** The fork right under the hero: assistant on one side, websites on the other. */
   split: {

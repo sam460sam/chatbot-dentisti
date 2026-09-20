@@ -40,6 +40,8 @@ export const en: Translation = {
     call: 'Call now',
     book: 'Book online',
     phoneLabel: 'On the phone, 23:47',
+    status: 'Replies in seconds',
+    input: 'Write a message',
   },
   pricing: {
     eyebrow: 'What it costs',
