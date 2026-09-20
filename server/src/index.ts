@@ -4,7 +4,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { serve } from "@hono/node-server";
 import { studios } from "./studios/demo.js";
-import { buildSystemPrompt } from "./prompt.js";
+import { buildClockPrompt, buildSystemPrompt } from "./prompt.js";
 import { toolsFor, executeTool } from "./tools.js";
 import { loadSession, saveSession, cleanupOldSessions } from "./store.js";
 import { rateLimited, rateLimitMessage } from "./ratelimit.js";
@@ -42,8 +42,10 @@ app.post("/chat", async (c) => {
   const history = await loadSession(sessionId);
   history.push({ role: "user", content: message.trim() });
 
+  // Il blocco stabile va in cache; l'orologio, che cambia ogni minuto, sta fuori.
   const system: Anthropic.TextBlockParam[] = [
-    { type: "text", text: buildSystemPrompt(studio, new Date()), cache_control: { type: "ephemeral" } },
+    { type: "text", text: buildSystemPrompt(studio), cache_control: { type: "ephemeral" } },
+    { type: "text", text: buildClockPrompt(studio, new Date()) },
   ];
 
   let reply = "";

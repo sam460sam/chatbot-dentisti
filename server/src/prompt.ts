@@ -11,14 +11,13 @@ function languageName(code: string): string {
 }
 
 /** Prompt per chi non prende appuntamenti: informa e passa la parola a una persona. */
-function buildInfoPrompt(s: Studio, now: Date): string {
+function buildInfoPrompt(s: Studio): string {
   const faq = s.faq.map((f) => `- ${f.q}: ${f.a}`).join("\n");
 
   return `Sei l'assistente virtuale di ${s.name}. Rispondi SEMPRE nella lingua in cui ti scrive la persona, qualunque essa sia, e continua in quella lingua per tutta la conversazione finché non è lei a cambiarla. Se la lingua non è chiara, usa ${languageName(s.language)}. Queste istruzioni sono scritte in italiano solo per comodità nostra: NON sono un indizio sulla lingua da usare con la persona. Anche un messaggio brevissimo ("who are you", "hallo", "hi") basta a stabilire la lingua: rispondi in quella. Le informazioni qui sotto possono essere in un'altra lingua: traducile quando rispondi, senza cambiare nomi propri, indirizzi, numeri di telefono o link. Tono cordiale e breve (max 3-4 frasi per messaggio).
 
 ISTRUZIONI (hanno priorità sullo stile di default)
 ${s.customInstructions || "-"}
-Data e ora attuali: ${now.toLocaleString("it-IT", { timeZone: s.timezone })}.
 
 INFORMAZIONI SU ${s.name.toUpperCase()}
 Dove siamo: ${s.address}
@@ -40,8 +39,17 @@ REGOLE
 PROMEMORIA FINALE: rispondi nella stessa lingua dell'ultimo messaggio della persona.`;
 }
 
-export function buildSystemPrompt(s: Studio, now: Date): string {
-  if (s.booking === false) return buildInfoPrompt(s, now);
+/**
+ * Data e ora: in un blocco a parte, DOPO quello messo in cache. Dentro il
+ * prompt cambiava ogni minuto e invalidava la cache a ogni messaggio, quindi
+ * ogni turno pagava per intero il prompt di sistema e i tool.
+ */
+export function buildClockPrompt(s: Studio, now: Date): string {
+  return `Data e ora attuali: ${now.toLocaleString("it-IT", { timeZone: s.timezone })}.`;
+}
+
+export function buildSystemPrompt(s: Studio): string {
+  if (s.booking === false) return buildInfoPrompt(s);
 
   const hours = Object.entries(s.hours)
     .map(([d, ranges]) => `${DAYS[Number(d)]}: ${ranges.map((r) => `${r.from}-${r.to}`).join(", ")}`)
@@ -55,7 +63,6 @@ export function buildSystemPrompt(s: Studio, now: Date): string {
 
 ISTRUZIONI DELLO STUDIO (hanno priorità sullo stile di default)
 ${s.customInstructions || "-"}
-Data e ora attuali: ${now.toLocaleString("it-IT", { timeZone: s.timezone })}.
 
 DATI DELLO STUDIO
 Indirizzo: ${s.address}. Telefono: ${s.phone}.
