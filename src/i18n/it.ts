@@ -46,11 +46,11 @@ export const it: Translation = {
       body: 'Sito completo + Assistente, con l\u2019attivazione dell\u2019assistente azzerata e i primi tre mesi offerti. Dal quarto mese parte il canone del pacchetto. Tre clienti, poi finisce.',
       rows: [
         { label: 'Attivazione', value: '\u20AC620', was: 'invece di \u20AC1.080' },
-        { label: 'Primi tre mesi', value: '\u20AC0', was: 'invece di \u20AC118 al mese' },
-        { label: 'Dal quarto mese', value: '\u20AC89', was: 'invece di \u20AC118' },
+        { label: 'Primi tre mesi', value: '\u20AC0', was: 'invece di \u20AC88 al mese' },
+        { label: 'Dal quarto mese', value: '\u20AC59', was: 'invece di \u20AC88' },
       ],
       savingLabel: 'Risparmio nei primi tre mesi',
-      saving: '\u20AC814',
+      saving: '\u20AC724',
     },
     bar: {
       text: 'Primi tre clienti: l\u2019assistente \u00e8 incluso con il sito.',
@@ -74,13 +74,13 @@ export const it: Translation = {
       {
         name: 'Assistente',
         setup: '\u20AC190',
-        month: '\u20AC89',
+        month: '\u20AC59',
         points: ['300 conversazioni al mese', 'Fissa nell\u2019agenda che usate gi\u00e0', 'Una lingua'],
       },
       {
         name: 'Assistente Pro',
         setup: '\u20AC290',
-        month: '\u20AC139',
+        month: '\u20AC99',
         plus: 'Tutto quello che c’è in Assistente, più:',
         points: ['1.000 conversazioni al mese', 'Anche su WhatsApp, non solo sul sito', 'Tutte le lingue in cui vi scrivono'],
       },
@@ -89,7 +89,7 @@ export const it: Translation = {
       tag: 'Tutti e due insieme',
       name: 'Sito completo + Assistente',
       setup: '\u20AC750',
-      month: '\u20AC89',
+      month: '\u20AC59',
       body: 'Trenta per cento in meno sull\u2019attivazione, e il canone del sito lo offriamo noi finch\u00e9 tenete l\u2019assistente. Costruirli insieme per noi \u00e8 davvero meno lavoro, quindi la differenza resta a voi.',
     },
     fine: [
@@ -249,7 +249,7 @@ export const it: Translation = {
       },
       {
         q: 'Quanto costa?',
-        a: 'Il listino completo è su questa pagina: non teniamo niente nascosto fino alla telefonata. L’assistente costa €190 di attivazione e €89 al mese per 300 conversazioni; i siti partono da €490. Prendendo tutti e due, l’attivazione cala del trenta per cento e il canone del sito lo offriamo noi.',
+        a: 'Il listino completo è su questa pagina: non teniamo niente nascosto fino alla telefonata. L’assistente costa €190 di attivazione e €59 al mese per 300 conversazioni; i siti partono da €490. Prendendo tutti e due, l’attivazione cala del trenta per cento e il canone del sito lo offriamo noi.',
       },
       {
         q: 'Funziona con il sito che abbiamo già?',

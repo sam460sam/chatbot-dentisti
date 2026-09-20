@@ -46,11 +46,11 @@ export const nl: Translation = {
       body: 'Volledige site + Assistent, met de installatiekosten van de assistent eraf en de eerste drie maanden van ons. Vanaf maand vier geldt het normale bundelbedrag. Drie klanten, daarna is het weg.',
       rows: [
         { label: 'Eenmalig', value: '\u20AC690', was: 'in plaats van \u20AC1.230' },
-        { label: 'Eerste drie maanden', value: '\u20AC0', was: 'in plaats van \u20AC138 per maand' },
-        { label: 'Vanaf maand vier', value: '\u20AC109', was: 'in plaats van \u20AC138' },
+        { label: 'Eerste drie maanden', value: '\u20AC0', was: 'in plaats van \u20AC108 per maand' },
+        { label: 'Vanaf maand vier', value: '\u20AC79', was: 'in plaats van \u20AC108' },
       ],
       savingLabel: 'Bespaard in de eerste drie maanden',
-      saving: '\u20AC954',
+      saving: '\u20AC864',
     },
     bar: {
       text: 'Eerste drie klanten: de assistent krijgt u gratis bij een website.',
@@ -74,13 +74,13 @@ export const nl: Translation = {
       {
         name: 'Assistent',
         setup: '\u20AC240',
-        month: '\u20AC109',
+        month: '\u20AC79',
         points: ['300 gesprekken per maand', 'Plant in de agenda die u al gebruikt', '\u00c9\u00e9n taal'],
       },
       {
         name: 'Assistent Pro',
         setup: '\u20AC340',
-        month: '\u20AC169',
+        month: '\u20AC129',
         plus: 'Alles uit Assistent, plus:',
         points: ['1.000 gesprekken per maand', 'Ook via WhatsApp, niet alleen de website', 'Elke taal waarin uw klanten schrijven'],
       },
@@ -89,7 +89,7 @@ export const nl: Translation = {
       tag: 'Allebei samen',
       name: 'Volledige site + Assistent',
       setup: '\u20AC860',
-      month: '\u20AC109',
+      month: '\u20AC79',
       body: 'Dertig procent van de eenmalige kosten eraf, en het maandbedrag van de site is van ons zolang u de assistent houdt. Ze samen bouwen is voor ons echt minder werk, dus het verschil is voor u.',
     },
     fine: [
@@ -249,7 +249,7 @@ export const nl: Translation = {
       },
       {
         q: 'Wat kost het?',
-        a: 'De hele prijslijst staat op deze pagina — er wordt niets achtergehouden tot een telefoongesprek. De assistent kost €240 eenmalig en €109 per maand voor 300 gesprekken; sites beginnen bij €590. Neemt u allebei, dan gaat er dertig procent van de eenmalige kosten af en is het maandbedrag van de site van ons.',
+        a: 'De hele prijslijst staat op deze pagina — er wordt niets achtergehouden tot een telefoongesprek. De assistent kost €240 eenmalig en €79 per maand voor 300 gesprekken; sites beginnen bij €590. Neemt u allebei, dan gaat er dertig procent van de eenmalige kosten af en is het maandbedrag van de site van ons.',
       },
       {
         q: 'Werkt het met onze huidige website?',

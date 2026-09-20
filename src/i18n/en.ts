@@ -46,11 +46,11 @@ export const en: Translation = {
       body: 'Full site + Assistant, with the assistant\u2019s setup fee taken off and the first three months on us. From month four the normal bundle fee starts. Three clients, then it is gone.',
       rows: [
         { label: 'To set up', value: '\u20AC690', was: 'instead of \u20AC1,230' },
-        { label: 'First three months', value: '\u20AC0', was: 'instead of \u20AC138 a month' },
-        { label: 'From month four', value: '\u20AC109', was: 'instead of \u20AC138' },
+        { label: 'First three months', value: '\u20AC0', was: 'instead of \u20AC108 a month' },
+        { label: 'From month four', value: '\u20AC79', was: 'instead of \u20AC108' },
       ],
       savingLabel: 'Saved in the first three months',
-      saving: '\u20AC954',
+      saving: '\u20AC864',
     },
     bar: {
       text: 'First three clients: the assistant comes free with a website.',
@@ -74,13 +74,13 @@ export const en: Translation = {
       {
         name: 'Assistant',
         setup: '\u20AC240',
-        month: '\u20AC109',
+        month: '\u20AC79',
         points: ['300 conversations a month', 'Books into the calendar you already use', 'One language'],
       },
       {
         name: 'Assistant Pro',
         setup: '\u20AC340',
-        month: '\u20AC169',
+        month: '\u20AC129',
         plus: 'Everything in Assistant, plus:',
         points: ['1,000 conversations a month', 'WhatsApp as well as the website', 'Every language your customers write in'],
       },
@@ -89,7 +89,7 @@ export const en: Translation = {
       tag: 'Both together',
       name: 'Full site + Assistant',
       setup: '\u20AC860',
-      month: '\u20AC109',
+      month: '\u20AC79',
       body: 'Thirty per cent off the setup, and the site\u2019s monthly fee is on us for as long as you keep the assistant. Building them together is genuinely less work for us, so you keep the difference.',
     },
     fine: [
@@ -249,7 +249,7 @@ export const en: Translation = {
       },
       {
         q: 'What does it cost?',
-        a: 'The whole price list is on this page — nothing is held back until a phone call. The assistant is €240 to set up and €109 a month for 300 conversations; sites start at €590. Take both and the setup drops thirty per cent and the site’s monthly fee is on us.',
+        a: 'The whole price list is on this page — nothing is held back until a phone call. The assistant is €240 to set up and €79 a month for 300 conversations; sites start at €590. Take both and the setup drops thirty per cent and the site’s monthly fee is on us.',
       },
       {
         q: 'Does it work with our current website?',
