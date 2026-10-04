@@ -5,3 +5,7 @@ dist
 .vscode
 dist-preview
 *.tsbuildinfo
+
+# local Cloudflare secrets
+.dev.vars
+.wrangler/

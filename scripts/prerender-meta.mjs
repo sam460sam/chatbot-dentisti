@@ -30,16 +30,21 @@ if (font && !template.includes('rel="preload" as="font"')) {
   await writeFile(join(root, 'dist/index.html'), template, 'utf8')
 }
 
+const PAGES = ['home', 'assistant', 'websites', 'prices', 'privacy']
 const pathFor = (lang, page) =>
-  (lang === 'en' ? '' : `/${lang}`) + (page === 'privacy' ? '/privacy' : '') || '/'
+  (lang === 'en' ? '' : `/${lang}`) + (page === 'home' ? '' : `/${page}`) || '/'
+/* same lookup as src/pageMeta.ts */
+const titleOf = (lang, page) => meta[lang][page === 'home' ? 'title' : `${page}Title`]
+const descriptionOf = (lang, page) => meta[lang][page === 'home' ? 'description' : `${page}Description`]
 
 const escapeAttr = (value) => value.replace(/&/g, '&amp;').replace(/"/g, '&quot;')
 
 for (const lang of LANGS) {
-  for (const page of ['home', 'privacy']) {
+  for (const page of PAGES) {
     const path = pathFor(lang, page)
-    const title = page === 'privacy' ? meta[lang].privacyTitle : meta[lang].title
-    const description = page === 'privacy' ? meta[lang].privacyDescription : meta[lang].description
+    const title = titleOf(lang, page)
+    const description = descriptionOf(lang, page)
+    if (!title || !description) throw new Error(`src/i18n/meta.json: no title/description for ${lang} ${page}`)
 
     const alternates = [
       `<link rel="canonical" href="${BASE}${path}" />`,
@@ -86,7 +91,7 @@ for (const lang of LANGS) {
 // robots.txt and the sitemap, written from the same address as the canonical
 // tags rather than kept by hand in public/ where they drifted out of step.
 const pages = []
-for (const page of ['home', 'privacy']) {
+for (const page of PAGES) {
   for (const lang of LANGS) pages.push({ lang, page, path: pathFor(lang, page) })
 }
 
@@ -102,7 +107,7 @@ const urls = pages
       ...LANGS.map((l) => `    <xhtml:link rel="alternate" hreflang="${l}" href="${BASE}${pathFor(l, page)}"/>`),
       `    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE}${pathFor('en', page)}"/>`,
     ].join('\n')
-    const priority = page === 'privacy' ? '0.3' : lang === 'en' ? '1.0' : '0.9'
+    const priority = page === 'privacy' ? '0.3' : page === 'home' ? (lang === 'en' ? '1.0' : '0.9') : '0.7'
     return `  <url>\n    <loc>${BASE}${path}</loc>\n${alts}\n    <priority>${priority}</priority>\n  </url>`
   })
   .join('\n')

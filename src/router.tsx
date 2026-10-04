@@ -2,7 +2,10 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import type { AnchorHTMLAttributes, ReactNode } from 'react'
 import { LANGS, type Lang } from './i18n'
 
-export type Page = 'home' | 'privacy'
+export type Page = 'home' | 'assistant' | 'websites' | 'prices' | 'privacy'
+
+/** Every page, in the order the prerender writes them. */
+export const PAGES: Page[] = ['home', 'assistant', 'websites', 'prices', 'privacy']
 
 export interface Route {
   lang: Lang
@@ -15,14 +18,14 @@ function parse(pathname: string): Route {
   if (parts.length > 0 && (LANGS as string[]).includes(parts[0])) {
     lang = parts.shift() as Lang
   }
-  const page: Page = parts[0] === 'privacy' ? 'privacy' : 'home'
+  const page: Page = (PAGES as string[]).includes(parts[0]) ? (parts[0] as Page) : 'home'
   return { lang, page }
 }
 
 /** Builds an internal path: English lives at the root, the others under /nl and /it. */
 export function pathFor(lang: Lang, page: Page): string {
   const prefix = lang === 'en' ? '' : `/${lang}`
-  const suffix = page === 'privacy' ? '/privacy' : ''
+  const suffix = page === 'home' ? '' : `/${page}`
   return prefix + suffix || '/'
 }
 

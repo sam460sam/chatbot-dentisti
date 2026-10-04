@@ -1,0 +1,11 @@
+# Copy to .dev.vars for `npx wrangler pages dev dist`. .dev.vars is gitignored.
+# With GOOGLE_MOCK=1 there is no Google at all: a pretend calendar and mailbox.
+GOOGLE_MOCK=1
+
+# The real thing (same names as in Cloudflare → Settings → Variables and Secrets):
+# GOOGLE_CLIENT_ID=
+# GOOGLE_CLIENT_SECRET=
+# GOOGLE_REFRESH_TOKEN=
+# NOTIFY_EMAIL=twinbyteai@gmail.com
+# BOOKING_HOURS=mon-fri 10:00-12:30,14:00-18:00
+# TURNSTILE_SECRET=1x0000000000000000000000000000000AA   # Cloudflare's test key, passes always

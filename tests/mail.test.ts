@@ -1,0 +1,37 @@
+// Run: npm test
+import { test } from 'node:test'
+import assert from 'node:assert/strict'
+import { raw, isAddress } from '../functions/_lib/mail.ts'
+
+const decode = (r: string) => Buffer.from(r.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8')
+
+test('a name with a line break cannot add a header', () => {
+  const msg = decode(raw({
+    to: 'a@example.com', toName: 'Evil\r\nBcc: everyone@example.com',
+    from: 'twinbyteai@gmail.com', fromName: 'Twinbyte',
+    subject: 'Hi\r\nBcc: x@example.com', text: 'x', html: 'x',
+  }))
+  const headers = msg.split('\r\n\r\n')[0]
+  assert.ok(!/^Bcc:/im.test(headers), headers)
+})
+
+test('only one plain address is accepted', () => {
+  assert.ok(isAddress('anna@twinbyteservices.com'))
+  for (const bad of ['a@b.com, c@d.com', 'a@b.com\r\nBcc: c@d.com', '<a@b.com>', 'nope', 'a@b', 'a b@c.com']) {
+    assert.equal(isAddress(bad), false, bad)
+  }
+  assert.throws(() => raw({ to: 'a@b.com, c@d.com', from: 'x@y.com', fromName: 'X', subject: 's', text: 't', html: 'h' }))
+})
+
+test('non-ASCII subjects and bodies survive (é, ë, €)', () => {
+  const msg = decode(raw({ to: 'a@b.com', from: 'x@y.com', fromName: 'Twinbyte', subject: 'Prenotazione confermata — è fatta', text: 'Één € ë', html: '<p>é</p>' }))
+  assert.match(msg, /Subject: =\?UTF-8\?B\?/)
+  const textPart = msg.split('Content-Transfer-Encoding: base64\r\n\r\n')[1].split('\r\n--')[0]
+  assert.equal(Buffer.from(textPart.replace(/\r\n/g, ''), 'base64').toString('utf8'), 'Één € ë')
+})
+
+test('a display name with ":" and "@" is encoded, never a group of recipients', () => {
+  const msg = decode(raw({ to: 'e@example.com', toName: 'Eve Bcc: all@example.com', from: 'x@y.com', fromName: 'X', subject: 's', text: 't', html: 'h' }))
+  const to = msg.split('\r\n').find((l) => l.startsWith('To:'))!
+  assert.match(to, /^To: =\?UTF-8\?B\?[A-Za-z0-9+/=]+\?= <e@example\.com>$/)
+})

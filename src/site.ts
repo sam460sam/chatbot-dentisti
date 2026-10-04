@@ -7,7 +7,7 @@ export const SITE = {
   /** The one place the site's address is written down. The build reads it from
       here to stamp the canonical tags, robots.txt and the sitemap, so there is
       nothing to forget when it changes. */
-  baseUrl: 'https://www.twinbyteservices.com',
+  baseUrl: 'https://twinbyte.online',
   lastUpdated: '2026-09-15',
   /** Live assistant widget on this site. Set enabled: false to take it off. */
   widget: {

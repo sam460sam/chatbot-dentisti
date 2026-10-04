@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { Menu, Close } from './marks'
 import { Link, pathFor, rememberLang, useRoute } from '../router'
 import { LANGS, LANG_LABELS, type Translation } from '../i18n'
+import { booking } from '../i18n/booking'
+import type { Page } from '../router'
 
-const SECTIONS = ['how', 'benefits', 'security', 'websites', 'prices', 'faq', 'contact'] as const
+const PAGES_IN_NAV: Page[] = ['assistant', 'websites', 'prices']
 
 export function Header({ t }: { t: Translation }) {
   const { lang, page } = useRoute()
@@ -50,7 +52,8 @@ export function Header({ t }: { t: Translation }) {
 
   useEffect(() => setOpen(false), [page, lang])
 
-  const links = SECTIONS.map((id) => ({ id, label: t.nav[id], to: `${home}#${id}` }))
+  const nav = booking[lang].nav
+  const links = PAGES_IN_NAV.map((p) => ({ id: p, label: nav[p as 'assistant' | 'websites' | 'prices'], to: pathFor(lang, p) }))
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-ink-edge bg-black">
@@ -71,7 +74,8 @@ export function Header({ t }: { t: Translation }) {
             <Link
               key={l.id}
               to={l.to}
-              className="text-small font-medium text-paper-dim transition-colors hover:text-paper"
+              aria-current={page === l.id ? 'page' : undefined}
+              className={`text-small font-medium transition-colors hover:text-paper ${page === l.id ? 'text-paper' : 'text-paper-dim'}`}
             >
               {l.label}
             </Link>
@@ -79,6 +83,12 @@ export function Header({ t }: { t: Translation }) {
         </nav>
 
         <div className="flex items-center gap-1">
+          <Link
+            to={`${home}#book`}
+            className="mark-out hidden items-center whitespace-nowrap bg-teal-bright px-2 py-1 text-small font-semibold leading-none text-ink transition-colors hover:bg-paper sm:inline-flex"
+          >
+            {nav.book}
+          </Link>
           <nav aria-label={t.nav.language} className="flex items-center border border-ink-edge">
             {LANGS.map((l) => (
               <Link
@@ -120,7 +130,7 @@ export function Header({ t }: { t: Translation }) {
       {open && (
         <nav id="mobile-menu" aria-label={t.nav.main} className="border-t border-ink-edge bg-black lg:hidden">
           <ul role="list" className="container-page flex flex-col py-1">
-            {links.map((l) => (
+            {[{ id: 'home', label: nav.book, to: `${home}#book` }, ...links].map((l) => (
               <li key={l.id}>
                 <Link
                   to={l.to}

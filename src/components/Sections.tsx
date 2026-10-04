@@ -1,4 +1,3 @@
-import { Hero } from './Hero'
 import { Assembly } from './Assembly'
 import { DayStrip } from './DayStrip'
 import { Diary } from './Diary'
@@ -7,7 +6,7 @@ import { Handover } from './Handover'
 import { SiteWireframe } from './SiteWireframe'
 import { Mark, Bubble, Window, Arrow, ArrowOut, Mail, Person } from './marks'
 import { SITE, mailLink, waLink } from '../site'
-import { useRoute } from '../router'
+import { pathFor, useRoute } from '../router'
 import type { Translation } from '../i18n'
 
 /*
@@ -58,15 +57,10 @@ function Band({
   )
 }
 
-export function Home({ t }: { t: Translation }) {
-  const { lang } = useRoute()
+
+export function DayStripSection({ t }: { t: Translation }) {
   return (
-    <main id="main">
-      <Hero t={t} />
-
-      {/* The object pulled apart and put together by the scrollbar. */}
-      <Assembly t={t} />
-
+    <>
       {/* The signature object: the hours this business is not there to answer,
           and the appointment that landed while nobody was in the shop. */}
       <section className="band-deep" aria-labelledby="daystrip-title">
@@ -86,7 +80,14 @@ export function Home({ t }: { t: Translation }) {
           </div>
         </div>
       </section>
+    </>
+  )
+}
 
+export function ServicesSplit({ t }: { t: Translation }) {
+  const { lang } = useRoute()
+  return (
+    <>
       {/* ---------------------------------------------------- the fork
           Two grounds touching with no gap and no rule between them. This is the
           one place on the page where a second flood is earned: it says "two
@@ -117,7 +118,7 @@ export function Home({ t }: { t: Translation }) {
               <a className="btn bg-paper text-teal hover:bg-paper-deep" href={waLink(t.wa.assistantQuote)} rel="noopener">
                 {t.split.assistant.quote}
               </a>
-              <a className="btn-line-flood" href="#how">
+              <a className="btn-line-flood" href={pathFor(lang, 'assistant')}>
                 {t.split.assistant.cta}
                 <Arrow />
               </a>
@@ -146,7 +147,7 @@ export function Home({ t }: { t: Translation }) {
               <a className="btn bg-paper text-verm hover:bg-paper-deep" href={waLink(t.wa.websitesQuote)} rel="noopener">
                 {t.split.websites.quote}
               </a>
-              <a className="btn-line-flood" href="#websites">
+              <a className="btn-line-flood" href={pathFor(lang, 'websites')}>
                 {t.split.websites.cta}
                 <Arrow />
               </a>
@@ -154,7 +155,13 @@ export function Home({ t }: { t: Translation }) {
           </div>
         </div>
       </section>
+    </>
+  )
+}
 
+export function HowSection({ t }: { t: Translation }) {
+  return (
+    <>
       {/* ------------------------------------------------ 01 how it works */}
       <Band id="how" tone="paper" folio="No. 01" ink="teal" title={t.how.title} lead={t.how.lead}>
         <ol role="list" className="grid gap-3 md:grid-cols-3">
@@ -167,7 +174,13 @@ export function Home({ t }: { t: Translation }) {
           ))}
         </ol>
       </Band>
+    </>
+  )
+}
 
+export function SecuritySection({ t }: { t: Translation }) {
+  return (
+    <>
       {/* ------------------------------------- where it stops — the ink plate */}
       <section id="security" aria-labelledby="security-title" className="band-ink">
         <div className="container-page">
@@ -189,7 +202,13 @@ export function Home({ t }: { t: Translation }) {
           </div>
         </div>
       </section>
+    </>
+  )
+}
 
+export function BenefitsSection({ t }: { t: Translation }) {
+  return (
+    <>
       {/* ---------------------------------------------- 03 what you get */}
       <Band
         id="benefits"
@@ -208,7 +227,14 @@ export function Home({ t }: { t: Translation }) {
           ))}
         </ul>
       </Band>
+    </>
+  )
+}
 
+export function WebsitesSection({ t }: { t: Translation }) {
+  const { lang } = useRoute()
+  return (
+    <>
       {/* ------------------------------------------------- 04 websites */}
       <Band
         id="websites"
@@ -261,7 +287,13 @@ export function Home({ t }: { t: Translation }) {
           </div>
         </div>
       </Band>
+    </>
+  )
+}
 
+export function PricesAndFaq({ t }: { t: Translation }) {
+  return (
+    <>
       {/* ----------------------------------------------------------- FAQ */}
       <Pricing t={t} />
 
@@ -292,7 +324,13 @@ export function Home({ t }: { t: Translation }) {
           </div>
         </div>
       </section>
+    </>
+  )
+}
 
+export function ContactSection({ t }: { t: Translation }) {
+  return (
+    <>
       {/* ----------------------------------------- the two people, and contact */}
       <section id="contact" aria-labelledby="contact-title" className="band-ink">
         <div className="container-page">
@@ -340,6 +378,10 @@ export function Home({ t }: { t: Translation }) {
           </div>
         </div>
       </section>
-    </main>
+    </>
   )
+}
+
+export function AssemblySection({ t }: { t: Translation }) {
+  return <Assembly t={t} />
 }

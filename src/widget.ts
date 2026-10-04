@@ -8,9 +8,16 @@ import type { Lang } from './i18n'
  * it never competes with the first render. The widget mounts itself in a shadow
  * root and is injected only once per page load.
  */
-export function useAssistantWidget(lang: Lang, hello: string) {
+export function useAssistantWidget(lang: Lang, hello: string, active = true) {
+  /* Shown only where it is wanted. Once injected it cannot be unloaded, so on
+     other pages its host element is hidden instead. */
   useEffect(() => {
-    if (!SITE.widget.enabled) return
+    const host = document.getElementById('dentist-chat-host')
+    if (host) host.style.display = active ? '' : 'none'
+  }, [active])
+
+  useEffect(() => {
+    if (!SITE.widget.enabled || !active) return
     if (document.querySelector('script[data-twinbyte-widget]')) return
 
     let timer = 0
@@ -47,5 +54,5 @@ export function useAssistantWidget(lang: Lang, hello: string) {
     }
     // The widget reads its language once, at injection time.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [active])
 }

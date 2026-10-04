@@ -1,6 +1,7 @@
 import { Link, pathFor, useRoute } from '../router'
 import { SITE } from '../site'
 import type { Translation } from '../i18n'
+import { booking } from '../i18n/booking'
 
 /*
  * Lines still carrying a TODO_ placeholder are not rendered.
@@ -22,7 +23,7 @@ export function PrivacyPage({ t }: { t: Translation }) {
         <h1 className="t-h2 mt-2 max-w-none">{t.privacyPage.title}</h1>
         <p className="t-lead mt-3">{t.privacyPage.intro}</p>
 
-        {t.privacyPage.sections.map((section) => {
+        {[...t.privacyPage.sections.slice(0, 1), booking[lang].privacy, ...t.privacyPage.sections.slice(1)].map((section) => {
           const body = section.body.filter((line) => !unfilled(line))
           if (body.length === 0) return null
           return (
