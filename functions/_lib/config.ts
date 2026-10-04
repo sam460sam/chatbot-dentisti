@@ -20,7 +20,7 @@ export interface Env {
  * Placeholder hours until the owners choose theirs. Changing them is a
  * dashboard edit (BOOKING_HOURS) plus a redeploy, never a code change.
  */
-export const DEFAULT_HOURS = 'mon-fri 10:00-12:30,14:00-18:00'
+export const DEFAULT_HOURS = 'mon-fri 18:00-21:00; sat 09:00-13:00'
 
 export const CALL_MINUTES = 15
 

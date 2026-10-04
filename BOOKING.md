@@ -64,7 +64,7 @@ see the warning below):
 | `GOOGLE_CLIENT_SECRET` | secret | from step 4 |
 | `GOOGLE_REFRESH_TOKEN` | secret | from step 5 |
 | `NOTIFY_EMAIL` | text | `twinbyteai@gmail.com` |
-| `BOOKING_HOURS` | text | e.g. `mon-fri 10:00-12:30,14:00-18:00; sat 10:00-12:00` |
+| `BOOKING_HOURS` | text | `mon-fri 18:00-21:00; sat 09:00-13:00` |
 
 Optional, against spam (free): Turnstile → Add widget → hostname
 `twinbyte.online` and `pages.dev`, mode Managed. Then add
