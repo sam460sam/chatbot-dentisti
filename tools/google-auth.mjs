@@ -3,7 +3,8 @@
  * Gets the Google refresh token the booking page runs on. Run it ONCE, on your
  * own computer, signed in as twinbyteai@gmail.com:
  *
- *   node tools/google-auth.mjs <CLIENT_ID> <CLIENT_SECRET>
+ *   node tools/google-auth.mjs ~/Downloads/client_secret_XXXX.json
+ *   (or: node tools/google-auth.mjs <CLIENT_ID> <CLIENT_SECRET>)
  *
  * It opens Google's consent page, catches the answer on 127.0.0.1, and prints
  * the refresh token. Paste the three values into Cloudflare (Settings →
@@ -18,10 +19,24 @@
 import http from 'node:http'
 import crypto from 'node:crypto'
 import { exec } from 'node:child_process'
+import { readFileSync } from 'node:fs'
 
-const [clientId, clientSecret] = process.argv.slice(2)
+/* Either the JSON file Google lets you download when the client is created,
+   or the two values typed out. */
+let [clientId, clientSecret] = process.argv.slice(2)
+if (clientId && clientId.endsWith('.json')) {
+  try {
+    const j = JSON.parse(readFileSync(clientId, 'utf8'))
+    const c = j.installed || j.web || {}
+    if (j.web) console.warn('This client is of type "Web application". Create a "Desktop app" client instead.')
+    ;[clientId, clientSecret] = [c.client_id, c.client_secret]
+  } catch (e) {
+    console.error('Could not read that file:', e.message)
+    process.exit(1)
+  }
+}
 if (!clientId || !clientSecret) {
-  console.error('Usage: node tools/google-auth.mjs <CLIENT_ID> <CLIENT_SECRET>')
+  console.error('Usage: node tools/google-auth.mjs ~/Downloads/client_secret_XXXX.json')
   process.exit(1)
 }
 

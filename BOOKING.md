@@ -47,7 +47,7 @@ billing account to the Google Cloud project.**
    Copy the client ID and the client secret right away: since 2025 the secret
    is shown only once.
 5. On your computer, in this repository:
-   `node tools/google-auth.mjs <CLIENT_ID> <CLIENT_SECRET>`
+   `node tools/google-auth.mjs ~/Downloads/client_secret_XXXX.json` (the JSON you downloaded)
    Sign in as twinbyteai@gmail.com. You will see "Google hasn't verified this
    app" → Advanced → Go to Twinbyte booking. Tick **all three** boxes. The
    terminal prints `GOOGLE_REFRESH_TOKEN=…`.
