@@ -87,10 +87,11 @@ function useTurnstile(active: boolean, lang: string) {
 
 /* ---------------------------------------------------------------- fields */
 function Field({
-  label, name, type = 'text', value, onChange, error, optional, autoComplete, inputMode, multiline,
+  label, name, type = 'text', value, onChange, error, optional, autoComplete, inputMode, multiline, onBlur,
 }: {
   label: string; name: string; type?: string; value: string; onChange: (v: string) => void
   error?: string; optional?: string; autoComplete?: string; inputMode?: 'tel' | 'email' | 'text'; multiline?: boolean
+  onBlur?: () => void
 }) {
   const id = `f-${name}`
   const cls = `mt-0.5 w-full border bg-white px-1.5 py-1 text-body text-ink outline-none transition-colors focus:border-teal ${
@@ -107,12 +108,28 @@ function Field({
           className={`${cls} resize-y`} aria-invalid={!!error} aria-describedby={error ? `${id}-e` : undefined} />
       ) : (
         <input id={id} name={name} type={type} value={value} onChange={(e) => onChange(e.currentTarget.value)}
-          autoComplete={autoComplete} inputMode={inputMode} className={cls}
+          autoComplete={autoComplete} inputMode={inputMode} className={cls} onBlur={onBlur}
+          autoCapitalize={type === 'email' ? 'none' : undefined}
+          autoCorrect={type === 'email' ? 'off' : undefined}
+          spellCheck={type === 'email' ? false : undefined}
           aria-invalid={!!error} aria-describedby={error ? `${id}-e` : undefined} />
       )}
       {error && <p id={`${id}-e`} className="mt-0.5 text-small text-verm">{error}</p>}
     </div>
   )
+}
+
+/* On a phone the first wrong field is usually above the button, off screen:
+   pressing "Book" then looked like it did nothing. Go to it and focus it. */
+function showFirstError(err: Record<string, string>, order: string[]) {
+  const first = order.find((k) => err[k])
+  if (!first) return
+  requestAnimationFrame(() => {
+    const el = document.getElementById(`f-${first}`)
+    if (!el) return
+    el.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    el.focus({ preventScroll: true })
+  })
 }
 
 /** A field humans never see. Bots fill it in. */
@@ -134,8 +151,8 @@ function Consent({ checked, onChange, error }: { checked: boolean; onChange: (v:
   return (
     <div>
       <label className="flex items-start gap-1 text-small text-ink-soft">
-        <input type="checkbox" checked={checked} onChange={(e) => onChange(e.currentTarget.checked)}
-          className="mt-0.5 h-2 w-2 shrink-0 accent-teal" aria-invalid={!!error} />
+        <input id="f-consent" type="checkbox" checked={checked} onChange={(e) => onChange(e.currentTarget.checked)}
+          className="mt-0.5 h-[20px] w-[20px] shrink-0 accent-teal" aria-invalid={!!error} />
         <span>
           {c.consentBefore}
           <Link to={pathFor(lang, 'privacy')} className="text-teal underline underline-offset-2">{c.consentLink}</Link>
@@ -360,7 +377,10 @@ function BookForm({
   const [fail, setFail] = useState('')
   const openedAt = useRef(Date.now())
   const ts = useTurnstile(true, lang)
-  const set = (k: keyof typeof v) => (x: string) => setV((o) => ({ ...o, [k]: x }))
+  const set = (k: keyof typeof v) => (x: string) => {
+    setV((o) => ({ ...o, [k]: x }))
+    setErrors((e) => (e[k] ? { ...e, [k]: '' } : e))
+  }
 
   const submit = async (e: { preventDefault(): void }) => {
     e.preventDefault()
@@ -372,7 +392,7 @@ function BookForm({
     if (!consent) err.consent = c.form.needConsent
     setErrors(err)
     setFail('')
-    if (Object.keys(err).length) return
+    if (Object.keys(err).length) return showFirstError(err, ['name', 'business', 'email', 'phone', 'consent'])
     setBusy(true)
     try {
       const { status, data } = await api<{ ok?: boolean; error?: string; meet?: string | null }>('/api/book', {
@@ -406,12 +426,22 @@ function BookForm({
       <div className="grid gap-2 sm:grid-cols-2">
         <Field label={c.form.name} name="name" value={v.name} onChange={set('name')} error={errors.name} autoComplete="name" />
         <Field label={c.form.business} name="business" value={v.business} onChange={set('business')} error={errors.business} autoComplete="organization" />
-        <Field label={c.form.email} name="email" type="email" inputMode="email" value={v.email} onChange={set('email')} error={errors.email} autoComplete="email" />
+        <Field label={c.form.email} name="email" type="email" inputMode="email" value={v.email} onChange={set('email')} error={errors.email} autoComplete="email"
+          onBlur={() => {
+            if (v.email.trim() && !EMAIL.test(v.email.trim())) setErrors((e) => ({ ...e, email: c.form.badEmail }))
+          }} />
         <Field label={c.form.phone} name="phone" type="tel" inputMode="tel" value={v.phone} onChange={set('phone')} error={errors.phone} autoComplete="tel" />
       </div>
       <Field label={c.form.message} name="message" optional={c.form.optional} value={v.message} onChange={set('message')} multiline />
       <Honeypot value={v.website} onChange={set('website')} />
-      <Consent checked={consent} onChange={setConsent} error={errors.consent} />
+      <Consent
+        checked={consent}
+        onChange={(on) => {
+          setConsent(on)
+          if (on) setErrors((e) => ({ ...e, consent: '' }))
+        }}
+        error={errors.consent}
+      />
       {ts.needed && <div ref={ts.ref} />}
       {fail && (
         <p role="alert" className="border-l-2 border-verm bg-white px-1.5 py-1 text-small text-ink">
@@ -502,7 +532,10 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
   const [sent, setSent] = useState('')
   const openedAt = useRef(Date.now())
   const ts = useTurnstile(!sent, lang)
-  const set = (k: keyof typeof v) => (x: string) => setV((o) => ({ ...o, [k]: x }))
+  const set = (k: keyof typeof v) => (x: string) => {
+    setV((o) => ({ ...o, [k]: x }))
+    setErrors((e) => (e[k] ? { ...e, [k]: '' } : e))
+  }
 
   const submit = async (e: { preventDefault(): void }) => {
     e.preventDefault()
@@ -514,7 +547,7 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
     if (!consent) err.consent = c.form.needConsent
     setErrors(err)
     setFail('')
-    if (Object.keys(err).length) return
+    if (Object.keys(err).length) return showFirstError(err, ['name', 'email', 'phone', 'message', 'consent'])
     setBusy(true)
     try {
       const { status, data } = await api<{ ok?: boolean; error?: string }>('/api/request', {
@@ -547,13 +580,23 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
       </div>
       <div className="grid gap-2 sm:grid-cols-2">
         <Field label={c.form.name} name="name" value={v.name} onChange={set('name')} error={errors.name} autoComplete="name" />
-        <Field label={c.form.email} name="email" type="email" inputMode="email" value={v.email} onChange={set('email')} error={errors.email} autoComplete="email" />
+        <Field label={c.form.email} name="email" type="email" inputMode="email" value={v.email} onChange={set('email')} error={errors.email} autoComplete="email"
+          onBlur={() => {
+            if (v.email.trim() && !EMAIL.test(v.email.trim())) setErrors((e) => ({ ...e, email: c.form.badEmail }))
+          }} />
         <Field label={c.form.business} name="business" optional={c.form.optional} value={v.business} onChange={set('business')} autoComplete="organization" />
         <Field label={c.form.phone} name="phone" type="tel" inputMode="tel" optional={c.form.optional} value={v.phone} onChange={set('phone')} error={errors.phone} autoComplete="tel" />
       </div>
       <Field label={c.request.message} name="message" value={v.message} onChange={set('message')} error={errors.message} multiline />
       <Honeypot value={v.website} onChange={set('website')} />
-      <Consent checked={consent} onChange={setConsent} error={errors.consent} />
+      <Consent
+        checked={consent}
+        onChange={(on) => {
+          setConsent(on)
+          if (on) setErrors((e) => ({ ...e, consent: '' }))
+        }}
+        error={errors.consent}
+      />
       {ts.needed && <div ref={ts.ref} />}
       {fail && <p role="alert" className="border-l-2 border-verm bg-white px-1.5 py-1 text-small text-ink">{fail}</p>}
       <div className="flex flex-wrap items-center gap-1">

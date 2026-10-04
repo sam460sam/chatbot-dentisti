@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useRoute } from '../router'
 import { booking } from '../i18n/booking'
 import { waLink } from '../site'
@@ -7,6 +8,25 @@ import { Bubble } from './marks'
 export function WhatsAppFloat() {
   const { lang } = useRoute()
   const c = booking[lang]
+  /* While a field has focus the keyboard is up and the form fills the screen;
+     the button would sit on the inputs, so it steps aside until typing stops. */
+  const [typing, setTyping] = useState(false)
+  useEffect(() => {
+    const field = (t: EventTarget | null) => t instanceof HTMLElement && t.matches('input, textarea, select')
+    const on = (e: FocusEvent) => {
+      if (field(e.target)) setTyping(true)
+    }
+    const off = (e: FocusEvent) => {
+      if (field(e.target) && !field(e.relatedTarget)) setTyping(false)
+    }
+    document.addEventListener('focusin', on)
+    document.addEventListener('focusout', off)
+    return () => {
+      document.removeEventListener('focusin', on)
+      document.removeEventListener('focusout', off)
+    }
+  }, [])
+  if (typing) return null
   return (
     <a
       href={waLink(c.hero.waText)}
