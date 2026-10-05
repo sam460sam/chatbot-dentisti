@@ -41,7 +41,9 @@ export function text(v: unknown, max: number, multiline = false): string {
   let s = v.replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, '')
   if (!multiline) s = s.replace(/[\r\n\t]+/g, ' ')
   s = s.trim()
-  return s.length > max ? '' : s
+  /* a long message is cut, not lost; the form already stops the others */
+  if (s.length > max) return multiline ? s.slice(0, max).trim() : ''
+  return s
 }
 
 export async function readJson(request: Request): Promise<Record<string, unknown> | null> {
@@ -59,13 +61,14 @@ export async function readJson(request: Request): Promise<Record<string, unknown
 /*
  * Bots. Three cheap layers, all free:
  *  - a field humans never see (`website`); bots fill it
- *  - the form must have been open at least 3 seconds
+ *  - the form must have been open at least 3 seconds (measured by the
+ *    page as a duration, so a visitor whose clock is off is not a bot)
  *  - Cloudflare Turnstile, when TURNSTILE_SECRET is set
  */
 export async function looksHuman(env: Env, body: Record<string, unknown>, ip: string | null): Promise<boolean> {
   if (typeof body.website === 'string' && body.website.trim() !== '') return false
-  const opened = Number(body.openedAt)
-  if (!Number.isFinite(opened) || Date.now() - opened < 3000) return false
+  const elapsed = Number(body.elapsed)
+  if (!Number.isFinite(elapsed) || elapsed < 3000) return false
   if (!env.TURNSTILE_SECRET) return true
   const token = typeof body.turnstile === 'string' ? body.turnstile : ''
   if (!token) return false

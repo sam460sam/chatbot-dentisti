@@ -20,7 +20,7 @@ export function PrivacyPage({ t }: { t: Translation }) {
     <main id="main" className="band-paper pt-10">
       <article className="container-page max-w-measure">
         <p className="t-label">{t.privacyPage.updated}: {SITE.lastUpdated}</p>
-        <h1 className="t-h2 mt-2 max-w-none">{t.privacyPage.title}</h1>
+        <h1 className="mt-2 max-w-none font-display text-h2 font-extrabold text-ink sm:text-h1">{t.privacyPage.title}</h1>
         <p className="t-lead mt-3">{t.privacyPage.intro}</p>
 
         {[...t.privacyPage.sections.slice(0, 1), booking[lang].privacy, ...t.privacyPage.sections.slice(1)].map((section) => {

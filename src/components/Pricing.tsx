@@ -1,6 +1,8 @@
 import { Mark, Arrow } from './marks'
 import { waLink } from '../site'
 import type { Translation } from '../i18n'
+import { useRoute } from '../router'
+import { booking } from '../i18n/booking'
 
 /*
  * The price list, on the page.
@@ -14,20 +16,25 @@ import type { Translation } from '../i18n'
  * same as everywhere else on the page. The order is fixed in the translation,
  * so the ink is assigned by index and never travels in the copy.
  */
-export function Pricing({ t }: { t: Translation }) {
+export function Pricing({ t, head = true }: { t: Translation; head?: boolean }) {
   const p = t.pricing
+  const { lang } = useRoute()
 
   return (
-    <section id="prices" aria-labelledby="prices-title" className="band-paper">
+    <section id="prices" aria-label={head ? undefined : p.title} aria-labelledby={head ? 'prices-title' : undefined} className={head ? 'band-paper' : 'band-paper pt-0 sm:pt-0 lg:pt-0'}>
       <div className="container-page">
-        <div className="flex items-baseline gap-2 border-t-2 border-ink pt-2">
-          <span className="t-folio">{p.eyebrow}</span>
-          <h2 id="prices-title" className="t-h2">
-            {p.title}
-          </h2>
-        </div>
+        {head && (
+          <>
+            <div className="flex items-baseline gap-2 border-t-2 border-ink pt-2">
+              <span className="t-folio">{p.eyebrow}</span>
+              <h2 id="prices-title" className="t-h2">
+                {p.title}
+              </h2>
+            </div>
 
-        <p className="t-lead mt-2">{p.lead}</p>
+            <p className="t-lead mt-2">{p.lead}</p>
+          </>
+        )}
 
         {/* The launch offer. It is a plate, not a banner: it is the loudest
             thing in this band on purpose, and it has an end date built into
@@ -131,7 +138,7 @@ export function Pricing({ t }: { t: Translation }) {
 
           <p className="t-body mt-2">{p.bundle.body}</p>
 
-          <a className="btn-teal mt-3" href={waLink(t.wa.assistantQuote)} rel="noopener">
+          <a className="btn-teal mt-3" href={waLink(booking[lang].mail.bundleWa)} rel="noopener">
             {p.cta}
             <Arrow />
           </a>

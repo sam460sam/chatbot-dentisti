@@ -61,7 +61,7 @@ export function SiteWireframe({ t }: { t: Translation }) {
             </div>
           </div>
         </div>
-        <p className="mt-0.5 text-micro tabular-nums text-ink-mute">1440</p>
+        <p className="mt-2 text-micro tabular-nums text-ink-mute">1440</p>
       </div>
 
       {/* Phone — the width that actually matters */}
@@ -81,7 +81,7 @@ export function SiteWireframe({ t }: { t: Translation }) {
             <span aria-hidden="true" className="block h-4 border border-paper-edge bg-paper-deep" />
           </div>
         </div>
-        <p className="mt-0.5 text-micro tabular-nums text-ink-mute">390</p>
+        <p className="mt-2 text-micro tabular-nums text-ink-mute">390</p>
       </div>
     </div>
   )

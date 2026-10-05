@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Link, pathFor, useRoute } from '../router'
+import { pathFor, useRoute } from '../router'
 import { booking } from '../i18n/booking'
 import { waLink } from '../site'
 import { Arrow, Bubble, Diary } from './marks'
@@ -12,6 +12,16 @@ import { Arrow, Bubble, Diary } from './marks'
 
 const TURNSTILE_KEY = (import.meta.env.VITE_TURNSTILE_SITE_KEY as string | undefined) || ''
 const LOCALE = { en: 'en-GB', nl: 'nl-NL', it: 'it-IT' } as const
+const CALL_MS = 15 * 60000
+
+/* JS scrolling ignores the CSS reduced-motion rule, so ask every time. */
+export function smooth(): ScrollBehavior {
+  try {
+    return matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'
+  } catch {
+    return 'auto'
+  }
+}
 
 function visitorZone(): string {
   try {
@@ -21,18 +31,39 @@ function visitorZone(): string {
   }
 }
 
+/** "Central European Time" rather than "Europe/Amsterdam". */
+function zoneName(zone: string, lang: keyof typeof LOCALE): string {
+  try {
+    const part = new Intl.DateTimeFormat(LOCALE[lang], { timeZone: zone, timeZoneName: 'longGeneric' })
+      .formatToParts(Date.now())
+      .find((p) => p.type === 'timeZoneName')?.value
+    if (part && !/^GMT[+-]/.test(part)) return part
+  } catch {
+    /* older browsers: fall through */
+  }
+  return zone.replace(/_/g, ' ')
+}
+
 /** YYYY-MM-DD of an instant in a zone: the key slots are grouped by. */
 function dayKey(ms: number, zone: string): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: zone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(ms)
 }
 
+/* A stalled request must end in an error the visitor can act on, never in
+   "Loading…" forever. */
 async function api<T>(path: string, body?: unknown): Promise<{ status: number; data: T | null }> {
-  const res = await fetch(path, body === undefined
-    ? { headers: { accept: 'application/json' } }
-    : { method: 'POST', headers: { 'content-type': 'application/json', accept: 'application/json' }, body: JSON.stringify(body) })
-  /* a missing endpoint would answer with the SPA's HTML and a 200 */
-  if (!(res.headers.get('content-type') || '').includes('application/json')) return { status: 0, data: null }
-  return { status: res.status, data: (await res.json()) as T }
+  const ctl = new AbortController()
+  const timer = setTimeout(() => ctl.abort(), body === undefined ? 10000 : 20000)
+  try {
+    const res = await fetch(path, body === undefined
+      ? { headers: { accept: 'application/json' }, cache: 'no-store', signal: ctl.signal }
+      : { method: 'POST', headers: { 'content-type': 'application/json', accept: 'application/json' }, body: JSON.stringify(body), signal: ctl.signal })
+    /* a missing endpoint would answer with the SPA's HTML and a 200 */
+    if (!(res.headers.get('content-type') || '').includes('application/json')) return { status: 0, data: null }
+    return { status: res.status, data: (await res.json()) as T }
+  } finally {
+    clearTimeout(timer)
+  }
 }
 
 /* ---------------------------------------------------------------- Turnstile */
@@ -46,6 +77,7 @@ declare global {
 function useTurnstile(active: boolean, lang: string) {
   const ref = useRef<HTMLDivElement>(null)
   const [token, setToken] = useState('')
+  const [blocked, setBlocked] = useState(false)
   const widget = useRef<string | null>(null)
 
   useEffect(() => {
@@ -68,6 +100,7 @@ function useTurnstile(active: boolean, lang: string) {
       s.async = true
       s.dataset.turnstile = 'true'
       s.onload = mount
+      s.onerror = () => setBlocked(true)
       document.head.appendChild(s)
     } else {
       const t = window.setInterval(() => window.turnstile && (window.clearInterval(t), mount()), 200)
@@ -82,37 +115,52 @@ function useTurnstile(active: boolean, lang: string) {
     setToken('')
     if (window.turnstile && widget.current) window.turnstile.reset(widget.current)
   }
-  return { ref, token, reset, needed: !!TURNSTILE_KEY }
+  return { ref, token, reset, blocked, needed: !!TURNSTILE_KEY }
 }
 
 /* ---------------------------------------------------------------- fields */
+
+/* The phone keyboard's return key goes to the next field instead of sending
+   a half-filled form. The message box keeps return for new lines. */
+function nextField(e: { key: string; preventDefault(): void; currentTarget: HTMLInputElement }) {
+  if (e.key !== 'Enter') return
+  e.preventDefault()
+  const form = e.currentTarget.form
+  if (!form) return
+  const all = Array.from(form.querySelectorAll<HTMLElement>('input:not([name=website]), textarea'))
+  all[all.indexOf(e.currentTarget) + 1]?.focus()
+}
+
 function Field({
-  label, name, type = 'text', value, onChange, error, optional, autoComplete, inputMode, multiline, onBlur,
+  label, name, type = 'text', value, onChange, error, optional, autoComplete, inputMode, multiline, maxLength,
 }: {
   label: string; name: string; type?: string; value: string; onChange: (v: string) => void
   error?: string; optional?: string; autoComplete?: string; inputMode?: 'tel' | 'email' | 'text'; multiline?: boolean
-  onBlur?: () => void
+  maxLength: number
 }) {
   const id = `f-${name}`
-  const cls = `mt-0.5 w-full border bg-white px-1.5 py-1 text-body text-ink outline-none transition-colors focus:border-teal ${
-    error ? 'border-verm' : 'border-paper-edge-deep'
+  /* the field the visitor is sent to keeps its red edge while focused */
+  const cls = `mt-0.5 w-full border bg-white px-2 py-1 text-body text-ink outline-none transition-colors ${
+    error ? 'border-verm focus:shadow-[0_0_0_1px_#A14531]' : 'border-ink-mute focus:border-teal focus:shadow-[0_0_0_1px_#0E5266]'
   }`
+  const aria = { 'aria-invalid': !!error, 'aria-required': !optional, 'aria-describedby': error ? `${id}-e` : undefined }
   return (
     <div>
       <label htmlFor={id} className="text-small font-semibold text-ink">
         {label}
-        {optional && <span className="font-normal text-ink-mute"> · {optional}</span>}
+        {optional && <> <span className="whitespace-nowrap font-normal text-ink-soft">·&nbsp;{optional}</span></>}
       </label>
       {multiline ? (
-        <textarea id={id} name={name} rows={3} value={value} onChange={(e) => onChange(e.currentTarget.value)}
-          className={`${cls} resize-y`} aria-invalid={!!error} aria-describedby={error ? `${id}-e` : undefined} />
+        <textarea id={id} name={name} rows={3} value={value} maxLength={maxLength}
+          onChange={(e) => onChange(e.currentTarget.value)} className={`${cls} resize-y`} {...aria} />
       ) : (
-        <input id={id} name={name} type={type} value={value} onChange={(e) => onChange(e.currentTarget.value)}
-          autoComplete={autoComplete} inputMode={inputMode} className={cls} onBlur={onBlur}
+        <input id={id} name={name} type={type} value={value} maxLength={maxLength}
+          onChange={(e) => onChange(e.currentTarget.value)} onKeyDown={nextField}
+          autoComplete={autoComplete} inputMode={inputMode} enterKeyHint="next" className={cls}
           autoCapitalize={type === 'email' ? 'none' : undefined}
           autoCorrect={type === 'email' ? 'off' : undefined}
           spellCheck={type === 'email' ? false : undefined}
-          aria-invalid={!!error} aria-describedby={error ? `${id}-e` : undefined} />
+          {...aria} />
       )}
       {error && <p id={`${id}-e`} className="mt-0.5 text-small text-verm">{error}</p>}
     </div>
@@ -127,7 +175,7 @@ function showFirstError(err: Record<string, string>, order: string[]) {
   requestAnimationFrame(() => {
     const el = document.getElementById(`f-${first}`)
     if (!el) return
-    el.scrollIntoView({ block: 'center', behavior: 'smooth' })
+    el.scrollIntoView({ block: 'center', behavior: smooth() })
     el.focus({ preventScroll: true })
   })
 }
@@ -145,21 +193,42 @@ const Honeypot = ({ value, onChange }: { value: string; onChange: (v: string) =>
 const EMAIL = /^[^\s@<>(),;:"\\[\]]+@[^\s@<>(),;:"\\[\]]+\.[a-z]{2,}$/i
 const PHONE = /^[+()\d\s.-]{6,40}$/
 
-function Consent({ checked, onChange, error }: { checked: boolean; onChange: (v: boolean) => void; error?: string }) {
+function Consent({ checked, onChange, error, before }: { checked: boolean; onChange: (v: boolean) => void; error?: string; before: string }) {
   const { lang } = useRoute()
   const c = booking[lang].form
   return (
     <div>
       <label className="flex items-start gap-1 text-small text-ink-soft">
         <input id="f-consent" type="checkbox" checked={checked} onChange={(e) => onChange(e.currentTarget.checked)}
-          className="mt-0.5 h-[20px] w-[20px] shrink-0 accent-teal" aria-invalid={!!error} />
+          className="mt-0.5 h-[20px] w-[20px] shrink-0 accent-teal" aria-invalid={!!error}
+          aria-describedby={error ? 'f-consent-e' : undefined} />
         <span>
-          {c.consentBefore}
-          <Link to={pathFor(lang, 'privacy')} className="text-teal underline underline-offset-2">{c.consentLink}</Link>
+          {before}
+          {/* a new tab: reading the statement must not throw away the form */}
+          <a href={pathFor(lang, 'privacy')} target="_blank" rel="noopener" className="text-teal underline underline-offset-2">{c.consentLink}</a>
           {c.consentAfter}
         </span>
       </label>
-      {error && <p className="mt-0.5 text-small text-verm">{error}</p>}
+      {error && <p id="f-consent-e" className="mt-0.5 text-small text-verm">{error}</p>}
+    </div>
+  )
+}
+
+/** A failure the visitor can act on: the sentence, and WhatsApp when it says so. */
+function Fail({ text, wa }: { text: string; wa: boolean }) {
+  const { lang } = useRoute()
+  const c = booking[lang]
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => ref.current?.focus({ preventScroll: false }), [text])
+  return (
+    <div ref={ref} tabIndex={-1} role="alert" className="border-l-2 border-verm bg-white px-2 py-1 text-small text-ink outline-none">
+      <p>{text}</p>
+      {wa && (
+        <a className="mt-0.5 inline-flex min-h-[44px] items-center gap-0.5 font-semibold text-teal underline underline-offset-2" href={waLink(c.hero.waText)} rel="noopener">
+          <Bubble size={16} />
+          {c.errors.waCta}
+        </a>
+      )}
     </div>
   )
 }
@@ -167,24 +236,30 @@ function Consent({ checked, onChange, error }: { checked: boolean; onChange: (v:
 /* ---------------------------------------------------------------- booker */
 type Load = { state: 'loading' } | { state: 'error' } | { state: 'ready'; slots: number[] }
 type Step = 'pick' | 'form' | 'done'
+type Draft = { name: string; email: string; phone: string; business: string; message: string; website: string }
+const EMPTY: Draft = { name: '', email: '', phone: '', business: '', message: '', website: '' }
 
 export function Booker({ onRequest }: { onRequest: () => void }) {
   const { lang } = useRoute()
   const c = booking[lang]
   const zone = useMemo(visitorZone, [])
+  const zoneLabel = useMemo(() => zoneName(zone, lang), [zone, lang])
   const [load, setLoad] = useState<Load>({ state: 'loading' })
   const [day, setDay] = useState('')
   const [slot, setSlot] = useState<number | null>(null)
   const [step, setStep] = useState<Step>('pick')
   const [notice, setNotice] = useState('')
   const [result, setResult] = useState<{ start: number; meet: string | null; email: string } | null>(null)
+  /* what the visitor typed survives "Change" and "someone just took this time" */
+  const [draft, setDraft] = useState<Draft>(EMPTY)
+  const [consent, setConsent] = useState(false)
   const top = useRef<HTMLDivElement>(null)
 
   const fetchSlots = async () => {
     setLoad({ state: 'loading' })
     try {
       const { status, data } = await api<{ slots: string[] }>('/api/slots')
-      if (status !== 200 || !data) throw new Error('slots')
+      if (status !== 200 || !data || !Array.isArray(data.slots)) throw new Error('slots')
       const slots = data.slots.map((s) => Date.parse(s)).filter(Number.isFinite)
       setLoad({ state: 'ready', slots })
       return slots
@@ -215,67 +290,115 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
 
   const fmtTime = (ms: number) => new Intl.DateTimeFormat(LOCALE[lang], { timeZone: zone, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(ms)
   const fmtDay = (ms: number) => new Intl.DateTimeFormat(LOCALE[lang], { timeZone: zone, weekday: 'long', day: 'numeric', month: 'long' }).format(ms)
+  /* A day key is a calendar date, not an instant: format it in UTC, or a
+     visitor at UTC+13 sees every day labelled one day late. */
+  const fmtKey = (key: string) => new Intl.DateTimeFormat(LOCALE[lang], { timeZone: 'UTC', weekday: 'long', day: 'numeric', month: 'long' }).format(Date.parse(`${key}T12:00:00Z`))
 
-  const goStep = (s: Step) => {
+  /* Move to the step: scroll only when the card's top is out of sight, then
+     put focus somewhere that tells a screen reader where it is. */
+  const goStep = (s: Step, focus?: () => HTMLElement | null) => {
     setStep(s)
-    requestAnimationFrame(() => top.current?.scrollIntoView({ block: 'nearest', behavior: 'smooth' }))
+    requestAnimationFrame(() => {
+      const el = top.current
+      if (!el) return
+      const y = el.getBoundingClientRect().top
+      if (y < 64 || y > window.innerHeight - 160) el.scrollIntoView({ block: 'start', behavior: smooth() })
+      focus?.()?.focus({ preventScroll: true })
+    })
   }
+  const selectedDay = () => top.current?.querySelector<HTMLElement>('[aria-pressed="true"]') || null
 
-  /* ------- the calendar: from today, 15 days, laid out Monday-first */
+  /* ------- the calendar: 15 days, Monday-first. A first week with nothing
+     free (a Sunday, or late in the day) is dropped instead of shown grey. */
   const grid = useMemo(() => {
     const today = Date.parse(`${dayKey(Date.now(), zone)}T12:00:00Z`)
-    const days = Array.from({ length: 15 }, (_, i) => {
+    let days = Array.from({ length: 15 }, (_, i) => {
       const d = new Date(today + i * 86400000)
-      return { key: d.toISOString().slice(0, 10), num: d.getUTCDate(), dow: (d.getUTCDay() + 6) % 7 }
+      return { key: d.toISOString().slice(0, 10), num: d.getUTCDate(), dow: (d.getUTCDay() + 6) % 7, ms: d.getTime() }
     })
+    const firstWeek = 7 - days[0].dow
+    if (byDay.size && days.slice(0, firstWeek).every((d) => !byDay.has(d.key))) days = days.slice(firstWeek)
+    /* and a last row of days that are all past the last free time */
+    while (byDay.size && days.length > 7 && days[days.length - 1].dow < 6 && !byDay.has(days[days.length - 1].key)) {
+      const row = days.slice(days.length - 1 - days[days.length - 1].dow)
+      if (row.some((d) => byDay.has(d.key))) break
+      days = days.slice(0, days.length - row.length)
+    }
     const lead = days[0].dow
-    return { cells: [...Array.from({ length: lead }, () => null), ...days], month: new Date(today) }
-  }, [zone])
+    return { cells: [...Array.from({ length: lead }, () => null), ...days], first: days[0].ms, last: days[days.length - 1].ms }
+  }, [zone, byDay])
 
-  const monthLabel = new Intl.DateTimeFormat(LOCALE[lang], { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(grid.month)
+  /* "October – November 2026" when the two weeks cross a month */
+  const monthLabel = useMemo(() => {
+    const f = new Intl.DateTimeFormat(LOCALE[lang], { month: 'long', year: 'numeric', timeZone: 'UTC' })
+    const a = new Date(grid.first)
+    const b = new Date(grid.last)
+    if (a.getUTCMonth() === b.getUTCMonth()) return f.format(a)
+    const m = (d: Date, year: boolean) => new Intl.DateTimeFormat(LOCALE[lang], { month: 'long', ...(year ? { year: 'numeric' } : {}), timeZone: 'UTC' }).format(d)
+    return a.getUTCFullYear() === b.getUTCFullYear() ? `${m(a, false)} – ${m(b, true)}` : `${m(a, true)} – ${m(b, true)}`
+  }, [grid, lang])
+  const monthShort = (ms: number) => new Intl.DateTimeFormat(LOCALE[lang], { month: 'short', timeZone: 'UTC' }).format(ms).replace('.', '')
+
+  const daySlots = byDay.get(day) || []
 
   return (
-    <div ref={top} className="scroll-mt-9">
+    <div ref={top} className="scroll-mt-2">
       {step === 'done' && result ? (
-        <Done result={result} zone={zone} fmtDay={fmtDay} fmtTime={fmtTime} />
+        <Done result={result} fmtDay={fmtDay} fmtTime={fmtTime} zoneLabel={zoneLabel} />
       ) : step === 'form' && slot !== null ? (
         <BookForm
           slot={slot}
           zone={zone}
-          label={`${fmtDay(slot)} · ${fmtTime(slot)}`}
-          onBack={() => goStep('pick')}
+          zoneLabel={zoneLabel}
+          fmtDay={fmtDay}
+          fmtTime={fmtTime}
+          draft={draft}
+          setDraft={setDraft}
+          consent={consent}
+          setConsent={setConsent}
+          onBack={() => goStep('pick', selectedDay)}
           onDone={(r) => {
             setResult(r)
+            setDraft(EMPTY)
+            setConsent(false)
             goStep('done')
           }}
           onTaken={async (msg) => {
+            const taken = slot
             setNotice(msg)
             setSlot(null)
-            await fetchSlots()
-            goStep('pick')
+            /* drop it at once: the new list may take a moment */
+            setLoad((l) => (l.state === 'ready' ? { ...l, slots: l.slots.filter((x) => x !== taken) } : l))
+            goStep('pick', () => top.current?.querySelector<HTMLElement>('[data-notice]') || null)
+            const fresh = await fetchSlots()
+            if (fresh.includes(taken)) setLoad({ state: 'ready', slots: fresh.filter((x) => x !== taken) })
           }}
         />
       ) : (
         <div>
           {notice && (
-            <p role="alert" className="mb-2 border-l-2 border-verm bg-white px-1.5 py-1 text-small text-ink">
+            <p data-notice tabIndex={-1} role="alert" className="mb-2 border-l-2 border-verm bg-white px-2 py-1 text-small text-ink outline-none">
               {notice}
             </p>
           )}
 
-          <div className="flex items-baseline justify-between gap-1">
+          <div className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">
             <h3 className="font-display text-h4 font-bold text-ink">{c.pick.day}</h3>
-            <span className="text-small capitalize text-ink-mute">{monthLabel}</span>
+            {load.state === 'ready' && <span className="text-small capitalize text-ink-soft">{monthLabel}</span>}
           </div>
 
-          {load.state === 'loading' && <p className="mt-2 text-small text-ink-mute" aria-live="polite">{c.pick.loading}</p>}
+          {load.state === 'loading' && <p className="mt-2 text-small text-ink-soft" aria-live="polite">{c.pick.loading}</p>}
 
           {load.state === 'error' && (
-            <div className="mt-2 border-l-2 border-verm bg-white px-1.5 py-1">
+            <div role="alert" className="mt-2 border-l-2 border-verm bg-white px-2 py-1">
               <p className="text-small text-ink">{c.pick.unavailable}</p>
               <div className="mt-1 flex flex-wrap gap-1">
+                <button type="button" className="btn-teal" onClick={() => void fetchSlots()}>{c.pick.retry}</button>
                 <button type="button" className="btn-line" onClick={onRequest}>{c.hero.request}</button>
-                <a className="btn-teal" href={waLink(c.hero.waText)} rel="noopener">{c.hero.whatsapp}</a>
+                <a className="btn-line" href={waLink(c.hero.waText)} rel="noopener">
+                  <Bubble size={16} />
+                  {c.hero.whatsapp}
+                </a>
               </div>
             </div>
           )}
@@ -284,40 +407,47 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
             <>
               <div className="mt-2 grid grid-cols-7 gap-0.5 text-center" role="group" aria-label={c.pick.day}>
                 {c.pick.weekdays.map((w) => (
-                  <span key={w} className="pb-0.5 text-micro font-bold uppercase text-ink-mute">{w}</span>
+                  <span key={w} aria-hidden="true" className="pb-0.5 text-micro font-bold uppercase text-ink-soft">{w}</span>
                 ))}
                 {grid.cells.map((cell, i) => {
-                  if (!cell) return <span key={`b${i}`} />
+                  if (!cell) return <span key={`b${i}`} aria-hidden="true" />
                   const free = byDay.get(cell.key)?.length || 0
                   const on = day === cell.key
+                  /* the 1st of a new month carries its name, so "3" is never read as the wrong month */
+                  const tag = cell.num === 1 && i > 0 ? <span aria-hidden="true" className="absolute top-[2px] text-[9px] font-bold uppercase leading-none tracking-wide">{monthShort(cell.ms)}</span> : null
+                  if (!free)
+                    return (
+                      <span key={cell.key} aria-hidden="true" className="relative flex h-[44px] items-center justify-center text-small tabular-nums text-paper-dim">
+                        {tag}
+                        {cell.num}
+                      </span>
+                    )
                   return (
                     <button
                       key={cell.key}
                       type="button"
-                      disabled={!free}
                       aria-pressed={on}
-                      aria-label={free ? fmtDay(Date.parse(`${cell.key}T12:00:00Z`)) : undefined}
+                      aria-label={fmtKey(cell.key)}
                       onClick={() => {
                         setDay(cell.key)
                         setNotice('')
                       }}
-                      className={`relative flex h-5 items-center justify-center text-small font-semibold tabular-nums transition-colors ${
+                      className={`relative flex h-[44px] items-center justify-center border text-small font-semibold tabular-nums transition-colors ${
                         on
-                          ? 'mark-in bg-teal text-paper'
-                          : free
-                            ? 'mark-in bg-white text-ink hover:bg-teal hover:text-paper'
-                            : 'cursor-default text-paper-dim'
+                          ? 'mark-in border-teal bg-teal text-paper'
+                          : 'mark-in border-transparent bg-white text-ink hover:border-teal hover:text-teal'
                       }`}
                     >
+                      {tag}
                       {cell.num}
-                      {free > 0 && !on && <span aria-hidden="true" className="absolute bottom-0.5 h-[3px] w-[3px] rounded-full bg-teal" />}
+                      {!on && <span aria-hidden="true" className="day-dot absolute bottom-[5px] h-[3px] w-[3px] rounded-full bg-teal" />}
                     </button>
                   )
                 })}
               </div>
 
               {byDay.size === 0 ? (
-                <div className="mt-3 border-l-2 border-teal bg-white px-1.5 py-1">
+                <div className="mt-3 border-l-2 border-teal bg-white px-2 py-1">
                   <p className="text-small text-ink">{c.pick.noneAtAll}</p>
                   <div className="mt-1 flex flex-wrap gap-1">
                     <button type="button" className="btn-line" onClick={onRequest}>{c.hero.request}</button>
@@ -326,34 +456,32 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
                 </div>
               ) : (
                 <div className="mt-3">
-                  <h3 className="font-display text-h4 font-bold text-ink">
-                    {c.pick.time}
-                    {day && <span className="ml-1 text-small font-normal text-ink-mute first-letter:uppercase">{fmtDay(Date.parse(`${day}T12:00:00Z`))}</span>}
-                  </h3>
-                  <ul role="list" className="mt-1.5 grid grid-cols-3 gap-1 sm:grid-cols-4">
-                    {(byDay.get(day) || []).map((s) => (
+                  <h3 className="font-display text-h4 font-bold text-ink">{c.pick.time}</h3>
+                  {day && <p className="mt-0.5 text-small text-ink-soft first-letter:uppercase">{fmtKey(day)}</p>}
+                  <ul role="list" className="mt-2 grid grid-cols-3 gap-1 sm:grid-cols-4">
+                    {daySlots.map((s) => (
                       <li key={s}>
                         <button
                           type="button"
+                          aria-label={`${fmtDay(s)}, ${fmtTime(s)}`}
                           onClick={() => {
                             setSlot(s)
                             setNotice('')
-                            goStep('form')
+                            goStep('form', () => document.getElementById('slot-title'))
                           }}
-                          className="mark-out w-full border border-teal bg-white py-1 text-small font-semibold tabular-nums text-teal transition-colors hover:bg-teal hover:text-paper"
+                          className="mark-out flex h-6 w-full items-center justify-center border border-teal bg-white text-small font-semibold tabular-nums text-teal transition-colors hover:bg-teal hover:text-paper"
                         >
                           {fmtTime(s)}
                         </button>
                       </li>
                     ))}
                   </ul>
-                  {(byDay.get(day) || []).length === 0 && <p className="text-small text-ink-mute">{c.pick.noSlotsDay}</p>}
+                  {daySlots.length === 0 && <p className="text-small text-ink-soft">{c.pick.noSlotsDay}</p>}
+                  <p className="mt-2 text-small text-ink-soft">{c.card.tz(zoneLabel)}</p>
                 </div>
               )}
             </>
           )}
-
-          <p className="mt-3 text-micro normal-case tracking-normal text-ink-mute">{c.card.tz(zone)}</p>
         </div>
       )}
     </div>
@@ -362,28 +490,32 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
 
 /* ---------------------------------------------------------------- the form */
 function BookForm({
-  slot, zone, label, onBack, onDone, onTaken,
+  slot, zone, zoneLabel, fmtDay, fmtTime, draft: v, setDraft, consent, setConsent, onBack, onDone, onTaken,
 }: {
-  slot: number; zone: string; label: string; onBack: () => void
+  slot: number; zone: string; zoneLabel: string
+  fmtDay: (n: number) => string; fmtTime: (n: number) => string
+  draft: Draft; setDraft: (f: (d: Draft) => Draft) => void
+  consent: boolean; setConsent: (v: boolean) => void
+  onBack: () => void
   onDone: (r: { start: number; meet: string | null; email: string }) => void
   onTaken: (msg: string) => void
 }) {
   const { lang } = useRoute()
   const c = booking[lang]
-  const [v, setV] = useState({ name: '', email: '', phone: '', business: '', message: '', website: '' })
-  const [consent, setConsent] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [busy, setBusy] = useState(false)
-  const [fail, setFail] = useState('')
-  const openedAt = useRef(Date.now())
+  const [fail, setFail] = useState<{ text: string; wa: boolean } | null>(null)
+  /* a duration, not a timestamp: the visitor's clock may be wrong */
+  const openedAt = useRef(performance.now())
   const ts = useTurnstile(true, lang)
-  const set = (k: keyof typeof v) => (x: string) => {
-    setV((o) => ({ ...o, [k]: x }))
+  const set = (k: keyof Draft) => (x: string) => {
+    setDraft((o) => ({ ...o, [k]: x }))
     setErrors((e) => (e[k] ? { ...e, [k]: '' } : e))
   }
 
   const submit = async (e: { preventDefault(): void }) => {
     e.preventDefault()
+    if (busy) return
     const err: Record<string, string> = {}
     if (!v.name.trim()) err.name = c.form.required
     if (!EMAIL.test(v.email.trim())) err.email = v.email.trim() ? c.form.badEmail : c.form.required
@@ -391,20 +523,27 @@ function BookForm({
     if (!v.business.trim()) err.business = c.form.required
     if (!consent) err.consent = c.form.needConsent
     setErrors(err)
-    setFail('')
+    setFail(null)
     if (Object.keys(err).length) return showFirstError(err, ['name', 'business', 'email', 'phone', 'consent'])
+    if (ts.needed && !ts.token) return setFail(ts.blocked ? { text: c.errors.generic, wa: true } : { text: c.errors.verifying, wa: false })
     setBusy(true)
     try {
-      const { status, data } = await api<{ ok?: boolean; error?: string; meet?: string | null }>('/api/book', {
-        ...v, start: new Date(slot).toISOString(), lang, zone, consent, openedAt: openedAt.current, turnstile: ts.token,
+      const { status, data } = await api<{ ok?: boolean; error?: string; meet?: string | null; start?: string }>('/api/book', {
+        ...v, start: new Date(slot).toISOString(), lang, zone, consent,
+        elapsed: Math.round(performance.now() - openedAt.current), turnstile: ts.token,
       })
       if (status === 200 && data?.ok) return onDone({ start: slot, meet: data.meet || null, email: v.email.trim() })
       const code = data?.error
       if (code === 'slot_taken' || code === 'slot_invalid') return onTaken(c.errors.slot_taken)
-      setFail(code === 'already_booked' ? c.errors.already_booked : code === 'bot' ? c.errors.bot : c.errors.generic)
+      if (code === 'invalid_phone') return setErrors({ phone: c.form.badPhone }), showFirstError({ phone: '1' }, ['phone'])
+      if (code === 'already_booked') {
+        const at = data?.start ? Date.parse(data.start) : NaN
+        setFail({ text: c.errors.already_booked(Number.isFinite(at) ? `${fmtDay(at)}, ${fmtTime(at)}` : ''), wa: true })
+      } else if (code === 'bot') setFail({ text: c.errors.bot, wa: false })
+      else setFail({ text: c.errors.generic, wa: true })
       ts.reset()
     } catch {
-      setFail(c.errors.generic)
+      setFail({ text: c.errors.generic, wa: true })
     } finally {
       setBusy(false)
     }
@@ -412,29 +551,32 @@ function BookForm({
 
   return (
     <form onSubmit={submit} noValidate className="relative grid gap-2">
-      <div className="flex items-start justify-between gap-1 border-b border-paper-edge pb-1.5">
+      <div className="flex items-start justify-between gap-1 border-b border-paper-edge-deep pb-2">
         <div>
           <p className="t-label">{c.card.title}</p>
-          <p className="mt-0.5 font-display text-h4 font-bold text-ink first-letter:uppercase">{label}</p>
+          <h3 id="slot-title" tabIndex={-1} className="mt-0.5 font-display text-h4 font-bold text-ink outline-none">
+            <span className="block first-letter:uppercase">{fmtDay(slot)}</span>
+            <span className="block tabular-nums">{fmtTime(slot)}–{fmtTime(slot + CALL_MS)}</span>
+          </h3>
+          <p className="mt-0.5 text-small text-ink-soft">{c.card.tz(zoneLabel)}</p>
         </div>
-        <button type="button" onClick={onBack} className="shrink-0 text-small font-semibold text-teal underline underline-offset-2">
+        <button type="button" onClick={onBack} aria-label={c.pick.changeLabel}
+          className="-mr-1 -mt-1 inline-flex min-h-[44px] shrink-0 items-center px-1 text-small font-semibold text-teal underline underline-offset-2">
           {c.pick.change}
         </button>
       </div>
 
       <h3 className="font-display text-h4 font-bold text-ink">{c.form.title}</h3>
-      <div className="grid gap-2 sm:grid-cols-2">
-        <Field label={c.form.name} name="name" value={v.name} onChange={set('name')} error={errors.name} autoComplete="name" />
-        <Field label={c.form.business} name="business" value={v.business} onChange={set('business')} error={errors.business} autoComplete="organization" />
-        <Field label={c.form.email} name="email" type="email" inputMode="email" value={v.email} onChange={set('email')} error={errors.email} autoComplete="email"
-          onBlur={() => {
-            if (v.email.trim() && !EMAIL.test(v.email.trim())) setErrors((e) => ({ ...e, email: c.form.badEmail }))
-          }} />
-        <Field label={c.form.phone} name="phone" type="tel" inputMode="tel" value={v.phone} onChange={set('phone')} error={errors.phone} autoComplete="tel" />
+      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+        <Field label={c.form.name} name="name" value={v.name} onChange={set('name')} error={errors.name} autoComplete="name" maxLength={80} />
+        <Field label={c.form.business} name="business" value={v.business} onChange={set('business')} error={errors.business} autoComplete="organization" maxLength={120} />
+        <Field label={c.form.email} name="email" type="email" inputMode="email" value={v.email} onChange={set('email')} error={errors.email} autoComplete="email" maxLength={254} />
+        <Field label={c.form.phone} name="phone" type="tel" inputMode="tel" value={v.phone} onChange={set('phone')} error={errors.phone} autoComplete="tel" maxLength={40} />
       </div>
-      <Field label={c.form.message} name="message" optional={c.form.optional} value={v.message} onChange={set('message')} multiline />
+      <Field label={c.form.message} name="message" optional={c.form.optional} value={v.message} onChange={set('message')} multiline maxLength={1500} />
       <Honeypot value={v.website} onChange={set('website')} />
       <Consent
+        before={c.form.consentBefore}
         checked={consent}
         onChange={(on) => {
           setConsent(on)
@@ -443,18 +585,13 @@ function BookForm({
         error={errors.consent}
       />
       {ts.needed && <div ref={ts.ref} />}
-      {fail && (
-        <p role="alert" className="border-l-2 border-verm bg-white px-1.5 py-1 text-small text-ink">
-          {fail}{' '}
-          <a className="text-teal underline" href={waLink(c.hero.waText)} rel="noopener">WhatsApp</a>
-        </p>
-      )}
-      <div className="flex flex-wrap items-center gap-1">
-        <button type="submit" disabled={busy} className="btn-teal disabled:opacity-60">
+      {fail && <Fail text={fail.text} wa={fail.wa} />}
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+        <button type="submit" aria-disabled={busy} className={`btn-teal ${busy ? 'cursor-wait opacity-60' : ''}`}>
           {busy ? c.form.sending : c.form.submit}
           {!busy && <Arrow />}
         </button>
-        <button type="button" onClick={onBack} className="text-small font-semibold text-ink-soft underline underline-offset-2">
+        <button type="button" onClick={onBack} className="inline-flex min-h-[44px] items-center px-1 text-small font-semibold text-ink-soft underline underline-offset-2">
           {c.pick.back}
         </button>
       </div>
@@ -478,40 +615,44 @@ function withAddress(sentence: (email: string) => string, email: string) {
 const stamp = (ms: number) => new Date(ms).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')
 
 function Done({
-  result, fmtDay, fmtTime,
+  result, fmtDay, fmtTime, zoneLabel,
 }: {
-  result: { start: number; meet: string | null; email: string }; zone: string
-  fmtDay: (n: number) => string; fmtTime: (n: number) => string
+  result: { start: number; meet: string | null; email: string }
+  fmtDay: (n: number) => string; fmtTime: (n: number) => string; zoneLabel: string
 }) {
   const { lang } = useRoute()
   const c = booking[lang]
-  const end = result.start + 15 * 60000
+  const end = result.start + CALL_MS
   const add = `https://calendar.google.com/calendar/render?${new URLSearchParams({
-    action: 'TEMPLATE', text: 'Twinbyte — discovery call', dates: `${stamp(result.start)}/${stamp(end)}`, details: result.meet || '',
+    action: 'TEMPLATE', text: `Twinbyte — ${c.card.title.replace(/\u00AD/g, '')}`, dates: `${stamp(result.start)}/${stamp(end)}`, details: result.meet || '',
   })}`
   const heading = useRef<HTMLHeadingElement>(null)
-  useEffect(() => heading.current?.focus(), [])
+  useEffect(() => heading.current?.focus({ preventScroll: true }), [])
   return (
-    <div className="animate-rise" aria-live="polite">
+    <div className="animate-rise">
       <span aria-hidden="true" className="mark-in flex h-5 w-5 items-center justify-center bg-teal text-paper">
         <Diary size={20} />
       </span>
       <h3 ref={heading} tabIndex={-1} className="mt-2 font-display text-h3 font-bold text-ink outline-none">{c.done.title}</h3>
-      <p className="mt-1 font-display text-h4 font-bold text-teal first-letter:uppercase">
-        {fmtDay(result.start)} · {fmtTime(result.start)}
+      <p className="mt-1 font-display text-h4 font-bold text-teal">
+        <span className="block first-letter:uppercase">{fmtDay(result.start)}</span>
+        <span className="block tabular-nums">{fmtTime(result.start)}–{fmtTime(end)}</span>
       </p>
+      <p className="mt-0.5 text-small text-ink-soft">{c.card.tz(zoneLabel)}</p>
       <p className="t-body mt-2">{withAddress(c.done.body, result.email)}</p>
-      <div className="mt-3 flex flex-col gap-1 sm:flex-row sm:flex-wrap">
+      <p className="t-body mt-1">{c.done.next}</p>
+      {/* the call may be days away: putting it in the calendar comes first */}
+      <div className="mt-3 grid max-w-[22rem] gap-1">
+        <a className="btn-teal" href={add} target="_blank" rel="noopener">
+          {c.done.add}
+          <Arrow />
+        </a>
         {result.meet && (
-          <a className="btn-teal" href={result.meet} target="_blank" rel="noopener">
-            {c.done.meet}
-            <Arrow />
-          </a>
+          <a className="btn-line" href={result.meet} target="_blank" rel="noopener">{c.done.meet}</a>
         )}
-        <a className="btn-line" href={add} target="_blank" rel="noopener">{c.done.add}</a>
       </div>
       <p className="mt-3 text-small">
-        <a className="inline-flex items-center gap-0.5 text-teal underline underline-offset-2" href={waLink(c.hero.waText)} rel="noopener">
+        <a className="inline-flex min-h-[44px] items-center gap-0.5 text-teal underline underline-offset-2" href={waLink(c.hero.waText)} rel="noopener">
           <Bubble size={16} />
           {c.done.whatsapp}
         </a>
@@ -524,21 +665,33 @@ function Done({
 export function RequestForm({ onBack }: { onBack: () => void }) {
   const { lang } = useRoute()
   const c = booking[lang]
-  const [v, setV] = useState({ name: '', email: '', phone: '', business: '', message: '', website: '' })
+  const [v, setV] = useState<Draft>(EMPTY)
   const [consent, setConsent] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [busy, setBusy] = useState(false)
-  const [fail, setFail] = useState('')
+  const [fail, setFail] = useState<{ text: string; wa: boolean } | null>(null)
   const [sent, setSent] = useState('')
-  const openedAt = useRef(Date.now())
+  const openedAt = useRef(performance.now())
   const ts = useTurnstile(!sent, lang)
-  const set = (k: keyof typeof v) => (x: string) => {
+  const heading = useRef<HTMLHeadingElement>(null)
+  const set = (k: keyof Draft) => (x: string) => {
     setV((o) => ({ ...o, [k]: x }))
     setErrors((e) => (e[k] ? { ...e, [k]: '' } : e))
   }
 
+  /* The thank-you is much shorter than the form: without this it lands above
+     the screen on a phone and pressing "Send" looks like it did nothing. */
+  useEffect(() => {
+    if (!sent) return
+    requestAnimationFrame(() => {
+      document.getElementById('book')?.scrollIntoView({ block: 'start', behavior: smooth() })
+      heading.current?.focus({ preventScroll: true })
+    })
+  }, [sent])
+
   const submit = async (e: { preventDefault(): void }) => {
     e.preventDefault()
+    if (busy) return
     const err: Record<string, string> = {}
     if (!v.name.trim()) err.name = c.form.required
     if (!EMAIL.test(v.email.trim())) err.email = v.email.trim() ? c.form.badEmail : c.form.required
@@ -546,18 +699,20 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
     if (!v.message.trim()) err.message = c.form.required
     if (!consent) err.consent = c.form.needConsent
     setErrors(err)
-    setFail('')
-    if (Object.keys(err).length) return showFirstError(err, ['name', 'email', 'phone', 'message', 'consent'])
+    setFail(null)
+    if (Object.keys(err).length) return showFirstError(err, ['name', 'email', 'business', 'phone', 'message', 'consent'])
+    if (ts.needed && !ts.token) return setFail(ts.blocked ? { text: c.errors.generic, wa: true } : { text: c.errors.verifying, wa: false })
     setBusy(true)
     try {
       const { status, data } = await api<{ ok?: boolean; error?: string }>('/api/request', {
-        ...v, lang, consent, openedAt: openedAt.current, turnstile: ts.token,
+        ...v, lang, consent, elapsed: Math.round(performance.now() - openedAt.current), turnstile: ts.token,
       })
       if (status === 200 && data?.ok) return setSent(v.email.trim())
-      setFail(data?.error === 'bot' ? c.errors.bot : c.errors.generic)
+      if (data?.error === 'invalid_phone') return setErrors({ phone: c.form.badPhone }), showFirstError({ phone: '1' }, ['phone'])
+      setFail(data?.error === 'bot' ? { text: c.errors.bot, wa: false } : { text: c.errors.generic, wa: true })
       ts.reset()
     } catch {
-      setFail(c.errors.generic)
+      setFail({ text: c.errors.generic, wa: true })
     } finally {
       setBusy(false)
     }
@@ -565,8 +720,11 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
 
   if (sent)
     return (
-      <div className="animate-rise" aria-live="polite">
-        <h3 className="font-display text-h3 font-bold text-ink">{c.request.title}</h3>
+      <div className="animate-rise">
+        <span aria-hidden="true" className="mark-in flex h-5 w-5 items-center justify-center bg-teal text-paper">
+          <Bubble size={20} />
+        </span>
+        <h3 ref={heading} tabIndex={-1} className="mt-2 font-display text-h3 font-bold text-ink outline-none">{c.request.doneTitle}</h3>
         <p className="t-body mt-2">{withAddress(c.request.done, sent)}</p>
         <button type="button" onClick={onBack} className="btn-line mt-3">{c.request.back}</button>
       </div>
@@ -576,20 +734,18 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
     <form onSubmit={submit} noValidate className="relative grid gap-2">
       <div>
         <h3 className="font-display text-h3 font-bold text-ink">{c.request.title}</h3>
-        <p className="t-body mt-1 text-small">{c.request.lead}</p>
+        <p className="mt-1 text-small text-ink-soft">{c.request.lead}</p>
       </div>
       <div className="grid gap-2 sm:grid-cols-2">
-        <Field label={c.form.name} name="name" value={v.name} onChange={set('name')} error={errors.name} autoComplete="name" />
-        <Field label={c.form.email} name="email" type="email" inputMode="email" value={v.email} onChange={set('email')} error={errors.email} autoComplete="email"
-          onBlur={() => {
-            if (v.email.trim() && !EMAIL.test(v.email.trim())) setErrors((e) => ({ ...e, email: c.form.badEmail }))
-          }} />
-        <Field label={c.form.business} name="business" optional={c.form.optional} value={v.business} onChange={set('business')} autoComplete="organization" />
-        <Field label={c.form.phone} name="phone" type="tel" inputMode="tel" optional={c.form.optional} value={v.phone} onChange={set('phone')} error={errors.phone} autoComplete="tel" />
+        <Field label={c.form.name} name="name" value={v.name} onChange={set('name')} error={errors.name} autoComplete="name" maxLength={80} />
+        <Field label={c.form.email} name="email" type="email" inputMode="email" value={v.email} onChange={set('email')} error={errors.email} autoComplete="email" maxLength={254} />
+        <Field label={c.form.business} name="business" optional={c.form.optional} value={v.business} onChange={set('business')} autoComplete="organization" maxLength={120} />
+        <Field label={c.form.phone} name="phone" type="tel" inputMode="tel" optional={c.form.optional} value={v.phone} onChange={set('phone')} error={errors.phone} autoComplete="tel" maxLength={40} />
       </div>
-      <Field label={c.request.message} name="message" value={v.message} onChange={set('message')} error={errors.message} multiline />
+      <Field label={c.request.message} name="message" value={v.message} onChange={set('message')} error={errors.message} multiline maxLength={3000} />
       <Honeypot value={v.website} onChange={set('website')} />
       <Consent
+        before={c.request.consentBefore}
         checked={consent}
         onChange={(on) => {
           setConsent(on)
@@ -598,12 +754,13 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
         error={errors.consent}
       />
       {ts.needed && <div ref={ts.ref} />}
-      {fail && <p role="alert" className="border-l-2 border-verm bg-white px-1.5 py-1 text-small text-ink">{fail}</p>}
-      <div className="flex flex-wrap items-center gap-1">
-        <button type="submit" disabled={busy} className="btn-teal disabled:opacity-60">
-          {busy ? c.form.sending : c.request.submit}
+      {fail && <Fail text={fail.text} wa={fail.wa} />}
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+        <button type="submit" aria-disabled={busy} className={`btn-teal ${busy ? 'cursor-wait opacity-60' : ''}`}>
+          {busy ? c.request.sending : c.request.submit}
+          {!busy && <Arrow />}
         </button>
-        <button type="button" onClick={onBack} className="text-small font-semibold text-ink-soft underline underline-offset-2">
+        <button type="button" onClick={onBack} className="inline-flex min-h-[44px] items-center px-1 text-small font-semibold text-ink-soft underline underline-offset-2">
           {c.request.back}
         </button>
       </div>

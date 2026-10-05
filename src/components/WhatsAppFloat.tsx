@@ -6,7 +6,7 @@ import { Bubble } from './marks'
 
 /* One floating button, bottom right, always the same: write to us. */
 export function WhatsAppFloat() {
-  const { lang } = useRoute()
+  const { lang, page } = useRoute()
   const c = booking[lang]
   /* While a field has focus the keyboard is up and the form fills the screen;
      the button would sit on the inputs, so it steps aside until typing stops. */
@@ -27,12 +27,15 @@ export function WhatsAppFloat() {
     }
   }, [])
   if (typing) return null
+  /* On the phone home page WhatsApp is already under the card and in the
+     closing band, and the button would sit on the time slots. */
+  const where = page === 'home' ? 'hidden sm:inline-flex' : 'inline-flex'
   return (
     <a
       href={waLink(c.hero.waText)}
       rel="noopener"
       aria-label={`${c.hero.whatsapp}`}
-      className="mark-out fixed bottom-2 right-2 z-40 inline-flex h-6 w-6 items-center justify-center gap-1 border border-ink-edge bg-ink text-small font-semibold text-paper shadow-[3px_3px_0_#0E5266] transition-colors hover:bg-teal sm:bottom-3 sm:right-3 sm:h-auto sm:w-auto sm:px-2 sm:py-1.5"
+      className={`mark-out fixed bottom-2 right-2 z-40 ${where} h-6 w-6 items-center justify-center gap-1 border border-ink-edge bg-ink text-small font-semibold text-paper shadow-[3px_3px_0_#0E5266] transition-colors hover:bg-teal sm:bottom-3 sm:right-3 sm:h-auto sm:w-auto sm:px-2 sm:py-1 focus-visible:outline-paper focus-visible:shadow-[0_0_0_4px_#17160F]`}
     >
       <Bubble size={18} />
       {/* on a phone the label goes: the button would sit on the form */}

@@ -17,9 +17,9 @@ export const onRequestGet = async ({ env }: Ctx) => {
     return new Response(JSON.stringify({ zone: r.zone, minutes: 15, slots }), {
       headers: {
         'content-type': 'application/json; charset=utf-8',
-        /* a few seconds of edge cache absorbs a burst of visitors from one post,
-           and is short enough that a slot taken a minute ago is not offered */
-        'cache-control': 'public, max-age=15',
+        /* never reused: after "someone just took this time" the page asks
+           again and must not get the old list back from the browser cache */
+        'cache-control': 'no-store',
         'x-content-type-options': 'nosniff',
       },
     })

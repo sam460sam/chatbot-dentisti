@@ -49,7 +49,7 @@ export const en: Translation = {
         { label: 'First three months', value: '\u20AC0', was: 'instead of \u20AC108 a month' },
         { label: 'From month four', value: '\u20AC79', was: 'instead of \u20AC108' },
       ],
-      savingLabel: 'Saved in the first three months',
+      savingLabel: 'Saved compared with buying both separately (set-up + first three months)',
       saving: '\u20AC864',
     },
     bar: {
@@ -227,12 +227,12 @@ export const en: Translation = {
       'Pages written with you — your words, no filler text',
       'Set up properly for Google: titles, descriptions, your business on the map',
       'Contact routes that actually get used: WhatsApp, phone, email',
-      'Hosting on a free plan, so there is no monthly hosting bill',
+      'Hosting and small changes are in the monthly fee, no separate hosting bill',
       'No cookies and no tracking, so no banner in your customer\u2019s face',
     ],
     whoTitle: 'Who it suits',
     who: 'Shops, workshops, trades, practices, studios, anyone who is looked up on a phone before being called. If you need a web shop with hundreds of products, we are not the right people and we will say so.',
-    quoteNote: 'Price and timing after a ten-minute call: it depends on how many pages you need and whether you already have text and photos.',
+    quoteNote: 'The prices are on the Prices page. In the free 15-minute call we agree the plan and the timing: that depends on how many pages you need and whether you already have text and photos.',
     showcase: 'See a page built to show off',
   },
   faq: {
@@ -273,8 +273,8 @@ export const en: Translation = {
     regions: 'We work remotely with businesses anywhere in the world. Wherever you are, the assistant answers in your customers’ language.',
   },
   footer: {
-    tagline: 'Digital assistant for small businesses and websites that load fast.',
-    colophon: 'Set in Bricolage Grotesque and Inter. Built in the Netherlands. This site sets no cookies, runs no analytics and loads no tracking pixels.',
+    tagline: 'Digital assistants and fast websites for small businesses.',
+    colophon: 'Set in Bricolage Grotesque, Inter and Instrument Serif. Built in the Netherlands. This site sets no cookies, runs no analytics and loads no tracking pixels.',
     privacy: 'Privacy statement',
     rights: 'All rights reserved.',
   },
@@ -282,7 +282,7 @@ export const en: Translation = {
     title: 'Privacy statement',
     updated: 'Last updated',
     intro:
-      'This statement explains what happens to personal data on this website and when you get in touch with us. It is deliberately short, because this website collects almost nothing.',
+      'This statement explains what happens to personal data on this website and when you get in touch with us. It is deliberately short: the website sets no cookies and tracks nothing. We only receive what you type yourself into a form (to book a call or send a request) or into the chat on the Digital assistant page.',
     sections: [
       {
         title: 'Who we are',
@@ -303,9 +303,9 @@ export const en: Translation = {
         ],
       },
       {
-        title: 'The assistant on this page',
+        title: 'The assistant on the Digital assistant page',
         body: [
-          'The chat bubble in the bottom right is our own assistant, and it is the one thing on this page that your browser loads from somewhere else. The script comes from a server we run at Vercel, and the answers from a server we run at Railway. Because your browser requests them directly, those two providers see your IP address and browser type.',
+          'The chat window opens only on the Digital assistant page; no other page loads it. It is our own assistant. The script comes from a server we run at Vercel, and the answers from a server we run at Railway. Because your browser requests them directly, those two providers see your IP address and browser type.',
           'If you open the chat, what you type is sent to that server to be answered, together with the language of the page. Please do not put anything in it you would not send us by email — for a booking or an offer, write to us on WhatsApp or at info@twinbyteservices.com instead.',
         ],
       },

@@ -14,7 +14,7 @@ import { candidateSlots } from '../_lib/slots.ts'
 import { google, json, readJson, looksHuman, asLang, asZone, text, reportFailure } from '../_lib/http.ts'
 import { isAddress } from '../_lib/mail.ts'
 import { meetLink } from '../_lib/google.ts'
-import { visitorConfirmation, ownerBooking, type Booking } from '../_lib/emails.ts'
+import { visitorConfirmation, ownerBooking, callTitle, type Booking } from '../_lib/emails.ts'
 import { waLink, type Ctx } from '../_lib/ctx.ts'
 
 export const onRequestPost = async ({ request, env, waitUntil }: Ctx) => {
@@ -53,10 +53,11 @@ export const onRequestPost = async ({ request, env, waitUntil }: Ctx) => {
 
     const lines = [
       `Name: ${b.name}`, `Business: ${b.business}`, `Phone: ${b.phone}`, `Email: ${b.email}`,
-      `Language: ${b.lang.toUpperCase()}`, `Their time zone: ${b.zone}`, '', b.message || '(no message)',
+      `Language: ${b.lang.toUpperCase()}`, `Time zone: ${b.zone}`, '', b.message || '(no message)',
     ]
     let ev = await g.insert({
-      summary: `Twinbyte call — ${b.name}${b.business ? ` (${b.business})` : ''}`,
+      /* the visitor gets this event as their invitation, so it speaks their language */
+      summary: `${callTitle(b.lang)} — ${b.name}${b.business ? ` (${b.business})` : ''}`,
       description: lines.join('\n'),
       start: b.start, end: b.end, zone: r.zone, attendee: b.email,
       privateProps: { tbBooking: '1', tbEmail: b.email, tbLang: b.lang },

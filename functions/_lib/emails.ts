@@ -24,6 +24,9 @@ export function addToGoogle(start: number, end: number, title: string, details: 
   return `https://calendar.google.com/calendar/render?${q}`
 }
 
+const TITLE = { en: 'Twinbyte — discovery call', nl: 'Twinbyte — kennismakingsgesprek', it: 'Twinbyte — chiamata conoscitiva' } as const
+export const callTitle = (lang: Lang) => TITLE[lang]
+
 const COPY = {
   en: {
     subject: (d: string, t: string) => `Your call with Twinbyte — ${d}, ${t}`,
@@ -86,7 +89,7 @@ export interface Booking {
 export function visitorConfirmation(b: Booking, from: string, wa: string): string {
   const c = COPY[b.lang]
   const { date, time } = when(b.start, b.lang, b.zone)
-  const add = addToGoogle(b.start, b.end, 'Twinbyte — discovery call', b.meet || '')
+  const add = addToGoogle(b.start, b.end, TITLE[b.lang], b.meet || '')
   const meetLine = b.meet ? `${c.meet}: ${b.meet}` : ''
   const text = [
     c.hello(b.name), '', c.booked, '',

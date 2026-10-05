@@ -53,11 +53,14 @@ export function Footer({ t }: { t: Translation }) {
         </ul>
       </div>
 
-      <div className="container-page rule-ink flex flex-col gap-1 py-3 text-micro text-paper-mute sm:flex-row sm:items-baseline sm:justify-between">
-        <p className="max-w-measure normal-case tracking-normal">{t.footer.colophon}</p>
-        <p className="tabular-nums normal-case tracking-normal">
-          © {year} Twinbyte. {t.footer.rights}
-        </p>
+      {/* the bottom padding keeps the last line clear of the floating WhatsApp button */}
+      <div className="container-page">
+        <div className="rule-ink flex flex-col gap-1 pb-9 pt-3 text-micro text-paper-mute sm:flex-row sm:items-baseline sm:justify-between">
+          <p className="max-w-measure normal-case tracking-normal">{t.footer.colophon}</p>
+          <p className="tabular-nums normal-case tracking-normal">
+            © {year} Twinbyte. {t.footer.rights}
+          </p>
+        </div>
       </div>
     </footer>
   )

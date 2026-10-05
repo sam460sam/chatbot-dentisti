@@ -22,7 +22,7 @@ export const nl: Translation = {
     title: 'De website die uw afspraken inplant.',
     lead: 'Wij bouwen de site, en de assistent erop beantwoordt uw klanten en vult uw agenda, op elk uur.',
     ctaQuote: 'Bekijk wat het kost',
-    ctaDemo: 'Zie hem een afspraak maken',
+    ctaDemo: 'Kijk hoe hij een afspraak maakt',
   },
   heroSite: {
     url: 'uw-bedrijf.nl',
@@ -49,7 +49,7 @@ export const nl: Translation = {
         { label: 'Eerste drie maanden', value: '\u20AC0', was: 'in plaats van \u20AC108 per maand' },
         { label: 'Vanaf maand vier', value: '\u20AC79', was: 'in plaats van \u20AC108' },
       ],
-      savingLabel: 'Bespaard in de eerste drie maanden',
+      savingLabel: 'Bespaard ten opzichte van los kopen (eenmalig + eerste drie maanden)',
       saving: '\u20AC864',
     },
     bar: {
@@ -104,7 +104,7 @@ export const nl: Translation = {
     title: 'Twee diensten, allebei goed gedaan',
     assistant: {
       tag: 'Digitale assistent',
-      title: 'Verlies niet langer de oproepen die u nooit hoort',
+      title: 'Verlies geen telefoontjes meer die u nooit hoort',
       body: 'Hij staat op de website die u al heeft en behandelt de vragen en afspraken die u anders telefonisch aanneemt: ’s avonds, in het weekend, terwijl u bij een klant bent.',
       points: [
         'Antwoordt binnen seconden, alleen met uw informatie',
@@ -147,11 +147,11 @@ export const nl: Translation = {
       {
         kick: 'In elkaar gezet',
         title: 'Niets van de plank.',
-        body: 'Geen sjabloon met uw logo erin geplakt. De onderdelen zijn gesneden voor uw bedrijf en met de hand gemonteerd, in de volgorde waarin ze horen.',
+        body: 'Geen sjabloon met uw logo erin geplakt. De onderdelen zijn op maat gesneden voor uw bedrijf en met de hand in elkaar gezet, in de volgorde waarin ze horen.',
       },
       {
         kick: 'Opgeleverd',
-        title: 'Dicht, getest, van u.',
+        title: 'Afgerond, getest, van u.',
         body: 'Eén afgewerkt geheel dat werkt op een telefoon, voor een prijs die op de pagina staat, per maand opzegbaar.',
       },
     ],
@@ -159,7 +159,7 @@ export const nl: Translation = {
   },
   dayStrip: {
     eyebrow: 'Een dinsdag',
-    title: 'U bent acht van deze vierentwintig uren open',
+    title: 'U bent acht van deze vierentwintig uur open',
     caption: 'De andere zestien zijn van niemand. Wie om 21:40 schrijft is niet lastig — dat is het uur waarop hij eindelijk ging zitten.',
     legendOpen: 'Open — u antwoordt',
     legendShut: 'Dicht — de assistent antwoordt',
@@ -177,7 +177,7 @@ export const nl: Translation = {
         body: 'Eén regel code op de site die u al heeft. Niets te installeren, verder verandert er niets. Een WhatsApp-versie volgt binnenkort.',
       },
       {
-        title: 'Klanten plannen zelf',
+        title: 'Klanten plannen zelf een afspraak',
         body: 'De assistent kijkt wanneer u beschikbaar bent, vraagt om een naam en een telefoonnummer en zet de afspraak in de agenda die u al gebruikt. U houdt die volledig in eigen hand.',
       },
     ],
@@ -192,7 +192,7 @@ export const nl: Translation = {
       },
       {
         title: 'Afspraken buiten openingstijden',
-        body: 'Avonden, weekenden, feestdagen en elke tijdzone waarin uw klanten zitten. Wie anders morgen zou bellen — of een concurrent zou bellen — plant vanavond.',
+        body: 'Avonden, weekenden, feestdagen en elke tijdzone waarin uw klanten zitten. Wie anders morgen zou bellen — of een concurrent zou bellen — plant vanavond een afspraak.',
       },
       {
         title: 'Hij spreekt de taal van uw klant',
@@ -227,12 +227,12 @@ export const nl: Translation = {
       'Pagina\u2019s samen met u geschreven — uw woorden, geen opvultekst',
       'Goed ingesteld voor Google: titels, omschrijvingen, uw bedrijf op de kaart',
       'Contactwegen die echt gebruikt worden: WhatsApp, telefoon, e-mail',
-      'Hosting op een gratis plan, dus geen maandelijkse hostingrekening',
+      'Hosting en kleine wijzigingen zitten in het maandbedrag, geen aparte hostingrekening',
       'Geen cookies en geen tracking, dus geen banner voor de neus van uw klant',
     ],
     whoTitle: 'Voor wie het past',
     who: 'Winkels, garages, vakmensen, praktijken, studio\u2019s: iedereen die op een telefoon wordt opgezocht voordat er gebeld wordt. Heeft u een webshop met honderden producten nodig, dan zijn wij niet de juiste partij en zeggen we dat.',
-    quoteNote: 'Prijs en planning na een telefoontje van tien minuten: het hangt af van hoeveel pagina\u2019s u nodig heeft en of u al teksten en foto\u2019s heeft.',
+    quoteNote: 'De prijzen staan op de pagina Tarieven. In het gratis gesprek van 15 minuten spreken we het pakket en de planning af: dat hangt af van hoeveel pagina\u2019s u nodig heeft en of u al teksten en foto\u2019s heeft.',
     showcase: 'Bekijk een pagina die indruk maakt',
   },
   faq: {
@@ -273,8 +273,8 @@ export const nl: Translation = {
     regions: 'We werken op afstand met bedrijven waar ook ter wereld. Waar u ook zit, de assistent antwoordt in de taal van uw klanten.',
   },
   footer: {
-    tagline: 'Digitale assistent voor kleine bedrijven en websites die snel laden.',
-    colophon: 'Gezet uit Bricolage Grotesque en Inter. Gemaakt in Nederland. Deze site plaatst geen cookies, gebruikt geen analytics en laadt geen trackingpixels.',
+    tagline: 'Digitale assistenten en snelle websites voor kleine bedrijven.',
+    colophon: 'Gezet in Bricolage Grotesque, Inter en Instrument Serif. Gemaakt in Nederland. Deze site plaatst geen cookies, gebruikt geen analytics en laadt geen trackingpixels.',
     privacy: 'Privacyverklaring',
     rights: 'Alle rechten voorbehouden.',
   },
@@ -282,7 +282,7 @@ export const nl: Translation = {
     title: 'Privacyverklaring',
     updated: 'Laatst bijgewerkt',
     intro:
-      'Deze verklaring legt uit wat er met persoonsgegevens gebeurt op deze website en wanneer u contact met ons opneemt. Hij is bewust kort, want deze website verzamelt vrijwel niets.',
+      'Deze verklaring legt uit wat er met persoonsgegevens gebeurt op deze website en wanneer u contact met ons opneemt. Hij is bewust kort: de website plaatst geen cookies en houdt niets bij. We ontvangen alleen wat u zelf invult in een formulier (om een gesprek te plannen of een aanvraag te doen) of typt in de chat op de pagina Digitale assistent.',
     sections: [
       {
         title: 'Wie wij zijn',
@@ -303,9 +303,9 @@ export const nl: Translation = {
         ],
       },
       {
-        title: 'De assistent op deze pagina',
+        title: 'De assistent op de pagina Digitale assistent',
         body: [
-          'De chatbubbel rechtsonder is onze eigen assistent, en het enige op deze pagina dat uw browser ergens anders vandaan haalt. Het script komt van een server die wij bij Vercel draaien en de antwoorden van een server bij Railway. Omdat uw browser die rechtstreeks opvraagt, zien die twee partijen uw IP-adres en browsertype.',
+          'Het chatvenster verschijnt alleen op de pagina Digitale assistent; geen andere pagina laadt het. Het is onze eigen assistent. Het script komt van een server die wij bij Vercel draaien en de antwoorden van een server bij Railway. Omdat uw browser die rechtstreeks opvraagt, zien die twee partijen uw IP-adres en browsertype.',
           'Opent u de chat, dan gaat wat u typt naar die server om beantwoord te worden, samen met de taal van de pagina. Zet er niets in wat u ons niet ook per e-mail zou sturen — voor een afspraak of een offerte kunt u ons beter via WhatsApp of op info@twinbyteservices.com bereiken.',
         ],
       },

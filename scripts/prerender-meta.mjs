@@ -81,9 +81,12 @@ for (const lang of LANGS) {
       )
       .replace(/<!-- alt:start -->[\s\S]*?<!-- alt:end -->/, alternates)
 
-    const outDir = join(root, 'dist', path === '/' ? '.' : path)
-    await mkdir(outDir, { recursive: true })
-    await writeFile(join(outDir, 'index.html'), html, 'utf8')
+    /* /nl/prices is written as nl/prices.html, not nl/prices/index.html:
+       Cloudflare Pages then serves the canonical address with a 200 instead
+       of a 308 to a trailing-slash copy of it. */
+    const file = path === '/' ? join(root, 'dist', 'index.html') : join(root, 'dist', `${path.slice(1)}.html`)
+    await mkdir(dirname(file), { recursive: true })
+    await writeFile(file, html, 'utf8')
     console.log(`prerendered ${path}`)
   }
 }

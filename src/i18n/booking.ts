@@ -6,7 +6,7 @@ import type { Lang } from './types'
  * Dutch uses "u", like the rest of the Dutch site.
  */
 export interface BookingCopy {
-  nav: { book: string; assistant: string; websites: string; prices: string }
+  nav: { book: string; bookShort: string; assistant: string; websites: string; prices: string }
   hero: {
     eyebrow: string
     title: string
@@ -19,6 +19,7 @@ export interface BookingCopy {
   }
   card: {
     who: string
+    team: string
     title: string
     coversTitle: string
     covers: string[]
@@ -26,6 +27,8 @@ export interface BookingCopy {
     place: string
     free: string
     tz: (zone: string) => string
+    prep: string
+    prepLink: string
   }
   pick: {
     day: string
@@ -36,6 +39,8 @@ export interface BookingCopy {
     unavailable: string
     back: string
     change: string
+    changeLabel: string
+    retry: string
     weekdays: string[]
   }
   form: {
@@ -56,10 +61,11 @@ export interface BookingCopy {
     badPhone: string
     needConsent: string
   }
-  errors: { slot_taken: string; already_booked: string; generic: string; bot: string }
+  errors: { slot_taken: string; already_booked: (when: string) => string; generic: string; bot: string; verifying: string; waCta: string }
   done: {
     title: string
     body: (email: string) => string
+    next: string
     meet: string
     add: string
     whatsapp: string
@@ -69,6 +75,9 @@ export interface BookingCopy {
     lead: string
     message: string
     submit: string
+    sending: string
+    consentBefore: string
+    doneTitle: string
     done: (email: string) => string
     back: string
     waText: string
@@ -81,17 +90,18 @@ export interface BookingCopy {
   }
   closing: { title: string; lead: string; book: string; whatsapp: string }
   page: { book: string; bookLead: string }
+  mail: { websitesSubject: string; bundleWa: string }
   float: string
   privacy: { title: string; body: string[] }
 }
 
 export const booking: Record<Lang, BookingCopy> = {
   en: {
-    nav: { book: 'Book a call', assistant: 'Digital assistant', websites: 'Websites', prices: 'Prices' },
+    nav: { book: 'Book a call', bookShort: 'Book', assistant: 'Digital assistant', websites: 'Websites', prices: 'Prices' },
     hero: {
       eyebrow: 'Discovery call · 15 minutes · free',
       title: 'Let’s talk about your business.',
-      lead: '15 minutes to get to know each other, understand what you need, and show you how we work.',
+      lead: 'We build digital assistants and fast websites for small businesses. In a free 15-minute call we get to know each other, hear what you need and show you how we work.',
       or: 'Or',
       request: 'Send a request',
       whatsapp: 'WhatsApp us',
@@ -99,14 +109,17 @@ export const booking: Record<Lang, BookingCopy> = {
       note: 'You always talk to us, Anna or Samuele. There is no call centre.',
     },
     card: {
-      who: 'Anna & Samuele · Twinbyte',
+      who: 'Anna & Samuele',
+      team: 'Twinbyte',
       title: 'Discovery call',
       coversTitle: 'What we cover',
       covers: ['Introductions', 'Your business and what you need', 'How we work', 'Next steps'],
       duration: '15 min',
       place: 'Google Meet',
       free: 'Free, no obligation',
-      tz: (z) => `Times in your time zone · ${z}`,
+      tz: (z) => `Times in your time zone: ${z}`,
+      prep: 'No preparation needed. And you do not need a call to find out what it costs: the prices are on the site.',
+      prepLink: 'See the prices',
     },
     pick: {
       day: 'Choose a day',
@@ -117,6 +130,8 @@ export const booking: Record<Lang, BookingCopy> = {
       unavailable: 'Booking is not available right now. Send us a request or a WhatsApp and we will answer just as fast.',
       back: 'Back',
       change: 'Change',
+      changeLabel: 'Change the time',
+      retry: 'Try again',
       weekdays: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     },
     form: {
@@ -139,13 +154,16 @@ export const booking: Record<Lang, BookingCopy> = {
     },
     errors: {
       slot_taken: 'Someone just took this time. Please pick another one.',
-      already_booked: 'You already have a call booked with us. To move it, reply to the confirmation email or message us on WhatsApp.',
+      already_booked: (w) => `You already have a call booked with us${w ? `: ${w}` : ''}. To move it, reply to the confirmation email or message us on WhatsApp.`,
       generic: 'Something went wrong on our side. Please try again, or message us on WhatsApp.',
       bot: 'That was quick. Please wait a moment and try again.',
+      verifying: 'One moment: we are checking that the form is not spam. Press again in a few seconds.',
+      waCta: 'Open WhatsApp',
     },
     done: {
       title: 'You’re booked.',
       body: (e) => `We sent the details to ${e}. Google Calendar will also send you an invitation with the same link.`,
+      next: 'No preparation needed. Need another time? Reply to the confirmation email or message us on WhatsApp.',
       meet: 'Google Meet link',
       add: 'Add to Google Calendar',
       whatsapp: 'Questions before the call? WhatsApp us',
@@ -155,6 +173,9 @@ export const booking: Record<Lang, BookingCopy> = {
       lead: 'Tell us what you need. We will write back by email.',
       message: 'What do you need?',
       submit: 'Send request',
+      sending: 'Sending…',
+      consentBefore: 'I agree that Twinbyte uses these details to answer my request, as described in the ',
+      doneTitle: 'Request received.',
       done: (e) => `Thank you, we have it. We will write back to ${e}.`,
       back: 'Back to booking',
       waText: 'Hi Twinbyte, I have a question.',
@@ -177,6 +198,7 @@ export const booking: Record<Lang, BookingCopy> = {
       whatsapp: 'WhatsApp us',
     },
     page: { book: 'Book a free 15-minute call', bookLead: 'Questions about this page? Ask them in the call.' },
+    mail: { websitesSubject: 'Question about a website for my business', bundleWa: 'Hello Twinbyte, I would like a quote for the full site + assistant bundle.' },
     float: 'WhatsApp',
     privacy: {
       title: 'When you book a call or send a request',
@@ -191,11 +213,11 @@ export const booking: Record<Lang, BookingCopy> = {
   },
 
   nl: {
-    nav: { book: 'Plan een gesprek', assistant: 'Digitale assistent', websites: 'Websites', prices: 'Tarieven' },
+    nav: { book: 'Plan een gesprek', bookShort: 'Plannen', assistant: 'Digitale assistent', websites: 'Websites', prices: 'Tarieven' },
     hero: {
-      eyebrow: 'Kennismakingsgesprek · 15 minuten · gratis',
+      eyebrow: 'Kennismakings\u00ADgesprek · 15 minuten · gratis',
       title: 'Laten we het over uw bedrijf hebben.',
-      lead: '15 minuten om kennis te maken, te begrijpen wat u nodig heeft en te laten zien hoe we werken.',
+      lead: 'We bouwen digitale assistenten en snelle websites voor kleine bedrijven. In een gratis gesprek van 15 minuten maken we kennis, horen we wat u nodig heeft en laten we zien hoe we werken.',
       or: 'Of',
       request: 'Stuur een aanvraag',
       whatsapp: 'Stuur een WhatsApp',
@@ -203,24 +225,29 @@ export const booking: Record<Lang, BookingCopy> = {
       note: 'U spreekt altijd met ons, Anna of Samuele. Er is geen callcenter.',
     },
     card: {
-      who: 'Anna & Samuele · Twinbyte',
-      title: 'Kennismakingsgesprek',
+      who: 'Anna & Samuele',
+      team: 'Twinbyte',
+      title: 'Kennismakings\u00ADgesprek',
       coversTitle: 'Waar we het over hebben',
       covers: ['Kennismaking', 'Uw bedrijf en wat u nodig heeft', 'Hoe wij werken', 'De volgende stap'],
       duration: '15 min',
       place: 'Google Meet',
       free: 'Gratis, vrijblijvend',
-      tz: (z) => `Tijden in uw tijdzone · ${z}`,
+      tz: (z) => `Tijden in uw tijdzone: ${z}`,
+      prep: 'U hoeft niets voor te bereiden. En u hoeft niet te bellen om te weten wat het kost: de tarieven staan op de site.',
+      prepLink: 'Bekijk de tarieven',
     },
     pick: {
       day: 'Kies een dag',
-      time: 'Kies een tijd',
+      time: 'Kies een tijdstip',
       noSlotsDay: 'Op deze dag is niets meer vrij.',
       noneAtAll: 'De komende twee weken is er niets vrij. Stuur een aanvraag of een WhatsApp, dan zoeken we samen een moment.',
       loading: 'Vrije tijden laden…',
       unavailable: 'Plannen lukt op dit moment niet. Stuur een aanvraag of een WhatsApp, dan reageren we net zo snel.',
       back: 'Terug',
       change: 'Wijzigen',
+      changeLabel: 'Tijd wijzigen',
+      retry: 'Opnieuw proberen',
       weekdays: ['ma', 'di', 'wo', 'do', 'vr', 'za', 'zo'],
     },
     form: {
@@ -243,13 +270,16 @@ export const booking: Record<Lang, BookingCopy> = {
     },
     errors: {
       slot_taken: 'Iemand heeft deze tijd net geboekt. Kies een andere tijd.',
-      already_booked: 'U heeft al een gesprek met ons gepland. Wilt u het verzetten? Beantwoord de bevestigingsmail of stuur ons een WhatsApp.',
+      already_booked: (w) => `U heeft al een gesprek met ons gepland${w ? `: ${w}` : ''}. Wilt u het verzetten? Beantwoord de bevestigingsmail of stuur ons een WhatsApp.`,
       generic: 'Er ging aan onze kant iets mis. Probeer het opnieuw, of stuur ons een WhatsApp.',
       bot: 'Dat ging snel. Wacht even en probeer het opnieuw.',
+      verifying: 'Een moment: we controleren of het formulier geen spam is. Druk over een paar seconden opnieuw.',
+      waCta: 'Open WhatsApp',
     },
     done: {
       title: 'Het gesprek staat gepland.',
       body: (e) => `We hebben de gegevens naar ${e} gestuurd. U krijgt van Google Agenda ook een uitnodiging met dezelfde link.`,
+      next: 'U hoeft niets voor te bereiden. Komt het toch niet uit? Beantwoord de bevestigingsmail of stuur ons een WhatsApp.',
       meet: 'Google Meet-link',
       add: 'Zet het in Google Agenda',
       whatsapp: 'Vragen vóór het gesprek? Stuur een WhatsApp',
@@ -259,12 +289,15 @@ export const booking: Record<Lang, BookingCopy> = {
       lead: 'Vertel wat u nodig heeft. We antwoorden per e-mail.',
       message: 'Waar kunnen we u mee helpen?',
       submit: 'Aanvraag versturen',
+      sending: 'Bezig met versturen…',
+      consentBefore: 'Ik ga ermee akkoord dat Twinbyte deze gegevens gebruikt om mijn aanvraag te beantwoorden, zoals beschreven in de ',
+      doneTitle: 'Aanvraag ontvangen.',
       done: (e) => `Dank u, we hebben het ontvangen. We antwoorden naar ${e}.`,
       back: 'Terug naar plannen',
       waText: 'Hallo Twinbyte, ik heb een vraag.',
     },
     related: {
-      eyebrow: 'Eerst rondkijken?',
+      eyebrow: 'Voordat u plant',
       title: 'Wilt u eerst meer weten?',
       lead: 'Alles wat we doen, op aparte pagina’s. Lees wat u nodig heeft en plan dan het gesprek.',
       cards: [
@@ -275,19 +308,20 @@ export const booking: Record<Lang, BookingCopy> = {
       ],
     },
     closing: {
-      title: 'Een gemiste oproep laat geen bericht achter. Die belt het volgende bedrijf op de lijst.',
+      title: 'Wie u niet bereikt, spreekt geen bericht in. Die belt het volgende bedrijf op de lijst.',
       lead: '15 minuten is genoeg om te zien of we u kunnen helpen.',
       book: 'Plan het gesprek van 15 minuten',
       whatsapp: 'Stuur een WhatsApp',
     },
     page: { book: 'Plan een gratis gesprek van 15 minuten', bookLead: 'Vragen over deze pagina? Stel ze in het gesprek.' },
+    mail: { websitesSubject: 'Vraag over een website voor mijn bedrijf', bundleWa: 'Hallo Twinbyte, ik wil graag een offerte voor het pakket volledige site + assistent.' },
     float: 'WhatsApp',
     privacy: {
       title: 'Als u een gesprek plant of een aanvraag stuurt',
       body: [
         'Als u een gesprek plant, verwerken we uw naam, e-mailadres, telefoonnummer, bedrijfsnaam, het bericht dat u toevoegt, de gekozen tijd, de taal van de pagina en uw tijdzone. Bij een aanvraag verwerken we dezelfde gegevens, behalve de tijd.',
         'We gebruiken ze alleen om het gesprek te plannen en te voeren, of om uw aanvraag te beantwoorden. De grondslag is de stap die u ons vraagt te zetten vóór een mogelijke overeenkomst (art. 6 lid 1 sub b AVG) en uw toestemming, die u met het vinkje geeft en altijd kunt intrekken.',
-        'De afspraak wordt als afspraak in onze Google Agenda opgeslagen, Google maakt de Google Meet-link aan en stuurt u de uitnodiging, en onze e-mails gaan via Gmail. Google is dus ontvanger van deze gegevens. Google kan gegevens buiten de EU verwerken; Google LLC is gecertificeerd onder het EU-VS Data Privacy Framework.',
+        'De boeking wordt als afspraak in onze Google Agenda opgeslagen, Google maakt de Google Meet-link aan en stuurt u de uitnodiging, en onze e-mails gaan via Gmail. Google is dus ontvanger van deze gegevens. Google kan gegevens buiten de EU verwerken; Google LLC is gecertificeerd onder het EU-VS Data Privacy Framework.',
         'Om geautomatiseerde spam tegen te houden kunnen de formulieren Cloudflare Turnstile gebruiken, dat de browser controleert zonder cookies. Daarvoor geldt de Turnstile-privacybijlage van Cloudflare: https://www.cloudflare.com/turnstile-privacy-policy/',
         'We verwijderen de agenda-afspraak en de e-mails binnen 12 maanden na het gesprek, tenzij het gesprek tot een overeenkomst leidt; dan bewaren we wat de wet vraagt.',
       ],
@@ -295,11 +329,11 @@ export const booking: Record<Lang, BookingCopy> = {
   },
 
   it: {
-    nav: { book: 'Prenota una chiamata', assistant: 'Assistente digitale', websites: 'Siti web', prices: 'Prezzi' },
+    nav: { book: 'Prenota una chiamata', bookShort: 'Prenota', assistant: 'Assistente digitale', websites: 'Siti web', prices: 'Prezzi' },
     hero: {
       eyebrow: 'Chiamata conoscitiva · 15 minuti · gratuita',
       title: 'Parliamo della tua attività.',
-      lead: '15 minuti per conoscerci, capire cosa ti serve e mostrarti come lavoriamo.',
+      lead: 'Creiamo assistenti digitali e siti web veloci per piccole attività. In una chiamata gratuita di 15 minuti ci conosciamo, capiamo cosa ti serve e ti mostriamo come lavoriamo.',
       or: 'Oppure',
       request: 'Invia una richiesta',
       whatsapp: 'Scrivici su WhatsApp',
@@ -307,14 +341,17 @@ export const booking: Record<Lang, BookingCopy> = {
       note: 'Parli sempre con noi, Anna o Samuele. Nessun call center.',
     },
     card: {
-      who: 'Anna & Samuele · Twinbyte',
+      who: 'Anna & Samuele',
+      team: 'Twinbyte',
       title: 'Chiamata conoscitiva',
       coversTitle: 'Di cosa parliamo',
       covers: ['Presentazioni', 'La tua attività e cosa ti serve', 'Come lavoriamo', 'I prossimi passi'],
       duration: '15 min',
       place: 'Google Meet',
       free: 'Gratuita, senza impegno',
-      tz: (z) => `Orari nel tuo fuso · ${z}`,
+      tz: (z) => `Orari nel tuo fuso orario: ${z}`,
+      prep: 'Non serve preparare niente. E non serve una chiamata per sapere quanto costa: i prezzi sono sul sito.',
+      prepLink: 'Vedi i prezzi',
     },
     pick: {
       day: 'Scegli un giorno',
@@ -325,6 +362,8 @@ export const booking: Record<Lang, BookingCopy> = {
       unavailable: 'In questo momento non si può prenotare. Mandaci una richiesta o un WhatsApp: rispondiamo altrettanto in fretta.',
       back: 'Indietro',
       change: 'Cambia',
+      changeLabel: 'Cambia orario',
+      retry: 'Riprova',
       weekdays: ['lun', 'mar', 'mer', 'gio', 'ven', 'sab', 'dom'],
     },
     form: {
@@ -339,7 +378,7 @@ export const booking: Record<Lang, BookingCopy> = {
       consentLink: 'informativa privacy',
       consentAfter: '.',
       submit: 'Prenota la chiamata',
-      sending: 'Prenoto…',
+      sending: 'Prenotazione in corso…',
       required: 'Compila questo campo.',
       badEmail: 'Questo non sembra un indirizzo email.',
       badPhone: 'Inserisci un numero di telefono.',
@@ -347,13 +386,16 @@ export const booking: Record<Lang, BookingCopy> = {
     },
     errors: {
       slot_taken: 'Qualcuno ha appena preso questo orario. Scegline un altro.',
-      already_booked: 'Hai già una chiamata prenotata con noi. Per spostarla, rispondi all’email di conferma o scrivici su WhatsApp.',
+      already_booked: (w) => `Hai già una chiamata prenotata con noi${w ? `: ${w}` : ''}. Per spostarla, rispondi all’email di conferma o scrivici su WhatsApp.`,
       generic: 'Qualcosa non ha funzionato da parte nostra. Riprova, oppure scrivici su WhatsApp.',
       bot: 'Troppo veloce. Aspetta un attimo e riprova.',
+      verifying: 'Un attimo: stiamo controllando che il modulo non sia spam. Riprova tra qualche secondo.',
+      waCta: 'Apri WhatsApp',
     },
     done: {
       title: 'Prenotazione fatta.',
       body: (e) => `Ti abbiamo mandato i dettagli a ${e}. Riceverai anche un invito da Google Calendar con lo stesso link.`,
+      next: 'Non serve preparare niente. Ti serve un altro orario? Rispondi all’email di conferma o scrivici su WhatsApp.',
       meet: 'Link Google Meet',
       add: 'Aggiungi a Google Calendar',
       whatsapp: 'Domande prima della chiamata? Scrivici su WhatsApp',
@@ -363,6 +405,9 @@ export const booking: Record<Lang, BookingCopy> = {
       lead: 'Raccontaci cosa ti serve. Ti rispondiamo per email.',
       message: 'Di cosa hai bisogno?',
       submit: 'Invia la richiesta',
+      sending: 'Invio in corso…',
+      consentBefore: 'Acconsento a che Twinbyte usi questi dati per rispondere alla mia richiesta, come descritto nell’',
+      doneTitle: 'Richiesta ricevuta.',
       done: (e) => `Grazie, l’abbiamo ricevuta. Ti rispondiamo a ${e}.`,
       back: 'Torna alla prenotazione',
       waText: 'Ciao Twinbyte, ho una domanda.',
@@ -379,12 +424,13 @@ export const booking: Record<Lang, BookingCopy> = {
       ],
     },
     closing: {
-      title: 'Una chiamata persa non lascia messaggi. Chiama l’attività successiva sulla lista.',
+      title: 'Chi non ti trova non lascia un messaggio: chiama l’attività successiva della lista.',
       lead: '15 minuti bastano per capire se possiamo aiutarti.',
       book: 'Prenota la chiamata da 15 minuti',
       whatsapp: 'Scrivici su WhatsApp',
     },
     page: { book: 'Prenota una chiamata gratuita di 15 minuti', bookLead: 'Domande su questa pagina? Falle durante la chiamata.' },
+    mail: { websitesSubject: 'Domanda su un sito web per la mia attività', bundleWa: 'Ciao Twinbyte, vorrei un preventivo per il pacchetto sito completo + assistente.' },
     float: 'WhatsApp',
     privacy: {
       title: 'Quando prenoti una chiamata o invii una richiesta',

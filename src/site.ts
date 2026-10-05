@@ -8,7 +8,7 @@ export const SITE = {
       here to stamp the canonical tags, robots.txt and the sitemap, so there is
       nothing to forget when it changes. */
   baseUrl: 'https://twinbyte.online',
-  lastUpdated: '2026-09-15',
+  lastUpdated: '2026-10-05',
   /** Live assistant widget on this site. Set enabled: false to take it off. */
   widget: {
     enabled: true,

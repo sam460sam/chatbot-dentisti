@@ -66,13 +66,16 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* the fixed 56px header: anchors, focus and scrollIntoView stop below it */
+    scroll-padding-top: 72px;
     -webkit-text-size-adjust: 100%;
   }
 
   body {
     @apply bg-paper font-sans text-body text-ink-soft antialiased;
-    /* tnum: times, dates and phone numbers line up in columns. */
-    font-feature-settings: 'cv11', 'ss01', 'tnum';
+    /* No global tnum: in Inter it also widens the hyphen ("E - mail").
+       Times, dates and prices that must line up carry tabular-nums. */
+    font-feature-settings: 'cv11', 'ss01';
     /* Dutch builds words like "verwerkersovereenkomst", and one of them in a
        three-column grid was wider than its column and pushed the whole page
        sideways on a tablet. Hyphenation breaks it properly (the html element
@@ -169,11 +172,11 @@
   }
 
   .btn-teal {
-    @apply btn bg-teal text-paper hover:bg-teal-deep;
+    @apply btn border border-transparent bg-teal text-paper hover:bg-teal-deep;
   }
 
   .btn-verm {
-    @apply btn bg-verm text-paper hover:bg-verm-deep;
+    @apply btn border border-transparent bg-verm text-paper hover:bg-verm-deep;
   }
 
   .btn-line {
@@ -182,7 +185,7 @@
 
   /* The one bright button on the black first screen. */
   .btn-teal-bright {
-    @apply btn bg-teal-bright text-ink hover:bg-paper;
+    @apply btn border border-transparent bg-teal-bright text-ink hover:bg-paper;
   }
 
   .btn-line-flood {
@@ -209,7 +212,7 @@
      not by rhythm: paper is neutral, teal is the assistant, terracotta is the
      websites, ink is the one plate that earns going dark. */
   .band {
-    @apply scroll-mt-8 py-6 sm:py-8 lg:py-9;
+    @apply py-6 sm:py-8 lg:py-9;
   }
 
   .band-paper {
@@ -282,7 +285,7 @@
   }
 
   .plate-verm {
-    box-shadow: 10px 10px 0 #A8371F;
+    box-shadow: 10px 10px 0 #A14531;
   }
 
   .plate-paper {
@@ -1126,5 +1129,19 @@
 
   .asm-beat .t-h2 {
     margin-left: 0;
+  }
+}
+
+/* Windows High Contrast removes backgrounds: the chosen day and the
+   free-day dots would vanish without these. */
+@media (forced-colors: active) {
+  #book button[aria-pressed='true'] {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+  }
+  #book .day-dot {
+    forced-color-adjust: none;
+    background: CanvasText;
   }
 }

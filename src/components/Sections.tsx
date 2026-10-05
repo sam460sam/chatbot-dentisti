@@ -7,6 +7,7 @@ import { SiteWireframe } from './SiteWireframe'
 import { Mark, Bubble, Window, Arrow, ArrowOut, Mail, Person } from './marks'
 import { SITE, mailLink, waLink } from '../site'
 import { pathFor, useRoute } from '../router'
+import { booking } from '../i18n/booking'
 import type { Translation } from '../i18n'
 
 /*
@@ -17,7 +18,7 @@ import type { Translation } from '../i18n'
  * the page. That is the whole navigation system, and it is why the fork below
  * is two grounds touching edge to edge rather than two matching cards.
  *
- * The folio numbers only run over the four sections that are a real sequence.
+ * No folio numbers: the old one-page sequence they counted is now split over pages.
  * FAQ and contact are not steps in a process, so they are not numbered.
  */
 
@@ -163,7 +164,7 @@ export function HowSection({ t }: { t: Translation }) {
   return (
     <>
       {/* ------------------------------------------------ 01 how it works */}
-      <Band id="how" tone="paper" folio="No. 01" ink="teal" title={t.how.title} lead={t.how.lead}>
+      <Band id="how" tone="paper" ink="teal" title={t.how.title} lead={t.how.lead}>
         <ol role="list" className="grid gap-3 md:grid-cols-3">
           {t.how.steps.map((step, index) => (
             <li key={step.title} className="border-t-2 border-teal pt-2">
@@ -187,8 +188,7 @@ export function SecuritySection({ t }: { t: Translation }) {
           <Handover t={t} />
 
           <div className="mt-8 rule-ink pt-4">
-            <p className="t-folio">No. 02</p>
-            <h3 className="t-h2 mt-1">{t.security.title}</h3>
+            <h3 className="t-h2">{t.security.title}</h3>
             <p className="t-lead mt-2">{t.security.lead}</p>
 
             <ul role="list" className="mt-4 grid gap-0 sm:grid-cols-3 sm:gap-3">
@@ -213,7 +213,6 @@ export function BenefitsSection({ t }: { t: Translation }) {
       <Band
         id="benefits"
         tone="deep"
-        folio="No. 03"
         ink="teal"
         title={t.benefits.title}
         lead={t.benefits.lead}
@@ -231,19 +230,11 @@ export function BenefitsSection({ t }: { t: Translation }) {
   )
 }
 
-export function WebsitesSection({ t }: { t: Translation }) {
+/* `bare`: on the websites page the page title already says the title and
+   lead, so only the substance is shown. */
+export function WebsitesSection({ t, bare }: { t: Translation; bare?: boolean }) {
   const { lang } = useRoute()
-  return (
-    <>
-      {/* ------------------------------------------------- 04 websites */}
-      <Band
-        id="websites"
-        tone="paper"
-        folio="No. 04"
-        ink="verm"
-        title={t.websites.title}
-        lead={t.websites.lead}
-      >
+  const body = (
         <div className="grid items-start gap-5 lg:grid-cols-[1fr_1fr] lg:gap-6">
           <div>
             <h3 className="t-h3">{t.websites.includesTitle}</h3>
@@ -279,23 +270,32 @@ export function WebsitesSection({ t }: { t: Translation }) {
                 {t.websites.showcase}
                 <ArrowOut />
               </a>
-              <a className="btn-line" href={mailLink(t.contact.emailSubject)}>
+              <a className="btn-line" href={mailLink(booking[lang].mail.websitesSubject)}>
                 <Mail />
                 {t.contact.email}
               </a>
             </div>
           </div>
         </div>
-      </Band>
-    </>
+  )
+  if (bare)
+    return (
+      <section id="websites" aria-label={t.websites.title} className="band-paper pt-0 sm:pt-0 lg:pt-0">
+        <div className="container-page">{body}</div>
+      </section>
+    )
+  return (
+    <Band id="websites" tone="paper" ink="verm" title={t.websites.title} lead={t.websites.lead}>
+      {body}
+    </Band>
   )
 }
 
-export function PricesAndFaq({ t }: { t: Translation }) {
+export function PricesAndFaq({ t, head = true }: { t: Translation; head?: boolean }) {
   return (
     <>
       {/* ----------------------------------------------------------- FAQ */}
-      <Pricing t={t} />
+      <Pricing t={t} head={head} />
 
       <section id="faq" aria-labelledby="faq-title" className="band-deep">
         <div className="container-page">
