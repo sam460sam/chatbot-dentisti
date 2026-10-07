@@ -123,3 +123,35 @@ set also gets `bounds.json`, where the object is in every frame, so the home
 page can keep it framed on a phone. `--resm` and `--bounds` rebuild those two
 things from frames already written. Frames are never upscaled past the
 film's own height, so a 480p film gives 854px frames.
+
+## logo.py, logo-png.mjs — the mark
+
+    pip install shapely fonttools brotli uharfbuzz
+    python3 tools/logo.py        # public/brand/*.svg, public/favicon.svg, src/brand/mark.ts
+    node tools/logo-png.mjs      # public/icon-*.png and public/og.png (needs Playwright)
+
+Two identical ribbons, the second turned 180 degrees; every fold cuts its outer
+corner along the crease. The geometry is in `ribbon()`; change `BAND` and `GAP`
+there, never by hand in the SVGs.
+
+## logo-3d.py — the footer film
+
+Same geometry, in Blender (Python 3.11 with `pip install bpy shapely`):
+
+    python tools/logo-3d.py --out render --frames 144 --size 600 --samples 32
+
+About 10 seconds a frame on four cores. Frames are transparent; the footer
+navy is put behind them while packing:
+
+    ffmpeg -f lavfi -i "color=c=0x0A0F1E:s=600x600:r=24" -framerate 24 -i render/%03d.png \
+      -filter_complex "[0][1]overlay=shortest=1,format=yuv420p" -c:v libvpx-vp9 -b:v 0 -crf 38 -an public/media/mark-3d.webm
+    ffmpeg -f lavfi -i "color=c=0x0A0F1E:s=600x600:r=24" -framerate 24 -i render/%03d.png \
+      -filter_complex "[0][1]overlay=shortest=1,format=yuv420p" -c:v libx264 -crf 26 -movflags +faststart -an public/media/mark-3d.mp4
+    convert render/001.png -background '#0A0F1E' -flatten -quality 82 public/media/mark-3d.webp
+
+## public/media — photographs and the hero loop
+
+Generated with Higgsfield (GPT Image 2.5 for the stills, Kling 3 for the loop,
+with the same image as first and last frame so it loops without a cut). No
+people. Each photograph is shipped as WebP at 640, 960 and 1600 px; the hero
+still at 800, 1280, 1920 and a 640 x 1080 portrait crop for phones.

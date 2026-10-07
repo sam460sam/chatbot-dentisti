@@ -1,11 +1,11 @@
 # The booking page
 
-`twinbyte.online` is one page: book a free 15-minute call. Everything else the
-business does lives on its own page (`/assistant`, `/websites`, `/prices`),
-linked from below the booking card.
+`twinbyteservices.com` opens on the call: the hero sends you to the booking
+card, a free 15-minute call. Everything else the business does lives on its
+own page (`/assistant`, `/websites`, `/prices`), linked from below the card.
 
 ```
-src/components/BookingPage.tsx   the home page: the sentence, the card, the related pages
+src/components/BookingPage.tsx   the home page: the hero, the card, the services, the closing
 src/components/Booker.tsx        day → time → details → done, and the request form
 src/i18n/booking.ts              every word of it, EN / NL / IT
 functions/api/slots.ts           GET  free starts for the next 14 days
@@ -52,7 +52,7 @@ billing account to the Google Cloud project.**
    app" → Advanced → Go to Twinbyte booking. Tick **all three** boxes. The
    terminal prints `GOOGLE_REFRESH_TOKEN=…`.
 
-### 2. Cloudflare — the Pages project that serves twinbyte.online
+### 2. Cloudflare — the Pages project that serves twinbyteservices.com
 
 Workers & Pages → the project → Settings → Variables and Secrets. Add for
 **Production** (and for **Preview**, if you want to test on the preview URL —
@@ -67,7 +67,7 @@ see the warning below):
 | `BOOKING_HOURS` | text | `mon-fri 18:00-21:00; sat 09:00-13:00` |
 
 Optional, against spam (free): Turnstile → Add widget → hostname
-`twinbyte.online` and `pages.dev`, mode Managed. Then add
+`twinbyteservices.com` and `pages.dev`, mode Managed. Then add
 `TURNSTILE_SECRET` (secret) and `VITE_TURNSTILE_SITE_KEY` (text — it is read at
 build time).
 
@@ -82,7 +82,7 @@ test afternoon; remove them afterwards if you like.
 
 A Google refresh token that is unused for six months stops working. Any free
 uptime monitor (UptimeRobot, Better Stack…) pointed at
-`https://twinbyte.online/api/health` once a day keeps it alive, and tells you
+`https://twinbyteservices.com/api/health` once a day keeps it alive, and tells you
 the day it ever answers `{"ok":false}`.
 
 ## Changing the hours
@@ -101,7 +101,7 @@ npm test                           # the slot and mail tests
 
 ## End-to-end test on the preview
 
-On `https://booking-page.<project>.pages.dev`, with the real values on Preview:
+On the project's preview URL (`https://<branch>.<project>.pages.dev`), with the real values on Preview:
 
 1. The calendar shows only days and times inside `BOOKING_HOURS`, nothing in
    the next 4 hours, nothing past 14 days.
@@ -114,10 +114,11 @@ On `https://booking-page.<project>.pages.dev`, with the real values on Preview:
 5. Send a request from "Send a request": a "New request" mail arrives.
 6. Delete the test event from the calendar.
 
-Then merge `booking-page` into `claude/twinbyte-showcase-site-7zns0j` — that is
-the branch both Pages projects publish as production, not `main`.
+The Pages project `twinbyteservices` publishes the branch `twinbyteservices` as
+production. `main` is the chatbot server and widget, not this site.
 
 ## The old site
 
-Branch `old-site`, commit `baa223f`: the full site as it was live before this
-page. It also stays viewable at `old-site.twinbyte-c82.pages.dev`.
+Branch `old-site`, commit `baa223f`: the full site as it was before this one,
+still live on twinbyte.online (Pages project `chatbot-dentisti`). It will
+become the showroom.
