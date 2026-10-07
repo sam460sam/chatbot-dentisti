@@ -23,6 +23,9 @@ export function Pricing({ t, head = true }: { t: Translation; head?: boolean }) 
   return (
     <section id="prices" aria-label={head ? undefined : p.title} aria-labelledby={head ? 'prices-title' : undefined} className="band-paper">
       <div className="container-page">
+        {/* without the visible head the page title is the h1 above: keep the
+            heading order h1 > h2 > h3 for screen readers */}
+        {!head && <h2 className="sr-only">{p.title}</h2>}
         {head && (
           <>
             <div className="flex items-baseline gap-2 border-t-2 border-ink pt-2">

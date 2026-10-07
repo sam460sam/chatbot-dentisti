@@ -527,7 +527,7 @@ html {
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--petrol);
+  color: var(--petrol-deep); /* 6.5:1 on cream, 5.9:1 on the deeper cream; petrol alone is 4.3 there */
 }
 
 .eyebrow::before {
@@ -717,7 +717,8 @@ html {
 
 /* ------------------------------------------------------------------ scroll motion
    Only where the browser drives it from the scroll position itself, only
-   transform and a partial fade, and never with reduced motion. */
+   transform (the hero copy alone also fades as it leaves), and never with
+   reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     [data-rise] {
@@ -752,9 +753,10 @@ html {
   }
 }
 
+/* movement only, no fade: text keeps its full contrast at every moment */
 @keyframes scroll-rise {
-  from { opacity: 0.35; transform: translateY(36px); }
-  to { opacity: 1; transform: none; }
+  from { transform: translateY(40px); }
+  to { transform: none; }
 }
 
 @keyframes hero-drift {
