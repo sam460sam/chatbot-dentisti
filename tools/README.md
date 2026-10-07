@@ -154,4 +154,6 @@ navy is put behind them while packing:
 Generated with Higgsfield (GPT Image 2.5 for the stills, Kling 3 for the loop,
 with the same image as first and last frame so it loops without a cut). No
 people. Each photograph is shipped as WebP at 640, 960 and 1600 px; the hero
-still at 800, 1280, 1920 and a 640 x 1080 portrait crop for phones.
+still at 800, 1280, 1920 and a 640 x 1080 portrait crop for phones; the loop
+(hero-loop.webm/.mp4, 1600 x 900, wide screens only) is the Kling clip minus its
+last frame, which equals the first.

@@ -21,7 +21,7 @@ const STILL = {
 }
 /* Wide screens only. On a phone the still is the hero and drifts slowly
    (CSS): no video download on a mobile connection. */
-const LOOP = { webm: '/media/hero-1280.webm', mp4: '/media/hero-1280.mp4' }
+const LOOP = { webm: '/media/hero-loop.webm', mp4: '/media/hero-loop.mp4' }
 const TALL = '(max-aspect-ratio: 4/5)'
 
 function wantsMotion(): boolean {
