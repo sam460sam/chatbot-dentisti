@@ -142,27 +142,35 @@ html {
 
 .btn-mint,
 .btn-teal-bright { --cut-fill: var(--mint); color: var(--navy); }
-.btn-mint:hover,
-.btn-teal-bright:hover { --cut-fill: var(--cream); }
 .btn-petrol,
 .btn-teal { --cut-fill: var(--petrol); color: var(--cream); }
-.btn-petrol:hover,
-.btn-teal:hover { --cut-fill: var(--navy); }
 .btn-verm { --cut-fill: #2f7563; color: var(--cream); }
-.btn-verm:hover { --cut-fill: var(--navy); }
 .btn-cream { --cut-fill: var(--cream); color: var(--navy); }
-.btn-cream:hover { --cut-fill: var(--mint); }
 /* a line on dark ground (and on the hero photograph): it fills on hover */
 .btn-ghost,
 .btn-line-flood { --cut-ink: rgba(244, 239, 230, 0.6); color: var(--cream); }
-.btn-ghost:hover,
-.btn-line-flood:hover { --cut-ink: var(--cream); --cut-fill: var(--cream); color: var(--navy); }
-/* a line on light ground */
+/* a line on light ground; pressed (the request toggle) looks filled */
 .btn-ghost-dark,
 .btn-line { --cut-ink: var(--navy); color: var(--navy); }
-.btn-ghost-dark:hover,
-.btn-line:hover,
 .btn-ghost-dark[aria-pressed='true'] { --cut-fill: var(--navy); color: var(--cream); }
+
+/* Hover only where there is a real pointer: on a phone :hover sticks to the
+   last thing tapped, and a button would stay navy after the tap. */
+@media (hover: hover) and (pointer: fine) {
+  .btn-mint:hover,
+  .btn-teal-bright:hover { --cut-fill: var(--cream); }
+  .btn-petrol:hover,
+  .btn-teal:hover,
+  .btn-verm:hover { --cut-fill: var(--navy); }
+  .btn-cream:hover { --cut-fill: var(--mint); }
+  .btn-ghost:hover,
+  .btn-line-flood:hover { --cut-ink: var(--cream); --cut-fill: var(--cream); color: var(--navy); }
+  .btn-ghost-dark:hover,
+  .btn-line:hover { --cut-fill: var(--navy); color: var(--cream); }
+    .service-card:hover .service-media img { transform: scale(1.045); }
+  .wa-float:hover { color: var(--navy); }
+  .wa-float:hover::after { background: var(--mint); }
+}
 
 .btn-mint[aria-disabled='true'],
 .btn-petrol[aria-disabled='true'],
@@ -592,7 +600,6 @@ html {
   transition: transform 900ms var(--ease);
 }
 
-.service-card:hover .service-media img,
 .service-card:focus-visible .service-media img {
   transform: scale(1.045);
 }
@@ -656,8 +663,6 @@ html {
 /* the petrol ribbon behind, out of register, like the booking card */
 .wa-float::before { inset: 4px -4px -4px 4px; background: var(--petrol); }
 .wa-float::after { inset: 0; background: var(--navy); transition: background-color 160ms ease; }
-.wa-float:hover { color: var(--navy); }
-.wa-float:hover::after { background: var(--mint); }
 .on-ink .wa-float:focus-visible,
 .wa-float:focus-visible { outline: 2px solid var(--petrol); outline-offset: 4px; }
 

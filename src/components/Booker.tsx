@@ -571,7 +571,7 @@ function BookForm({
       </div>
 
       <h3 className="font-display text-h4 font-bold text-ink">{c.form.title}</h3>
-      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+      <div className="grid gap-2 sm:grid-cols-2">
         <Field label={c.form.name} name="name" value={v.name} onChange={set('name')} error={errors.name} autoComplete="name" maxLength={80} />
         <Field label={c.form.business} name="business" value={v.business} onChange={set('business')} error={errors.business} autoComplete="organization" maxLength={120} />
         <Field label={c.form.email} name="email" type="email" inputMode="email" value={v.email} onChange={set('email')} error={errors.email} autoComplete="email" maxLength={254} />
@@ -737,7 +737,7 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
   return (
     <form onSubmit={submit} noValidate className="relative grid gap-2">
       <div>
-        <h3 className="font-display text-h3 font-bold text-ink">{c.request.title}</h3>
+        <h3 id="request-title" tabIndex={-1} className="font-display text-h3 font-bold text-ink outline-none">{c.request.title}</h3>
         <p className="mt-1 text-small text-ink-soft">{c.request.lead}</p>
       </div>
       <div className="grid gap-2 sm:grid-cols-2">

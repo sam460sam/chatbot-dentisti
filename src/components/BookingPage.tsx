@@ -24,9 +24,19 @@ export function BookingPage() {
   const c = booking[lang]
   const [mode, setMode] = useState<'book' | 'request'>('book')
 
+  /* Switching between booking and the request form scrolls to the card and
+     moves focus into it: left on the toggle, focus would sit under the fixed
+     header once the card scrolls up. */
   const show = (m: 'book' | 'request') => {
     setMode(m)
-    requestAnimationFrame(() => document.getElementById('book')?.scrollIntoView({ block: 'start', behavior: smooth() }))
+    requestAnimationFrame(() => {
+      const card = document.getElementById('book')
+      card?.scrollIntoView({ block: 'start', behavior: smooth() })
+      const target = m === 'request' ? document.getElementById('request-title') : card?.querySelector<HTMLElement>('[aria-pressed="true"]')
+      if (target) return target.focus({ preventScroll: true })
+      card?.setAttribute('tabindex', '-1')
+      card?.focus({ preventScroll: true })
+    })
   }
 
   const alternatives = (

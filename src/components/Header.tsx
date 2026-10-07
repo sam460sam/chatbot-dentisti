@@ -127,9 +127,10 @@ export function Header({ t }: { t: Translation }) {
 
           <div className="flex items-center gap-1 justify-self-end">
             <div className="hidden sm:block">{langSwitch(false)}</div>
-            <Link to={`${homePath}#book`} className="btn-mint !min-h-[40px] !px-2">
-              <span className="sm:hidden">{nav.bookShort}</span>
-              <span className="hidden sm:inline">{nav.book}</span>
+            {/* the long label only where the bar has room for it on one line in every language */}
+            <Link to={`${homePath}#book`} className="btn-mint !min-h-[40px] whitespace-nowrap !px-2">
+              <span className="xl:hidden">{nav.bookShort}</span>
+              <span className="hidden xl:inline">{nav.book}</span>
             </Link>
             <button
               ref={menuButton}
