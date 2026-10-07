@@ -39,6 +39,19 @@ const descriptionOf = (lang, page) => meta[lang][page === 'home' ? 'description'
 
 const escapeAttr = (value) => value.replace(/&/g, '&amp;').replace(/"/g, '&quot;')
 
+/* The first picture of each page is its largest paint. The app renders it,
+   so without a hint the browser would only find it after the script ran. */
+const picture = (name) =>
+  `<link rel="preload" as="image" imagesrcset="/media/${name}-640.webp 640w, /media/${name}-960.webp 960w, /media/${name}-1600.webp 1600w" imagesizes="100vw" fetchpriority="high" />`
+const PRELOAD = {
+  home: [
+    '<link rel="preload" as="image" href="/media/hero-portrait.webp" media="(max-aspect-ratio: 4/5)" fetchpriority="high" />',
+    '<link rel="preload" as="image" imagesrcset="/media/hero-800.webp 800w, /media/hero-1280.webp 1280w, /media/hero-1920.webp 1920w" imagesizes="100vw" media="not all and (max-aspect-ratio: 4/5)" fetchpriority="high" />',
+  ].join('\n    '),
+  assistant: picture('assistant'),
+  websites: picture('websites'),
+}
+
 for (const lang of LANGS) {
   for (const page of PAGES) {
     const path = pathFor(lang, page)
@@ -80,6 +93,7 @@ for (const lang of LANGS) {
         `<meta property="og:image" content="${BASE}/og.png" />`,
       )
       .replace(/<!-- alt:start -->[\s\S]*?<!-- alt:end -->/, alternates)
+      .replace('</head>', PRELOAD[page] ? `  ${PRELOAD[page]}\n  </head>` : '</head>')
 
     /* /nl/prices is written as nl/prices.html, not nl/prices/index.html:
        Cloudflare Pages then serves the canonical address with a 200 instead

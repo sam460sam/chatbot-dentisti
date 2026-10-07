@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { App } from './App'
 import { RouterProvider, followBrowserLanguage } from './router'
 import './index.css'
+import './site.css'
 
 followBrowserLanguage()
 

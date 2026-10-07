@@ -1,57 +1,84 @@
 import { Link, pathFor, useRoute } from '../router'
-import { SITE, mailLink } from '../site'
+import { SITE, mailLink, waLink } from '../site'
+import { booking } from '../i18n/booking'
+import { home } from '../i18n/home'
+import { MarkFilm } from './MarkFilm'
+import { Arrow } from './marks'
 import type { Translation } from '../i18n'
 
 /*
- * The colophon claims only what is true of the built page. Three of the four
- * design directions wanted it to read "0 third-party requests" — but the live
- * page injects the chat widget from another origin and calls the assistant API,
- * so that line would be false, and falsifiable in ten seconds with devtools.
- * On a page whose whole argument is honesty, one unverifiable line is worse
- * than no line at all.
+ * The colophon claims only what is true of the built page: the assistant
+ * widget on /assistant does load from another origin, so there is no
+ * "zero third-party requests" line here, and there never should be.
  */
 export function Footer({ t }: { t: Translation }) {
   const { lang } = useRoute()
   const year = new Date().getFullYear()
+  const b = booking[lang]
+  const h = home[lang]
+  const homePath = pathFor(lang, 'home')
+
+  const pages = [
+    { to: homePath, label: b.nav.book },
+    { to: pathFor(lang, 'assistant'), label: b.nav.assistant },
+    { to: pathFor(lang, 'websites'), label: b.nav.websites },
+    { to: `${homePath}#ads`, label: h.footer.adsLink },
+    { to: pathFor(lang, 'prices'), label: b.nav.prices },
+  ]
 
   return (
-    <footer className="on-ink border-t border-ink-edge bg-ink text-paper">
-      <div className="container-page grid gap-4 py-6 sm:grid-cols-[1fr_auto] sm:gap-6">
-        <div>
-          <img
-            src="/logo-white.png"
-            alt="Twinbyte"
-            width={640}
-            height={175}
-            loading="lazy"
-            decoding="async"
-            className="h-3 w-auto"
-          />
-          <p className="mt-2 max-w-measure text-small text-paper-dim">{t.footer.tagline}</p>
+    <footer className="site-footer on-ink">
+      <div className="container-page grid items-center gap-6 pb-6 pt-9 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-8 lg:pt-10">
+        <div className="order-2 lg:order-1">
+          <img src="/brand/logo-on-dark.svg" alt="Twinbyte" width={154} height={32} loading="lazy" decoding="async" className="h-4 w-auto" />
+          <p className="mt-2 max-w-[34ch] text-lead text-paper-dim">{t.footer.tagline}</p>
+          <Link to={`${homePath}#book`} className="btn-mint mt-4">
+            {b.nav.book}
+            <Arrow />
+          </Link>
+
+          <div className="mt-8 grid gap-5 sm:grid-cols-2">
+            <div>
+              <p className="t-label">{h.footer.pages}</p>
+              <ul role="list" className="mt-2 grid gap-1">
+                {pages.map((p) => (
+                  <li key={p.to}>
+                    <Link className="text-lead font-medium text-paper transition-colors hover:text-teal-bright" to={p.to}>
+                      {p.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="t-label">{h.footer.contact}</p>
+              <ul role="list" className="mt-2 grid gap-1 text-body">
+                <li>
+                  <a className="text-paper underline decoration-ink-edge underline-offset-4 hover:text-teal-bright [overflow-wrap:anywhere]" href={mailLink(t.contact.emailSubject)}>
+                    {SITE.email}
+                  </a>
+                </li>
+                <li>
+                  <a className="text-paper underline decoration-ink-edge underline-offset-4 hover:text-teal-bright" href={waLink(b.hero.waText)} rel="noopener">
+                    WhatsApp {SITE.whatsappDisplay}
+                  </a>
+                </li>
+                <li>
+                  <Link className="text-paper-dim underline decoration-ink-edge underline-offset-4 hover:text-paper" to={pathFor(lang, 'privacy')}>
+                    {t.footer.privacy}
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
 
-        <ul role="list" className="grid gap-0.5 text-small sm:text-right">
-          <li>
-            <a className="text-paper underline underline-offset-4 hover:text-teal-bright" href={mailLink(t.contact.emailSubject)}>
-              {SITE.email}
-            </a>
-          </li>
-          <li>
-            <a
-              className="text-paper underline underline-offset-4 hover:text-teal-bright"
-              href={`https://wa.me/${SITE.whatsappNumber}`}
-              rel="noopener"
-            >
-              WhatsApp {SITE.whatsappDisplay}
-            </a>
-          </li>
-          <li>
-            <Link className="text-paper-dim underline underline-offset-4 hover:text-paper" to={pathFor(lang, 'privacy')}>
-              {t.footer.privacy}
-            </Link>
-          </li>
-        </ul>
+        <div className="order-1 flex justify-center lg:order-2 lg:justify-end">
+          <MarkFilm label={h.footer.film} />
+        </div>
       </div>
+
+      <div aria-hidden="true" className="footer-word container-page">twinbyte</div>
 
       {/* the bottom padding keeps the last line clear of the floating WhatsApp button */}
       <div className="container-page">

@@ -17,17 +17,22 @@ export function PrivacyPage({ t }: { t: Translation }) {
   const { lang } = useRoute()
 
   return (
-    <main id="main" className="band-paper pt-10">
+    <main id="main">
+      <section className="page-head page-head-plain on-ink">
+        <div className="hero-copy container-page">
+          <p className="hero-eyebrow"><span aria-hidden="true" className="hero-dot" />{t.privacyPage.updated}: {SITE.lastUpdated}</p>
+          <h1 className="hero-title">{t.privacyPage.title}</h1>
+          <p className="hero-lead">{t.privacyPage.intro}</p>
+        </div>
+      </section>
+      <div className="band-paper">
       <article className="container-page max-w-measure">
-        <p className="t-label">{t.privacyPage.updated}: {SITE.lastUpdated}</p>
-        <h1 className="mt-2 max-w-none font-display text-h2 font-extrabold text-ink sm:text-h1">{t.privacyPage.title}</h1>
-        <p className="t-lead mt-3">{t.privacyPage.intro}</p>
 
         {[...t.privacyPage.sections.slice(0, 1), booking[lang].privacy, ...t.privacyPage.sections.slice(1)].map((section) => {
           const body = section.body.filter((line) => !unfilled(line))
           if (body.length === 0) return null
           return (
-            <section key={section.title} className="mt-6 border-t border-paper-edge pt-3">
+            <section key={section.title} className="mt-6 border-t border-paper-edge pt-3 first:mt-0">
               <h2 className="t-h3">{section.title}</h2>
               {body.map((paragraph) => (
                 <p key={paragraph} className="t-body mt-2 text-small">
@@ -47,6 +52,7 @@ export function PrivacyPage({ t }: { t: Translation }) {
           </Link>
         </p>
       </article>
+      </div>
     </main>
   )
 }

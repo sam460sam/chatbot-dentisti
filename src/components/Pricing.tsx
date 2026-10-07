@@ -21,7 +21,7 @@ export function Pricing({ t, head = true }: { t: Translation; head?: boolean }) 
   const { lang } = useRoute()
 
   return (
-    <section id="prices" aria-label={head ? undefined : p.title} aria-labelledby={head ? 'prices-title' : undefined} className={head ? 'band-paper' : 'band-paper pt-0 sm:pt-0 lg:pt-0'}>
+    <section id="prices" aria-label={head ? undefined : p.title} aria-labelledby={head ? 'prices-title' : undefined} className="band-paper">
       <div className="container-page">
         {head && (
           <>

@@ -9,3 +9,4 @@ dist-preview
 # local Cloudflare secrets
 .dev.vars
 .wrangler/
+tools/__pycache__/

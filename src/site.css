@@ -1,0 +1,776 @@
+/* ==========================================================================
+   The twinbyteservices.com layer: the folded-ribbon brand on top of the
+   type and spacing system in index.css.
+
+   Rules kept from the site this grew out of, because they were paid for on
+   real iPhones: no filter, no backdrop-filter, no 3D transforms, no blurred
+   shadows on large layers, no persistent will-change — and nothing on the
+   page is ever hidden until a script decides to show it. Scroll motion here
+   is CSS scroll-driven animation: it only moves things that are already
+   visible, and a browser without it simply shows the page still.
+
+   The one shape: the cut corner. A real paper fold cuts the outer corner
+   along the crease — that is why the mark has flat tips — so buttons, chips
+   and cards lose two opposite corners, top-left and bottom-right, the same
+   way the two ribbons sit 180 degrees apart.
+   ========================================================================== */
+
+:root {
+  --navy: #0a0f1e;
+  --navy-2: #111a30;
+  --navy-3: #1b2742;
+  --petrol: #356f8e;
+  --petrol-deep: #2a5a74;
+  --mint: #96d3c0;
+  --mint-deep: #6db8a2;
+  --cream: #f4efe6;
+  --cream-deep: #eae3d6;
+  --line: #d9d0c0;
+  --ease: cubic-bezier(0.2, 0.7, 0, 1);
+}
+
+html {
+  /* the first paint before the script is navy, like the header and the hero:
+     no white flash, and an overscroll past the footer stays dark */
+  background: var(--navy);
+}
+
+/* ------------------------------------------------------------------ cut corners
+   The fill lives on pseudo-elements so the element itself stays a rectangle:
+   the focus ring is never clipped away. A line is a ring: the outer shape
+   minus the same shape 1px inside it (evenodd). 0.41px = 1px x (sqrt2 - 1)
+   keeps the diagonal as thick as the straight edges. */
+@property --cut-fill {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --cut-ink {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+.cut,
+.cut-line,
+.btn-mint,
+.btn-petrol,
+.btn-cream,
+.btn-ghost,
+.btn-ghost-dark,
+.btn-teal,
+.btn-verm,
+.btn-line,
+.btn-teal-bright,
+.btn-line-flood {
+  --c: 10px;
+  position: relative;
+  isolation: isolate;
+  transition: --cut-fill 180ms ease, --cut-ink 180ms ease, color 180ms ease;
+}
+
+.cut::before,
+.cut-line::before,
+.cut-line::after,
+.btn-mint::before,
+.btn-petrol::before,
+.btn-cream::before,
+.btn-ghost::before,
+.btn-ghost::after,
+.btn-ghost-dark::before,
+.btn-ghost-dark::after,
+.btn-teal::before,
+.btn-verm::before,
+.btn-teal-bright::before,
+.btn-line::before,
+.btn-line::after,
+.btn-line-flood::before,
+.btn-line-flood::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--cut-fill);
+  clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+}
+
+/* the ring, drawn over the fill */
+.cut-line::after,
+.btn-ghost::after,
+.btn-ghost-dark::after,
+.btn-line::after,
+.btn-line-flood::after {
+  background: var(--cut-ink);
+  clip-path: polygon(evenodd,
+    var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c),
+    calc(var(--c) + 0.41px) 1px, calc(100% - 1px) 1px, calc(100% - 1px) calc(100% - var(--c) - 0.41px),
+    calc(100% - var(--c) - 0.41px) calc(100% - 1px), 1px calc(100% - 1px), 1px calc(var(--c) + 0.41px));
+}
+
+.cut-sm { --c: 6px; }
+.cut-lg { --c: 22px; }
+
+/* a picture in a cut frame: no focus ring to protect, so clip it directly */
+.cut-frame {
+  --c: 22px;
+  clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+}
+
+/* ------------------------------------------------------------------ buttons */
+.btn-mint,
+.btn-petrol,
+.btn-cream,
+.btn-ghost,
+.btn-ghost-dark,
+.btn-teal,
+.btn-verm,
+.btn-line,
+.btn-teal-bright,
+.btn-line-flood {
+  display: inline-flex;
+  min-height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 24px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.btn-mint,
+.btn-teal-bright { --cut-fill: var(--mint); color: var(--navy); }
+.btn-mint:hover,
+.btn-teal-bright:hover { --cut-fill: var(--cream); }
+.btn-petrol,
+.btn-teal { --cut-fill: var(--petrol); color: var(--cream); }
+.btn-petrol:hover,
+.btn-teal:hover { --cut-fill: var(--navy); }
+.btn-verm { --cut-fill: #2f7563; color: var(--cream); }
+.btn-verm:hover { --cut-fill: var(--navy); }
+.btn-cream { --cut-fill: var(--cream); color: var(--navy); }
+.btn-cream:hover { --cut-fill: var(--mint); }
+/* a line on dark ground (and on the hero photograph): it fills on hover */
+.btn-ghost,
+.btn-line-flood { --cut-ink: rgba(244, 239, 230, 0.6); color: var(--cream); }
+.btn-ghost:hover,
+.btn-line-flood:hover { --cut-ink: var(--cream); --cut-fill: var(--cream); color: var(--navy); }
+/* a line on light ground */
+.btn-ghost-dark,
+.btn-line { --cut-ink: var(--navy); color: var(--navy); }
+.btn-ghost-dark:hover,
+.btn-line:hover,
+.btn-ghost-dark[aria-pressed='true'] { --cut-fill: var(--navy); color: var(--cream); }
+
+.btn-mint[aria-disabled='true'],
+.btn-petrol[aria-disabled='true'],
+.btn-teal[aria-disabled='true'] {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+/* ------------------------------------------------------------------ intro */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: var(--navy);
+  pointer-events: none;
+  animation: intro-lift 720ms cubic-bezier(0.76, 0, 0.24, 1) 980ms both;
+}
+
+.intro-mark {
+  width: clamp(88px, 14vw, 132px);
+  height: auto;
+  overflow: visible;
+}
+
+.intro-a,
+.intro-b {
+  transform-box: view-box;
+  transform-origin: 50px 50px;
+  animation: intro-fold-a 820ms var(--ease) 80ms both;
+}
+
+.intro-b {
+  animation-name: intro-fold-b;
+}
+
+@keyframes intro-fold-a {
+  from { opacity: 0; transform: translate(-26px, -26px) rotate(-90deg) scale(0.86); }
+  60% { opacity: 1; }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes intro-fold-b {
+  from { opacity: 0; transform: translate(26px, 26px) rotate(-90deg) scale(0.86); }
+  60% { opacity: 1; }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes intro-lift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100%); }
+}
+
+/* ------------------------------------------------------------------ header */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  color: var(--cream);
+  background: rgba(10, 15, 30, 0.94);
+  border-bottom: 1px solid #1b2742;
+}
+
+/* Over the home hero the bar starts clear and fills in over the first 120px
+   of scroll. Where scroll timelines are missing it simply stays filled. */
+@supports (animation-timeline: scroll()) {
+  .site-header.over-hero {
+    animation: header-fill linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 0 120px;
+  }
+}
+
+@keyframes header-fill {
+  from { background: rgba(10, 15, 30, 0); border-bottom-color: rgba(27, 39, 66, 0); }
+  to { background: rgba(10, 15, 30, 0.94); border-bottom-color: #1b2742; }
+}
+
+/* display comes from the utilities (hidden lg:flex): this file loads after
+   them, so it must never set display on something they show or hide */
+.nav-pill {
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border: 1px solid rgba(244, 239, 230, 0.16);
+  border-radius: 999px;
+  background: rgba(10, 15, 30, 0.35);
+}
+
+.nav-pill a {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  padding: 0 16px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(244, 239, 230, 0.78);
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.nav-pill a:hover { color: var(--cream); background: rgba(244, 239, 230, 0.08); }
+.nav-pill a[aria-current='page'] { color: var(--navy); background: var(--cream); }
+
+.menu-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 49;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 88px 16px 32px;
+  background:
+    radial-gradient(120% 60% at 100% 0%, rgba(53, 111, 142, 0.45), rgba(53, 111, 142, 0) 60%),
+    var(--navy);
+  color: var(--cream);
+  animation: sheet-in 320ms var(--ease) both;
+}
+
+@keyframes sheet-in {
+  from { opacity: 0; transform: translateY(-12px); }
+  to { opacity: 1; transform: none; }
+}
+
+.menu-sheet a.menu-big {
+  display: block;
+  padding: 10px 0;
+  font-family: Bricolage, Georgia, serif;
+  font-size: clamp(34px, 9vw, 48px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--cream);
+}
+
+.menu-sheet a.menu-big[aria-current='page'] { color: var(--mint); }
+
+/* ------------------------------------------------------------------ hero */
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 92svh;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--navy);
+  color: var(--cream);
+}
+
+@media (min-width: 768px) {
+  .hero { min-height: 100svh; }
+}
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.hero-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% 50%;
+}
+
+.hero-video {
+  opacity: 0;
+  transition: opacity 900ms ease;
+}
+
+/* on a phone the still is the hero: it drifts closer, very slowly */
+@media (max-aspect-ratio: 4/5) and (prefers-reduced-motion: no-preference) {
+  .hero picture .hero-img {
+    animation: still-drift 26s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes still-drift {
+  from { transform: scale(1); }
+  to { transform: scale(1.08) translateY(-1.5%); }
+}
+
+.hero-video.is-on { opacity: 1; }
+
+/* The words sit on the dark street on the left and the dark shopfront at
+   the bottom; the shade only deepens what is already dark there. */
+.hero-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(10, 15, 30, 0.96) 0%, rgba(10, 15, 30, 0.72) 32%, rgba(10, 15, 30, 0.12) 64%, rgba(10, 15, 30, 0.35) 100%),
+    linear-gradient(to right, rgba(10, 15, 30, 0.72) 0%, rgba(10, 15, 30, 0.2) 55%, rgba(10, 15, 30, 0) 75%);
+}
+
+.hero-copy {
+  position: relative;
+  padding-top: 120px;
+  padding-bottom: clamp(56px, 9vh, 112px);
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  color: var(--mint);
+}
+
+.hero-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  transform: translateY(-1px);
+  background: var(--mint);
+  clip-path: polygon(30% 0, 100% 0, 100% 70%, 70% 100%, 0 100%, 0 30%);
+}
+
+.hero-title {
+  margin-top: 20px;
+  max-width: 13ch;
+  font-family: Bricolage, Georgia, serif;
+  font-size: clamp(46px, 8.4vw, 116px);
+  font-weight: 700;
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+  color: var(--cream);
+  text-wrap: balance;
+  hyphens: manual;
+  overflow-wrap: normal;
+}
+
+.hero-lead {
+  margin-top: 24px;
+  max-width: 46ch;
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height: 1.6;
+  color: rgba(244, 239, 230, 0.86);
+  text-wrap: pretty;
+}
+
+.hero-cue {
+  position: absolute;
+  right: clamp(16px, 4vw, 48px);
+  bottom: clamp(56px, 9vh, 112px);
+  display: none;
+  width: 1px;
+  height: 72px;
+  background: rgba(244, 239, 230, 0.25);
+  overflow: hidden;
+}
+
+.hero-cue span {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 28px;
+  background: var(--mint);
+  animation: cue 2.2s var(--ease) infinite;
+}
+
+@media (min-width: 1024px) {
+  .hero-cue { display: block; }
+}
+
+@keyframes cue {
+  from { transform: translateY(-28px); }
+  to { transform: translateY(72px); }
+}
+
+/* The first entrance: CSS on load, never an observer. */
+.hero-copy > * {
+  animation: rise-in 900ms var(--ease) both;
+}
+.hero-copy > *:nth-child(1) { animation-delay: 200ms; }
+.hero-copy > *:nth-child(2) { animation-delay: 300ms; }
+.hero-copy > *:nth-child(3) { animation-delay: 420ms; }
+.hero-copy > *:nth-child(4) { animation-delay: 520ms; }
+
+/* with the intro, the words wait for the curtain */
+.hero-copy.after-intro > * { animation-delay: 1500ms; }
+.hero-copy.after-intro > *:nth-child(2) { animation-delay: 1600ms; }
+.hero-copy.after-intro > *:nth-child(3) { animation-delay: 1720ms; }
+.hero-copy.after-intro > *:nth-child(4) { animation-delay: 1820ms; }
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ------------------------------------------------------------------ page heads */
+.page-head {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 62svh;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--navy);
+  color: var(--cream);
+}
+
+.page-head .hero-copy {
+  padding-top: 132px;
+  padding-bottom: clamp(48px, 7vh, 88px);
+}
+
+.page-head .hero-title {
+  max-width: 16ch;
+  font-size: clamp(40px, 6.4vw, 88px);
+}
+
+.page-head-plain {
+  min-height: 0;
+  background:
+    radial-gradient(70% 90% at 100% 0%, rgba(53, 111, 142, 0.38), rgba(53, 111, 142, 0) 70%),
+    var(--navy);
+}
+
+/* ------------------------------------------------------------------ sections */
+/* the section headings of the inner pages, in the same voice as the home page */
+.t-h2 {
+  max-width: 20ch;
+  font-size: clamp(30px, 3.6vw, 52px);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.section-title {
+  max-width: 18ch;
+  font-family: Bricolage, Georgia, serif;
+  font-size: clamp(34px, 4.6vw, 64px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--navy);
+  text-wrap: balance;
+}
+
+.on-ink .section-title { color: var(--cream); }
+
+.eyebrow {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--petrol);
+}
+
+.eyebrow::before {
+  content: '';
+  flex: none;
+  transform: translateY(-1px);
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  clip-path: polygon(30% 0, 100% 0, 100% 70%, 70% 100%, 0 100%, 0 30%);
+}
+
+.on-ink .eyebrow { color: var(--mint); }
+
+/* the booking card and its plate */
+.book-card {
+  --c: 28px;
+  position: relative;
+  isolation: isolate;
+}
+
+.book-card::before,
+.book-card::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+}
+
+.book-card::after {
+  inset: 0;
+  background: #fff;
+}
+
+.book-card-dark::after {
+  background: var(--navy);
+}
+
+/* the second ribbon: a petrol plate out of register behind the card */
+.book-card::before {
+  inset: 12px -12px -12px 12px;
+  background: var(--petrol);
+}
+
+@media (max-width: 640px) {
+  .book-card { --c: 18px; }
+  .book-card::before { inset: 8px -6px -8px 6px; }
+}
+
+/* service cards */
+.service-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+}
+
+.service-media {
+  --c: 22px;
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--navy-2);
+  clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+}
+
+.service-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 900ms var(--ease);
+}
+
+.service-card:hover .service-media img,
+.service-card:focus-visible .service-media img {
+  transform: scale(1.045);
+}
+
+/* full-bleed picture band (the closing call) */
+.picture-band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--navy);
+  color: var(--cream);
+}
+
+.picture-band > img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.picture-band::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(to right, rgba(10, 15, 30, 0.94) 0%, rgba(10, 15, 30, 0.78) 45%, rgba(10, 15, 30, 0.3) 100%),
+    linear-gradient(to top, rgba(10, 15, 30, 0.6), rgba(10, 15, 30, 0) 40%);
+}
+
+/* the floating WhatsApp button: navy with the cut corners, mint on hover */
+.wa-float {
+  --c: 8px;
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 40;
+  isolation: isolate;
+  height: 48px;
+  min-width: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cream);
+  transition: color 160ms ease;
+}
+
+.wa-float::before,
+.wa-float::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+}
+
+/* the petrol ribbon behind, out of register, like the booking card */
+.wa-float::before { inset: 4px -4px -4px 4px; background: var(--petrol); }
+.wa-float::after { inset: 0; background: var(--navy); transition: background-color 160ms ease; }
+.wa-float:hover { color: var(--navy); }
+.wa-float:hover::after { background: var(--mint); }
+.on-ink .wa-float:focus-visible,
+.wa-float:focus-visible { outline: 2px solid var(--petrol); outline-offset: 4px; }
+
+@media (min-width: 640px) {
+  .wa-float { right: 24px; bottom: 24px; padding: 0 18px; }
+}
+
+/* ------------------------------------------------------------------ footer */
+.site-footer {
+  position: relative;
+  overflow: hidden;
+  background: var(--navy);
+  color: var(--cream);
+}
+
+.mark-film {
+  position: relative;
+  width: min(72vw, 440px);
+  aspect-ratio: 1;
+}
+
+.mark-film img,
+.mark-film video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.mark-film video {
+  opacity: 0;
+  transition: opacity 600ms ease;
+  /* a video's navy is never exactly the page's navy: fade the square's edge out */
+  -webkit-mask-image: radial-gradient(closest-side, #000 78%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 78%, transparent 100%);
+}
+
+.mark-film video.is-on { opacity: 1; }
+
+.footer-word {
+  font-family: Bricolage, Georgia, serif;
+  font-size: clamp(64px, 17vw, 260px);
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.06em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(150, 211, 192, 0.28);
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------ scroll motion
+   Only where the browser drives it from the scroll position itself, only
+   transform and a partial fade, and never with reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    [data-rise] {
+      animation: scroll-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+
+    .hero-media {
+      animation: hero-drift linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100svh;
+    }
+
+    .hero-copy {
+      animation: hero-away linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 80svh;
+    }
+
+    .parallax > img {
+      animation: picture-drift linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+
+    .footer-word {
+      animation: word-slide linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 0%;
+    }
+  }
+}
+
+@keyframes scroll-rise {
+  from { opacity: 0.35; transform: translateY(36px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes hero-drift {
+  to { transform: translateY(14svh) scale(1.06); }
+}
+
+@keyframes hero-away {
+  to { opacity: 0.25; transform: translateY(-6svh); }
+}
+
+@keyframes picture-drift {
+  from { transform: translateY(-6%) scale(1.12); }
+  to { transform: translateY(6%) scale(1.12); }
+}
+
+@keyframes word-slide {
+  from { transform: translateX(6%); }
+  to { transform: translateX(-4%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro { display: none; }
+  .hero-video { display: none; }
+}

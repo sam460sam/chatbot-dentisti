@@ -1,19 +1,22 @@
 /** @type {import('tailwindcss').Config} */
 
 /*
- * TWO INKS.
+ * THE TWINBYTE PALETTE: navy, petrol, mint, cream.
  *
- * Teal is the assistant. Terracotta is the websites. There is no third accent.
- * A visitor who came for one half of the business can follow it down the page by
- * colour alone — the thing the old single-accent palette could not do.
+ * The token names are the old ones on purpose (paper, ink, teal, verm), so
+ * every component kept its meaning while the colours changed underneath:
+ *   paper = cream ground          ink  = navy text and dark plates
+ *   teal  = petrol, the assistant verm = deep mint, the websites
+ * `teal.bright` is mint itself: the bright accent on dark ground.
  *
- * Contrast, measured rather than assumed:
- *   - On `paper` every pairing below passes AA.
- *   - On `paper-deep`, `ink-mute` does NOT (4.29:1). Use `ink-soft` there.
- *   - On a `teal` or `verm` flood ONLY `paper` at full strength passes AA (7.77 / 5.82).
- *     There is no dimmed secondary text on a flood; flood sections carry short, bright copy.
- *   - `verm` is the text-safe terracotta (5.82 on paper). `verm-fill` is lighter and is for
- *     fills and rules only, never text. The split is in the name so the mistake is visible.
+ * Contrast, measured:
+ *   - petrol on cream 4.8:1, ink-soft on cream 8.2:1, ink-mute on cream 5.4:1
+ *     and on paper-deep 4.8:1 (the old 4.29:1 failure is gone).
+ *   - verm (deep mint) on cream 4.8:1. verm-fill and mint are fills only,
+ *     never text on light ground.
+ *   - mint on navy 11.2:1, cream on navy 16.7:1.
+ *   - `danger` is the one colour outside the palette: an error must look
+ *     like an error. 6.6:1 on white, 5.7:1 on cream.
  */
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
@@ -41,18 +44,17 @@ export default {
     extend: {
       colors: {
         paper: {
-          DEFAULT: '#F5F2EC', deep: '#EAE5DA', edge: '#D9D4C8',
-          'edge-deep': '#CFC9BB', dim: '#B4AFA3', mute: '#9A9488',
+          DEFAULT: '#F4EFE6', deep: '#EAE3D6', edge: '#D9D0C0',
+          'edge-deep': '#CBC1AE', dim: '#B5AD9E', mute: '#9A9282',
         },
-        ink: { DEFAULT: '#17160F', soft: '#4A4740', mute: '#66625A', edge: '#3F3C33' },
-        /* `mid` exists because the strip needs two bars that are unmistakable at a
-           glance: ink against teal measured 2.09:1, which on a laptop at an angle
-           reads as one colour. mid against ink is 3.82:1 and still visible on the
-           beige ground at 3.78:1. */
-        teal: { DEFAULT: '#0E5266', deep: '#0A3F4F', mid: '#1D7D96', bright: '#59B9CC' },
-        /* Pulled back from a fully saturated #A8371F: at flood scale it was the
-           loudest thing on the page. Still 5.51:1 under paper text. */
-        verm: { DEFAULT: '#A14531', fill: '#C8622F', deep: '#853727', bright: '#D96A46' },
+        ink: { DEFAULT: '#0A0F1E', soft: '#3F4659', mute: '#5A6173', edge: '#1B2742', raised: '#111A30' },
+        teal: { DEFAULT: '#356F8E', deep: '#2A5A74', mid: '#4A88A8', bright: '#96D3C0' },
+        verm: { DEFAULT: '#2F7563', fill: '#6DB8A2', deep: '#245C4D', bright: '#C9E8DE' },
+        navy: '#0A0F1E',
+        petrol: '#356F8E',
+        mint: { DEFAULT: '#96D3C0', deep: '#6DB8A2' },
+        cream: '#F4EFE6',
+        danger: '#B42318',
       },
       fontFamily: {
         display: ['Bricolage', 'Georgia', 'serif'],

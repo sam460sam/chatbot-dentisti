@@ -4,6 +4,7 @@ import { BookingPage } from './components/BookingPage'
 import { AssistantPage, PricesPage, WebsitesPage } from './components/Pages'
 import { PrivacyPage } from './components/PrivacyPage'
 import { WhatsAppFloat } from './components/WhatsAppFloat'
+import { Intro } from './components/Intro'
 import { useRoute } from './router'
 import { useSeo } from './seo'
 import { pageMeta } from './pageMeta'
@@ -22,7 +23,8 @@ export function App() {
   useAssistantWidget(lang, t.widgetHello, page === 'assistant')
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-paper">
+      {page === 'home' && <Intro />}
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-[60] focus:bg-ink focus:px-2 focus:py-1 focus:font-semibold focus:text-paper"
@@ -40,7 +42,7 @@ export function App() {
         ) : page === 'prices' ? (
           <PricesPage t={t} />
         ) : (
-          <BookingPage t={t} />
+          <BookingPage />
         )}
       </div>
       <Footer t={t} />

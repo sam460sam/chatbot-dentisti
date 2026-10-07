@@ -6,6 +6,7 @@ import {
   AssemblySection, BenefitsSection, DayStripSection, HowSection, PricesAndFaq,
   SecuritySection, WebsitesSection,
 } from './Sections'
+import { Picture, type PictureName } from './Picture'
 import type { Translation } from '../i18n'
 
 /*
@@ -13,38 +14,44 @@ import type { Translation } from '../i18n'
  * by subject, and each one ends the same way: back to the call.
  */
 
-function PageTitle({ title, lead, ink, children }: { title: string; lead: string; ink: 'teal' | 'verm' | 'ink'; children?: React.ReactNode }) {
-  const rule = ink === 'teal' ? 'border-teal' : ink === 'verm' ? 'border-verm' : 'border-ink'
+function PageTitle({ title, lead, pic, eyebrow, children }: {
+  title: string; lead: string; pic?: PictureName; eyebrow?: string; children?: React.ReactNode
+}) {
   return (
-    <section className="band-paper pb-6 pt-8 sm:pb-6 sm:pt-10 lg:pb-6">
-      <div className="container-page">
-        <div className={`border-t-2 pt-2 ${rule}`}>
-          <h1 className="t-display max-w-[18ch]">{title}</h1>
+    <section className={`page-head on-ink ${pic ? 'parallax' : 'page-head-plain'}`}>
+      {pic && (
+        <div className="hero-media" aria-hidden="true">
+          <Picture name={pic} sizes="100vw" eager className="hero-img" />
+          <div className="hero-shade" />
         </div>
-        <p className="t-lead mt-3 max-w-lead">{lead}</p>
+      )}
+      <div className="hero-copy container-page">
+        {eyebrow && <p className="hero-eyebrow"><span aria-hidden="true" className="hero-dot" />{eyebrow}</p>}
+        <h1 className="hero-title">{title}</h1>
+        <p className="hero-lead">{lead}</p>
         {children}
       </div>
     </section>
   )
 }
 
-/* Every page ends on the call: a plate on paper, so it does not melt into
-   the footer, with WhatsApp next to it as on the home page. */
+/* Every page ends on the call: a navy plate with the petrol ribbon behind
+   it, WhatsApp next to it as on the home page. */
 function BookBand() {
   const { lang } = useRoute()
   const c = booking[lang]
   return (
     <section className="band-paper">
       <div className="container-page">
-        <div className="on-ink border border-ink bg-ink p-3 plate-teal sm:p-5">
-          <h2 className="max-w-[22ch] font-display text-h3 font-extrabold text-paper sm:text-h2">{c.page.book}</h2>
+        <div className="book-card book-card-dark p-3 sm:p-6" data-rise>
+          <h2 className="max-w-[22ch] font-display text-h3 font-bold text-paper sm:text-h2">{c.page.book}</h2>
           <p className="mt-2 max-w-lead text-body text-paper-dim">{c.page.bookLead}</p>
           <div className="mt-4 flex flex-col gap-1 sm:flex-row">
-            <Link className="btn-teal-bright" to={`${pathFor(lang, 'home')}#book`}>
+            <Link className="btn-mint" to={`${pathFor(lang, 'home')}#book`}>
               {c.nav.book}
               <Arrow />
             </Link>
-            <a className="btn-line-flood" href={waLink(c.hero.waText)} rel="noopener">
+            <a className="btn-ghost" href={waLink(c.hero.waText)} rel="noopener">
               <Bubble size={16} />
               {c.hero.whatsapp}
             </a>
@@ -56,12 +63,13 @@ function BookBand() {
 }
 
 export function AssistantPage({ t }: { t: Translation }) {
+  const { lang } = useRoute()
   return (
     <main id="main">
-      <PageTitle title={t.split.assistant.title} lead={t.split.assistant.body} ink="teal">
+      <PageTitle title={t.split.assistant.title} lead={t.split.assistant.body} pic="assistant" eyebrow={booking[lang].nav.assistant}>
         {/* the one page that loads the live assistant says so */}
         {SITE.widget.enabled && (
-          <p className="mt-3 flex items-center gap-1 text-body font-semibold text-teal">
+          <p className="mt-3 flex items-center gap-1 text-body font-semibold text-teal-bright">
             <Bubble size={16} />
             {t.demo.tryHere}
           </p>
@@ -77,9 +85,10 @@ export function AssistantPage({ t }: { t: Translation }) {
 }
 
 export function WebsitesPage({ t }: { t: Translation }) {
+  const { lang } = useRoute()
   return (
     <main id="main">
-      <PageTitle title={t.websites.title} lead={t.websites.lead} ink="verm" />
+      <PageTitle title={t.websites.title} lead={t.websites.lead} pic="websites" eyebrow={booking[lang].nav.websites} />
       <WebsitesSection t={t} bare />
       <AssemblySection t={t} />
       <OtherHalf t={t} />
@@ -89,9 +98,10 @@ export function WebsitesPage({ t }: { t: Translation }) {
 }
 
 export function PricesPage({ t }: { t: Translation }) {
+  const { lang } = useRoute()
   return (
     <main id="main">
-      <PageTitle title={t.pricing.title} lead={t.pricing.lead} ink="ink" />
+      <PageTitle title={t.pricing.title} lead={t.pricing.lead} eyebrow={booking[lang].nav.prices} />
       <PricesAndFaq t={t} head={false} />
       <BookBand />
     </main>
@@ -105,7 +115,11 @@ function OtherHalf({ t }: { t: Translation }) {
   return (
     <section className="band-deep">
       <div className="container-page">
-        <Link to={pathFor(lang, 'assistant')} className="group block border-t-2 border-teal bg-paper p-3 transition-colors hover:bg-white sm:p-4">
+        <Link to={pathFor(lang, 'assistant')} className="cut-line cut-lg group grid gap-3 p-3 [--cut-fill:#F4EFE6] [--cut-ink:#CBC1AE] hover:[--cut-fill:#FFFFFF] sm:p-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] md:items-center" data-rise>
+          <div className="service-media">
+            <Picture name="assistant" sizes="(min-width: 768px) 40vw, 100vw" />
+          </div>
+          <div>
           <p className="t-label flex items-center gap-1 text-teal">
             <Bubble size={16} />
             {a.tag}
@@ -116,6 +130,7 @@ function OtherHalf({ t }: { t: Translation }) {
             {a.cta}
             <Arrow />
           </span>
+          </div>
         </Link>
       </div>
     </section>

@@ -66,8 +66,8 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* the fixed 56px header: anchors, focus and scrollIntoView stop below it */
-    scroll-padding-top: 72px;
+    /* the fixed header (56px, 64px on a desktop): anchors, focus and scrollIntoView stop below it */
+    scroll-padding-top: 80px;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -89,17 +89,17 @@
     @apply bg-teal text-paper;
   }
 
-  /* One focus ring for the whole site. It clears 3:1 on paper, ink, teal and
-     terracotta alike, so there is never a theme-conditional focus branch to break. */
+  /* One focus ring for the whole site: petrol on light ground, cream on dark.
+     Petrol clears 4.8:1 on cream; cream clears 16:1 on navy. */
   :focus-visible {
-    outline: 2px solid #0E5266;
+    outline: 2px solid #356F8E;
     outline-offset: 2px;
     border-radius: 2px;
   }
 
   .on-ink :focus-visible,
   .on-flood :focus-visible {
-    outline-color: #F5F2EC;
+    outline-color: #F4EFE6;
   }
 
   /* Safari and VoiceOver drop the list role from any list with list-style:none,
@@ -120,18 +120,13 @@
     min-width: 0;
   }
 
-  /* ---------------------------------------------------------- the square corner
-     The one ownable shape. It is not in the logo; it is derived from it — the
-     bubble's tail abstracted into a corner, so the mark scales from an 8px chip
-     to a 640px panel without ever drawing a triangle.
-       .mark-in  — something is said TO you   (square bottom-left)
-       .mark-out — your turn                  (square bottom-right)  */
-  .mark-in {
-    border-radius: 10px 10px 10px 0;
-  }
-
+  /* The old bubble corner (one square corner, three rounded) belonged to the
+     old logo. The new mark is straight lines and 45-degree cuts, so these are
+     plain square corners now; the cut corner itself is in site.css. The two
+     names stay so the components did not have to change. */
+  .mark-in,
   .mark-out {
-    border-radius: 10px 10px 0 10px;
+    border-radius: 0;
   }
 
   /* ------------------------------------------------------------------ type */
@@ -166,51 +161,22 @@
     @apply font-sans text-micro font-bold uppercase text-ink-mute;
   }
 
-  /* --------------------------------------------------------------- controls */
-  .btn {
-    @apply mark-out inline-flex items-center justify-center gap-1 px-3 py-2 text-small font-semibold transition-colors duration-150;
-  }
-
-  .btn-teal {
-    @apply btn border border-transparent bg-teal text-paper hover:bg-teal-deep;
-  }
-
-  .btn-verm {
-    @apply btn border border-transparent bg-verm text-paper hover:bg-verm-deep;
-  }
-
-  .btn-line {
-    @apply btn border border-ink bg-transparent text-ink hover:bg-ink hover:text-paper;
-  }
-
-  /* The one bright button on the black first screen. */
-  .btn-teal-bright {
-    @apply btn border border-transparent bg-teal-bright text-ink hover:bg-paper;
-  }
-
-  .btn-line-flood {
-    @apply btn border border-paper bg-transparent text-paper hover:bg-paper hover:text-ink;
-  }
+  /* --------------------------------------------------------------- controls
+     The buttons are drawn in site.css (cut corners). These older names map
+     onto them: teal = petrol, line = navy outline, teal-bright = mint,
+     line-flood = cream outline on dark ground. */
 
   /* ---------------------------------------------------------------- surfaces
      A hairline is always `1px solid <hex>` — never rgba, never fractional.
      Safari renders fractional and translucent hairlines at inconsistent
      thickness across device pixel ratios, and a ruled page shows it. */
-  .rule {
-    @apply border-t border-paper-edge;
-  }
-
-  .rule-deep {
-    @apply border-t border-paper-edge-deep;
-  }
-
   .rule-ink {
     @apply border-t border-ink-edge;
   }
 
   /* A section is a band of ground. There are four, and they alternate by meaning,
-     not by rhythm: paper is neutral, teal is the assistant, terracotta is the
-     websites, ink is the one plate that earns going dark. */
+     not by rhythm: paper (cream) is neutral, deep is the quieter cream, ink
+     (navy) is the plate that earns going dark. */
   .band {
     @apply py-6 sm:py-8 lg:py-9;
   }
@@ -221,14 +187,6 @@
 
   .band-deep {
     @apply band bg-paper-deep;
-  }
-
-  .band-teal {
-    @apply band on-flood bg-teal text-paper;
-  }
-
-  .band-verm {
-    @apply band on-flood bg-verm text-paper;
   }
 
   .band-ink {
@@ -277,46 +235,25 @@
      render white on an iPhone here. A blurred shadow has to be rasterised
      every time its layer is touched; a hard one never does. */
   .plate-ink {
-    box-shadow: 10px 10px 0 #17160F;
+    box-shadow: 10px 10px 0 #0A0F1E;
   }
 
   .plate-teal {
-    box-shadow: 10px 10px 0 #0E5266;
+    box-shadow: 10px 10px 0 #356F8E;
   }
 
   .plate-verm {
-    box-shadow: 10px 10px 0 #A14531;
-  }
-
-  .plate-paper {
-    box-shadow: 10px 10px 0 #F5F2EC;
+    box-shadow: 10px 10px 0 #6DB8A2;
   }
 
   /* Only the offset shrinks on a phone. `currentColor` was wrong here: it
      resolves to the inherited TEXT colour, so every plate turned the same
-     muddy grey and the terracotta one stopped being terracotta at all. */
+     muddy grey. */
   @media (max-width: 640px) {
-    .plate-ink { box-shadow: 6px 6px 0 #17160F; }
-    .plate-teal { box-shadow: 6px 6px 0 #0E5266; }
-    .plate-verm { box-shadow: 6px 6px 0 #A14531; }
-    .plate-paper { box-shadow: 6px 6px 0 #F5F2EC; }
+    .plate-ink { box-shadow: 6px 6px 0 #0A0F1E; }
+    .plate-teal { box-shadow: 6px 6px 0 #356F8E; }
+    .plate-verm { box-shadow: 6px 6px 0 #6DB8A2; }
   }
-
-  /* ------------------------------------------------------------- entrance
-     The hero arrives in sequence. Opacity and a 6px translate, nothing else,
-     fired by CSS on load — never by an observer, so a failed script or a slow
-     phone can never leave a visitor looking at an empty screen waiting for
-     content that already downloaded. Below the fold nothing animates at all. */
-  .enter > * {
-    animation: rise 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  .enter > *:nth-child(1) { animation-delay: 0ms; }
-  .enter > *:nth-child(2) { animation-delay: 60ms; }
-  .enter > *:nth-child(3) { animation-delay: 120ms; }
-  .enter > *:nth-child(4) { animation-delay: 180ms; }
-  .enter > *:nth-child(5) { animation-delay: 240ms; }
-  .enter > *:nth-child(6) { animation-delay: 300ms; }
 
   /* --------------------------------------------------------------- the marks
      A 6px solid square replaces every borrowed check icon. It takes the ink of
@@ -346,618 +283,6 @@
   }
 }
 
-/* ============================================================== THE HERO STAGE
-   The rest of the page draws depth with a hard offset plate — print out of
-   register, zero blur. The hero is the single exception and it is deliberate:
-   the hero is a photograph of the product, the rest of the page is the document.
-
-   What is still forbidden here, because it is what made whole sections render
-   white on an iPhone on this project: `filter`, `backdrop-filter`, 3D
-   transforms, a persistent `will-change`, and anything that gates visibility on
-   an IntersectionObserver. The grain below is a static SVG image the browser
-   rasterises once per tile — not a live filter on a live layer. The float is one
-   transform on one element, and `prefers-reduced-motion` stops it. */
-
-.band-hero {
-  position: relative;
-  overflow: hidden;
-  background:
-    radial-gradient(640px 420px at 88% 8%, rgba(89, 185, 204, 0.16), rgba(89, 185, 204, 0) 66%),
-    radial-gradient(720px 460px at 8% 100%, rgba(217, 106, 70, 0.14), rgba(217, 106, 70, 0) 66%),
-    #000;
-}
-
-/* The headline is one sentence and must not drop its last word: it scales
-   with the column rather than sitting at the fixed display size. */
-@media (min-width: 1024px) {
-  .band-hero .t-display {
-    font-size: clamp(54px, 4.9vw, 70px);
-    line-height: 1;
-  }
-}
-
-.band-hero > * {
-  position: relative;
-  z-index: 1;
-}
-
-.stage {
-  position: relative;
-  padding-bottom: 26px;
-}
-
-/* The light stays inside the stage (past its edge it gave /nl a horizontal
-   scrollbar on a tablet). On black it is a soft teal glow behind the window,
-   not a white one. */
-.stage-light {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -14%;
-  bottom: 4%;
-  pointer-events: none;
-  background: radial-gradient(74% 54% at 52% 44%, rgba(89, 185, 204, 0.2), rgba(89, 185, 204, 0) 72%);
-}
-
-.stage-float {
-  position: relative;
-  animation: stagefloat 9s ease-in-out infinite alternate;
-}
-
-@keyframes stagefloat {
-  from { transform: translateY(0); }
-  to { transform: translateY(-10px); }
-}
-
-.stage-floor {
-  position: absolute;
-  left: 6%;
-  right: 6%;
-  bottom: 0;
-  height: 46px;
-  pointer-events: none;
-  background: radial-gradient(50% 50% at 50% 50%, rgba(89, 185, 204, 0.16), rgba(89, 185, 204, 0) 72%);
-}
-
-/* ------------------------------------------------------ the site, in a window */
-.browser {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid #CFC9BB;
-  border-radius: 12px;
-  background: #F5F2EC;
-  box-shadow:
-    0 44px 72px -40px rgba(23, 22, 15, 0.5),
-    0 2px 6px rgba(23, 22, 15, 0.08);
-}
-
-.browser-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 9px 12px;
-  border-bottom: 1px solid #D9D4C8;
-  background: #EAE5DA;
-}
-
-.browser-dots {
-  display: flex;
-  gap: 5px;
-}
-
-.browser-dots i {
-  display: block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #CFC9BB;
-}
-
-/* The address field is a real field: a rounded well with a lock in it. */
-.browser-url {
-  display: inline-flex;
-  flex: 1;
-  align-items: center;
-  gap: 7px;
-  max-width: 300px;
-  padding: 4px 11px;
-  border-radius: 7px;
-  background: #F5F2EC;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: #66625A;
-}
-
-.browser-page {
-  padding: 18px 22px 24px;
-}
-
-.site-nav {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #D9D4C8;
-}
-
-.site-mark {
-  font-family: 'Bricolage', Georgia, serif;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: #17160F;
-}
-
-.site-links {
-  display: flex;
-  flex: 1;
-  justify-content: flex-end;
-  gap: 14px;
-  font-size: 11px;
-  color: #66625A;
-}
-
-.site-nav-btn {
-  border-radius: 8px 8px 0 8px;
-  padding: 5px 10px;
-  background: #17160F;
-  font-size: 10.5px;
-  font-weight: 600;
-  color: #F5F2EC;
-  white-space: nowrap;
-}
-
-.site-body {
-  display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap: 22px;
-  align-items: start;
-  padding-top: 22px;
-}
-
-.site-hours {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #A14531;
-}
-
-.site-title {
-  margin-top: 8px;
-  font-family: 'Bricolage', Georgia, serif;
-  font-size: 32px;
-  line-height: 34px;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: #17160F;
-}
-
-.site-lead {
-  margin-top: 8px;
-  max-width: 26ch;
-  font-size: 12.5px;
-  line-height: 19px;
-  color: #4A4740;
-}
-
-.site-btns {
-  display: flex;
-  gap: 8px;
-  margin-top: 14px;
-}
-
-.site-btn-fill,
-.site-btn-line {
-  border-radius: 10px 10px 0 10px;
-  padding: 7px 13px;
-  font-size: 11px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.site-btn-fill {
-  background: #A14531;
-  color: #F5F2EC;
-}
-
-.site-btn-line {
-  border: 1px solid #17160F;
-  color: #17160F;
-}
-
-/* No stock photograph stands in for a business we have not met. The picture is
-   the terracotta ink with light falling across it — plainly a drawing, not a
-   claim — and the address sits on it as a chip. */
-.site-art {
-  position: relative;
-  overflow: hidden;
-  align-self: stretch;
-  min-height: 236px;
-  border-radius: 10px 10px 10px 0;
-  background:
-    radial-gradient(90% 70% at 100% 0%, rgba(245, 242, 236, 0.22), rgba(245, 242, 236, 0) 60%),
-    radial-gradient(80% 60% at 0% 100%, #7A3222, rgba(122, 50, 34, 0) 70%),
-    linear-gradient(160deg, #C45B40 0%, #A14531 55%, #853727 100%);
-}
-
-.site-art::before {
-  content: '';
-  position: absolute;
-  right: -22%;
-  top: -34%;
-  width: 78%;
-  padding-top: 78%;
-  border-radius: 50%;
-  background: rgba(245, 242, 236, 0.12);
-}
-
-.site-art::after {
-  content: '';
-  position: absolute;
-  left: -30%;
-  bottom: -52%;
-  width: 90%;
-  padding-top: 90%;
-  border-radius: 50%;
-  background: rgba(23, 22, 15, 0.14);
-}
-
-.site-art-chip {
-  display: none;
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  z-index: 1;
-  border-radius: 8px 8px 8px 0;
-  padding: 5px 9px;
-  background: #F5F2EC;
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #17160F;
-}
-
-.site-launcher {
-  position: absolute;
-  right: 14px;
-  bottom: 14px;
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 999px 999px 4px 999px;
-  background: #0E5266;
-  color: #F5F2EC;
-  box-shadow: 0 8px 16px -8px rgba(23, 22, 15, 0.6);
-}
-
-/* --------------------------------------------- the conversation, on a phone */
-.phone {
-  position: absolute;
-  z-index: 2;
-  left: -54px;
-  bottom: -30px;
-  width: 220px;
-  padding: 9px;
-  border-radius: 36px;
-  background: #17160F;
-  box-shadow:
-    0 34px 54px -26px rgba(23, 22, 15, 0.6),
-    0 0 0 1px #3F3C33;
-}
-
-.phone-island {
-  position: absolute;
-  left: 50%;
-  top: 19px;
-  z-index: 1;
-  width: 60px;
-  height: 17px;
-  margin-left: -30px;
-  border-radius: 999px;
-  background: #17160F;
-}
-
-/* Fixed height, thread pinned to the bottom. Anchored the other way round the
-   phone grew upward as the messages arrived and ended up sitting over the
-   window's address bar — the one element in the composition that moved. */
-.phone-screen {
-  display: flex;
-  flex-direction: column;
-  height: 404px;
-  overflow: hidden;
-  border-radius: 28px;
-  background: #F5F2EC;
-}
-
-.phone-status {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 18px 0;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: #17160F;
-}
-
-.phone-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 14px 11px 0;
-  padding-bottom: 9px;
-  border-bottom: 1px solid #D9D4C8;
-}
-
-.phone-avatar {
-  display: grid;
-  flex-shrink: 0;
-  place-items: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 999px 999px 4px 999px;
-  background: #0E5266;
-  color: #F5F2EC;
-}
-
-.phone-who {
-  min-width: 0;
-}
-
-.phone-who b,
-.phone-who small {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.phone-who b {
-  display: block;
-  font-size: 11.5px;
-  line-height: 14px;
-  font-weight: 700;
-  color: #17160F;
-}
-
-.phone-who small {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 9.5px;
-  line-height: 12px;
-  color: #66625A;
-}
-
-.phone-who small::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #1D7D96;
-}
-
-/* The thread is pinned to the bottom of the screen and clipped at the top, the
-   way a real conversation sits in a phone. The gradient at the top edge is what
-   makes the clip read as scroll rather than as a rendering fault. */
-.phone-thread {
-  position: relative;
-  display: flex;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-  padding: 10px 11px 8px;
-}
-
-.phone-thread > div {
-  width: 100%;
-  justify-content: flex-end;
-}
-
-.phone-thread::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 26px;
-  pointer-events: none;
-  background: linear-gradient(180deg, #F5F2EC 0%, rgba(245, 242, 236, 0) 100%);
-}
-
-.phone-input {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin: 0 11px 12px;
-  padding: 5px 5px 5px 12px;
-  border: 1px solid #D9D4C8;
-  border-radius: 999px;
-  background: #FFFDF9;
-  font-size: 10.5px;
-  color: #9A9488;
-}
-
-.phone-input i {
-  display: grid;
-  flex-shrink: 0;
-  place-items: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #0E5266;
-  color: #F5F2EC;
-}
-
-/* ------------------------------------------- the appointment, on the calendar
-   Always in the layout; only its opacity changes when the thread finishes, so
-   the composition never shifts. */
-.stage-card {
-  position: absolute;
-  z-index: 3;
-  right: -22px;
-  bottom: 62px;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  width: 248px;
-  padding: 11px 13px 11px 11px;
-  border: 1px solid #17160F;
-  border-radius: 10px 10px 10px 0;
-  background: #FFFDF9;
-  box-shadow: 0 24px 40px -24px rgba(23, 22, 15, 0.55);
-  opacity: 0;
-  transform: translateY(8px);
-  transition:
-    opacity 480ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.stage-card[data-shown='true'] {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.stage-card-icon {
-  display: grid;
-  flex-shrink: 0;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 8px 8px 8px 0;
-  background: #0E5266;
-  color: #F5F2EC;
-}
-
-.stage-card-text b {
-  display: block;
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 700;
-  color: #17160F;
-}
-
-.stage-card-text small {
-  display: block;
-  margin-top: 1px;
-  font-size: 11px;
-  line-height: 15px;
-  color: #66625A;
-}
-
-.stage-card-text em {
-  display: block;
-  margin-top: 6px;
-  font-style: normal;
-  font-size: 9px;
-  line-height: 12px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #0E5266;
-}
-
-/* Below the two-column breakpoint the phone stops being an overlay and joins
-   the flow: on a 390px screen an absolutely positioned phone sits on top of the
-   page it is meant to be standing in front of, and both become unreadable. It
-   stands in the middle, and the calendar card lands on its lower corner. */
-@media (max-width: 1023px) {
-  .phone {
-    position: relative;
-    left: auto;
-    bottom: auto;
-    width: 208px;
-    margin: -48px auto 0;
-  }
-
-  .phone-screen {
-    height: 336px;
-  }
-
-  .stage-card {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    width: min(260px, 100%);
-    margin: -26px 0 0 auto;
-  }
-
-  .stage {
-    padding-bottom: 0;
-  }
-
-  .stage-floor {
-    bottom: 6px;
-  }
-
-  /* The phone overlaps the corner the launcher sits in, and half a teal disc
-     peeking out from behind it reads as a bug. On a phone the phone IS the
-     chat, so the launcher has nothing left to say. */
-  .site-launcher {
-    display: none;
-  }
-}
-
-@media (max-width: 560px) {
-  .browser-page {
-    padding: 16px 16px 20px;
-  }
-
-  .site-nav-btn {
-    display: none;
-  }
-
-  .site-body {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .site-art {
-    min-height: 96px;
-  }
-
-  .site-art-chip {
-    display: block;
-  }
-
-  .site-title {
-    font-size: 28px;
-    line-height: 30px;
-  }
-
-  .site-lead {
-    max-width: none;
-  }
-}
-
-/* The phone is absolutely placed, the page inside the window is not: a floor
-   under the body keeps the window the same height in every language, so the
-   phone and the card land in the same place on /nl and /it. */
-@media (min-width: 1024px) {
-  .site-body {
-    min-height: 330px;
-  }
-}
-
-/* ----------------------------------------------------------- the fact strip */
-.facts {
-  display: grid;
-  gap: 8px;
-  border-top: 1px solid #D9D4C8;
-  padding-top: 20px;
-}
-
-@media (min-width: 640px) {
-  .facts {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-  }
-}
-
 /* ============================================================ THE ASSEMBLY
    A film of the object being put together, cut into frames and played on a
    canvas by the scrollbar: one drawImage per scroll frame, nothing else.
@@ -967,7 +292,7 @@
 .asm {
   position: relative;
   background: #000;
-  color: #F5F2EC;
+  color: #F4EFE6;
 }
 
 .asm-runway {
@@ -987,8 +312,8 @@
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(46% 40% at 50% 40%, rgba(89, 185, 204, 0.12), rgba(89, 185, 204, 0) 70%),
-    radial-gradient(60% 46% at 50% 108%, rgba(161, 69, 49, 0.18), rgba(161, 69, 49, 0) 70%);
+    radial-gradient(46% 40% at 50% 40%, rgba(150, 211, 192, 0.12), rgba(150, 211, 192, 0) 70%),
+    radial-gradient(60% 46% at 50% 108%, rgba(53, 111, 142, 0.28), rgba(53, 111, 142, 0) 70%);
 }
 
 /* Square on a phone, wide on a desktop; the player frames the object inside
@@ -1035,28 +360,28 @@
 }
 
 .asm-pin line {
-  stroke: #4A453A;
+  stroke: #3F4659;
   stroke-width: 1;
 }
 
 .asm-pin circle {
-  fill: #59B9CC;
+  fill: #96D3C0;
 }
 
 .asm-pin text {
-  fill: #B4AFA3;
+  fill: #B5AD9E;
 }
 
 .asm-pin-done path {
   fill: none;
-  stroke: #D96A46;
+  stroke: #96D3C0;
   stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 .asm-pin-done text {
-  fill: #F5F2EC;
+  fill: #F4EFE6;
 }
 
 @media (min-width: 1024px) {

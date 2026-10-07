@@ -4,9 +4,9 @@ import { Diary } from './Diary'
 import { Pricing } from './Pricing'
 import { Handover } from './Handover'
 import { SiteWireframe } from './SiteWireframe'
-import { Mark, Bubble, Window, Arrow, ArrowOut, Mail, Person } from './marks'
-import { SITE, mailLink, waLink } from '../site'
-import { pathFor, useRoute } from '../router'
+import { Mark, Arrow, ArrowOut, Mail } from './marks'
+import { mailLink, waLink } from '../site'
+import { useRoute } from '../router'
 import { booking } from '../i18n/booking'
 import type { Translation } from '../i18n'
 
@@ -78,81 +78,6 @@ export function DayStripSection({ t }: { t: Translation }) {
             </div>
 
             <Diary t={t} />
-          </div>
-        </div>
-      </section>
-    </>
-  )
-}
-
-export function ServicesSplit({ t }: { t: Translation }) {
-  const { lang } = useRoute()
-  return (
-    <>
-      {/* ---------------------------------------------------- the fork
-          Two grounds touching with no gap and no rule between them. This is the
-          one place on the page where a second flood is earned: it says "two
-          businesses, equal weight" more plainly than any headline could. */}
-      <section id="services" aria-labelledby="services-title" className="grid md:grid-cols-2">
-        <h2 id="services-title" className="sr-only">
-          {t.split.title}
-        </h2>
-
-        {/* The assistant */}
-        <div className="on-flood bg-teal px-2 py-8 sm:px-3 lg:px-5">
-          <div className="ml-auto max-w-[37rem] md:pr-3">
-            <p className="t-label flex items-center gap-1">
-              <Bubble size={16} />
-              {t.split.assistant.tag}
-            </p>
-            <h3 className="t-h3 mt-2 max-w-title">{t.split.assistant.title}</h3>
-            <p className="t-body mt-2">{t.split.assistant.body}</p>
-            <ul role="list" className="mt-3 grid gap-1">
-              {t.split.assistant.points.map((point) => (
-                <li key={point} className="flex items-start gap-1 text-small text-paper">
-                  <Mark tone="paper" />
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-4 flex flex-col gap-1 sm:flex-row">
-              <a className="btn bg-paper text-teal hover:bg-paper-deep" href={waLink(t.wa.assistantQuote)} rel="noopener">
-                {t.split.assistant.quote}
-              </a>
-              <a className="btn-line-flood" href={pathFor(lang, 'assistant')}>
-                {t.split.assistant.cta}
-                <Arrow />
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* The websites */}
-        <div className="on-flood bg-verm px-2 py-8 sm:px-3 lg:px-5">
-          <div className="max-w-[37rem] md:pl-3">
-            <p className="t-label flex items-center gap-1">
-              <Window size={16} />
-              {t.split.websites.tag}
-            </p>
-            <h3 className="t-h3 mt-2 max-w-title">{t.split.websites.title}</h3>
-            <p className="t-body mt-2">{t.split.websites.body}</p>
-            <ul role="list" className="mt-3 grid gap-1">
-              {t.split.websites.points.map((point) => (
-                <li key={point} className="flex items-start gap-1 text-small text-paper">
-                  <Mark tone="paper" />
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-4 flex flex-col gap-1 sm:flex-row">
-              <a className="btn bg-paper text-verm hover:bg-paper-deep" href={waLink(t.wa.websitesQuote)} rel="noopener">
-                {t.split.websites.quote}
-              </a>
-              <a className="btn-line-flood" href={pathFor(lang, 'websites')}>
-                {t.split.websites.cta}
-                <Arrow />
-              </a>
-            </div>
           </div>
         </div>
       </section>
@@ -280,7 +205,7 @@ export function WebsitesSection({ t, bare }: { t: Translation; bare?: boolean })
   )
   if (bare)
     return (
-      <section id="websites" aria-label={t.websites.title} className="band-paper pt-0 sm:pt-0 lg:pt-0">
+      <section id="websites" aria-label={t.websites.title} className="band-paper">
         <div className="container-page">{body}</div>
       </section>
     )
@@ -321,60 +246,6 @@ export function PricesAndFaq({ t, head = true }: { t: Translation; head?: boolea
                 <p className="t-body pb-2 text-small">{item.a}</p>
               </details>
             ))}
-          </div>
-        </div>
-      </section>
-    </>
-  )
-}
-
-export function ContactSection({ t }: { t: Translation }) {
-  return (
-    <>
-      {/* ----------------------------------------- the two people, and contact */}
-      <section id="contact" aria-labelledby="contact-title" className="band-ink">
-        <div className="container-page">
-          <p className="t-folio flex items-center gap-1">
-            <Person size={16} />
-            {t.contact.title}
-          </p>
-
-          <h2 id="contact-title" className="mt-2 font-display text-h2 font-extrabold text-paper sm:text-h1">
-            Anna &amp; Samuele
-          </h2>
-
-          <p className="mt-3 max-w-lead text-lead text-paper">{t.contact.note}</p>
-
-          <div className="mt-6 grid gap-4 rule-ink pt-4 lg:grid-cols-[1fr_auto] lg:items-end">
-            <div>
-              <p className="max-w-measure text-body text-paper-dim">{t.contact.regions}</p>
-              <p className="mt-2 text-small text-paper-dim">{t.demo.tryHere}</p>
-
-              <ul role="list" className="mt-3 grid gap-0.5">
-                <li>
-                  <a className="text-body text-paper underline underline-offset-4 hover:text-teal-bright" href={mailLink(t.contact.emailSubject)}>
-                    {SITE.email}
-                  </a>
-                </li>
-                <li>
-                  <a className="text-body text-paper underline underline-offset-4 hover:text-teal-bright" href={waLink(t.wa.generic)} rel="noopener">
-                    WhatsApp {SITE.whatsappDisplay}
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* One button per half of the business, in its own ink. */}
-            <div className="flex flex-col gap-1 sm:flex-row lg:flex-col">
-              <a className="btn bg-teal text-paper hover:bg-teal-deep" href={waLink(t.wa.assistantQuote)} rel="noopener">
-                <Bubble size={16} />
-                {t.split.assistant.quote}
-              </a>
-              <a className="btn bg-verm text-paper hover:bg-verm-deep" href={waLink(t.wa.websitesQuote)} rel="noopener">
-                <Window size={16} />
-                {t.split.websites.quote}
-              </a>
-            </div>
           </div>
         </div>
       </section>

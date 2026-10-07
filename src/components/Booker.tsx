@@ -141,7 +141,7 @@ function Field({
   const id = `f-${name}`
   /* the field the visitor is sent to keeps its red edge while focused */
   const cls = `mt-0.5 w-full border bg-white px-2 py-1 text-body text-ink outline-none transition-colors ${
-    error ? 'border-verm focus:shadow-[0_0_0_1px_#A14531]' : 'border-ink-mute focus:border-teal focus:shadow-[0_0_0_1px_#0E5266]'
+    error ? 'border-danger focus:shadow-[0_0_0_1px_#B42318]' : 'border-paper-edge-deep hover:border-ink-mute focus:border-teal focus:shadow-[0_0_0_1px_#356F8E]'
   }`
   const aria = { 'aria-invalid': !!error, 'aria-required': !optional, 'aria-describedby': error ? `${id}-e` : undefined }
   return (
@@ -162,7 +162,7 @@ function Field({
           spellCheck={type === 'email' ? false : undefined}
           {...aria} />
       )}
-      {error && <p id={`${id}-e`} className="mt-0.5 text-small text-verm">{error}</p>}
+      {error && <p id={`${id}-e`} className="mt-0.5 text-small text-danger">{error}</p>}
     </div>
   )
 }
@@ -209,7 +209,7 @@ function Consent({ checked, onChange, error, before }: { checked: boolean; onCha
           {c.consentAfter}
         </span>
       </label>
-      {error && <p id="f-consent-e" className="mt-0.5 text-small text-verm">{error}</p>}
+      {error && <p id="f-consent-e" className="mt-0.5 text-small text-danger">{error}</p>}
     </div>
   )
 }
@@ -221,7 +221,7 @@ function Fail({ text, wa }: { text: string; wa: boolean }) {
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => ref.current?.focus({ preventScroll: false }), [text])
   return (
-    <div ref={ref} tabIndex={-1} role="alert" className="border-l-2 border-verm bg-white px-2 py-1 text-small text-ink outline-none">
+    <div ref={ref} tabIndex={-1} role="alert" className="border-l-2 border-danger bg-paper px-2 py-1 text-small text-ink outline-none">
       <p>{text}</p>
       {wa && (
         <a className="mt-0.5 inline-flex min-h-[44px] items-center gap-0.5 font-semibold text-teal underline underline-offset-2" href={waLink(c.hero.waText)} rel="noopener">
@@ -375,9 +375,10 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
           }}
         />
       ) : (
-        <div>
+        <div className={load.state === 'ready' && byDay.size > 0 ? 'xl:grid xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] xl:gap-4' : ''}>
+          <div>
           {notice && (
-            <p data-notice tabIndex={-1} role="alert" className="mb-2 border-l-2 border-verm bg-white px-2 py-1 text-small text-ink outline-none">
+            <p data-notice tabIndex={-1} role="alert" className="mb-2 border-l-2 border-danger bg-paper px-2 py-1 text-small text-ink outline-none">
               {notice}
             </p>
           )}
@@ -390,12 +391,12 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
           {load.state === 'loading' && <p className="mt-2 text-small text-ink-soft" aria-live="polite">{c.pick.loading}</p>}
 
           {load.state === 'error' && (
-            <div role="alert" className="mt-2 border-l-2 border-verm bg-white px-2 py-1">
+            <div role="alert" className="mt-2 border-l-2 border-danger bg-paper px-2 py-1">
               <p className="text-small text-ink">{c.pick.unavailable}</p>
               <div className="mt-1 flex flex-wrap gap-1">
-                <button type="button" className="btn-teal" onClick={() => void fetchSlots()}>{c.pick.retry}</button>
-                <button type="button" className="btn-line" onClick={onRequest}>{c.hero.request}</button>
-                <a className="btn-line" href={waLink(c.hero.waText)} rel="noopener">
+                <button type="button" className="btn-petrol" onClick={() => void fetchSlots()}>{c.pick.retry}</button>
+                <button type="button" className="btn-ghost-dark" onClick={onRequest}>{c.hero.request}</button>
+                <a className="btn-ghost-dark" href={waLink(c.hero.waText)} rel="noopener">
                   <Bubble size={16} />
                   {c.hero.whatsapp}
                 </a>
@@ -432,10 +433,10 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
                         setDay(cell.key)
                         setNotice('')
                       }}
-                      className={`relative flex h-[44px] items-center justify-center border text-small font-semibold tabular-nums transition-colors ${
+                      className={`cut cut-sm flex h-[44px] items-center justify-center text-small font-semibold tabular-nums ${
                         on
-                          ? 'mark-in border-teal bg-teal text-paper'
-                          : 'mark-in border-transparent bg-white text-ink hover:border-teal hover:text-teal'
+                          ? 'text-paper [--cut-fill:#356F8E]'
+                          : 'text-ink [--cut-fill:#EEF3F1] hover:text-teal hover:[--cut-fill:#DCEBE6]'
                       }`}
                     >
                       {tag}
@@ -446,16 +447,21 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
                 })}
               </div>
 
-              {byDay.size === 0 ? (
-                <div className="mt-3 border-l-2 border-teal bg-white px-2 py-1">
+              {byDay.size === 0 && (
+                <div className="mt-3 border-l-2 border-teal bg-paper px-2 py-1">
                   <p className="text-small text-ink">{c.pick.noneAtAll}</p>
                   <div className="mt-1 flex flex-wrap gap-1">
-                    <button type="button" className="btn-line" onClick={onRequest}>{c.hero.request}</button>
-                    <a className="btn-teal" href={waLink(c.hero.waText)} rel="noopener">{c.hero.whatsapp}</a>
+                    <button type="button" className="btn-ghost-dark" onClick={onRequest}>{c.hero.request}</button>
+                    <a className="btn-petrol" href={waLink(c.hero.waText)} rel="noopener">{c.hero.whatsapp}</a>
                   </div>
                 </div>
-              ) : (
-                <div className="mt-3">
+              )}
+            </>
+          )}
+          </div>
+
+          {load.state === 'ready' && byDay.size > 0 && (
+                <div className="mt-4 xl:mt-0 xl:border-l xl:border-paper-edge xl:pl-4">
                   <h3 className="font-display text-h4 font-bold text-ink">{c.pick.time}</h3>
                   {day && <p className="mt-0.5 text-small text-ink-soft first-letter:uppercase">{fmtKey(day)}</p>}
                   <ul role="list" className="mt-2 grid grid-cols-3 gap-1 sm:grid-cols-4">
@@ -469,7 +475,7 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
                             setNotice('')
                             goStep('form', () => document.getElementById('slot-title'))
                           }}
-                          className="mark-out flex h-6 w-full items-center justify-center border border-teal bg-white text-small font-semibold tabular-nums text-teal transition-colors hover:bg-teal hover:text-paper"
+                          className="cut-line cut-sm flex h-6 w-full items-center justify-center text-small font-semibold tabular-nums text-teal [--cut-fill:#FFFFFF] [--cut-ink:#356F8E] hover:text-paper hover:[--cut-fill:#356F8E]"
                         >
                           {fmtTime(s)}
                         </button>
@@ -479,8 +485,6 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
                   {daySlots.length === 0 && <p className="text-small text-ink-soft">{c.pick.noSlotsDay}</p>}
                   <p className="mt-2 text-small text-ink-soft">{c.card.tz(zoneLabel)}</p>
                 </div>
-              )}
-            </>
           )}
         </div>
       )}
@@ -587,7 +591,7 @@ function BookForm({
       {ts.needed && <div ref={ts.ref} />}
       {fail && <Fail text={fail.text} wa={fail.wa} />}
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-        <button type="submit" aria-disabled={busy} className={`btn-teal ${busy ? 'cursor-wait opacity-60' : ''}`}>
+        <button type="submit" aria-disabled={busy} className="btn-petrol">
           {busy ? c.form.sending : c.form.submit}
           {!busy && <Arrow />}
         </button>
@@ -630,8 +634,8 @@ function Done({
   useEffect(() => heading.current?.focus({ preventScroll: true }), [])
   return (
     <div className="animate-rise">
-      <span aria-hidden="true" className="mark-in flex h-5 w-5 items-center justify-center bg-teal text-paper">
-        <Diary size={20} />
+      <span aria-hidden="true" className="cut cut-sm flex h-6 w-6 items-center justify-center text-paper [--cut-fill:#356F8E]">
+        <Diary size={22} />
       </span>
       <h3 ref={heading} tabIndex={-1} className="mt-2 font-display text-h3 font-bold text-ink outline-none">{c.done.title}</h3>
       <p className="mt-1 font-display text-h4 font-bold text-teal">
@@ -643,12 +647,12 @@ function Done({
       <p className="t-body mt-1">{c.done.next}</p>
       {/* the call may be days away: putting it in the calendar comes first */}
       <div className="mt-3 grid max-w-[22rem] gap-1">
-        <a className="btn-teal" href={add} target="_blank" rel="noopener">
+        <a className="btn-petrol" href={add} target="_blank" rel="noopener">
           {c.done.add}
           <Arrow />
         </a>
         {result.meet && (
-          <a className="btn-line" href={result.meet} target="_blank" rel="noopener">{c.done.meet}</a>
+          <a className="btn-ghost-dark" href={result.meet} target="_blank" rel="noopener">{c.done.meet}</a>
         )}
       </div>
       <p className="mt-3 text-small">
@@ -721,12 +725,12 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
   if (sent)
     return (
       <div className="animate-rise">
-        <span aria-hidden="true" className="mark-in flex h-5 w-5 items-center justify-center bg-teal text-paper">
-          <Bubble size={20} />
+        <span aria-hidden="true" className="cut cut-sm flex h-6 w-6 items-center justify-center text-paper [--cut-fill:#356F8E]">
+          <Bubble size={22} />
         </span>
         <h3 ref={heading} tabIndex={-1} className="mt-2 font-display text-h3 font-bold text-ink outline-none">{c.request.doneTitle}</h3>
         <p className="t-body mt-2">{withAddress(c.request.done, sent)}</p>
-        <button type="button" onClick={onBack} className="btn-line mt-3">{c.request.back}</button>
+        <button type="button" onClick={onBack} className="btn-ghost-dark mt-3">{c.request.back}</button>
       </div>
     )
 
@@ -756,7 +760,7 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
       {ts.needed && <div ref={ts.ref} />}
       {fail && <Fail text={fail.text} wa={fail.wa} />}
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-        <button type="submit" aria-disabled={busy} className={`btn-teal ${busy ? 'cursor-wait opacity-60' : ''}`}>
+        <button type="submit" aria-disabled={busy} className="btn-petrol">
           {busy ? c.request.sending : c.request.submit}
           {!busy && <Arrow />}
         </button>

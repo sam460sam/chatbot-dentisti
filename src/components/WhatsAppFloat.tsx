@@ -35,7 +35,7 @@ export function WhatsAppFloat() {
       href={waLink(c.hero.waText)}
       rel="noopener"
       aria-label={`${c.hero.whatsapp}`}
-      className={`mark-out fixed bottom-2 right-2 z-40 ${where} h-6 w-6 items-center justify-center gap-1 border border-ink-edge bg-ink text-small font-semibold text-paper shadow-[3px_3px_0_#0E5266] transition-colors hover:bg-teal sm:bottom-3 sm:right-3 sm:h-auto sm:w-auto sm:px-2 sm:py-1 focus-visible:outline-paper focus-visible:shadow-[0_0_0_4px_#17160F]`}
+      className={`wa-float ${where}`}
     >
       <Bubble size={18} />
       {/* on a phone the label goes: the button would sit on the form */}
