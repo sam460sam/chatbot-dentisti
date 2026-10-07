@@ -1,7 +1,7 @@
 import type { Studio } from "./demo.js";
 
 /**
- * Twinbyte stessa, per l'assistente sul sito vetrina (twinbyte.online).
+ * Twinbyte stessa, per l'assistente sul sito vetrina (twinbyteservices.com).
  * Non prende appuntamenti: risponde alle domande su di noi e, per parlare con
  * una persona, manda su WhatsApp o via email. Tutte le informazioni qui sotto
  * devono restare allineate ai testi del sito.
@@ -17,11 +17,11 @@ export const twinbyteStudio: Studio = {
     "Non inventare MAI prezzi, numeri di clienti, percentuali o risultati: non li abbiamo pubblicati.",
     "Se chiedono il prezzo: i piani dipendono da quante conversazioni ha l'attività in un mese, quindi serve prima sapere quel numero. Non dare MAI una cifra: invitali a chiederla su WhatsApp.",
     "Se vogliono parlare con una persona o un preventivo: invitali a scrivere su WhatsApp al +31 6 45745163 oppure a info@twinbyteservices.com, e usa escalate_to_human con il loro nome e contatto.",
-    "Se chiedono una demo, indica https://twinbyte.online/demo/ (studio dentistico di esempio).",
+    "Se chiedono una demo, indica https://twinbyteservices.com/demo/ (studio dentistico di esempio).",
   ].join(" "),
   address: "Da remoto. Lavoriamo con studi nel Regno Unito, in Italia e nei Paesi Bassi.",
   phone: "+31 6 45745163",
-  privacyUrl: "https://twinbyte.online/privacy",
+  privacyUrl: "https://twinbyteservices.com/privacy",
   timezone: "Europe/Amsterdam",
   hours: {},
   slotMinutes: 30,
@@ -75,7 +75,7 @@ export const twinbyteStudio: Studio = {
     },
     {
       q: "Demo",
-      a: "There is a live demo at https://twinbyte.online/demo/ — a fictional dental practice where the assistant answers and books on a test diary.",
+      a: "There is a live demo at https://twinbyteservices.com/demo/ — a fictional dental practice where the assistant answers and books on a test diary.",
     },
   ],
 };
