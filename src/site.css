@@ -35,6 +35,27 @@ html {
   background: var(--navy);
 }
 
+/* ------------------------------------------------------------------ wrapping
+   A heading, a label or a button is never hyphenated: a word cut in two at
+   display size reads as a typo ("Cosa possiamo costrui-re"). Neither is an
+   address, which would read as a different one. Headings balance their
+   lines; running text avoids a lone last word. The first screen's lead
+   is not cut either. */
+h1, h2, h3, h4, summary, dt, button, label, .hero-lead,
+.t-label, .t-folio, .eyebrow, .hero-eyebrow, .font-display, .menu-big,
+.uppercase, .uppercase *, [class*='btn-'],
+a[href^='mailto:'], a[href^='http'] {
+  hyphens: manual;
+}
+
+h1, h2, h3, h4, summary, .t-h3, .eyebrow, .hero-eyebrow {
+  text-wrap: balance;
+}
+
+p, li, dd {
+  text-wrap: pretty;
+}
+
 /* ------------------------------------------------------------------ cut corners
    The fill lives on pseudo-elements so the element itself stays a rectangle:
    the focus ring is never clipped away. A line is a ring: the outer shape
@@ -66,7 +87,7 @@ html {
   --c: 10px;
   position: relative;
   isolation: isolate;
-  transition: --cut-fill 180ms ease, --cut-ink 180ms ease, color 180ms ease;
+  transition: --cut-fill 180ms ease, --cut-ink 180ms ease, color 180ms ease, scale 160ms var(--ease);
 }
 
 .cut::before,
@@ -179,6 +200,24 @@ html {
   opacity: 0.6;
 }
 
+/* A press answers the finger at once. The preflight turns the grey tap
+   flash off and the hover fills above are for a mouse only, so without this
+   a tap on a phone looked like nothing had happened. The separate `scale`
+   property, so it adds to a scroll transform instead of replacing it. */
+.btn-mint:active,
+.btn-petrol:active,
+.btn-cream:active,
+.btn-ghost:active,
+.btn-ghost-dark:active,
+.btn-teal:active,
+.btn-verm:active,
+.btn-line:active,
+.btn-teal-bright:active,
+.btn-line-flood:active { scale: 0.97; }
+.cut-line.group:active,
+.service-card:active { scale: 0.99; }
+.wa-float:active { scale: 0.94; }
+
 /* ------------------------------------------------------------------ intro */
 .intro {
   position: fixed;
@@ -188,7 +227,7 @@ html {
   place-items: center;
   background: var(--navy);
   pointer-events: none;
-  animation: intro-lift 720ms cubic-bezier(0.76, 0, 0.24, 1) 980ms both;
+  animation: intro-lift 640ms cubic-bezier(0.83, 0, 0.17, 1) 620ms both;
 }
 
 .intro-mark {
@@ -201,7 +240,7 @@ html {
 .intro-b {
   transform-box: view-box;
   transform-origin: 50px 50px;
-  animation: intro-fold-a 820ms var(--ease) 80ms both;
+  animation: intro-fold-a 640ms var(--ease) 40ms both;
 }
 
 .intro-b {
@@ -231,23 +270,51 @@ html {
   inset: 0 0 auto;
   z-index: 50;
   color: var(--cream);
+  border-bottom: 1px solid transparent;
+}
+
+/* The fill and its bottom line are one layer under the bar's content, so
+   the scroll below only changes its opacity: nothing is repainted. */
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 -1px;
+  z-index: -1;
+  pointer-events: none;
   background: rgba(10, 15, 30, 0.94);
-  border-bottom: 1px solid #1b2742;
+  box-shadow: inset 0 -1px #1b2742;
 }
 
 /* Over the home hero the bar starts clear and fills in over the first 120px
    of scroll. Where scroll timelines are missing it simply stays filled. */
 @supports (animation-timeline: scroll()) {
-  .site-header.over-hero {
+  .site-header.over-hero::before {
     animation: header-fill linear both;
     animation-timeline: scroll(root block);
     animation-range: 0 120px;
   }
 }
 
+/* The reading progress, driven by the scroll itself. Header.tsx keeps its
+   script only for browsers without scroll timelines, and for reduced
+   motion, where every animation here is cut to nothing. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    .read-bar {
+      animation: read-bar linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+
 @keyframes header-fill {
-  from { background: rgba(10, 15, 30, 0); border-bottom-color: rgba(27, 39, 66, 0); }
-  to { background: rgba(10, 15, 30, 0.94); border-bottom-color: #1b2742; }
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes read-bar {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
 /* display comes from the utilities (hidden lg:flex): this file loads after
@@ -288,12 +355,33 @@ html {
     radial-gradient(120% 60% at 100% 0%, rgba(53, 111, 142, 0.45), rgba(53, 111, 142, 0) 60%),
     var(--navy);
   color: var(--cream);
-  animation: sheet-in 320ms var(--ease) both;
+  animation: sheet-in 280ms var(--ease) both;
 }
 
 @keyframes sheet-in {
   from { opacity: 0; transform: translateY(-12px); }
   to { opacity: 1; transform: none; }
+}
+
+/* The links follow the sheet one after the other, and the burger turns
+   into the cross. Movement only: every link is readable from the first
+   frame. Closing stays instant. */
+@media (prefers-reduced-motion: no-preference) {
+  .menu-sheet li { animation: menu-link-in 480ms var(--ease) both; }
+  .menu-sheet li:nth-child(2) { animation-delay: 40ms; }
+  .menu-sheet li:nth-child(3) { animation-delay: 80ms; }
+  .menu-sheet li:nth-child(4) { animation-delay: 120ms; }
+  .site-header button[aria-expanded='true'] svg { animation: icon-turn 260ms var(--ease) both; }
+}
+
+@keyframes menu-link-in {
+  from { transform: translateY(24px); }
+  to { transform: none; }
+}
+
+@keyframes icon-turn {
+  from { transform: rotate(-90deg); }
+  to { transform: none; }
 }
 
 .menu-sheet a.menu-big {
@@ -449,18 +537,20 @@ html {
 
 /* The first entrance: CSS on load, never an observer. */
 .hero-copy > * {
-  animation: rise-in 900ms var(--ease) both;
+  animation: rise-in 700ms var(--ease) both;
 }
-.hero-copy > *:nth-child(1) { animation-delay: 200ms; }
-.hero-copy > *:nth-child(2) { animation-delay: 300ms; }
-.hero-copy > *:nth-child(3) { animation-delay: 420ms; }
-.hero-copy > *:nth-child(4) { animation-delay: 520ms; }
+.hero-copy > *:nth-child(1) { animation-delay: 80ms; }
+.hero-copy > *:nth-child(2) { animation-delay: 130ms; }
+.hero-copy > *:nth-child(3) { animation-delay: 180ms; }
+.hero-copy > *:nth-child(4) { animation-delay: 230ms; }
 
-/* with the intro, the words wait for the curtain */
-.hero-copy.after-intro > * { animation-delay: 1500ms; }
-.hero-copy.after-intro > *:nth-child(2) { animation-delay: 1600ms; }
-.hero-copy.after-intro > *:nth-child(3) { animation-delay: 1720ms; }
-.hero-copy.after-intro > *:nth-child(4) { animation-delay: 1820ms; }
+/* With the intro, the words rise with the curtain. It lifts upwards, so it
+   uncovers the bottom of the screen first, where the words are: if they
+   waited for it to finish, the photograph would stand there without them. */
+.hero-copy.after-intro > * { animation-delay: 680ms; }
+.hero-copy.after-intro > *:nth-child(2) { animation-delay: 710ms; }
+.hero-copy.after-intro > *:nth-child(3) { animation-delay: 740ms; }
+.hero-copy.after-intro > *:nth-child(4) { animation-delay: 770ms; }
 
 @keyframes rise-in {
   from { opacity: 0; transform: translateY(18px); }
@@ -572,9 +662,12 @@ html {
   background: var(--petrol);
 }
 
+/* On a phone the card is taller than the screen: a plate beside it read as
+   a thin petrol stripe at the screen's edge for whole screens of scrolling.
+   There it is a ledge under the card instead. */
 @media (max-width: 640px) {
   .book-card { --c: 18px; }
-  .book-card::before { inset: 8px -6px -8px 6px; }
+  .book-card::before { inset: 10px 0 -8px 0; }
 }
 
 /* service cards */
@@ -582,13 +675,17 @@ html {
   display: flex;
   height: 100%;
   flex-direction: column;
+  transition: scale 160ms var(--ease);
 }
 
 .service-media {
   --c: 22px;
   position: relative;
   aspect-ratio: 4 / 3;
+  /* clip, not hidden: hidden makes a scroll container, and the picture's
+     view() timeline would measure against this box instead of the page */
   overflow: hidden;
+  overflow: clip;
   background: var(--navy-2);
   clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
 }
@@ -604,11 +701,25 @@ html {
   transform: scale(1.045);
 }
 
+/* From a tablet up the three cards share their rows, so the titles, the
+   texts and the links line up across the row however long each title is. */
+@media (min-width: 768px) {
+  @supports (grid-template-rows: subgrid) {
+    .service-row > li,
+    .service-row .service-card {
+      display: grid;
+      grid-row: span 5;
+      grid-template-rows: subgrid;
+    }
+  }
+}
+
 /* full-bleed picture band (the closing call) */
 .picture-band {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  overflow: clip; /* see .service-media */
   background: var(--navy);
   color: var(--cream);
 }
@@ -649,7 +760,7 @@ html {
   font-size: 14px;
   font-weight: 600;
   color: var(--cream);
-  transition: color 160ms ease;
+  transition: color 160ms ease, scale 160ms var(--ease);
 }
 
 .wa-float::before,
@@ -674,6 +785,7 @@ html {
 .site-footer {
   position: relative;
   overflow: hidden;
+  overflow: clip; /* see .service-media */
   background: var(--navy);
   color: var(--cream);
 }
@@ -695,7 +807,9 @@ html {
 
 .mark-film video {
   opacity: 0;
-  transition: opacity 600ms ease;
+  /* the still is the film's first frame: a short cut, or both marks show
+     at once while the film is already turning */
+  transition: opacity 180ms linear;
   /* a video's navy is never exactly the page's navy: fade the square's edge out */
   -webkit-mask-image: radial-gradient(closest-side, #000 78%, transparent 100%);
   mask-image: radial-gradient(closest-side, #000 78%, transparent 100%);
@@ -708,7 +822,9 @@ html {
   font-size: clamp(64px, 17vw, 260px);
   font-weight: 700;
   line-height: 0.8;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.035em;
+  /* room for the y's tail above the rule */
+  padding-bottom: 0.14em;
   color: transparent;
   -webkit-text-stroke: 1px rgba(150, 211, 192, 0.28);
   user-select: none;
@@ -721,10 +837,17 @@ html {
    reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
+    /* it settles instead of stopping dead; the service cards side by side
+       arrive one after the other */
     [data-rise] {
-      animation: scroll-rise linear both;
+      animation: scroll-rise cubic-bezier(0.2, 0.7, 0, 1) both;
       animation-timeline: view();
-      animation-range: entry 0% entry 55%;
+      animation-range: entry 0% cover 30%;
+    }
+
+    @media (min-width: 768px) {
+      #services ul > li[data-rise]:nth-child(2) { animation-range: entry 0% cover 36%; }
+      #services ul > li[data-rise]:nth-child(3) { animation-range: entry 0% cover 42%; }
     }
 
     .hero-media {
@@ -745,17 +868,27 @@ html {
       animation-range: cover;
     }
 
+    /* the photographs settle into their frames as they arrive; `scale`, so
+       the hover zoom (a transform) still adds to it */
+    .service-media img {
+      animation: media-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 50%;
+    }
+
+    /* it comes to rest at the bottom of the page: the end of its view range
+       (exit) can never be reached there */
     .footer-word {
       animation: word-slide linear both;
       animation-timeline: view();
-      animation-range: entry 0% exit 0%;
+      animation-range: entry 0% cover 30%;
     }
   }
 }
 
 /* movement only, no fade: text keeps its full contrast at every moment */
 @keyframes scroll-rise {
-  from { transform: translateY(40px); }
+  from { transform: translateY(56px); }
   to { transform: none; }
 }
 
@@ -772,9 +905,14 @@ html {
   to { transform: translateY(6%) scale(1.12); }
 }
 
+@keyframes media-settle {
+  from { scale: 1.12; }
+  to { scale: 1; }
+}
+
 @keyframes word-slide {
-  from { transform: translateX(6%); }
-  to { transform: translateX(-4%); }
+  from { transform: translateX(8%); }
+  to { transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {

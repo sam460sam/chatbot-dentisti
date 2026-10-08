@@ -1,6 +1,8 @@
 import { Link, pathFor, useRoute } from '../router'
 import { booking } from '../i18n/booking'
+import { home } from '../i18n/home'
 import { SITE, waLink } from '../site'
+import { keepTogether } from './BookingPage'
 import { Arrow, Bubble } from './marks'
 import {
   AssemblySection, BenefitsSection, DayStripSection, HowSection, PricesAndFaq,
@@ -44,7 +46,7 @@ function BookBand() {
     <section className="band-paper">
       <div className="container-page">
         <div className="book-card book-card-dark p-3 sm:p-6" data-rise>
-          <h2 className="max-w-[22ch] font-display text-h3 font-bold text-paper sm:text-h2">{c.page.book}</h2>
+          <h2 className="max-w-[22ch] font-display text-h3 font-bold text-paper sm:text-h2">{keepTogether(c.page.book)}</h2>
           <p className="mt-2 max-w-lead text-body text-paper-dim">{c.page.bookLead}</p>
           <div className="mt-4 flex flex-col gap-1 sm:flex-row">
             <Link className="btn-mint" to={`${pathFor(lang, 'home')}#book`}>
@@ -64,16 +66,29 @@ function BookBand() {
 
 export function AssistantPage({ t }: { t: Translation }) {
   const { lang } = useRoute()
+  const demo = home[lang].demo
   return (
     <main id="main">
       <PageTitle title={t.split.assistant.title} lead={t.split.assistant.body} pic="assistant" eyebrow={booking[lang].nav.assistant}>
-        {/* the one page that loads the live assistant says so */}
-        {SITE.widget.enabled && (
-          <p className="mt-3 flex items-center gap-1 text-body font-semibold text-teal-bright">
-            <Bubble size={16} />
-            {t.demo.tryHere}
-          </p>
-        )}
+        {/* one child, so it rises in fourth with the head */}
+        <div className="mt-4">
+          {/* the demo practice: the assistant as a customer meets it, on a
+              client's website (public/demo), in this tab */}
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+            <a className="btn-mint shrink-0" href={SITE.demo[lang]}>
+              {demo.cta}
+              <Arrow />
+            </a>
+            <p className="max-w-[46ch] text-small text-paper-dim">{demo.note}</p>
+          </div>
+          {/* the one page that loads the live assistant says so */}
+          {SITE.widget.enabled && (
+            <p className="mt-3 flex items-start gap-1 text-body font-semibold text-teal-bright">
+              <Bubble size={16} className="mt-[5px] shrink-0" />
+              {t.demo.tryHere}
+            </p>
+          )}
+        </div>
       </PageTitle>
       <DayStripSection t={t} />
       <HowSection t={t} />

@@ -2,13 +2,16 @@ import type { Lang } from './types'
 
 /*
  * Copy that only the new layout needs: the hero line above the title, the
- * online-ads card, and the footer headings. Everything else on the home page
+ * online-ads card, the link to the live demo on the assistant page, and the
+ * footer headings. Everything else on the home page
  * reuses the booking copy (src/i18n/booking.ts), so no promise is written
  * twice. The ads card names no price on purpose: it is agreed in the call.
  */
 export interface HomeCopy {
   hero: { eyebrow: string; video: string }
   ads: { tag: string; title: string; body: string; cta: string }
+  /** The demo practice (public/demo) books into a test diary only: the note says so. */
+  demo: { cta: string; note: string }
   footer: { pages: string; contact: string; services: string; adsLink: string; film: string }
   menu: string
 }
@@ -25,6 +28,10 @@ export const home: Record<Lang, HomeCopy> = {
       body: 'We create and run ads on Instagram and Facebook for your business, aimed at people in your area. The cost depends on the campaign: we agree it with you in the call.',
       cta: 'Ask about it in the call',
     },
+    demo: {
+      cta: 'Try the live demo',
+      note: 'The website of a fictional dental practice, with the assistant built in. Ask it anything or book a test appointment: nothing real is booked.',
+    },
     footer: { pages: 'Pages', contact: 'Contact', services: 'What we do', adsLink: 'Online ads', film: 'The Twinbyte mark, turning slowly.' },
     menu: 'Menu',
   },
@@ -39,6 +46,10 @@ export const home: Record<Lang, HomeCopy> = {
       body: 'Wij maken en beheren advertenties op Instagram en Facebook voor uw bedrijf, gericht op mensen in uw omgeving. De kosten hangen af van de campagne: die spreken we met u af in het gesprek.',
       cta: 'Vraag ernaar in het gesprek',
     },
+    demo: {
+      cta: 'Probeer de live demo',
+      note: 'De website van een fictieve tandartspraktijk, met de assistent erin. Stel uw vraag of boek een testafspraak: er wordt niets echt ingepland.',
+    },
     footer: { pages: 'Pagina’s', contact: 'Contact', services: 'Wat we doen', adsLink: 'Online advertenties', film: 'Het Twinbyte-logo, dat langzaam draait.' },
     menu: 'Menu',
   },
@@ -52,6 +63,10 @@ export const home: Record<Lang, HomeCopy> = {
       title: 'Visti da chi vive intorno a te',
       body: 'Creiamo e gestiamo annunci su Instagram e Facebook per la tua attività, rivolti alle persone della tua zona. Il costo dipende dalla campagna: lo concordiamo con te durante la chiamata.',
       cta: 'Chiedicelo nella chiamata',
+    },
+    demo: {
+      cta: 'Prova la demo dal vivo',
+      note: 'Il sito di uno studio dentistico immaginario, con l’assistente già dentro. Fagli una domanda o prenota un appuntamento di prova: non viene fissato niente di reale.',
     },
     footer: { pages: 'Pagine', contact: 'Contatti', services: 'Cosa facciamo', adsLink: 'Annunci online', film: 'Il logo Twinbyte che ruota lentamente.' },
     menu: 'Menu',

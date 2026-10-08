@@ -9,7 +9,7 @@ import { Picture, type PictureName } from './Picture'
 import { Arrow, ArrowOut, Bubble } from './marks'
 
 /* "15-minute" must not break at its hyphen in a big heading. */
-function keepTogether(text: string) {
+export function keepTogether(text: string) {
   return text.split(/(\S*\d-\S*)/).map((part, i) => (i % 2 ? <span key={i} className="whitespace-nowrap">{part}</span> : part))
 }
 
@@ -40,7 +40,7 @@ export function BookingPage() {
   }
 
   const alternatives = (
-    <div className="w-fit max-w-full">
+    <div className="w-full max-w-full lg:w-fit">
       <div className="flex items-center gap-2" aria-hidden="true">
         <span className="h-px w-4 bg-paper-edge-deep" />
         <span className="t-label">{c.hero.or}</span>
@@ -67,7 +67,7 @@ export function BookingPage() {
     <main id="main">
       <HomeHero />
 
-      <section aria-labelledby="book-title" className="band-paper pb-9 pt-9 lg:pb-10 lg:pt-10">
+      <section aria-labelledby="book-title" className="band-paper pb-7 pt-9 sm:pb-9 lg:pb-10 lg:pt-10">
         <div className="container-page">
           <div className="grid items-end gap-3 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-6" data-rise>
             <div>
@@ -84,7 +84,7 @@ export function BookingPage() {
               covers. From a tablet up the calendar takes the right column. */}
           <div
             id="book"
-            className="book-card mt-6 flex scroll-mt-2 flex-col md:grid md:grid-cols-[minmax(0,0.78fr)_minmax(0,1.6fr)] md:grid-rows-[auto_1fr]"
+            className="book-card mt-6 flex scroll-mt-2 flex-col md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] md:grid-rows-[auto_1fr] lg:grid-cols-[minmax(0,0.78fr)_minmax(0,1.6fr)]"
           >
             <div className={`order-1 border-b border-paper-edge p-3 sm:p-4 md:col-start-1 md:row-start-1 ${
               mode === 'book' ? 'md:border-b-0 md:border-r md:pb-0' : 'md:col-span-2'
@@ -108,7 +108,7 @@ export function BookingPage() {
               )}
             </div>
 
-            <div className={`order-2 p-3 sm:p-4 ${mode === 'book' ? 'md:col-start-2 md:row-span-2 md:row-start-1' : 'md:col-span-2 md:row-start-2'}`}>
+            <div key={mode} className={`order-2 animate-rise p-3 sm:p-4 ${mode === 'book' ? 'md:col-start-2 md:row-span-2 md:row-start-1' : 'md:col-span-2 md:row-start-2'}`}>
               {mode === 'book' ? <Booker onRequest={() => show('request')} /> : <RequestForm onBack={() => show('book')} />}
             </div>
 
@@ -157,7 +157,7 @@ function Services() {
   const small = [card('prices'), card('showcase')]
 
   return (
-    <section id="services" aria-labelledby="related-title" className="band-deep pb-9 pt-9 lg:pb-10 lg:pt-10">
+    <section id="services" aria-labelledby="related-title" className="band-deep pb-9 pt-7 sm:pt-9 lg:pb-10 lg:pt-10">
       <div className="container-page">
         <div className="grid items-end gap-3 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-6" data-rise>
           <div>
@@ -167,7 +167,7 @@ function Services() {
           <p className="t-lead [text-wrap:pretty]">{c.lead}</p>
         </div>
 
-        <ul role="list" className="mt-6 grid gap-5 md:grid-cols-3 md:gap-3 lg:gap-4">
+        <ul role="list" className="service-row mt-6 grid gap-5 md:grid-cols-3 md:gap-x-3 md:gap-y-0 lg:gap-x-4">
           {big.map((s) => {
             const inner = (
               <>
@@ -233,7 +233,7 @@ function Closing() {
   return (
     <section aria-labelledby="closing-title" className="picture-band parallax on-ink">
       <Picture name="call" sizes="100vw" />
-      <div className="container-page py-11 lg:py-12">
+      <div className="container-page py-9 sm:py-11 lg:py-12">
         <div data-rise>
           <h2 id="closing-title" className="section-title max-w-[20ch]">{c.closing.title}</h2>
           <p className="mt-3 max-w-lead text-lead text-paper">{c.closing.lead}</p>
