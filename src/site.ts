@@ -24,9 +24,7 @@ export const SITE = {
     color: '#356F8E',
   },
   /**
-   * Live demo practice, served from this site (public/demo).
-   * TODO: Dutch and Italian versions of the demo page — both point at the
-   * English one for now.
+   * Live demo practice, served from this site (public/demo), one page per language.
    */
   demo: {
     en: '/demo/',

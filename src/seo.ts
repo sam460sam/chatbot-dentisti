@@ -35,7 +35,7 @@ export function useSeo(lang: Lang, page: Page, title: string, description: strin
     setMeta('meta[name="description"]', 'name', 'description', description)
     setMeta('meta[property="og:title"]', 'property', 'og:title', title)
     setMeta('meta[property="og:description"]', 'property', 'og:description', description)
-    setMeta('meta[property="og:locale"]', 'property', 'og:locale', lang)
+    setMeta('meta[property="og:locale"]', 'property', 'og:locale', ({ en: 'en_GB', nl: 'nl_NL', it: 'it_IT' } as const)[lang])
     setMeta('meta[property="og:url"]', 'property', 'og:url', SITE.baseUrl + pathFor(lang, page))
     setLink('canonical', SITE.baseUrl + pathFor(lang, page))
     for (const alt of LANGS) {

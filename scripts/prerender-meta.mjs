@@ -69,7 +69,7 @@ const picture = (name) =>
   `<link rel="preload" as="image" imagesrcset="/media/${name}-640.webp 640w, /media/${name}-960.webp 960w, /media/${name}-1600.webp 1600w" imagesizes="100vw" fetchpriority="high" />`
 const PRELOAD = {
   home: [
-    '<link rel="preload" as="image" href="/media/hero-portrait.webp" media="(max-aspect-ratio: 4/5)" fetchpriority="high" />',
+    '<link rel="preload" as="image" imagesrcset="/media/hero-portrait-640.webp 640w, /media/hero-portrait-960.webp 960w, /media/hero-portrait-1280.webp 1280w" imagesizes="100vw" media="(max-aspect-ratio: 4/5)" fetchpriority="high" />',
     '<link rel="preload" as="image" imagesrcset="/media/hero-800.webp 800w, /media/hero-1280.webp 1280w, /media/hero-1920.webp 1920w" imagesizes="100vw" media="not all and (max-aspect-ratio: 4/5)" fetchpriority="high" />',
   ].join('\n    '),
   assistant: picture('assistant'),

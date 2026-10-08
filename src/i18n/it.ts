@@ -219,7 +219,7 @@ export const it: Translation = {
     ],
   },
   websites: {
-    title: 'Siti web per piccole aziende',
+    title: 'Siti web per piccole attività',
     lead: 'Oltre all’assistente realizziamo siti web: quelli che servono davvero a una piccola attività. Chiari, veloci e costruiti intorno a quello che cercano i tuoi clienti.',
     cta: 'Chiedi informazioni su un sito',
     includesTitle: 'Cosa comprende un sito',
@@ -353,7 +353,7 @@ export const it: Translation = {
     typing: 'sta scrivendo',
     calendarTitle: 'La tua agenda',
     eventTitle: 'Appuntamento — Laura Bianchi',
-    eventTime: 'gio 18 set · 10:30 – 11:00',
+    eventTime: 'giovedì · 10:00 – 10:30',
     eventBadge: 'Creato dall’assistente',
     callback: 'Da richiamare — richiesta urgente',
     tryHere: 'La bolla di chat in basso a destra è l’assistente vero. Provalo.',

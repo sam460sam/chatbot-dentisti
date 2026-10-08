@@ -17,7 +17,7 @@ import { introRuns } from './Intro'
  */
 const STILL = {
   wide: { src: '/media/hero-1280.webp', srcSet: '/media/hero-800.webp 800w, /media/hero-1280.webp 1280w, /media/hero-1920.webp 1920w' },
-  tall: '/media/hero-portrait.webp',
+  tall: '/media/hero-portrait-640.webp 640w, /media/hero-portrait-960.webp 960w, /media/hero-portrait-1280.webp 1280w',
 }
 /* Wide screens only. On a phone the still is the hero and drifts slowly
    (CSS): no video download on a mobile connection. */
@@ -71,7 +71,7 @@ export function HomeHero() {
     <section ref={section} aria-labelledby="hero-title" className="hero on-ink">
       <div className="hero-media" aria-hidden="true">
         <picture>
-          <source media={TALL} srcSet={STILL.tall} />
+          <source media={TALL} srcSet={STILL.tall} sizes="100vw" />
           <img
             src={STILL.wide.src}
             srcSet={STILL.wide.srcSet}

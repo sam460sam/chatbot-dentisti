@@ -353,7 +353,7 @@ export const en: Translation = {
     typing: 'typing',
     calendarTitle: 'Your calendar',
     eventTitle: 'Appointment — Laura Bakker',
-    eventTime: 'Thu 18 Sept · 10:30 – 11:00',
+    eventTime: 'Thursday · 10:00 – 10:30',
     eventBadge: 'Created by the assistant',
     callback: 'Call back — urgent request',
     tryHere: 'The chat bubble in the bottom right is the real assistant. Try it.',

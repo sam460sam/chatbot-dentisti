@@ -353,7 +353,7 @@ export const nl: Translation = {
     typing: 'typt',
     calendarTitle: 'Uw agenda',
     eventTitle: 'Afspraak — Laura Bakker',
-    eventTime: 'do 18 sep · 10:30 – 11:00',
+    eventTime: 'donderdag · 10:00 – 10:30',
     eventBadge: 'Aangemaakt door de assistent',
     callback: 'Terugbellen — spoedvraag',
     tryHere: 'De chatbubbel rechtsonder is de echte assistent. Probeer hem gerust.',
