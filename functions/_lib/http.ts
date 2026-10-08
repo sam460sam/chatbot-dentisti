@@ -91,9 +91,22 @@ export async function looksHuman(env: Env, body: Record<string, unknown>, ip: st
  * Pages keeps no logs. A booking that fails while the owners are on the
  * other side of the world would leave no trace, so a failure reports itself
  * by mail — best effort, and never allowed to throw.
+ *
+ * At most one mail per place and visitor every 30 minutes (per isolate, so
+ * roughly): a Google outage must not answer every page view with a mail,
+ * and use up the Gmail quota the confirmations need. A different visitor
+ * (a different `detail`) still gets a mail of their own.
  */
+const reported = new Map<string, number>()
+const QUIET_MS = 30 * 60000
+
 export async function reportFailure(env: Env, where: string, error: unknown, detail: Record<string, unknown> = {}) {
   console.error(where, error)
+  const key = `${where} ${JSON.stringify(detail)}`
+  const now = Date.now()
+  if (now - (reported.get(key) ?? -Infinity) < QUIET_MS) return
+  if (reported.size > 200) reported.clear()
+  reported.set(key, now)
   try {
     const g = google(env)
     const msg = error instanceof Error ? `${error.message}\n${(error as { body?: string }).body || ''}` : String(error)

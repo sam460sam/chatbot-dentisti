@@ -40,3 +40,7 @@ export function rules(env: Env): SlotRules {
 export const notifyEmail = (env: Env) => env.NOTIFY_EMAIL || 'twinbyteai@gmail.com'
 export const calendarId = (env: Env) => env.CALENDAR_ID || 'primary'
 export const isMock = (env: Env) => env.GOOGLE_MOCK === '1'
+/** Without all three Google secrets nothing can be booked or sent. That is
+    the site before its one-time setup: a state, not a failure. */
+export const isConfigured = (env: Env) =>
+  isMock(env) || !!(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET && env.GOOGLE_REFRESH_TOKEN)

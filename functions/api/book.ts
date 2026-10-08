@@ -9,7 +9,7 @@
  *      second booking in the slot, the later one is undone
  *   7. our mail to the visitor, in their language, and the notification to us
  */
-import { rules, notifyEmail, CALL_MINUTES } from '../_lib/config.ts'
+import { rules, notifyEmail, isConfigured, CALL_MINUTES } from '../_lib/config.ts'
 import { candidateSlots } from '../_lib/slots.ts'
 import { google, json, readJson, looksHuman, asLang, asZone, text, reportFailure } from '../_lib/http.ts'
 import { isAddress } from '../_lib/mail.ts'
@@ -43,6 +43,7 @@ export const onRequestPost = async ({ request, env, waitUntil }: Ctx) => {
   b.end = b.start + CALL_MINUTES * 60000
   const blockEnd = b.start + r.blockMinutes * 60000
 
+  if (!isConfigured(env)) return json({ error: 'not_configured' }, 503)
   const g = google(env)
   try {
     const busy = await g.busy(b.start, blockEnd)

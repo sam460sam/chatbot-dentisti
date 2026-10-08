@@ -1,12 +1,12 @@
 /* POST /api/request — the "send us a request" form. One mail to us, with
    Reply-To set to the visitor so answering is one click. */
-import { notifyEmail } from '../_lib/config.ts'
+import { notifyEmail, isConfigured } from '../_lib/config.ts'
 import { google, json, readJson, looksHuman, asLang, text, reportFailure } from '../_lib/http.ts'
 import { isAddress } from '../_lib/mail.ts'
 import { ownerRequest } from '../_lib/emails.ts'
 import type { Ctx } from '../_lib/ctx.ts'
 
-export const onRequestPost = async ({ request, env }: Ctx) => {
+export const onRequestPost = async ({ request, env, waitUntil }: Ctx) => {
   const body = await readJson(request)
   if (!body) return json({ error: 'bad_request' }, 400)
   const r = {
@@ -21,11 +21,13 @@ export const onRequestPost = async ({ request, env }: Ctx) => {
   if (r.phone && !/^[+()\d\s.-]{6,40}$/.test(r.phone)) return json({ error: 'invalid_phone' }, 422)
   if (body.consent !== true) return json({ error: 'consent' }, 422)
   if (!(await looksHuman(env, body, request.headers.get('cf-connecting-ip')))) return json({ error: 'bot' }, 403)
+  /* the mail goes out through Gmail: without Google there is no sending */
+  if (!isConfigured(env)) return json({ error: 'not_configured' }, 503)
   try {
     await google(env).send(ownerRequest(r, notifyEmail(env)))
     return json({ ok: true })
   } catch (e) {
-    await reportFailure(env, 'POST /api/request', e, { email: r.email })
+    waitUntil(reportFailure(env, 'POST /api/request', e, { email: r.email }))
     return json({ error: 'unavailable' }, 503)
   }
 }

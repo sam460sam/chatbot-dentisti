@@ -2,7 +2,9 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { raw, isAddress } from '../functions/_lib/mail.ts'
-import { readJson } from '../functions/_lib/http.ts'
+import { readJson, reportFailure } from '../functions/_lib/http.ts'
+import { outbox } from '../functions/_lib/mock.ts'
+import { onRequestPost as postRequest } from '../functions/api/request.ts'
 
 const decode = (r: string) => Buffer.from(r.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8')
 
@@ -48,4 +50,39 @@ test('the forms take JSON only, not text/plain dressed up as JSON', async () => 
   for (const t of ['text/plain; a=application/json', 'text/plain', 'application/jsonp', 'multipart/form-data; boundary=application/json']) {
     assert.equal(await readJson(post(t)), null, t)
   }
+})
+
+test('a request before the Google setup: "not_configured", and nothing is sent', async () => {
+  const real = globalThis.fetch
+  let fetched = 0
+  globalThis.fetch = (async () => { fetched++; throw new Error('no network in tests') }) as typeof fetch
+  try {
+    const later: Promise<unknown>[] = []
+    const body = JSON.stringify({ name: 'Mario', email: 'mario@example.com', message: 'Ciao', consent: true, elapsed: 5000, lang: 'it' })
+    const res = await postRequest({
+      request: new Request('https://twinbyteservices.com/api/request', { method: 'POST', headers: { 'content-type': 'application/json' }, body }),
+      env: {}, waitUntil: (p) => void later.push(p),
+    })
+    assert.equal(res.status, 503)
+    assert.deepEqual(await res.json(), { error: 'not_configured' })
+    assert.equal(fetched + later.length, 0)
+  } finally {
+    globalThis.fetch = real
+  }
+})
+
+/* ---------------------------------------------------------------- failure reports */
+
+test('a failure is mailed once per place and visitor, not once per page view', async (t) => {
+  /* reportFailure logs, and the pretend mailbox prints every mail */
+  t.mock.method(console, 'error', () => {})
+  t.mock.method(console, 'log', () => {})
+  const env = { GOOGLE_MOCK: '1' }
+  const before = outbox.length
+  for (let i = 0; i < 5; i++) await reportFailure(env, 'GET /api/slots (test)', new Error('freebusy failed: 500'))
+  assert.equal(outbox.length, before + 1)
+  await reportFailure(env, 'POST /api/request (test)', new Error('x'), { email: 'a@example.com' })
+  await reportFailure(env, 'POST /api/request (test)', new Error('x'), { email: 'a@example.com' })
+  await reportFailure(env, 'POST /api/request (test)', new Error('x'), { email: 'b@example.com' })
+  assert.equal(outbox.length, before + 3)
 })

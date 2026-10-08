@@ -2,6 +2,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { parseHours, candidateSlots, freeSlots, wallClockToUtc, type SlotRules } from '../functions/_lib/slots.ts'
+import { onRequestGet as getSlots } from '../functions/api/slots.ts'
 
 const ROME = 'Europe/Rome'
 const rules = (over: Partial<SlotRules> = {}): SlotRules => ({
@@ -89,4 +90,55 @@ test('a slot needs the whole block to fit before closing time', () => {
   const now = Date.UTC(2026, 10, 2, 5, 0)
   const mon = candidateSlots(r, now).filter((s) => iso(s).startsWith('2026-11-02')).map(iso)
   assert.deepEqual(mon, ['2026-11-02T09:00:00.000Z', '2026-11-02T09:30:00.000Z'])
+})
+
+/* ---------------------------------------------------------------- GET /api/slots */
+
+/* What a Pages Function receives, with every waitUntil counted. */
+function call(env: Record<string, string>) {
+  const later: Promise<unknown>[] = []
+  const ctx = { request: new Request('https://twinbyteservices.com/api/slots'), env, waitUntil: (p: Promise<unknown>) => void later.push(p) }
+  return { ctx, later }
+}
+
+test('/api/slots before the Google setup: "not_configured", no Google call, no mail', async () => {
+  const real = globalThis.fetch
+  let fetched = 0
+  globalThis.fetch = (async () => { fetched++; throw new Error('no network in tests') }) as typeof fetch
+  try {
+    for (const env of [{}, { GOOGLE_CLIENT_ID: 'id', GOOGLE_CLIENT_SECRET: 'secret' }]) {
+      const { ctx, later } = call(env)
+      const res = await getSlots(ctx)
+      assert.equal(res.status, 503)
+      assert.deepEqual(await res.json(), { error: 'not_configured' })
+      assert.equal(later.length, 0)
+    }
+    assert.equal(fetched, 0)
+  } finally {
+    globalThis.fetch = real
+  }
+})
+
+test('/api/slots with the pretend calendar answers free starts', async () => {
+  const { ctx } = call({ GOOGLE_MOCK: '1' })
+  const res = await getSlots(ctx)
+  assert.equal(res.status, 200)
+  const data = (await res.json()) as { slots: string[] }
+  assert.ok(Array.isArray(data.slots) && data.slots.every((x) => !Number.isNaN(Date.parse(x))))
+})
+
+test('/api/slots when Google fails: "unavailable" at once, the report after the answer', async (t) => {
+  t.mock.method(console, 'error', () => {}) // the handler logs the failure; expected here
+  const real = globalThis.fetch
+  globalThis.fetch = (async () => new Response('{"error":"invalid_grant"}', { status: 400 })) as typeof fetch
+  try {
+    const { ctx, later } = call({ GOOGLE_CLIENT_ID: 'id', GOOGLE_CLIENT_SECRET: 'secret', GOOGLE_REFRESH_TOKEN: 'revoked' })
+    const res = await getSlots(ctx)
+    assert.equal(res.status, 503)
+    assert.deepEqual(await res.json(), { error: 'unavailable' })
+    assert.equal(later.length, 1)
+    await Promise.all(later)
+  } finally {
+    globalThis.fetch = real
+  }
 })
