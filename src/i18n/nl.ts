@@ -269,7 +269,7 @@ export const nl: Translation = {
     title: 'Neem contact op',
     email: 'Stuur een e-mail',
     emailSubject: 'Vraag over de Twinbyte-assistent',
-    note: 'U krijgt altijd antwoord van Anna of Samuele — er zit geen callcenter achter.',
+    note: 'U krijgt altijd antwoord van het team van Twinbyte zelf — er zit geen callcenter achter.',
     regions: 'We werken op afstand met bedrijven waar ook ter wereld. Waar u ook zit, de assistent antwoordt in de taal van uw klanten.',
   },
   footer: {
@@ -287,7 +287,7 @@ export const nl: Translation = {
       {
         title: 'Wie wij zijn',
         body: [
-          'Twinbyte — Anna en Samuele.',
+          'Twinbyte.',
           'Verwerkingsverantwoordelijke: TODO_LEGAL_NAME',
           'Adres: TODO_ADDRESS',
           'BTW- / KvK-nummer: TODO_VAT_NUMBER',

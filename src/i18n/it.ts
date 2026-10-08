@@ -269,7 +269,7 @@ export const it: Translation = {
     title: 'Parliamone',
     email: 'Scrivici un’email',
     emailSubject: 'Domanda sull’assistente Twinbyte',
-    note: 'Ti risponde sempre Anna o Samuele: dietro non c’è nessun call center.',
+    note: 'Ti risponde sempre direttamente il team Twinbyte: dietro non c’è nessun call center.',
     regions: 'Lavoriamo da remoto con attività in qualsiasi parte del mondo. Ovunque tu sia, l’assistente risponde nella lingua dei tuoi clienti.',
   },
   footer: {
@@ -287,7 +287,7 @@ export const it: Translation = {
       {
         title: 'Chi siamo',
         body: [
-          'Twinbyte — Anna e Samuele.',
+          'Twinbyte.',
           'Titolare del trattamento: TODO_LEGAL_NAME',
           'Indirizzo: TODO_ADDRESS',
           'Partita IVA / numero di registrazione: TODO_VAT_NUMBER',

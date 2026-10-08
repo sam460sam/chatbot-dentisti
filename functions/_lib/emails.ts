@@ -38,7 +38,7 @@ const COPY = {
     add: 'Add it to Google Calendar',
     agenda: 'In 15 minutes we get to know each other, you tell us about your business and what you need, we show you how we work, and we agree on next steps. No preparation needed.',
     change: 'Need another time? Just reply to this email, or message us on WhatsApp.',
-    sign: 'Anna & Samuele — Twinbyte',
+    sign: 'The Twinbyte team',
   },
   nl: {
     subject: (d: string, t: string) => `Uw gesprek met Twinbyte — ${d}, ${t}`,
@@ -50,7 +50,7 @@ const COPY = {
     add: 'Zet het in Google Agenda',
     agenda: 'In 15 minuten maken we kennis, vertelt u over uw bedrijf en wat u nodig heeft, laten wij zien hoe we werken en spreken we de volgende stap af. U hoeft niets voor te bereiden.',
     change: 'Komt het toch niet uit? Beantwoord gewoon deze e-mail, of stuur ons een WhatsApp-bericht.',
-    sign: 'Anna & Samuele — Twinbyte',
+    sign: 'Het Twinbyte-team',
   },
   it: {
     subject: (d: string, t: string) => `La tua chiamata con Twinbyte — ${d}, ${t}`,
@@ -62,7 +62,7 @@ const COPY = {
     add: 'Aggiungila a Google Calendar',
     agenda: 'In 15 minuti ci conosciamo, ci racconti la tua attività e cosa ti serve, ti mostriamo come lavoriamo e decidiamo insieme i prossimi passi. Non serve preparare niente.',
     change: 'Ti serve un altro orario? Rispondi a questa email, oppure scrivici su WhatsApp.',
-    sign: 'Anna & Samuele — Twinbyte',
+    sign: 'Il team Twinbyte',
   },
 } as const
 

@@ -269,7 +269,7 @@ export const en: Translation = {
     title: 'Talk to us',
     email: 'Send an email',
     emailSubject: 'Question about the Twinbyte assistant',
-    note: 'You will always get a reply from Anna or Samuele — there is no call centre behind this.',
+    note: 'You will always get a reply from the Twinbyte team itself — there is no call centre behind this.',
     regions: 'We work remotely with businesses anywhere in the world. Wherever you are, the assistant answers in your customers’ language.',
   },
   footer: {
@@ -287,7 +287,7 @@ export const en: Translation = {
       {
         title: 'Who we are',
         body: [
-          'Twinbyte — Anna and Samuele.',
+          'Twinbyte.',
           'Controller: TODO_LEGAL_NAME',
           'Address: TODO_ADDRESS',
           'VAT / company number: TODO_VAT_NUMBER',
