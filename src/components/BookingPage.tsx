@@ -108,7 +108,7 @@ export function BookingPage() {
               )}
             </div>
 
-            <div className={`order-2 p-3 sm:p-4 ${mode === 'book' ? 'md:col-start-2 md:row-span-2 md:row-start-1' : 'md:col-span-2 md:row-start-2'}`}>
+            <div key={mode} className={`order-2 animate-rise p-3 sm:p-4 ${mode === 'book' ? 'md:col-start-2 md:row-span-2 md:row-start-1' : 'md:col-span-2 md:row-start-2'}`}>
               {mode === 'book' ? <Booker onRequest={() => show('request')} /> : <RequestForm onBack={() => show('book')} />}
             </div>
 
