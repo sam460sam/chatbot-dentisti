@@ -139,7 +139,7 @@ const T = {
     'Frames': 'Beelden',
     '318, in three sequences': '318, in drie sequenties',
     'Delivery': 'Levering',
-    'WebP with transparency, two sizes': 'WebP met transparantie, twee formaten',
+    'WebP with transparency: every frame on a wide screen, every second one on a phone': 'WebP met transparantie: elk beeld op een breed scherm, om het andere op een telefoon',
     'Playback': 'Afspelen',
     'One canvas per sequence, one drawImage per scroll frame': 'Eén canvas per sequentie, één drawImage per scrolbeeld',
     'Loading': 'Laden',
@@ -283,7 +283,7 @@ const T = {
     'Frames': 'Fotogrammi',
     '318, in three sequences': '318, in tre sequenze',
     'Delivery': 'Formato',
-    'WebP with transparency, two sizes': 'WebP con trasparenza, due dimensioni',
+    'WebP with transparency: every frame on a wide screen, every second one on a phone': 'WebP con trasparenza: tutti i fotogrammi su uno schermo largo, uno ogni due sul telefono',
     'Playback': 'Riproduzione',
     'One canvas per sequence, one drawImage per scroll frame': 'Un canvas per sequenza, un drawImage per ogni fotogramma di scorrimento',
     'Loading': 'Caricamento',
@@ -387,9 +387,9 @@ for (const lang of LANGS) {
   out = (out + code)
     .replace('<html lang="en">', `<html lang="${lang}">`)
     .replace(`<link rel="canonical" href="${SITE}/showcase/">`, `<link rel="canonical" href="${SITE}/showcase/${lang}/">`)
-    /* the language switch: this page is the current one */
-    .replace(' aria-current="true">EN<', '>EN<')
-    .replace(`lang="${lang}" aria-label=`, `lang="${lang}" aria-current="true" aria-label=`)
+    /* the language switches (header and footer): this page is the current one */
+    .replaceAll(' aria-current="true">EN<', '>EN<')
+    .replaceAll(`lang="${lang}" aria-label=`, `lang="${lang}" aria-current="true" aria-label=`)
     /* every link to the main site goes to the same language */
     .replaceAll('href="/"', `href="${home}"`)
     .replaceAll('href="/#', `href="${home}#`)

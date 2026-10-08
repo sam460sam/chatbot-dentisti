@@ -17,7 +17,12 @@
      the headline never waits for it, but the object should not be far behind. -->
 <link rel="preload" as="image" href="/showcase/frames-sm/001.webp" media="(max-width: 819px)" fetchpriority="high">
 <link rel="preload" as="image" href="/showcase/frames/001.webp" media="(min-width: 820px)" fetchpriority="high">
+<!-- The three faces the first screen is set in. A passage is anchored to the
+     bottom of the screen, so a face that lands late and rewraps a heading
+     moves everything above it: they are asked for before anything else. -->
 <link rel="preload" as="font" type="font/woff2" href="/showcase/fonts/bricolage-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/showcase/fonts/inter-latin-var.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/showcase/fonts/instrument-serif-italic.woff2" crossorigin>
 <script>document.documentElement.className='js'</script>
 
 <style>
@@ -29,6 +34,14 @@
 @font-face{font-family:'InterVariable';font-weight:300 800;font-display:swap;src:url('/showcase/fonts/inter-latin-var.woff2') format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:'InterVariable';font-weight:300 800;font-display:swap;src:url('/showcase/fonts/inter-latin-ext-var.woff2') format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 @font-face{font-family:'InstrumentSerif';font-style:italic;font-weight:400;font-display:swap;src:url('/showcase/fonts/instrument-serif-italic.woff2') format('woff2')}
+/* Until a face lands, a system face resized to take the same room, so the
+   swap does not rewrap a line. The ratios are measured: Inter is 6.8% wider
+   than Arial at 400 and 0.9% at 600, Bricolage at 700 is 9.1% narrower than
+   Arial Bold, Instrument Serif italic 12.3% narrower than Times italic. */
+@font-face{font-family:'Inter Fallback';font-weight:300 500;src:local('Arial'),local('ArialMT'),local('Liberation Sans'),local('LiberationSans');size-adjust:106.8%;ascent-override:90.7%;descent-override:22.6%;line-gap-override:0%}
+@font-face{font-family:'Inter Fallback';font-weight:600 800;src:local('Arial Bold'),local('Arial-BoldMT'),local('Liberation Sans Bold'),local('LiberationSans-Bold');size-adjust:100.9%;ascent-override:96%;descent-override:23.9%;line-gap-override:0%}
+@font-face{font-family:'Bricolage Fallback';font-weight:400 800;src:local('Arial Bold'),local('Arial-BoldMT'),local('Liberation Sans Bold'),local('LiberationSans-Bold');size-adjust:90.9%;ascent-override:102.3%;descent-override:29.7%;line-gap-override:0%}
+@font-face{font-family:'Serif Fallback';font-style:italic;font-weight:400;src:local('Times New Roman Italic'),local('TimesNewRomanPS-ItalicMT'),local('Liberation Serif Italic'),local('LiberationSerif-Italic');size-adjust:87.7%;ascent-override:112.9%;descent-override:35.3%;line-gap-override:0%}
 
 /* The brand, as on the main site. Petrol is a fill and a border, never small
    text on navy (3.5:1); mint and cream carry the words there. */
@@ -39,15 +52,15 @@
   --cream:#F4EFE6; --cream-deep:#EAE3D6; --line:#D9D0C0;
   --dim:#B9C2D0; --mute:#8FA3B8;
   --ink-soft:#3F4659; --ink-mute:#5A6173;
-  --display:'Bricolage',Georgia,serif;
-  --serif:'InstrumentSerif',Georgia,'Times New Roman',serif;
+  --display:'Bricolage','Bricolage Fallback',Arial,sans-serif;
+  --serif:'InstrumentSerif','Serif Fallback','Times New Roman',serif;
   --ease:cubic-bezier(.2,.7,0,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{background:var(--navy);-webkit-text-size-adjust:100%}
 body{
   background:var(--navy);color:var(--cream);
-  font-family:InterVariable,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  font-family:InterVariable,'Inter Fallback',Arial,sans-serif;
   font-size:16px;line-height:1.6;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
@@ -88,7 +101,7 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.0
 }
 .btn-mint{--fill:var(--mint);color:var(--navy)}
 .btn-ghost{--ring:rgba(244,239,230,.6);color:var(--cream)}
-.btn-sm{min-height:40px;padding:0 16px;font-size:14px}
+.btn-sm{min-height:44px;padding:0 16px;font-size:14px}
 @media(hover:hover) and (pointer:fine){
   .btn{transition:color .18s ease}
   .btn-mint:hover{--fill:var(--cream)}
@@ -103,19 +116,22 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.0
 .logo{display:flex;align-items:center;min-height:44px}
 .logo img{height:24px;width:auto}
 .bar-r{display:flex;align-items:center;gap:8px}
-.langs{display:flex;height:36px;padding:3px;border:1px solid var(--navy-line);border-radius:999px}
+.langs{display:flex;gap:6px;height:36px;padding:3px;border:1px solid var(--navy-line);border-radius:999px}
 .langs a{
   position:relative;display:flex;align-items:center;justify-content:center;
-  min-width:34px;padding:0 6px;border-radius:999px;
+  min-width:38px;padding:0 6px;border-radius:999px;
   font-size:11px;line-height:1;letter-spacing:.14em;font-weight:700;text-decoration:none;
   color:var(--dim);
 }
-/* a 44px target without a 44px pill */
-.langs a::after{content:'';position:absolute;inset:-5px -1px}
+/* a 44 x 44 target without a 44px pill: the link is 38 x 28, its touch area
+   reaches 8px above and below and 3px to each side, which meets the next
+   one's across the 6px gap without overlapping it */
+.langs a::after{content:'';position:absolute;inset:-8px -3px}
 .langs a[aria-current]{background:var(--cream);color:var(--navy)}
 .bar .btn .long{display:none}
 @media(min-width:560px){.bar .btn .long{display:inline}.bar .btn .short{display:none}}
-@media(max-width:379px){.langs{display:none}}
+/* under 370px the bar has no room for it; the footer carries it too */
+@media(max-width:369px){.bar .langs{display:none}}
 
 /* ------------------------------------------------------------- the runway */
 .runway{position:relative;height:400vh}
@@ -144,14 +160,16 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.0
   color:var(--mint);
 }
 .beat h2{
-  margin:12px auto 0;max-width:20ch;
+  /* em, not ch: a "0" is 18% narrower in the fallback face than in
+     Bricolage, and a measure in ch rewrapped the first headline on the swap */
+  margin:12px auto 0;max-width:12em;
   font-family:var(--display);font-weight:700;
   font-size:clamp(32px,6.4vw,64px);line-height:1.02;letter-spacing:-.035em;
   text-wrap:balance;
 }
 .beat h2 em{color:var(--mint);font-size:1.08em;letter-spacing:-.02em}
 .beat p{
-  margin:14px auto 0;max-width:46ch;
+  margin:14px auto 0;max-width:29em;
   font-size:clamp(15px,2.1vw,18px);line-height:1.55;color:var(--dim);
   text-wrap:pretty;
 }
@@ -181,16 +199,20 @@ html:not(.js) .beat{position:static;margin:60px 0}
    part landed in the picture, as a fraction. Nothing here guesses. They move by
    transform, so following the object is never a layout shift. */
 .pins{position:absolute;inset:0;pointer-events:none}
+/* Everything in a pin is placed by transform: the pin itself on its part,
+   the leader line stretched by scaleX, the words slid along after it. Its
+   layout never changes from one frame to the next, so nothing in it is
+   ever a layout shift. */
 .pin{
   position:absolute;left:0;top:0;
-  display:flex;align-items:center;gap:8px;
   opacity:0;transition:opacity .35s ease;
   white-space:nowrap;
 }
 .pin.on{opacity:1}
-.pin i{width:7px;height:7px;background:var(--mint);flex:none}
+.pin i{position:absolute;left:0;top:50%;width:7px;height:7px;margin-top:-3.5px;background:var(--mint)}
 .pin.v i{background:var(--cream)}
 .pin span{
+  display:block;
   font-size:11px;line-height:16px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
   color:var(--mute);
 }
@@ -199,7 +221,7 @@ html:not(.js) .beat{position:static;margin:60px 0}
   font-family:var(--display);font-weight:600;font-size:15px;line-height:20px;
   letter-spacing:-.01em;text-transform:none;color:var(--cream);
 }
-.pin em{height:1px;background:var(--navy-line);flex:none;display:block}
+.pin em{position:absolute;left:15px;top:50%;width:1px;height:1px;background:var(--navy-line);transform-origin:0 0}
 @media(max-width:819px){.pin{display:none}}
 
 /* ------------------------------------------------- the pressable button */
@@ -227,8 +249,10 @@ html:not(.js) .beat{position:static;margin:60px 0}
 }
 .hotspot:focus-visible::after{opacity:1}
 @media(hover:hover) and (pointer:fine){.hotspot:hover::after{opacity:1}}
+/* the label hangs under the rendered page, not on it: --below is set from
+   the frame, the distance from the button's bottom edge to the page's */
 .hotspot b{
-  position:absolute;left:50%;top:calc(100% + 18px);transform:translateX(-50%);
+  position:absolute;left:50%;top:calc(100% + var(--below,18px));transform:translateX(-50%);
   font-size:11px;line-height:16px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;
   color:var(--mint);white-space:nowrap;
 }
@@ -308,11 +332,12 @@ h3 em{color:var(--mint);font-size:1.06em}
 .foot .logo img{height:32px}
 .foot .tagline{margin-top:16px;max-width:34ch;font-size:19px;line-height:30px;color:var(--dim)}
 .foot .btn{margin-top:32px}
+.foot-langs{display:inline-flex;margin-top:48px}
 .cols{display:grid;gap:40px;margin-top:64px}
 @media(min-width:640px){.cols{grid-template-columns:1fr 1fr}}
 .label{font-size:12px;line-height:16px;letter-spacing:.10em;text-transform:uppercase;font-weight:700;color:var(--mute)}
 .cols ul{list-style:none;margin-top:12px;display:grid}
-.cols a{display:inline-flex;align-items:center;min-height:40px;font-size:17px;font-weight:500;text-decoration:none;color:var(--cream);overflow-wrap:anywhere}
+.cols a{display:inline-flex;align-items:center;min-height:44px;font-size:17px;font-weight:500;text-decoration:none;color:var(--cream);overflow-wrap:anywhere}
 .cols .contact a{font-size:16px;font-weight:400;text-decoration:underline;text-decoration-color:var(--navy-line);text-underline-offset:4px}
 .cols .contact a.quiet{color:var(--dim)}
 @media(hover:hover) and (pointer:fine){.cols a:hover{color:var(--mint)}}
@@ -547,7 +572,7 @@ h3 em{color:var(--mint);font-size:1.06em}
         <div><dt>Objects</dt><dd>Two modelled in Blender from code, lit in a measured studio</dd></div>
         <div><dt>Film</dt><dd>One generated between two pictures, cut into frames</dd></div>
         <div><dt>Frames</dt><dd>318, in three sequences</dd></div>
-        <div><dt>Delivery</dt><dd>WebP with transparency, two sizes</dd></div>
+        <div><dt>Delivery</dt><dd>WebP with transparency: every frame on a wide screen, every second one on a phone</dd></div>
         <div><dt>Playback</dt><dd>One canvas per sequence, one drawImage per scroll frame</dd></div>
         <div><dt>Loading</dt><dd>The first frame of each sequence at once, the rest as you get close</dd></div>
         <div><dt>Libraries</dt><dd>None</dd></div>
@@ -595,6 +620,12 @@ h3 em{color:var(--mint);font-size:1.06em}
             <li><a class="quiet" href="/privacy">Privacy statement</a></li>
           </ul>
         </div>
+      </div>
+      <!-- a group, not a second nav landmark with the same name as the bar's -->
+      <div class="langs foot-langs" role="group" aria-label="Language">
+        <a href="/showcase/" hreflang="en" lang="en" aria-label="English" aria-current="true">EN</a>
+        <a href="/showcase/nl/" hreflang="nl" lang="nl" aria-label="Nederlands">NL</a>
+        <a href="/showcase/it/" hreflang="it" lang="it" aria-label="Italiano">IT</a>
       </div>
     </div>
     <div class="foot-mark"><img src="/media/mark-3d.webp" alt="" width="600" height="600" loading="lazy" decoding="async"></div>
@@ -750,6 +781,8 @@ h3 em{color:var(--mint);font-size:1.06em}
         if (!show) continue;
         on.push({
           el: pin,
+          line: pin.querySelector('em'),
+          words: pin.querySelector('span'),
           x: (box.x + a[0] * box.s) / dpr,
           y: (box.y + a[1] * box.s) / dpr,
           h: pin.offsetHeight || 36
@@ -766,10 +799,11 @@ h3 em{color:var(--mint);font-size:1.06em}
         var top = it.y - it.h / 2;
         if (top < floor) top = floor;
         floor = top + it.h + 10;
-        var lead = col - it.x;
-        if (lead < 16) lead = 16;
+        var lead = Math.round(Math.max(16, col - it.x));
         it.el.style.transform = 'translate(' + Math.round(ox + it.x) + 'px,' + Math.round(oy + top) + 'px)';
-        it.el.firstElementChild.nextElementSibling.style.width = Math.round(lead) + 'px';
+        /* dot 7, gap 8, the line, gap 8, then the words */
+        it.line.style.transform = 'scaleX(' + lead + ')';
+        it.words.style.transform = 'translateX(' + (lead + 23) + 'px)';
       }
 
       /* The button in the second sequence is rendered, so the only way to make
@@ -787,6 +821,7 @@ h3 em{color:var(--mint);font-size:1.06em}
           hot.style.height = Math.round((br[1] - tl[1]) * box.s / dpr) + 'px';
           /* the rendered button's cut is 0.14 of its 1.66 width (tools/showcase-seq-b.py) */
           hot.style.setProperty('--c', Math.round(w * 0.14 / 1.66) + 'px');
+          hot.style.setProperty('--below', Math.max(12, Math.round((FIT[3] - br[1]) * box.s / dpr) + 10) + 'px');
         }
       }
     }
