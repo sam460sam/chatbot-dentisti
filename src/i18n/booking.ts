@@ -66,6 +66,8 @@ export interface BookingCopy {
   }
   errors: {
     slot_taken: string; already_booked: (when: string) => string; generic: string; bot: string; verifying: string; waCta: string
+    /* the request could not be sent: what the visitor typed goes on by WhatsApp or email */
+    notSent: string; byWhatsApp: string; byEmail: string
   }
   done: {
     title: string
@@ -86,6 +88,7 @@ export interface BookingCopy {
     done: (email: string) => string
     back: string
     waText: string
+    mailSubject: string
   }
   related: {
     eyebrow: string
@@ -167,6 +170,9 @@ export const booking: Record<Lang, BookingCopy> = {
       bot: 'That was quick. Please wait a moment and try again.',
       verifying: 'One moment: we are checking that the form is not spam. Press again in a few seconds.',
       waCta: 'Open WhatsApp',
+      notSent: 'We could not send it from here. Your message is ready to go by WhatsApp or email: one tap, nothing to type again.',
+      byWhatsApp: 'Send by WhatsApp',
+      byEmail: 'Send by email',
     },
     done: {
       title: 'You’re booked.',
@@ -187,6 +193,7 @@ export const booking: Record<Lang, BookingCopy> = {
       done: (e) => `Thank you, we have it. We will write back to ${e}.`,
       back: 'Back to booking',
       waText: 'Hi Twinbyte, I have a question.',
+      mailSubject: 'Request from the website',
     },
     related: {
       eyebrow: 'Before you book',
@@ -286,6 +293,9 @@ export const booking: Record<Lang, BookingCopy> = {
       bot: 'Dat ging snel. Wacht even en probeer het opnieuw.',
       verifying: 'Een moment: we controleren of het formulier geen spam is. Druk over een paar seconden opnieuw.',
       waCta: 'Open WhatsApp',
+      notSent: 'Versturen lukte hier niet. Uw bericht staat klaar voor WhatsApp of e-mail: één tik, niets opnieuw typen.',
+      byWhatsApp: 'Verstuur via WhatsApp',
+      byEmail: 'Verstuur per e-mail',
     },
     done: {
       title: 'Het gesprek staat gepland.',
@@ -306,6 +316,7 @@ export const booking: Record<Lang, BookingCopy> = {
       done: (e) => `Dank u, we hebben het ontvangen. We antwoorden naar ${e}.`,
       back: 'Terug naar plannen',
       waText: 'Hallo Twinbyte, ik heb een vraag.',
+      mailSubject: 'Aanvraag via de website',
     },
     related: {
       eyebrow: 'Voordat u plant',
@@ -405,6 +416,9 @@ export const booking: Record<Lang, BookingCopy> = {
       bot: 'Troppo veloce. Aspetta un attimo e riprova.',
       verifying: 'Un attimo: stiamo controllando che il modulo non sia spam. Riprova tra qualche secondo.',
       waCta: 'Apri WhatsApp',
+      notSent: 'Da qui non siamo riusciti a inviarla. Il tuo messaggio è pronto per WhatsApp o email: un tocco, niente da riscrivere.',
+      byWhatsApp: 'Invia su WhatsApp',
+      byEmail: 'Invia per email',
     },
     done: {
       title: 'Prenotazione fatta.',
@@ -425,6 +439,7 @@ export const booking: Record<Lang, BookingCopy> = {
       done: (e) => `Grazie, l’abbiamo ricevuta. Ti rispondiamo a ${e}.`,
       back: 'Torna alla prenotazione',
       waText: 'Ciao Twinbyte, ho una domanda.',
+      mailSubject: 'Richiesta dal sito',
     },
     related: {
       eyebrow: 'Prima di prenotare',

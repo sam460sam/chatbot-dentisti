@@ -215,16 +215,26 @@ function Consent({ checked, onChange, error, before }: { checked: boolean; onCha
   )
 }
 
-/** A failure the visitor can act on: the sentence, and WhatsApp when it says so. */
-function Fail({ text, wa }: { text: string; wa: boolean }) {
+/** A failure the visitor can act on: the sentence, and WhatsApp when it says so.
+    With `keep`, nothing was lost: the visitor's own message goes on by
+    WhatsApp or email, already written, so the box is calm rather than red. */
+function Fail({ text, wa, keep }: { text: string; wa: boolean; keep?: { wa: string; mail: string } }) {
   const { lang } = useRoute()
   const c = booking[lang]
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => ref.current?.focus({ preventScroll: false }), [text])
   return (
-    <div ref={ref} tabIndex={-1} role="alert" className="border-l-2 border-danger bg-paper px-2 py-1 text-small text-ink outline-none">
+    <div ref={ref} tabIndex={-1} role="alert" className={`border-l-2 bg-paper px-2 py-1 text-small text-ink outline-none ${keep ? 'border-teal py-2' : 'border-danger'}`}>
       <p>{text}</p>
-      {wa && (
+      {keep ? (
+        <div className="mt-2 grid gap-1 sm:flex sm:flex-wrap">
+          <a className="btn-petrol" href={keep.wa} rel="noopener">
+            <Bubble size={16} />
+            {c.errors.byWhatsApp}
+          </a>
+          <a className="btn-ghost-dark" href={keep.mail}>{c.errors.byEmail}</a>
+        </div>
+      ) : wa && (
         <a className="mt-0.5 inline-flex min-h-[44px] items-center gap-0.5 font-semibold text-teal underline underline-offset-2" href={waLink(c.hero.waText)} rel="noopener">
           <Bubble size={16} />
           {c.errors.waCta}
@@ -699,7 +709,7 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
   const [consent, setConsent] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [busy, setBusy] = useState(false)
-  const [fail, setFail] = useState<{ text: string; wa: boolean } | null>(null)
+  const [fail, setFail] = useState<{ text: string; wa: boolean; keep?: { wa: string; mail: string } } | null>(null)
   const [sent, setSent] = useState('')
   const openedAt = useRef(performance.now())
   const ts = useTurnstile(!sent, lang)
@@ -718,6 +728,20 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
       heading.current?.focus({ preventScroll: true })
     })
   }, [sent])
+
+  /* Not sent (Google not set up yet, an outage, no network): the visitor's
+     message must not be lost. It goes on by WhatsApp or email, written out. */
+  const notSent = () => {
+    const who = [v.name.trim(), v.business.trim() && `(${v.business.trim()})`, v.phone.trim()].filter(Boolean).join(' ')
+    const body = `${v.message.trim().slice(0, 1500)}\n\n— ${who}`
+    return {
+      text: c.errors.notSent, wa: false,
+      keep: {
+        wa: waLink(`${c.request.waText}\n\n${body}`),
+        mail: `${mailLink(c.request.mailSubject)}&body=${encodeURIComponent(body.replace(/\n/g, '\r\n'))}`,
+      },
+    }
+  }
 
   const submit = async (e: { preventDefault(): void }) => {
     e.preventDefault()
@@ -739,10 +763,10 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
       })
       if (status === 200 && data?.ok) return setSent(v.email.trim())
       if (data?.error === 'invalid_phone') return setErrors({ phone: c.form.badPhone }), showFirstError({ phone: '1' }, ['phone'])
-      setFail(data?.error === 'bot' ? { text: c.errors.bot, wa: false } : { text: c.errors.generic, wa: true })
+      setFail(data?.error === 'bot' ? { text: c.errors.bot, wa: false } : notSent())
       ts.reset()
     } catch {
-      setFail({ text: c.errors.generic, wa: true })
+      setFail(notSent())
     } finally {
       setBusy(false)
     }
@@ -784,7 +808,7 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
         error={errors.consent}
       />
       {ts.needed && <div ref={ts.ref} />}
-      {fail && <Fail text={fail.text} wa={fail.wa} />}
+      {fail && <Fail text={fail.text} wa={fail.wa} keep={fail.keep} />}
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
         <button type="submit" aria-disabled={busy} className="btn-petrol">
           {busy ? c.request.sending : c.request.submit}
