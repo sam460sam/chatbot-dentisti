@@ -79,6 +79,9 @@ body{
 img,svg{display:block}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--mint);outline-offset:3px}
+/* read out, not shown: the full name of a language after its two letters,
+   so the spoken name still contains the visible one */
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .band-cream :focus-visible,.band-deep :focus-visible{outline-color:var(--petrol-deep)}
 em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
 
@@ -178,12 +181,17 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.0
   font-size:clamp(32px,6.4vw,64px);line-height:1.02;letter-spacing:-.035em;
   text-wrap:balance;
 }
-.beat h2 em{color:var(--mint);font-size:1.08em;letter-spacing:-.02em}
+/* the accent always starts its own line: where it breaks never depends on
+   which face has landed yet */
+.beat h2 em{display:block;color:var(--mint);font-size:1.08em;letter-spacing:-.02em}
 .beat p{
   margin:14px auto 0;max-width:29em;
   font-size:clamp(15px,2.1vw,18px);line-height:1.55;color:var(--dim);
   text-wrap:pretty;
 }
+/* a wide screen is short for its width: two long lines leave the object more
+   of the height than three short ones */
+@media(min-width:1024px){.beat p{max-width:36em}}
 
 /* The first passage of every runway is on in the markup, so the first screen
    has its headline before any script or picture. The script only ever takes
@@ -385,9 +393,9 @@ h3 em{color:var(--mint);font-size:1.06em}
     <a class="logo" href="/" aria-label="Twinbyte"><img src="/brand/logo-on-dark.svg" alt="Twinbyte" width="115" height="24"></a>
     <div class="bar-r">
       <nav class="langs" aria-label="Language">
-        <a href="/showcase/" hreflang="en" lang="en" aria-label="English" aria-current="true">EN</a>
-        <a href="/showcase/nl/" hreflang="nl" lang="nl" aria-label="Nederlands">NL</a>
-        <a href="/showcase/it/" hreflang="it" lang="it" aria-label="Italiano">IT</a>
+        <a href="/showcase/" hreflang="en" lang="en" aria-current="true">EN<span class="vh"> (English)</span></a>
+        <a href="/showcase/nl/" hreflang="nl" lang="nl">NL<span class="vh"> (Nederlands)</span></a>
+        <a href="/showcase/it/" hreflang="it" lang="it">IT<span class="vh"> (Italiano)</span></a>
       </nav>
       <a class="btn btn-mint btn-sm" href="/#book"><span class="long">Book a call</span><span class="short">Book</span></a>
     </div>
@@ -447,9 +455,8 @@ h3 em{color:var(--mint);font-size:1.06em}
 
     <a class="hotspot" data-from="74"
        href="https://wa.me/31645745163?text=Hi%20Twinbyte%2C%20I%20pressed%20the%20button%20on%20your%20showcase%20page."
-       rel="noopener" target="_blank"
-       aria-label="Message Twinbyte on WhatsApp — this is the rendered button, and it is a real link">
-      <b>press it — it is a real link</b>
+       rel="noopener" target="_blank">
+      <b>press it — it is a real link</b><span class="vh"> Message Twinbyte on WhatsApp.</span>
     </a>
 
     <div class="beat on" data-from="0.00" data-to="0.24">
@@ -634,9 +641,9 @@ h3 em{color:var(--mint);font-size:1.06em}
       </div>
       <!-- a group, not a second nav landmark with the same name as the bar's -->
       <div class="langs foot-langs" role="group" aria-label="Language">
-        <a href="/showcase/" hreflang="en" lang="en" aria-label="English" aria-current="true">EN</a>
-        <a href="/showcase/nl/" hreflang="nl" lang="nl" aria-label="Nederlands">NL</a>
-        <a href="/showcase/it/" hreflang="it" lang="it" aria-label="Italiano">IT</a>
+        <a href="/showcase/" hreflang="en" lang="en" aria-current="true">EN<span class="vh"> (English)</span></a>
+        <a href="/showcase/nl/" hreflang="nl" lang="nl">NL<span class="vh"> (Nederlands)</span></a>
+        <a href="/showcase/it/" hreflang="it" lang="it">IT<span class="vh"> (Italiano)</span></a>
       </div>
     </div>
     <div class="foot-mark"><img src="/media/mark-3d.webp" alt="" width="600" height="600" loading="lazy" decoding="async"></div>
@@ -659,6 +666,13 @@ h3 em{color:var(--mint);font-size:1.06em}
 
   var yr = document.getElementById('yr');
   if (yr) yr.textContent = String(new Date().getFullYear());
+
+  function afterFonts(fn) {
+    var done = false;
+    function go() { if (!done) { done = true; fn(); } }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(go, go);
+    setTimeout(go, 1500);
+  }
 
   function Runway(cfg) {
     var runway = document.getElementById(cfg.runway);
@@ -717,7 +731,27 @@ h3 em{color:var(--mint);font-size:1.06em}
        per frame, and never guessed: drawing it at a fixed fraction of the canvas
        with a fixed offset cut the top off on a short window and ran it into the
        text on a tall one. */
+    /* Every passage of a runway gets the same height: the tallest one's, plus
+       a line to spare, and its words start at the top of it. A passage is
+       anchored to the bottom of the screen, so without this a face that lands
+       late and adds a line would push the headline up — a layout shift. With
+       it the headline stays where it was and the new line takes the spare
+       room. Never shrinks for the same width; starts over when the width
+       changes. Every headline of a runway also sits on the same line. */
+    var floorH = 0, floorW = -1;
+    function settle() {
+      if (still) return;
+      var w = runway.clientWidth, max = 0, i;
+      if (w !== floorW) { floorW = w; floorH = 0; }
+      for (i = 0; i < beats.length; i++) beats[i].style.minHeight = '';
+      for (i = 0; i < beats.length; i++) max = Math.max(max, beats[i].offsetHeight);
+      if (!floorH) floorH = max + 28;
+      if (max > floorH) floorH = max;
+      for (i = 0; i < beats.length; i++) beats[i].style.minHeight = floorH + 'px';
+    }
+
     function measure() {
+      settle();
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.round(canvas.clientWidth * dpr);
       canvas.height = Math.round(canvas.clientHeight * dpr);
@@ -946,7 +980,11 @@ h3 em{color:var(--mint);font-size:1.06em}
       /* A sequence further down the page starts loading only when it is a
          screen and a half away: the first one does not share the line with
          two others while it is the one being looked at. */
-      if (!cfg.lazy || !('IntersectionObserver' in window)) return start();
+      /* The first sequence waits for the faces of the first screen (at most a
+         second and a half): on a slow line its frames would otherwise share
+         the bandwidth with the fonts the headline is waiting for. */
+      if (!cfg.lazy) return afterFonts(start);
+      if (!('IntersectionObserver' in window)) return start();
       var io = new IntersectionObserver(function (es) {
         if (es[0].isIntersecting) { io.disconnect(); start(); }
       }, { rootMargin: '150% 0px' });

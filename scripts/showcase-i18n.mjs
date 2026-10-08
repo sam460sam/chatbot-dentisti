@@ -65,8 +65,7 @@ const T = {
     'Not a template with your logo dropped in': 'Geen sjabloon met uw logo erin geplakt',
     'Hours and address': 'Tijden en adres',
     'Above the fold, on any phone': 'Bovenaan de pagina, op elke telefoon',
-    'Message Twinbyte on WhatsApp — this is the rendered button, and it is a real link':
-      'Stuur Twinbyte een WhatsApp — dit is de gerenderde knop, en het is een echte link',
+    'Message Twinbyte on WhatsApp.': 'Stuur Twinbyte een WhatsApp.',
     'press it — it is a real link': 'druk erop — het is een echte link',
     'The other half': 'De andere helft',
     'A message becomes a page.': 'Een bericht wordt een pagina.',
@@ -210,8 +209,7 @@ const T = {
     'Not a template with your logo dropped in': 'Non un template con il tuo logo incollato sopra',
     'Hours and address': 'Orari e indirizzo',
     'Above the fold, on any phone': 'Nella prima schermata, su qualsiasi telefono',
-    'Message Twinbyte on WhatsApp — this is the rendered button, and it is a real link':
-      'Scrivi a Twinbyte su WhatsApp — è il pulsante renderizzato, ed è un link vero',
+    'Message Twinbyte on WhatsApp.': 'Scrivi a Twinbyte su WhatsApp.',
     'press it — it is a real link': 'premilo — è un link vero',
     'The other half': 'L’altra metà',
     'A message becomes a page.': 'Un messaggio diventa una pagina.',
@@ -326,7 +324,7 @@ const WA = {
 
 /* The same in every language: names, addresses, the language switch itself. */
 const NEUTRAL = new Set([
-  'Twinbyte', 'EN', 'NL', 'IT', 'English', 'Nederlands', 'Italiano',
+  'Twinbyte', 'EN', 'NL', 'IT', '(English)', '(Nederlands)', '(Italiano)',
   'info@twinbyteservices.com', 'WhatsApp +31 6 45745163', 'noindex',
 ])
 
@@ -392,8 +390,8 @@ for (const lang of LANGS) {
     .replace(`<meta property="og:url" content="${SITE}/showcase/">`, `<meta property="og:url" content="${SITE}/showcase/${lang}/">`)
     .replace('<meta property="og:locale" content="en">', `<meta property="og:locale" content="${lang}">`)
     /* the language switches (header and footer): this page is the current one */
-    .replaceAll(' aria-current="true">EN<', '>EN<')
-    .replaceAll(`lang="${lang}" aria-label=`, `lang="${lang}" aria-current="true" aria-label=`)
+    .replaceAll('hreflang="en" lang="en" aria-current="true">', 'hreflang="en" lang="en">')
+    .replaceAll(`hreflang="${lang}" lang="${lang}">`, `hreflang="${lang}" lang="${lang}" aria-current="true">`)
     /* every link to the main site goes to the same language */
     .replaceAll('href="/"', `href="${home}"`)
     .replaceAll('href="/#', `href="${home}#`)
@@ -409,6 +407,8 @@ for (const lang of LANGS) {
   if (/href="\/(#|assistant|websites|prices|privacy|")/.test(out)) errors.push(`${lang} still links to the English site`)
   if (!out.includes(`<link rel="canonical" href="${SITE}/showcase/${lang}/">`) || !out.includes(`content="${SITE}/showcase/${lang}/"`) || !out.includes(`og:locale" content="${lang}"`))
     errors.push(`${lang} canonical, og:url or og:locale still points at the English page`)
+  const current = [...out.matchAll(/hreflang="(\w+)" lang="\w+" aria-current="true">/g)].map((m) => m[1])
+  if (current.length !== 2 || current.some((l) => l !== lang)) errors.push(`${lang} language switch marks ${current.join(',') || 'nothing'} as current`)
 
   await mkdir(`dist/showcase/${lang}`, { recursive: true })
   await writeFile(`dist/showcase/${lang}/index.html`, out)
