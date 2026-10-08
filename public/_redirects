@@ -1,1 +1,5 @@
-/*    /index.html   200
+# No catch-all rewrite to /index.html. Every page is a prerendered file
+# (scripts/prerender-meta.mjs), and an address that is not one must get a
+# real 404: Cloudflare serves the nearest 404.html (404.html, nl/404.html,
+# it/404.html) with that status. A rewrite here would answer every typo
+# with the English home page and a 200, and a missing script with HTML.

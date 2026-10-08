@@ -1,7 +1,7 @@
 # Twinbyte — twinbyteservices.com
 
-The site of Twinbyte (Anna & Samuele): websites, a digital assistant and
-online ads for small local businesses. Visitors book a free 15-minute call or
+The site of Twinbyte: websites, a digital assistant and online ads for
+small local businesses. Visitors book a free 15-minute call or
 send a request. EN / NL / IT.
 
 React + TypeScript + Vite + Tailwind (React runs as Preact). Booking runs on
@@ -33,8 +33,16 @@ npm test         # the slot and mail tests
 - `public/brand/` — logo and mark SVGs. `public/media/` — photographs, the
   hero loop and the 3D mark film. Both are generated, see `tools/`.
 - `scripts/prerender-meta.mjs` — after the build, one HTML shell per route
-  with the right language, meta, hreflang and image preloads.
-- `public/_redirects` — SPA fallback for Cloudflare Pages.
+  with the right language, meta, hreflang and image preloads, a plain
+  fallback for readers that run no script, JSON-LD on the home pages, and a
+  not-found shell per language (`404.html`, `nl/404.html`, `it/404.html`).
+- `public/_redirects` — deliberately no catch-all: an unknown address gets
+  the nearest `404.html` with a real 404 status.
+- `public/_headers` — security headers and year-long caching for the
+  hashed files in `/assets/`.
+- `scripts/check-placeholders.mjs` — fails the build on an unfilled
+  placeholder, or on a title or description quoting a price that is no
+  longer on the price list.
 
 ## Brand files (tools/)
 

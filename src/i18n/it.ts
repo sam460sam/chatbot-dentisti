@@ -40,7 +40,7 @@ export const it: Translation = {
   pricing: {
     eyebrow: 'Quanto costa',
     title: 'Il listino completo, scritto sulla pagina',
-    lead: 'Non serve una telefonata per sapere quanto spendi. Questi sono prezzi di lancio \u2014 saliranno quando avremo un portfolio, e chi firma adesso tiene i suoi.',
+    lead: 'Non serve una telefonata per sapere quanto spendi. Questi sono prezzi di lancio: saliranno, e chi firma adesso tiene i suoi.',
     launch: {
       tag: 'Offerta di lancio \u2014 primi tre clienti',
       body: 'Sito completo + Assistente, con l\u2019attivazione dell\u2019assistente azzerata e i primi tre mesi offerti. Dal quarto mese parte il canone del pacchetto. Tre clienti, poi finisce.',
@@ -49,7 +49,7 @@ export const it: Translation = {
         { label: 'Primi tre mesi', value: '\u20AC0', was: 'invece di \u20AC88 al mese' },
         { label: 'Dal quarto mese', value: '\u20AC59', was: 'invece di \u20AC88' },
       ],
-      savingLabel: 'Risparmio rispetto all’acquisto separato (attivazione + primi tre mesi)',
+      savingLabel: 'Risparmi (attivazione + primi tre mesi)',
       saving: '\u20AC724',
     },
     bar: {
@@ -142,7 +142,7 @@ export const it: Translation = {
       {
         kick: 'Come lavoriamo',
         title: 'Ogni pezzo, fatto su misura.',
-        body: 'Un sito è una pila di piccole decisioni: le parole, gli orari, il bottone, la cosa che risponde. Ognuna la prendiamo apposta.',
+        body: 'Un sito è una pila di piccole decisioni: le parole, gli orari, il bottone, la cosa che risponde. Ognuna è una scelta precisa.',
       },
       {
         kick: 'Montato',
@@ -213,14 +213,14 @@ export const it: Translation = {
         body: 'L’assistente lo dichiara prima che inizi la conversazione. Non dà consulenze professionali né consigli medici: tutto ciò che richiede un giudizio passa a te.',
       },
       {
-        title: 'Accordo sul trattamento dei dati firmato',
+        title: 'Un accordo firmato sul trattamento dei dati',
         body: 'Prima di andare online firmiamo con te un accordo sul trattamento dei dati (DPA): cosa viene trattato, perché e per quanto tempo. Il titolare del trattamento resti tu.',
       },
     ],
   },
   websites: {
     title: 'Siti web per piccole aziende',
-    lead: 'Oltre all’assistente realizziamo siti web: quelli che servono davvero a una piccola azienda, non una vetrina per noi.',
+    lead: 'Oltre all’assistente realizziamo siti web: quelli che servono davvero a una piccola attività. Chiari, veloci e costruiti intorno a quello che cercano i tuoi clienti.',
     cta: 'Chiedi informazioni su un sito',
     includesTitle: 'Cosa comprende un sito',
     includes: [
@@ -249,7 +249,7 @@ export const it: Translation = {
       },
       {
         q: 'Quanto costa?',
-        a: 'Il listino completo è su questa pagina: non teniamo niente nascosto fino alla telefonata. L’assistente costa €190 di attivazione e €59 al mese per 300 conversazioni; i siti partono da €490. Prendendo tutti e due, l’attivazione cala del trenta per cento e il canone del sito lo offriamo noi.',
+        a: 'Il listino completo di siti e assistente è su questa pagina: non teniamo niente nascosto fino alla telefonata. L’assistente costa €190 di attivazione e €59 al mese per 300 conversazioni; i siti partono da €490. Prendendo insieme sito completo e assistente, l’attivazione cala del trenta per cento e il canone del sito lo offriamo noi.',
       },
       {
         q: 'Funziona con il sito che abbiamo già?',

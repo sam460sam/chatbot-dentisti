@@ -40,7 +40,7 @@ export const en: Translation = {
   pricing: {
     eyebrow: 'What it costs',
     title: 'The whole price list, on the page',
-    lead: 'No call needed to find out what you would pay. These are launch prices — they go up once we have a portfolio, and whoever signs now keeps theirs.',
+    lead: 'No call needed to find out what you would pay. These are launch prices: they will go up, and whoever signs now keeps theirs.',
     launch: {
       tag: 'Launch offer — first three clients',
       body: 'Full site + Assistant, with the assistant\u2019s setup fee taken off and the first three months on us. From month four the normal bundle fee starts. Three clients, then it is gone.',
@@ -49,7 +49,7 @@ export const en: Translation = {
         { label: 'First three months', value: '\u20AC0', was: 'instead of \u20AC108 a month' },
         { label: 'From month four', value: '\u20AC79', was: 'instead of \u20AC108' },
       ],
-      savingLabel: 'Saved compared with buying both separately (set-up + first three months)',
+      savingLabel: 'You save (setup + first three months)',
       saving: '\u20AC864',
     },
     bar: {
@@ -96,7 +96,7 @@ export const en: Translation = {
       'Conversations beyond your plan: \u20AC0.08 each. We tell you before you go over, never after.',
       'Extra page on a full site: \u20AC140.',
       'Month to month, one month\u2019s notice. No long contract, ever.',
-      'Prices in euro, per business. VAT, where it applies, is shown on the quote.',
+      'Prices in euro, for businesses. VAT, where it applies, is shown on the quote.',
     ],
     cta: 'Ask for a quote',
   },
@@ -220,7 +220,7 @@ export const en: Translation = {
   },
   websites: {
     title: 'Websites for small businesses',
-    lead: 'Besides the assistant we build websites — the kind a small business actually needs, not a showcase for us.',
+    lead: 'Besides the assistant we build websites — the kind a small business actually needs: clear, fast, and built around what your customers look for.',
     cta: 'Ask about a website',
     includesTitle: 'What a site includes',
     includes: [
@@ -249,7 +249,7 @@ export const en: Translation = {
       },
       {
         q: 'What does it cost?',
-        a: 'The whole price list is on this page — nothing is held back until a phone call. The assistant is €240 to set up and €79 a month for 300 conversations; sites start at €590. Take both and the setup drops thirty per cent and the site’s monthly fee is on us.',
+        a: 'The whole price list for websites and the assistant is on this page — nothing is held back until a phone call. The assistant is €240 to set up and €79 a month for 300 conversations; sites start at €590. Take the full site and the assistant together and the setup drops thirty per cent and the site’s monthly fee is on us.',
       },
       {
         q: 'Does it work with our current website?',

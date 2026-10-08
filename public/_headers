@@ -1,0 +1,21 @@
+# Security and caching headers for the static files (Cloudflare Pages).
+# They do not reach the booking API: functions/_lib/http.ts sets its own.
+#
+# The CSP only stops the site being framed elsewhere, <base> hijacking and
+# plugins. It deliberately does not limit scripts or connections: the
+# assistant on /assistant loads from chatbot-dentisti.vercel.app and talks
+# to its API on Railway, and that cannot be tested from a build machine.
+# HSTS covers www (it redirects to the apex over HTTPS); no preload, which
+# is hard to undo.
+
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Content-Security-Policy: frame-ancestors 'self'; base-uri 'self'; object-src 'none'
+
+# Vite names every file here after its content, so a changed file is a new
+# address: these can be kept for a year without asking again.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

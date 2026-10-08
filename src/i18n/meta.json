@@ -1,38 +1,50 @@
 {
   "en": {
-    "title": "Book a free 15-minute call — Twinbyte",
-    "description": "Book a free 15-minute call with Twinbyte. Websites, a digital assistant that answers your customers and books appointments, and online ads for local businesses.",
+    "title": "Twinbyte — Websites & digital assistant for small businesses",
+    "description": "Fast websites, a digital assistant that answers your customers and books appointments 24/7, and local online ads. Prices on the site, free 15-minute call.",
     "privacyTitle": "Privacy statement — Twinbyte",
     "privacyDescription": "How Twinbyte handles personal data. No cookies, no analytics, no tracking on this website.",
     "assistantTitle": "Digital assistant for small businesses — Twinbyte",
     "assistantDescription": "An assistant on your website that answers your customers 24/7 from your own information and books appointments into the calendar you already use.",
     "websitesTitle": "Websites for small businesses — Twinbyte",
     "websitesDescription": "Fast, clear websites for small businesses: hours, prices, where you are and one tap to call, on any phone.",
-    "pricesTitle": "Prices — Twinbyte",
-    "pricesDescription": "The whole Twinbyte price list: websites, the digital assistant and the bundle. Month to month, no long contract."
+    "pricesTitle": "Prices: sites from €590, assistant from €79 a month — Twinbyte",
+    "pricesDescription": "The whole Twinbyte price list: websites from €590 to set up, the digital assistant from €79 a month, and the bundle. Month to month, no long contract.",
+    "notfoundTitle": "Page not found — Twinbyte",
+    "notfoundHeading": "Page not found",
+    "notfoundDescription": "There is no page at this address: it may have moved, or the link has a typo. Start again from the home page, or book a free 15-minute call.",
+    "ogImageAlt": "Twinbyte: websites, digital assistant and online ads for local businesses"
   },
   "nl": {
-    "title": "Plan een gratis gesprek van 15 minuten — Twinbyte",
-    "description": "Plan een gratis gesprek van 15 minuten met Twinbyte. Websites, een digitale assistent die uw klanten te woord staat en afspraken inplant, en online advertenties voor lokale bedrijven.",
+    "title": "Twinbyte — Websites en digitale assistent voor kleine bedrijven",
+    "description": "Websites, een digitale assistent die 24/7 antwoordt en afspraken inplant, en lokale online advertenties. Prijzen op de site, gratis gesprek van 15 minuten.",
     "privacyTitle": "Privacyverklaring — Twinbyte",
     "privacyDescription": "Hoe Twinbyte omgaat met persoonsgegevens. Geen cookies, geen analytics, geen tracking op deze website.",
     "assistantTitle": "Digitale assistent voor kleine bedrijven — Twinbyte",
     "assistantDescription": "Een assistent op uw website die uw klanten 24/7 te woord staat met uw eigen informatie en afspraken in de agenda zet die u al gebruikt.",
     "websitesTitle": "Websites voor kleine bedrijven — Twinbyte",
     "websitesDescription": "Snelle, duidelijke websites voor kleine bedrijven: openingstijden, prijzen, waar u zit en met één tik bellen, op elke telefoon.",
-    "pricesTitle": "Tarieven — Twinbyte",
-    "pricesDescription": "De hele prijslijst van Twinbyte: websites, de digitale assistent en het pakket. Maand per maand, geen lang contract."
+    "pricesTitle": "Tarieven: sites vanaf €590, assistent vanaf €79 per maand — Twinbyte",
+    "pricesDescription": "De hele prijslijst van Twinbyte: websites vanaf €590 eenmalig, digitale assistent vanaf €79 per maand en het pakket. Maand per maand, geen lang contract.",
+    "notfoundTitle": "Pagina niet gevonden — Twinbyte",
+    "notfoundHeading": "Pagina niet gevonden",
+    "notfoundDescription": "Op dit adres staat geen pagina: misschien is hij verplaatst, of zit er een typfout in de link. Begin opnieuw op de homepage, of plan een gratis gesprek van 15 minuten.",
+    "ogImageAlt": "Twinbyte: websites, digitale assistent en online advertenties voor lokale bedrijven"
   },
   "it": {
-    "title": "Prenota una chiamata gratuita di 15 minuti — Twinbyte",
-    "description": "Prenota una chiamata gratuita di 15 minuti con Twinbyte. Siti web, un assistente digitale che risponde ai clienti e fissa appuntamenti, e annunci online per attività locali.",
+    "title": "Twinbyte — Siti web e assistente digitale per piccole attività",
+    "description": "Siti web, un assistente digitale che risponde e fissa appuntamenti 24 ore su 24, e annunci online in zona. Prezzi sul sito, chiamata gratuita di 15 minuti.",
     "privacyTitle": "Informativa privacy — Twinbyte",
     "privacyDescription": "Come Twinbyte tratta i dati personali. Nessun cookie, nessuna analisi statistica, nessun tracciamento su questo sito.",
     "assistantTitle": "Assistente digitale per piccole attività — Twinbyte",
     "assistantDescription": "Un assistente sul tuo sito che risponde ai clienti 24 ore su 24 con le tue informazioni e fissa gli appuntamenti nell’agenda che usi già.",
     "websitesTitle": "Siti web per piccole attività — Twinbyte",
     "websitesDescription": "Siti veloci e chiari per piccole attività: orari, prezzi, dove sei e un tocco per chiamare, su qualsiasi telefono.",
-    "pricesTitle": "Prezzi — Twinbyte",
-    "pricesDescription": "Il listino completo di Twinbyte: siti web, assistente digitale e pacchetto. Mese per mese, nessun contratto lungo."
+    "pricesTitle": "Prezzi: siti da €490, assistente da €59 al mese — Twinbyte",
+    "pricesDescription": "Il listino completo di Twinbyte: siti web da €490 di attivazione, assistente digitale da €59 al mese e il pacchetto. Mese per mese, nessun contratto lungo.",
+    "notfoundTitle": "Pagina non trovata — Twinbyte",
+    "notfoundHeading": "Pagina non trovata",
+    "notfoundDescription": "A questo indirizzo non c’è nessuna pagina: forse è stata spostata, o nel link c’è un errore. Riparti dalla home, oppure prenota una chiamata gratuita di 15 minuti.",
+    "ogImageAlt": "Twinbyte: siti web, assistente digitale e annunci online per attività locali"
   }
 }
