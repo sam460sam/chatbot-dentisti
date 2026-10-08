@@ -85,8 +85,8 @@ const T = {
       'Een cheeseburger, uit elkaar gehaald in losse ingrediënten, zweeft tegen een donkere achtergrond; terwijl u scrolt, vallen de ingrediënten op elkaar tot de burger compleet is',
     'For a restaurant': 'Voor een restaurant',
     'What is in it, layer by layer.': 'Wat erin zit, laag voor laag.',
-    'Every ingredient on its own, before it becomes the thing on the menu. Two pictures: this one, and the finished burger.':
-      'Elk ingrediënt apart, voordat het het gerecht op de kaart wordt. Twee afbeeldingen: deze, en de afgewerkte burger.',
+    'Every ingredient on its own, before it becomes the thing on the menu.':
+      'Elk ingrediënt apart, voordat het het gerecht op de kaart wordt.',
     'Put together': 'In elkaar gezet',
     'In the order it goes together.': 'In de volgorde waarin het in elkaar gaat.',
     'Bun, lettuce, tomato, cheese, the patty, the onion rings, the sauce. The film between the two pictures was generated, then cut into 84 frames the scrollbar plays.':
@@ -229,8 +229,8 @@ const T = {
       'Un cheeseburger scomposto nei suoi ingredienti fluttua su un fondo scuro; scorrendo la pagina gli ingredienti si posano uno sull’altro finché l’hamburger è completo',
     'For a restaurant': 'Per un ristorante',
     'What is in it, layer by layer.': 'Cosa c’è dentro, strato per strato.',
-    'Every ingredient on its own, before it becomes the thing on the menu. Two pictures: this one, and the finished burger.':
-      'Ogni ingrediente da solo, prima di diventare il piatto del menu. Due immagini: questa, e l’hamburger finito.',
+    'Every ingredient on its own, before it becomes the thing on the menu.':
+      'Ogni ingrediente da solo, prima di diventare il piatto del menu.',
     'Put together': 'Montato',
     'In the order it goes together.': 'Nell’ordine in cui si monta.',
     'Bun, lettuce, tomato, cheese, the patty, the onion rings, the sauce. The film between the two pictures was generated, then cut into 84 frames the scrollbar plays.':
@@ -345,7 +345,7 @@ function units(html) {
   const out = []
   for (const m of body.matchAll(/>([^<]+)</g)) out.push(norm(m[1]))
   for (const m of body.matchAll(/\s(?:aria-label|alt|title|placeholder)="([^"]*)"/g)) out.push(norm(m[1]))
-  for (const m of body.matchAll(/<meta name="description" content="([^"]*)"/g)) out.push(norm(m[1]))
+  for (const m of body.matchAll(/<meta (?:name="description"|property="og:(?:title|description)") content="([^"]*)"/g)) out.push(norm(m[1]))
   return out.filter((u) => u && /\p{L}/u.test(u) && !NEUTRAL.has(u))
 }
 
@@ -387,6 +387,8 @@ for (const lang of LANGS) {
   out = (out + code)
     .replace('<html lang="en">', `<html lang="${lang}">`)
     .replace(`<link rel="canonical" href="${SITE}/showcase/">`, `<link rel="canonical" href="${SITE}/showcase/${lang}/">`)
+    .replace(`<meta property="og:url" content="${SITE}/showcase/">`, `<meta property="og:url" content="${SITE}/showcase/${lang}/">`)
+    .replace('<meta property="og:locale" content="en">', `<meta property="og:locale" content="${lang}">`)
     /* the language switches (header and footer): this page is the current one */
     .replaceAll(' aria-current="true">EN<', '>EN<')
     .replaceAll(`lang="${lang}" aria-label=`, `lang="${lang}" aria-current="true" aria-label=`)
@@ -403,6 +405,8 @@ for (const lang of LANGS) {
   }
   for (const text of WA.en) if (out.includes(enc(text))) errors.push(`${lang} still English in a WhatsApp link: "${text}"`)
   if (/href="\/(#|assistant|websites|prices|privacy|")/.test(out)) errors.push(`${lang} still links to the English site`)
+  if (!out.includes(`<link rel="canonical" href="${SITE}/showcase/${lang}/">`) || !out.includes(`content="${SITE}/showcase/${lang}/"`) || !out.includes(`og:locale" content="${lang}"`))
+    errors.push(`${lang} canonical, og:url or og:locale still points at the English page`)
 
   await mkdir(`dist/showcase/${lang}`, { recursive: true })
   await writeFile(`dist/showcase/${lang}/index.html`, out)
