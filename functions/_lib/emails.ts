@@ -16,6 +16,20 @@ export function when(start: number, lang: Lang, zone: string): { date: string; t
   }
 }
 
+/** "Central European Time" rather than "Europe/Rome", as the booking card
+    shows it; the zone's own name where the runtime has nothing better. */
+export function zoneName(zone: string, lang: Lang, at: number): string {
+  try {
+    const part = new Intl.DateTimeFormat(LOCALE[lang], { timeZone: zone, timeZoneName: 'longGeneric' })
+      .formatToParts(at)
+      .find((p) => p.type === 'timeZoneName')?.value
+    if (part && !/^GMT[+-]/.test(part)) return part
+  } catch {
+    /* fall through */
+  }
+  return zone.replace(/_/g, ' ')
+}
+
 const stamp = (ms: number) => new Date(ms).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')
 
 /** "Add to Google Calendar", for people whose calendar did not pick the invite up. */
@@ -32,7 +46,7 @@ const COPY = {
     subject: (d: string, t: string) => `Your call with Twinbyte — ${d}, ${t}`,
     hello: (n: string) => `Hi ${n},`,
     booked: 'your 15-minute call with Twinbyte is booked.',
-    whenL: 'When', whereL: 'Where', tzNote: (z: string) => `Time shown in ${z}.`,
+    whenL: 'When', whereL: 'Where', tzNote: (z: string) => `Time in your time zone: ${z}.`,
     meet: 'Google Meet — join here',
     invite: 'Google Calendar will also send you an invitation with the same link.',
     add: 'Add it to Google Calendar',
@@ -44,7 +58,7 @@ const COPY = {
     subject: (d: string, t: string) => `Uw gesprek met Twinbyte — ${d}, ${t}`,
     hello: (n: string) => `Hallo ${n},`,
     booked: 'uw gesprek van 15 minuten met Twinbyte staat gepland.',
-    whenL: 'Wanneer', whereL: 'Waar', tzNote: (z: string) => `Tijd in ${z}.`,
+    whenL: 'Wanneer', whereL: 'Waar', tzNote: (z: string) => `Tijd in uw tijdzone: ${z}.`,
     meet: 'Google Meet — hier deelnemen',
     invite: 'U krijgt van Google Agenda ook een uitnodiging met dezelfde link.',
     add: 'Zet het in Google Agenda',
@@ -56,7 +70,7 @@ const COPY = {
     subject: (d: string, t: string) => `La tua chiamata con Twinbyte — ${d}, ${t}`,
     hello: (n: string) => `Ciao ${n},`,
     booked: 'la tua chiamata di 15 minuti con Twinbyte è prenotata.',
-    whenL: 'Quando', whereL: 'Dove', tzNote: (z: string) => `Orario nel fuso ${z}.`,
+    whenL: 'Quando', whereL: 'Dove', tzNote: (z: string) => `Orario nel tuo fuso orario: ${z}.`,
     meet: 'Google Meet — entra qui',
     invite: 'Riceverai anche un invito da Google Calendar con lo stesso link.',
     add: 'Aggiungila a Google Calendar',
@@ -91,9 +105,10 @@ export function visitorConfirmation(b: Booking, from: string, wa: string): strin
   const { date, time } = when(b.start, b.lang, b.zone)
   const add = addToGoogle(b.start, b.end, TITLE[b.lang], b.meet || '')
   const meetLine = b.meet ? `${c.meet}: ${b.meet}` : ''
+  const zone = zoneName(b.zone, b.lang, b.start)
   const text = [
     c.hello(b.name), '', c.booked, '',
-    `${c.whenL}: ${date}, ${time}`, c.tzNote(b.zone),
+    `${c.whenL}: ${date}, ${time}`, c.tzNote(zone),
     b.meet ? `${c.whereL}: ${meetLine}` : '', '',
     c.invite, `${c.add}: ${add}`, '', c.agenda, '', c.change, `WhatsApp: ${wa}`, '', c.sign,
   ].join('\n')
@@ -103,7 +118,7 @@ export function visitorConfirmation(b: Booking, from: string, wa: string): strin
 <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;border-top:2px solid #0E5266;margin:0 0 20px">
 <tr><td style="padding:12px 0 2px;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:#66625A">${h(c.whenL)}</td></tr>
 <tr><td style="font-size:20px;font-weight:bold;padding:0 0 2px">${h(date)}, ${h(time)}</td></tr>
-<tr><td style="font-size:13px;color:#66625A;padding:0 0 12px">${h(c.tzNote(b.zone))}</td></tr>
+<tr><td style="font-size:13px;color:#66625A;padding:0 0 12px">${h(c.tzNote(zone))}</td></tr>
 </table>
 ${b.meet ? `<p style="margin:0 0 20px"><a href="${h(b.meet)}" style="display:inline-block;background:#0E5266;color:#ffffff;text-decoration:none;font-weight:bold;padding:12px 20px;border-radius:10px 10px 10px 0">${h(c.meet)}</a></p>` : ''}
 <p style="margin:0 0 8px;color:#4A4740">${h(c.invite)}</p>
@@ -113,6 +128,22 @@ ${b.meet ? `<p style="margin:0 0 20px"><a href="${h(b.meet)}" style="display:inl
 <p style="margin:0 0 20px"><a href="${h(wa)}" style="color:#A14531">WhatsApp</a></p>
 <p style="margin:0;font-weight:bold">${h(c.sign)}</p>`)
   return raw({ to: b.email, toName: b.name, from, fromName: 'Twinbyte', subject: c.subject(date, time), text, html })
+}
+
+/* The calendar event is the visitor's invitation too: its description is
+   in their language, like its title. */
+const EVENT = {
+  en: { name: 'Name', business: 'Business', phone: 'Phone', email: 'Email', lang: 'Language', zone: 'Time zone', none: '(no message)' },
+  nl: { name: 'Naam', business: 'Bedrijf', phone: 'Telefoon', email: 'E-mail', lang: 'Taal', zone: 'Tijdzone', none: '(geen bericht)' },
+  it: { name: 'Nome', business: 'Attività', phone: 'Telefono', email: 'Email', lang: 'Lingua', zone: 'Fuso orario', none: '(nessun messaggio)' },
+} as const
+
+export function eventDescription(b: Booking): string {
+  const l = EVENT[b.lang]
+  return [
+    `${l.name}: ${b.name}`, `${l.business}: ${b.business}`, `${l.phone}: ${b.phone}`, `${l.email}: ${b.email}`,
+    `${l.lang}: ${b.lang.toUpperCase()}`, `${l.zone}: ${zoneName(b.zone, b.lang, b.start)}`, '', b.message || l.none,
+  ].join('\n')
 }
 
 function rows(pairs: [string, string][]) {

@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { pathFor, useRoute } from '../router'
 import { booking } from '../i18n/booking'
-import { waLink } from '../site'
+import { mailLink, waLink } from '../site'
 import { Arrow, Bubble, Diary } from './marks'
+import '../booker.css'
 
 /*
  * The booking flow: day → time → details → done. Everything the visitor sees
@@ -148,7 +149,7 @@ function Field({
     <div>
       <label htmlFor={id} className="text-small font-semibold text-ink">
         {label}
-        {optional && <> <span className="whitespace-nowrap font-normal text-ink-soft">·&nbsp;{optional}</span></>}
+        {optional && <> <span className="whitespace-nowrap font-normal text-ink-soft">({optional})</span></>}
       </label>
       {multiline ? (
         <textarea id={id} name={name} rows={3} value={value} maxLength={maxLength}
@@ -214,16 +215,26 @@ function Consent({ checked, onChange, error, before }: { checked: boolean; onCha
   )
 }
 
-/** A failure the visitor can act on: the sentence, and WhatsApp when it says so. */
-function Fail({ text, wa }: { text: string; wa: boolean }) {
+/** A failure the visitor can act on: the sentence, and WhatsApp when it says so.
+    With `keep`, nothing was lost: the visitor's own message goes on by
+    WhatsApp or email, already written, so the box is calm rather than red. */
+function Fail({ text, wa, keep }: { text: string; wa: boolean; keep?: { wa: string; mail: string } }) {
   const { lang } = useRoute()
   const c = booking[lang]
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => ref.current?.focus({ preventScroll: false }), [text])
   return (
-    <div ref={ref} tabIndex={-1} role="alert" className="border-l-2 border-danger bg-paper px-2 py-1 text-small text-ink outline-none">
+    <div ref={ref} tabIndex={-1} role="alert" className={`animate-rise border-l-2 bg-paper px-2 py-1 text-small text-ink outline-none ${keep ? 'border-teal py-2' : 'border-danger'}`}>
       <p>{text}</p>
-      {wa && (
+      {keep ? (
+        <div className="mt-2 grid gap-1 sm:flex sm:flex-wrap">
+          <a className="btn-petrol" href={keep.wa} rel="noopener">
+            <Bubble size={16} />
+            {c.errors.byWhatsApp}
+          </a>
+          <a className="btn-ghost-dark" href={keep.mail}>{c.errors.byEmail}</a>
+        </div>
+      ) : wa && (
         <a className="mt-0.5 inline-flex min-h-[44px] items-center gap-0.5 font-semibold text-teal underline underline-offset-2" href={waLink(c.hero.waText)} rel="noopener">
           <Bubble size={16} />
           {c.errors.waCta}
@@ -234,7 +245,9 @@ function Fail({ text, wa }: { text: string; wa: boolean }) {
 }
 
 /* ---------------------------------------------------------------- booker */
-type Load = { state: 'loading' } | { state: 'error' } | { state: 'ready'; slots: number[] }
+/* "setup": the server has no Google secrets yet, so nothing here can book or
+   send, and trying again cannot help. "down": a timeout or an outage. */
+type Load = { state: 'loading' } | { state: 'error'; why: 'setup' | 'down'; retrying?: boolean } | { state: 'ready'; slots: number[] }
 type Step = 'pick' | 'form' | 'done'
 type Draft = { name: string; email: string; phone: string; business: string; message: string; website: string }
 const EMPTY: Draft = { name: '', email: '', phone: '', business: '', message: '', website: '' }
@@ -256,15 +269,18 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
   const top = useRef<HTMLDivElement>(null)
 
   const fetchSlots = async () => {
-    setLoad({ state: 'loading' })
+    /* "Try again" keeps its card on screen while it asks */
+    setLoad((l) => (l.state === 'error' ? { ...l, retrying: true } : { state: 'loading' }))
+    let why: 'setup' | 'down' = 'down'
     try {
-      const { status, data } = await api<{ slots: string[] }>('/api/slots')
+      const { status, data } = await api<{ slots?: string[]; error?: string }>('/api/slots')
+      if (data?.error === 'not_configured') why = 'setup'
       if (status !== 200 || !data || !Array.isArray(data.slots)) throw new Error('slots')
       const slots = data.slots.map((s) => Date.parse(s)).filter(Number.isFinite)
       setLoad({ state: 'ready', slots })
       return slots
     } catch {
-      setLoad({ state: 'error' })
+      setLoad({ state: 'error', why })
       return []
     }
   }
@@ -375,38 +391,58 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
           }}
         />
       ) : (
-        <div className={load.state === 'ready' && byDay.size > 0 ? 'xl:grid xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] xl:gap-4' : ''}>
+        <div className={`animate-rise ${load.state === 'ready' && byDay.size > 0 ? 'xl:grid xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] xl:gap-4' : ''}`}>
           <div>
           {notice && (
-            <p data-notice tabIndex={-1} role="alert" className="mb-2 border-l-2 border-danger bg-paper px-2 py-1 text-small text-ink outline-none">
+            <p data-notice tabIndex={-1} role="alert" className="mb-2 animate-rise border-l-2 border-danger bg-paper px-2 py-1 text-small text-ink outline-none">
               {notice}
             </p>
           )}
 
-          <div className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">
-            <h3 className="font-display text-h4 font-bold text-ink">{c.pick.day}</h3>
-            {load.state === 'ready' && <span className="text-small capitalize text-ink-soft">{monthLabel}</span>}
-          </div>
+          {load.state !== 'error' && (
+            <div className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">
+              <h3 className="font-display text-h4 font-bold text-ink">{c.pick.day}</h3>
+              {load.state === 'ready' && <span className="text-small capitalize text-ink-soft">{monthLabel}</span>}
+            </div>
+          )}
 
           {load.state === 'loading' && <p className="mt-2 text-small text-ink-soft" aria-live="polite">{c.pick.loading}</p>}
 
+          {/* No calendar to show: what this visitor sees until the Google
+              setup is done, or on an outage. Not an error to them — two ways
+              to reach us that work right now, WhatsApp first. The request
+              form needs Google too, so before the setup it is email instead,
+              and "Try again" only appears when trying again can help. */}
           {load.state === 'error' && (
-            <div role="alert" className="mt-2 border-l-2 border-danger bg-paper px-2 py-1">
-              <p className="text-small text-ink">{c.pick.unavailable}</p>
-              <div className="mt-1 flex flex-wrap gap-1">
-                <button type="button" className="btn-petrol" onClick={() => void fetchSlots()}>{c.pick.retry}</button>
-                <button type="button" className="btn-ghost-dark" onClick={onRequest}>{c.hero.request}</button>
-                <a className="btn-ghost-dark" href={waLink(c.hero.waText)} rel="noopener">
+            <div role="status" data-unavailable={load.why} className="animate-rise">
+              <span aria-hidden="true" className="cut cut-sm flex h-6 w-6 items-center justify-center text-paper [--cut-fill:#356F8E]">
+                <Bubble size={22} />
+              </span>
+              <h3 className="mt-2 font-display text-h4 font-bold text-ink">{c.pick.unavailableTitle}</h3>
+              <p className="mt-1 max-w-measure text-small text-ink-soft">{c.pick.unavailable}</p>
+              <div className="mt-3 grid gap-1 sm:flex sm:flex-wrap sm:items-center">
+                <a className="btn-petrol" href={waLink(c.hero.waText)} rel="noopener">
                   <Bubble size={16} />
                   {c.hero.whatsapp}
                 </a>
+                {load.why === 'setup' ? (
+                  <a className="btn-ghost-dark" href={`${mailLink(c.pick.emailSubject)}&body=${encodeURIComponent(c.hero.waText)}`}>{c.pick.email}</a>
+                ) : (
+                  <button type="button" className="btn-ghost-dark" onClick={onRequest}>{c.hero.request}</button>
+                )}
+                {load.why === 'down' && (
+                  <button type="button" aria-disabled={load.retrying} onClick={() => !load.retrying && void fetchSlots()}
+                    className="inline-flex min-h-[44px] items-center justify-center px-1 text-small font-semibold text-ink-soft underline underline-offset-2">
+                    {load.retrying ? c.pick.loading : c.pick.retry}
+                  </button>
+                )}
               </div>
             </div>
           )}
 
           {load.state === 'ready' && (
             <>
-              <div className="mt-2 grid grid-cols-7 gap-0.5 text-center" role="group" aria-label={c.pick.day}>
+              <div className="mt-2 grid animate-fade grid-cols-7 gap-0.5 text-center" role="group" aria-label={c.pick.day}>
                 {c.pick.weekdays.map((w) => (
                   <span key={w} aria-hidden="true" className="pb-0.5 text-micro font-bold uppercase text-ink-soft">{w}</span>
                 ))}
@@ -463,26 +499,29 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
           {load.state === 'ready' && byDay.size > 0 && (
                 <div className="mt-4 xl:mt-0 xl:border-l xl:border-paper-edge xl:pl-4">
                   <h3 className="font-display text-h4 font-bold text-ink">{c.pick.time}</h3>
-                  {day && <p className="mt-0.5 text-small text-ink-soft first-letter:uppercase">{fmtKey(day)}</p>}
-                  <ul role="list" className="mt-2 grid grid-cols-3 gap-1 sm:grid-cols-4">
-                    {daySlots.map((s) => (
-                      <li key={s}>
-                        <button
-                          type="button"
-                          aria-label={`${fmtDay(s)}, ${fmtTime(s)}`}
-                          onClick={() => {
-                            setSlot(s)
-                            setNotice('')
-                            goStep('form', () => document.getElementById('slot-title'))
-                          }}
-                          className="cut-line cut-sm flex h-6 w-full items-center justify-center text-small font-semibold tabular-nums text-teal [--cut-fill:#FFFFFF] [--cut-ink:#356F8E] hover:text-paper hover:[--cut-fill:#356F8E]"
-                        >
-                          {fmtTime(s)}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                  {daySlots.length === 0 && <p className="text-small text-ink-soft">{c.pick.noSlotsDay}</p>}
+                  {/* keyed by day: the new day's times rise in, so the change is seen */}
+                  <div key={day} className="animate-rise">
+                    {day && <p className="mt-0.5 text-small text-ink-soft first-letter:uppercase">{fmtKey(day)}</p>}
+                    <ul role="list" className="mt-2 grid grid-cols-3 gap-1 sm:grid-cols-4">
+                      {daySlots.map((s) => (
+                        <li key={s}>
+                          <button
+                            type="button"
+                            aria-label={`${fmtDay(s)}, ${fmtTime(s)}`}
+                            onClick={() => {
+                              setSlot(s)
+                              setNotice('')
+                              goStep('form', () => document.getElementById('slot-title'))
+                            }}
+                            className="cut-line cut-sm flex h-6 w-full items-center justify-center text-small font-semibold tabular-nums text-teal [--cut-fill:#FFFFFF] [--cut-ink:#356F8E] hover:text-paper hover:[--cut-fill:#356F8E]"
+                          >
+                            {fmtTime(s)}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                    {daySlots.length === 0 && <p className="text-small text-ink-soft">{c.pick.noSlotsDay}</p>}
+                  </div>
                   <p className="mt-2 text-small text-ink-soft">{c.card.tz(zoneLabel)}</p>
                 </div>
           )}
@@ -523,7 +562,7 @@ function BookForm({
     const err: Record<string, string> = {}
     if (!v.name.trim()) err.name = c.form.required
     if (!EMAIL.test(v.email.trim())) err.email = v.email.trim() ? c.form.badEmail : c.form.required
-    if (!PHONE.test(v.phone.trim())) err.phone = c.form.badPhone
+    if (!PHONE.test(v.phone.trim())) err.phone = v.phone.trim() ? c.form.badPhone : c.form.required
     if (!v.business.trim()) err.business = c.form.required
     if (!consent) err.consent = c.form.needConsent
     setErrors(err)
@@ -554,7 +593,7 @@ function BookForm({
   }
 
   return (
-    <form onSubmit={submit} noValidate className="relative grid gap-2">
+    <form onSubmit={submit} noValidate className="relative grid animate-rise gap-2">
       <div className="flex items-start justify-between gap-1 border-b border-paper-edge-deep pb-2">
         <div>
           <p className="t-label">{c.card.title}</p>
@@ -673,7 +712,7 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
   const [consent, setConsent] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [busy, setBusy] = useState(false)
-  const [fail, setFail] = useState<{ text: string; wa: boolean } | null>(null)
+  const [fail, setFail] = useState<{ text: string; wa: boolean; keep?: { wa: string; mail: string } } | null>(null)
   const [sent, setSent] = useState('')
   const openedAt = useRef(performance.now())
   const ts = useTurnstile(!sent, lang)
@@ -692,6 +731,20 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
       heading.current?.focus({ preventScroll: true })
     })
   }, [sent])
+
+  /* Not sent (Google not set up yet, an outage, no network): the visitor's
+     message must not be lost. It goes on by WhatsApp or email, written out. */
+  const notSent = () => {
+    const who = [v.name.trim(), v.business.trim() && `(${v.business.trim()})`, v.phone.trim()].filter(Boolean).join(' ')
+    const body = `${v.message.trim().slice(0, 1500)}\n\n— ${who}`
+    return {
+      text: c.errors.notSent, wa: false,
+      keep: {
+        wa: waLink(`${c.request.waText}\n\n${body}`),
+        mail: `${mailLink(c.request.mailSubject)}&body=${encodeURIComponent(body.replace(/\n/g, '\r\n'))}`,
+      },
+    }
+  }
 
   const submit = async (e: { preventDefault(): void }) => {
     e.preventDefault()
@@ -713,10 +766,10 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
       })
       if (status === 200 && data?.ok) return setSent(v.email.trim())
       if (data?.error === 'invalid_phone') return setErrors({ phone: c.form.badPhone }), showFirstError({ phone: '1' }, ['phone'])
-      setFail(data?.error === 'bot' ? { text: c.errors.bot, wa: false } : { text: c.errors.generic, wa: true })
+      setFail(data?.error === 'bot' ? { text: c.errors.bot, wa: false } : notSent())
       ts.reset()
     } catch {
-      setFail({ text: c.errors.generic, wa: true })
+      setFail(notSent())
     } finally {
       setBusy(false)
     }
@@ -735,7 +788,7 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
     )
 
   return (
-    <form onSubmit={submit} noValidate className="relative grid gap-2">
+    <form onSubmit={submit} noValidate className="relative grid animate-rise gap-2">
       <div>
         <h3 id="request-title" tabIndex={-1} className="font-display text-h3 font-bold text-ink outline-none">{c.request.title}</h3>
         <p className="mt-1 text-small text-ink-soft">{c.request.lead}</p>
@@ -758,7 +811,7 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
         error={errors.consent}
       />
       {ts.needed && <div ref={ts.ref} />}
-      {fail && <Fail text={fail.text} wa={fail.wa} />}
+      {fail && <Fail text={fail.text} wa={fail.wa} keep={fail.keep} />}
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
         <button type="submit" aria-disabled={busy} className="btn-petrol">
           {busy ? c.request.sending : c.request.submit}

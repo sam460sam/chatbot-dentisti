@@ -36,7 +36,10 @@ export interface BookingCopy {
     noSlotsDay: string
     noneAtAll: string
     loading: string
+    unavailableTitle: string
     unavailable: string
+    email: string
+    emailSubject: string
     back: string
     change: string
     changeLabel: string
@@ -61,7 +64,11 @@ export interface BookingCopy {
     badPhone: string
     needConsent: string
   }
-  errors: { slot_taken: string; already_booked: (when: string) => string; generic: string; bot: string; verifying: string; waCta: string }
+  errors: {
+    slot_taken: string; already_booked: (when: string) => string; generic: string; bot: string; verifying: string; waCta: string
+    /* the request could not be sent: what the visitor typed goes on by WhatsApp or email */
+    notSent: string; byWhatsApp: string; byEmail: string
+  }
   done: {
     title: string
     body: (email: string) => string
@@ -81,6 +88,7 @@ export interface BookingCopy {
     done: (email: string) => string
     back: string
     waText: string
+    mailSubject: string
   }
   related: {
     eyebrow: string
@@ -127,7 +135,10 @@ export const booking: Record<Lang, BookingCopy> = {
       noSlotsDay: 'No free times left on this day.',
       noneAtAll: 'No free times in the next two weeks. Send us a request or a WhatsApp and we will find one.',
       loading: 'Loading free times…',
-      unavailable: 'Booking is not available right now. Send us a request or a WhatsApp and we will answer just as fast.',
+      unavailableTitle: 'Book with a message',
+      unavailable: 'The online calendar is not reachable right now. Write to us and we will find a time with you, just as fast.',
+      email: 'Email us',
+      emailSubject: 'Booking a discovery call',
       back: 'Back',
       change: 'Change',
       changeLabel: 'Change the time',
@@ -149,7 +160,7 @@ export const booking: Record<Lang, BookingCopy> = {
       sending: 'Booking…',
       required: 'Please fill this in.',
       badEmail: 'This does not look like an email address.',
-      badPhone: 'Please enter a phone number.',
+      badPhone: 'This number does not look right. Write it in full, with digits, spaces or +.',
       needConsent: 'Please tick the box to continue.',
     },
     errors: {
@@ -159,6 +170,9 @@ export const booking: Record<Lang, BookingCopy> = {
       bot: 'That was quick. Please wait a moment and try again.',
       verifying: 'One moment: we are checking that the form is not spam. Press again in a few seconds.',
       waCta: 'Open WhatsApp',
+      notSent: 'We could not send it from here. Your message is ready to go by WhatsApp or email: one tap, nothing to type again.',
+      byWhatsApp: 'Send by WhatsApp',
+      byEmail: 'Send by email',
     },
     done: {
       title: 'You’re booked.',
@@ -179,6 +193,7 @@ export const booking: Record<Lang, BookingCopy> = {
       done: (e) => `Thank you, we have it. We will write back to ${e}.`,
       back: 'Back to booking',
       waText: 'Hi Twinbyte, I have a question.',
+      mailSubject: 'Request from the website',
     },
     related: {
       eyebrow: 'Before you book',
@@ -243,7 +258,10 @@ export const booking: Record<Lang, BookingCopy> = {
       noSlotsDay: 'Op deze dag is niets meer vrij.',
       noneAtAll: 'De komende twee weken is er niets vrij. Stuur een aanvraag of een WhatsApp, dan zoeken we samen een moment.',
       loading: 'Vrije tijden laden…',
-      unavailable: 'Plannen lukt op dit moment niet. Stuur een aanvraag of een WhatsApp, dan reageren we net zo snel.',
+      unavailableTitle: 'Plan via een bericht',
+      unavailable: 'De online agenda is nu even niet bereikbaar. Stuur ons een bericht, dan zoeken we samen een moment, net zo snel.',
+      email: 'Stuur een e-mail',
+      emailSubject: 'Een kennismakingsgesprek plannen',
       back: 'Terug',
       change: 'Wijzigen',
       changeLabel: 'Tijd wijzigen',
@@ -265,7 +283,7 @@ export const booking: Record<Lang, BookingCopy> = {
       sending: 'Bezig met inplannen…',
       required: 'Vul dit veld in.',
       badEmail: 'Dit lijkt geen e-mailadres.',
-      badPhone: 'Vul een telefoonnummer in.',
+      badPhone: 'Dit nummer lijkt niet te kloppen. Vul het volledig in, met cijfers, spaties of +.',
       needConsent: 'Vink het vakje aan om verder te gaan.',
     },
     errors: {
@@ -275,6 +293,9 @@ export const booking: Record<Lang, BookingCopy> = {
       bot: 'Dat ging snel. Wacht even en probeer het opnieuw.',
       verifying: 'Een moment: we controleren of het formulier geen spam is. Druk over een paar seconden opnieuw.',
       waCta: 'Open WhatsApp',
+      notSent: 'Versturen lukte hier niet. Uw bericht staat klaar voor WhatsApp of e-mail: één tik, niets opnieuw typen.',
+      byWhatsApp: 'Verstuur via WhatsApp',
+      byEmail: 'Verstuur per e-mail',
     },
     done: {
       title: 'Het gesprek staat gepland.',
@@ -295,6 +316,7 @@ export const booking: Record<Lang, BookingCopy> = {
       done: (e) => `Dank u, we hebben het ontvangen. We antwoorden naar ${e}.`,
       back: 'Terug naar plannen',
       waText: 'Hallo Twinbyte, ik heb een vraag.',
+      mailSubject: 'Aanvraag via de website',
     },
     related: {
       eyebrow: 'Voordat u plant',
@@ -359,7 +381,10 @@ export const booking: Record<Lang, BookingCopy> = {
       noSlotsDay: 'In questo giorno non ci sono più orari liberi.',
       noneAtAll: 'Nelle prossime due settimane non ci sono orari liberi. Mandaci una richiesta o un WhatsApp e lo troviamo insieme.',
       loading: 'Carico gli orari liberi…',
-      unavailable: 'In questo momento non si può prenotare. Mandaci una richiesta o un WhatsApp: rispondiamo altrettanto in fretta.',
+      unavailableTitle: 'Prenota con un messaggio',
+      unavailable: 'Il calendario online in questo momento non è raggiungibile. Scrivici e troviamo insieme un orario, altrettanto in fretta.',
+      email: 'Scrivici un’email',
+      emailSubject: 'Prenotare una chiamata conoscitiva',
       back: 'Indietro',
       change: 'Cambia',
       changeLabel: 'Cambia orario',
@@ -381,7 +406,7 @@ export const booking: Record<Lang, BookingCopy> = {
       sending: 'Prenotazione in corso…',
       required: 'Compila questo campo.',
       badEmail: 'Questo non sembra un indirizzo email.',
-      badPhone: 'Inserisci un numero di telefono.',
+      badPhone: 'Questo numero non sembra valido. Scrivilo per intero, con cifre, spazi o +.',
       needConsent: 'Spunta la casella per continuare.',
     },
     errors: {
@@ -391,6 +416,9 @@ export const booking: Record<Lang, BookingCopy> = {
       bot: 'Troppo veloce. Aspetta un attimo e riprova.',
       verifying: 'Un attimo: stiamo controllando che il modulo non sia spam. Riprova tra qualche secondo.',
       waCta: 'Apri WhatsApp',
+      notSent: 'Da qui non siamo riusciti a inviarla. Il tuo messaggio è pronto per WhatsApp o email: un tocco, niente da riscrivere.',
+      byWhatsApp: 'Invia su WhatsApp',
+      byEmail: 'Invia per email',
     },
     done: {
       title: 'Prenotazione fatta.',
@@ -411,6 +439,7 @@ export const booking: Record<Lang, BookingCopy> = {
       done: (e) => `Grazie, l’abbiamo ricevuta. Ti rispondiamo a ${e}.`,
       back: 'Torna alla prenotazione',
       waText: 'Ciao Twinbyte, ho una domanda.',
+      mailSubject: 'Richiesta dal sito',
     },
     related: {
       eyebrow: 'Prima di prenotare',

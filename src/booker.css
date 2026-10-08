@@ -1,0 +1,14 @@
+/*
+ * The booking card's own rules (Booker.tsx). This file is bundled before
+ * index.css and site.css, so nothing here relies on coming later: a rule
+ * either wins on specificity or sets nothing a utility also sets.
+ */
+
+/* While the card cannot show the calendar it carries its own WhatsApp and
+   request (or email) buttons. The page's "Or" row, under the card on a phone
+   and above it from a laptop up, would only repeat them. A browser without
+   :has() keeps both: a repeat, never a loss. */
+#book:has([data-unavailable]) + div,
+div:has(+ #book [data-unavailable]) div:has(> div > div > button[aria-pressed]) {
+  display: none;
+}

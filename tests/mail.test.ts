@@ -2,6 +2,10 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { raw, isAddress } from '../functions/_lib/mail.ts'
+import { readJson, reportFailure } from '../functions/_lib/http.ts'
+import { outbox } from '../functions/_lib/mock.ts'
+import { onRequestPost as postRequest } from '../functions/api/request.ts'
+import { visitorConfirmation, eventDescription, type Booking } from '../functions/_lib/emails.ts'
 
 const decode = (r: string) => Buffer.from(r.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8')
 
@@ -34,4 +38,83 @@ test('a display name with ":" and "@" is encoded, never a group of recipients', 
   const msg = decode(raw({ to: 'e@example.com', toName: 'Eve Bcc: all@example.com', from: 'x@y.com', fromName: 'X', subject: 's', text: 't', html: 'h' }))
   const to = msg.split('\r\n').find((l) => l.startsWith('To:'))!
   assert.match(to, /^To: =\?UTF-8\?B\?[A-Za-z0-9+/=]+\?= <e@example\.com>$/)
+})
+
+/* ---------------------------------------------------------------- what the visitor receives */
+
+const textPart = (r: string) => {
+  const part = decode(r).split('Content-Transfer-Encoding: base64\r\n\r\n')[1].split('\r\n--')[0]
+  return Buffer.from(part.replace(/\r\n/g, ''), 'base64').toString('utf8')
+}
+const booked = (over: Partial<Booking>): Booking => ({
+  name: 'Mario', email: 'mario@example.com', phone: '+39 333 1234567', business: 'Studio Rossi', message: '',
+  lang: 'it', zone: 'Europe/Rome', start: Date.UTC(2026, 9, 24, 7, 0), end: Date.UTC(2026, 9, 24, 7, 15), ...over,
+})
+
+test('the confirmation names the time zone the way the booking card does', () => {
+  const it = textPart(visitorConfirmation(booked({}), 'twinbyteai@gmail.com', 'https://wa.me/1'))
+  assert.match(it, /Orario nel tuo fuso orario: Ora dell’Europa centrale\./)
+  assert.ok(!it.includes('Europe/Rome'), it)
+  const nl = textPart(visitorConfirmation(booked({ lang: 'nl', zone: 'Europe/Amsterdam' }), 'twinbyteai@gmail.com', 'https://wa.me/1'))
+  assert.match(nl, /Tijd in uw tijdzone: Midden-Europese tijd\./)
+  const en = textPart(visitorConfirmation(booked({ lang: 'en', zone: 'America/New_York' }), 'twinbyteai@gmail.com', 'https://wa.me/1'))
+  assert.match(en, /Time in your time zone: Eastern Time\./)
+})
+
+test('the calendar invitation speaks the visitor’s language', () => {
+  const it = eventDescription(booked({}))
+  for (const label of ['Nome: Mario', 'Attività: Studio Rossi', 'Telefono: ', 'Lingua: IT', 'Fuso orario: Ora dell’Europa centrale', '(nessun messaggio)']) {
+    assert.ok(it.includes(label), `${label}\n${it}`)
+  }
+  const nl = eventDescription(booked({ lang: 'nl', message: 'Tot dan' }))
+  assert.ok(nl.startsWith('Naam: Mario\nBedrijf: Studio Rossi') && nl.endsWith('\n\nTot dan'), nl)
+  assert.ok(!/\b(Name|Business|Phone|Language|Time zone):/.test(it + nl))
+})
+
+/* ---------------------------------------------------------------- the forms */
+
+const post = (type: string, body = '{"a":1}') =>
+  new Request('https://twinbyteservices.com/api/request', { method: 'POST', headers: { 'content-type': type }, body })
+
+test('the forms take JSON only, not text/plain dressed up as JSON', async () => {
+  assert.deepEqual(await readJson(post('application/json')), { a: 1 })
+  assert.deepEqual(await readJson(post('Application/JSON; charset=utf-8')), { a: 1 })
+  for (const t of ['text/plain; a=application/json', 'text/plain', 'application/jsonp', 'multipart/form-data; boundary=application/json']) {
+    assert.equal(await readJson(post(t)), null, t)
+  }
+})
+
+test('a request before the Google setup: "not_configured", and nothing is sent', async () => {
+  const real = globalThis.fetch
+  let fetched = 0
+  globalThis.fetch = (async () => { fetched++; throw new Error('no network in tests') }) as typeof fetch
+  try {
+    const later: Promise<unknown>[] = []
+    const body = JSON.stringify({ name: 'Mario', email: 'mario@example.com', message: 'Ciao', consent: true, elapsed: 5000, lang: 'it' })
+    const res = await postRequest({
+      request: new Request('https://twinbyteservices.com/api/request', { method: 'POST', headers: { 'content-type': 'application/json' }, body }),
+      env: {}, waitUntil: (p) => void later.push(p),
+    })
+    assert.equal(res.status, 503)
+    assert.deepEqual(await res.json(), { error: 'not_configured' })
+    assert.equal(fetched + later.length, 0)
+  } finally {
+    globalThis.fetch = real
+  }
+})
+
+/* ---------------------------------------------------------------- failure reports */
+
+test('a failure is mailed once per place and visitor, not once per page view', async (t) => {
+  /* reportFailure logs, and the pretend mailbox prints every mail */
+  t.mock.method(console, 'error', () => {})
+  t.mock.method(console, 'log', () => {})
+  const env = { GOOGLE_MOCK: '1' }
+  const before = outbox.length
+  for (let i = 0; i < 5; i++) await reportFailure(env, 'GET /api/slots (test)', new Error('freebusy failed: 500'))
+  assert.equal(outbox.length, before + 1)
+  await reportFailure(env, 'POST /api/request (test)', new Error('x'), { email: 'a@example.com' })
+  await reportFailure(env, 'POST /api/request (test)', new Error('x'), { email: 'a@example.com' })
+  await reportFailure(env, 'POST /api/request (test)', new Error('x'), { email: 'b@example.com' })
+  assert.equal(outbox.length, before + 3)
 })

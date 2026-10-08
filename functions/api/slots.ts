@@ -3,12 +3,14 @@
  * The free starts in the next 14 days, as UTC instants. The page turns them
  * into days and times in the visitor's own zone.
  */
-import { rules } from '../_lib/config.ts'
+import { rules, isConfigured } from '../_lib/config.ts'
 import { freeSlots } from '../_lib/slots.ts'
 import { google, json, reportFailure } from '../_lib/http.ts'
 import type { Ctx } from '../_lib/ctx.ts'
 
-export const onRequestGet = async ({ env }: Ctx) => {
+export const onRequestGet = async ({ env, waitUntil }: Ctx) => {
+  /* The page shows its calm "write to us" card for this; nobody is mailed. */
+  if (!isConfigured(env)) return json({ error: 'not_configured' }, 503)
   try {
     const r = rules(env)
     const now = Date.now()
@@ -24,7 +26,8 @@ export const onRequestGet = async ({ env }: Ctx) => {
       },
     })
   } catch (e) {
-    await reportFailure(env, 'GET /api/slots', e)
+    /* reported after the answer: the page must not wait for a mail */
+    waitUntil(reportFailure(env, 'GET /api/slots', e))
     return json({ error: 'unavailable' }, 503)
   }
 }

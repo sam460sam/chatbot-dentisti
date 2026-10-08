@@ -133,7 +133,9 @@ export function candidateSlots(rules: SlotRules, now: number): number[] {
       }
     }
   }
-  return out.sort((a, b) => a - b)
+  /* On the March switch 02:00–03:00 does not exist on the wall clock: hours
+     that cover it would give 02:00 and 03:00 the same instant, twice. */
+  return [...new Set(out)].sort((a, b) => a - b)
 }
 
 /** Candidate slots minus anything that overlaps busy time. */

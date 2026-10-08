@@ -30,7 +30,19 @@ billing account to the Google Cloud project.**
   and told to pick another time.
 - Bots: a hidden field, a 3-second minimum, and Cloudflare Turnstile when its
   keys are set.
-- Anything that fails sends a mail to `NOTIFY_EMAIL`, because Pages keeps no logs.
+- Anything that fails sends a mail to `NOTIFY_EMAIL`, because Pages keeps no logs:
+  at most one per place and visitor every 30 minutes, so an outage cannot fill
+  the inbox or use up the Gmail quota the confirmations need.
+
+## Before the setup, and when Google is down
+
+Until the three `GOOGLE_*` secrets are set, `/api/slots`, `/api/book` and
+`/api/request` answer `503 {"error":"not_configured"}` without calling Google
+and without mailing anyone. The card then shows **Book with a message**:
+WhatsApp, and an email to `info@twinbyteservices.com` (not the request form,
+which sends through Gmail too). On a real outage the card shows WhatsApp, the
+request form and "Try again". If a request cannot be sent, the visitor gets
+their own message back as a WhatsApp or email link, already written.
 
 ## One-time setup (about 45 minutes)
 
@@ -71,6 +83,23 @@ Optional, against spam (free): Turnstile → Add widget → hostname
 `TURNSTILE_SECRET` (secret) and `VITE_TURNSTILE_SITE_KEY` (text — it is read at
 build time).
 
+**Turnstile is both values or neither.** The site key is baked into the page
+when it is built; the secret is checked when a form is sent. With only the
+secret, the page sends no token and the server refuses every booking and every
+request as a bot: visitors read "That was quick. Please wait a moment and try
+again." however long they wait. With only the site key, the widget shows but
+nothing is checked. So add both, then Retry deployment (that rebuilds the page
+with the key), and check:
+
+1. Open the booking form and press the first free time. In the browser's
+   network panel, `challenges.cloudflare.com/turnstile/…/api.js` loads: the
+   site key is in the build.
+2. Send a request from "Send a request" with your own address: it arrives.
+   "That was quick" instead means the secret does not match the site key, or
+   the page was built before the key was added.
+
+To switch Turnstile off again, delete **both** and Retry deployment.
+
 Secrets are read by the deployment that comes **after** you save them:
 Deployments → latest → Retry deployment.
 
@@ -83,7 +112,9 @@ test afternoon; remove them afterwards if you like.
 A Google refresh token that is unused for six months stops working. Any free
 uptime monitor (UptimeRobot, Better Stack…) pointed at
 `https://twinbyteservices.com/api/health` once a day keeps it alive, and tells you
-the day it ever answers `{"ok":false}`.
+the day it ever answers `{"ok":false}`. The endpoint asks Google for a new token
+at most every 10 minutes, so a busy monitor (or a stranger) cannot hammer
+Google through it.
 
 ## Changing the hours
 
