@@ -52,6 +52,14 @@ test('March switch: the 23-hour day does not shift the hours either', () => {
   assert.deepEqual(mon.map(iso)[0], '2027-03-29T08:00:00.000Z')
 })
 
+test('March switch: hours across the missing 02:00–03:00 give each instant once', () => {
+  const now = Date.UTC(2027, 2, 25, 6, 0) // Thu 25 Mar 2027, DST starts Sun 28 Mar
+  const sun = candidateSlots(rules({ hours: parseHours('sun 01:00-04:00') }), now).filter((s) => iso(s).startsWith('2027-03-28'))
+  assert.equal(new Set(sun).size, sun.length, sun.map(iso).join(' '))
+  // 01:00, 01:30 (winter, +1), then 03:00, 03:30 (summer, +2); 02:xx is 03:xx
+  assert.deepEqual(sun.map(iso), ['00:00', '00:30', '01:00', '01:30'].map((t) => `2027-03-28T${t}:00.000Z`))
+})
+
 test('four hours of notice: nothing that starts sooner', () => {
   const now = Date.UTC(2026, 10, 2, 7, 15) // Mon 2 Nov 2026 08:15 Rome
   const first = candidateSlots(rules(), now)[0]
