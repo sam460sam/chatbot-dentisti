@@ -4,6 +4,11 @@
  * The privacy page withholds TODO_ lines at render time, but a placeholder in a
  * meta description or a price would go straight to a visitor. This is the
  * backstop: a hard non-zero exit, not a warning someone scrolls past.
+ *
+ * Same for a stale price: the prices page title and description quote prices
+ * (src/i18n/meta.json) that are copies of the price list. If the list changes
+ * and they do not, search results would show an old price, so every amount
+ * in a shell's title or description must still be a price in the app.
  */
 import { readdir, readFile } from 'node:fs/promises'
 import { join } from 'node:path'
@@ -25,6 +30,18 @@ async function* files(dir) {
 let fatal = 0
 const warned = new Set()
 
+/* every price the app shows is a string of its own, like setup: "€590" */
+const prices = new Set()
+for (const name of await readdir(join(DIST, 'assets'))) {
+  if (!name.endsWith('.js')) continue
+  const js = (await readFile(join(DIST, 'assets', name), 'utf8')).replace(/\\u20ac/gi, '€')
+  for (const m of js.match(/"€[\d.,]+"/g) ?? []) prices.add(m.slice(1, -1))
+}
+const quoted = (html) =>
+  [/<title>([^<]*)<\/title>/, /<meta name="description" content="([^"]*)"/]
+    .map((re) => (html.match(re) || [])[1] || '')
+    .join(' ')
+
 for await (const path of files(DIST)) {
   const text = await readFile(path, 'utf8')
   for (const m of text.match(new RegExp(FATAL, 'g')) ?? []) {
@@ -32,6 +49,12 @@ for await (const path of files(DIST)) {
     fatal++
   }
   for (const m of text.match(new RegExp(WARN, 'g')) ?? []) warned.add(m)
+  if (!path.endsWith('.html')) continue
+  for (const price of quoted(text).match(/€\d[\d.,]*\d|€\d/g) ?? []) {
+    if (prices.has(price)) continue
+    console.error(`${price} in the title or description of ${path} is not on the price list (src/i18n/meta.json)`)
+    fatal++
+  }
 }
 
 if (warned.size) {
@@ -40,6 +63,6 @@ if (warned.size) {
 }
 
 if (fatal) {
-  console.error(`\n${fatal} placeholder(s) would have shipped to visitors.`)
+  console.error(`\n${fatal} placeholder(s) or stale price(s) would have shipped to visitors.`)
   process.exit(1)
 }
