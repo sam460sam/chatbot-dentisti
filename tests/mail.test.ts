@@ -5,6 +5,7 @@ import { raw, isAddress } from '../functions/_lib/mail.ts'
 import { readJson, reportFailure } from '../functions/_lib/http.ts'
 import { outbox } from '../functions/_lib/mock.ts'
 import { onRequestPost as postRequest } from '../functions/api/request.ts'
+import { visitorConfirmation, eventDescription, type Booking } from '../functions/_lib/emails.ts'
 
 const decode = (r: string) => Buffer.from(r.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8')
 
@@ -37,6 +38,37 @@ test('a display name with ":" and "@" is encoded, never a group of recipients', 
   const msg = decode(raw({ to: 'e@example.com', toName: 'Eve Bcc: all@example.com', from: 'x@y.com', fromName: 'X', subject: 's', text: 't', html: 'h' }))
   const to = msg.split('\r\n').find((l) => l.startsWith('To:'))!
   assert.match(to, /^To: =\?UTF-8\?B\?[A-Za-z0-9+/=]+\?= <e@example\.com>$/)
+})
+
+/* ---------------------------------------------------------------- what the visitor receives */
+
+const textPart = (r: string) => {
+  const part = decode(r).split('Content-Transfer-Encoding: base64\r\n\r\n')[1].split('\r\n--')[0]
+  return Buffer.from(part.replace(/\r\n/g, ''), 'base64').toString('utf8')
+}
+const booked = (over: Partial<Booking>): Booking => ({
+  name: 'Mario', email: 'mario@example.com', phone: '+39 333 1234567', business: 'Studio Rossi', message: '',
+  lang: 'it', zone: 'Europe/Rome', start: Date.UTC(2026, 9, 24, 7, 0), end: Date.UTC(2026, 9, 24, 7, 15), ...over,
+})
+
+test('the confirmation names the time zone the way the booking card does', () => {
+  const it = textPart(visitorConfirmation(booked({}), 'twinbyteai@gmail.com', 'https://wa.me/1'))
+  assert.match(it, /Orario nel tuo fuso orario: Ora dell’Europa centrale\./)
+  assert.ok(!it.includes('Europe/Rome'), it)
+  const nl = textPart(visitorConfirmation(booked({ lang: 'nl', zone: 'Europe/Amsterdam' }), 'twinbyteai@gmail.com', 'https://wa.me/1'))
+  assert.match(nl, /Tijd in uw tijdzone: Midden-Europese tijd\./)
+  const en = textPart(visitorConfirmation(booked({ lang: 'en', zone: 'America/New_York' }), 'twinbyteai@gmail.com', 'https://wa.me/1'))
+  assert.match(en, /Time in your time zone: Eastern Time\./)
+})
+
+test('the calendar invitation speaks the visitor’s language', () => {
+  const it = eventDescription(booked({}))
+  for (const label of ['Nome: Mario', 'Attività: Studio Rossi', 'Telefono: ', 'Lingua: IT', 'Fuso orario: Ora dell’Europa centrale', '(nessun messaggio)']) {
+    assert.ok(it.includes(label), `${label}\n${it}`)
+  }
+  const nl = eventDescription(booked({ lang: 'nl', message: 'Tot dan' }))
+  assert.ok(nl.startsWith('Naam: Mario\nBedrijf: Studio Rossi') && nl.endsWith('\n\nTot dan'), nl)
+  assert.ok(!/\b(Name|Business|Phone|Language|Time zone):/.test(it + nl))
 })
 
 /* ---------------------------------------------------------------- the forms */

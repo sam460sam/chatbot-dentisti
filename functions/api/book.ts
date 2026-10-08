@@ -14,7 +14,7 @@ import { candidateSlots } from '../_lib/slots.ts'
 import { google, json, readJson, looksHuman, asLang, asZone, text, reportFailure } from '../_lib/http.ts'
 import { isAddress } from '../_lib/mail.ts'
 import { meetLink } from '../_lib/google.ts'
-import { visitorConfirmation, ownerBooking, callTitle, type Booking } from '../_lib/emails.ts'
+import { visitorConfirmation, ownerBooking, callTitle, eventDescription, type Booking } from '../_lib/emails.ts'
 import { waLink, type Ctx } from '../_lib/ctx.ts'
 
 export const onRequestPost = async ({ request, env, waitUntil }: Ctx) => {
@@ -52,14 +52,10 @@ export const onRequestPost = async ({ request, env, waitUntil }: Ctx) => {
     const mine = await g.list(now, now + (r.days + 1) * 86400000, `tbEmail=${b.email}`)
     if (mine.length) return json({ error: 'already_booked', start: mine[0].start.dateTime }, 409)
 
-    const lines = [
-      `Name: ${b.name}`, `Business: ${b.business}`, `Phone: ${b.phone}`, `Email: ${b.email}`,
-      `Language: ${b.lang.toUpperCase()}`, `Time zone: ${b.zone}`, '', b.message || '(no message)',
-    ]
     let ev = await g.insert({
       /* the visitor gets this event as their invitation, so it speaks their language */
       summary: `${callTitle(b.lang)} — ${b.name}${b.business ? ` (${b.business})` : ''}`,
-      description: lines.join('\n'),
+      description: eventDescription(b),
       start: b.start, end: b.end, zone: r.zone, attendee: b.email,
       privateProps: { tbBooking: '1', tbEmail: b.email, tbLang: b.lang },
     })
