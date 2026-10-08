@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""SEQUENCE A — "THE CASE". 150 frames, 1100x1100, Cycles CPU, film transparent.
+"""SEQUENCE A — "THE CASE". 150 frames, 960x960, Cycles CPU, film transparent.
 
 Built to the art-direction spec. Every part is a child of `rig`, an empty rotated
 90 degrees about X, so that in LOCAL rig space:
@@ -11,13 +11,14 @@ import bpy, bmesh, math, json, os, sys
 from mathutils import Vector
 from bpy_extras.object_utils import world_to_camera_view
 
-OUT = '/tmp/claude-0/blend2'
-RES = 960
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUT = os.environ.get('OUT', os.path.join(ROOT, 'render'))
+RES = int(os.environ.get('RES', '960'))
 FRAMES = 150
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 S = bpy.context.scene
-HDRI = os.environ.get('HDRI', '/home/user/twinbyte-site/tools/hdri/studio_small_09_2k.hdr')
+HDRI = os.environ.get('HDRI', os.path.join(ROOT, 'tools/hdri/studio_small_09_2k.hdr'))
 HDRI_S = float(os.environ.get('HDRI_S', '0.55'))   # how much of the room
 LAMP_S = float(os.environ.get('LAMP_S', '0.55'))   # the panels and lamps, scaled
 S.render.resolution_x = RES          # BEFORE any world_to_camera_view call:
@@ -31,10 +32,15 @@ def hexc(h, a=1.0):
         return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
     return (lin(int(h[0:2], 16)), lin(int(h[2:4], 16)), lin(int(h[4:6], 16)), a)
 
-TEAL  = os.environ.get('C_TEAL', '#03455C')
-VERM  = os.environ.get('C_VERM', '#8A3726')
-COAT  = float(os.environ.get('COAT', '0.07'))
-PAPER, INK, STEEL = '#F5F2EC', '#1B1914', '#2E2B23'
+# Pre-darkened: these are the values that LAND on the brand colours once lit
+# (petrol #356F8E, mint #96D3C0). Putting the brand hex in here renders them
+# pale. Measured on the proof frames; see tools/README.md.
+PETROL = os.environ.get('C_PETROL', '#17628A')   # lands at about #34698B on the flat faces
+MINT   = os.environ.get('C_MINT', '#4A8376')     # lands at about #94D9C3 on the lit face
+COAT   = float(os.environ.get('COAT', '0.07'))
+PAPER  = os.environ.get('C_PAPER', '#F4EFE6')    # cream
+INK    = os.environ.get('C_INK', '#0A0F1E')      # navy
+STEEL  = os.environ.get('C_STEEL', '#1B2742')
 
 def mat(name, hexv, rough=0.30, coat=0.35, metal=0.0, coatr=0.06):
     m = bpy.data.materials.new(name)
@@ -48,43 +54,34 @@ def mat(name, hexv, rough=0.30, coat=0.35, metal=0.0, coatr=0.06):
         b.inputs['Coat Roughness'].default_value = coatr
     return m
 
-M_TEAL  = mat('teal', TEAL, rough=0.22, coat=COAT)
-M_VERM  = mat('verm', VERM, rough=0.24, coat=COAT)
+M_PETROL = mat('petrol', PETROL, rough=0.22, coat=COAT)
+M_MINT   = mat('mint', MINT, rough=0.24, coat=COAT)
 M_PAPER = mat('paper', PAPER, rough=0.38, coat=0.18, coatr=0.16)
 M_INK   = mat('ink', INK, rough=0.50, coat=0.05)
 M_STEEL = mat('steel', STEEL, rough=0.25, coat=0.0, metal=0.85)
 
 # ------------------------------------------------- the brand-mark generator
-def outline(size=2.0, r=0.42, sharp='bl', seg=10, aspect=1.0):
-    """Rounded rect, three corners radiused, ONE corner dead square.
-       This function IS the logo. It must never become a generic rounded box."""
+def outline(size=2.0, r=0.42, cut=True, seg=10, aspect=1.0):
+    """The cut corner: top-left and bottom-right chamfered at 45 degrees, the
+       other two square. A real paper fold cuts the outer corner along the
+       crease, which is why the two ribbons of the mark have flat tips — and
+       why every button and card on the site loses those same two corners.
+       This function IS the logo. It must never become a generic rounded box.
+       cut=False keeps all four corners square (the bevel still softens them)."""
     hx, hy = size / 2.0, size * aspect / 2.0
-    corners = [('br', Vector((hx, -hy)), 1, -1),
-               ('tr', Vector((hx, hy)), 1, 1),
-               ('tl', Vector((-hx, hy)), -1, 1),
-               ('bl', Vector((-hx, -hy)), -1, -1)]
-    pts = []
-    for name, c, cx, cy in corners:
-        if name == sharp:
-            pts.append(c.copy())
-            continue
-        cen = Vector((c.x - cx * r, c.y - cy * r))
-        if cx > 0 and cy < 0:   a0, a1 = -math.pi / 2, 0.0
-        elif cx > 0 and cy > 0: a0, a1 = 0.0, math.pi / 2
-        elif cx < 0 and cy > 0: a0, a1 = math.pi / 2, math.pi
-        else:                   a0, a1 = math.pi, 3 * math.pi / 2
-        for k in range(seg + 1):
-            t = a0 + (a1 - a0) * k / seg
-            pts.append(Vector((cen.x + math.cos(t) * r, cen.y + math.sin(t) * r)))
-    return pts
+    if not cut:
+        return [Vector((hx, -hy)), Vector((hx, hy)), Vector((-hx, hy)), Vector((-hx, -hy))]
+    r = min(r, hx, hy)
+    return [Vector((hx, -hy + r)), Vector((hx, hy)), Vector((-hx + r, hy)),
+            Vector((-hx, hy - r)), Vector((-hx, -hy)), Vector((hx - r, -hy))]
 
-def shape(name, size, r, sharp, depth, material, bevel=0.05, aspect=1.0, seg=10):
+def shape(name, size, r, cut, depth, material, bevel=0.05, aspect=1.0, seg=10):
     """Extruded from local z=0 to z=depth, so offsets below are predictable."""
     me = bpy.data.meshes.new(name)
     ob = bpy.data.objects.new(name, me)
     S.collection.objects.link(ob)
     bm = bmesh.new()
-    verts = [bm.verts.new((p.x, p.y, 0.0)) for p in outline(size, r, sharp, seg, aspect)]
+    verts = [bm.verts.new((p.x, p.y, 0.0)) for p in outline(size, r, cut, seg, aspect)]
     face = bm.faces.new(verts)
     ret = bmesh.ops.extrude_face_region(bm, geom=[face])
     moved = [e for e in ret['geom'] if isinstance(e, bmesh.types.BMVert)]
@@ -98,6 +95,10 @@ def shape(name, size, r, sharp, depth, material, bevel=0.05, aspect=1.0, seg=10)
         mo.limit_method = 'ANGLE'; mo.angle_limit = math.radians(30)
     for p in me.polygons:
         p.use_smooth = True
+    # Smooth, but not across a real edge: without this a flat face with only a
+    # few corners shades in dark triangles, because each corner's normal leans
+    # toward the side walls.
+    me.set_sharp_from_angle(angle=math.radians(34))
     return ob
 
 def cube(name, sx, sy, sz, material, loc=(0, 0, 0), bevel=0.012):
@@ -121,6 +122,7 @@ def boolean(target, cutter):
     bpy.context.view_layer.objects.active = target
     bpy.ops.object.modifier_apply(modifier=mo.name)
     bpy.data.objects.remove(cutter, do_unlink=True)
+    target.data.set_sharp_from_angle(angle=math.radians(34))
 
 def empty(name, loc):
     e = bpy.data.objects.new(name, None)
@@ -141,15 +143,15 @@ def attach(ob):
     return ob
 
 # ------------------------------------------------------------------ geometry
-tray = shape('tray', 2.6, 0.52, 'bl', 0.24, M_TEAL, bevel=0.05)
-cut = shape('traycut', 2.48, 0.46, 'bl', 0.20, M_TEAL, bevel=0.0)
+tray = shape('tray', 2.6, 0.52, True, 0.24, M_PETROL, bevel=0.05)
+cut = shape('traycut', 2.48, 0.485, True, 0.30, M_PETROL, bevel=0.0)   # 0.485: the wall stays 0.06 thick across the cut
 cut.location = (0, 0, 0.04)
 bpy.context.view_layer.update()
 boolean(tray, cut)
 attach(tray)
 
-lid = shape('lid', 2.6, 0.52, 'bl', 0.18, M_TEAL, bevel=0.05)
-lidcut = shape('lidcut', 2.48, 0.46, 'bl', 0.12, M_TEAL, bevel=0.0)
+lid = shape('lid', 2.6, 0.52, True, 0.18, M_PETROL, bevel=0.05)
+lidcut = shape('lidcut', 2.48, 0.485, True, 0.12, M_PETROL, bevel=0.0)
 lidcut.location = (0, 0, -0.06)
 bpy.context.view_layer.update()
 boolean(lid, lidcut)
@@ -162,7 +164,7 @@ PLATE_END = [(-0.42, -0.14, 0.30), (0.00, 0.20, 0.56), (0.42, 0.50, 0.82)]
 BARS = [1.20, 0.95, 1.30, 0.66]
 plates = []
 for i in range(3):
-    pl = shape('plate%d' % i, 1.70, 0.10, 'none', 0.055, M_PAPER, bevel=0.016, aspect=0.560)
+    pl = shape('plate%d' % i, 1.70, 0.10, True, 0.055, M_PAPER, bevel=0.016, aspect=0.560)
     pl.data.materials.append(M_INK)           # slot 1
     pl.modifiers['bevel'].material = 1        # the rim that makes three cards read as three
     pl.location = PLATE_START[i]
@@ -179,16 +181,16 @@ rail = cube('rail', 2.60, 0.18, 0.18, M_STEEL, loc=(0, -0.55, 0.52), bevel=0.012
 attach(rail)
 rail.location = (0.00, -40.0, 0.52)
 
-card_in = shape('card_in', 0.72, 0.14, 'bl', 0.07, M_TEAL, bevel=0.012)
+card_in = shape('card_in', 0.72, 0.14, True, 0.07, M_PETROL, bevel=0.012)
 card_in.location = (-1.15, -0.55, 0.72)
 attach(card_in)
 
-card_out = shape('card_out', 0.72, 0.14, 'br', 0.07, M_VERM, bevel=0.012)
+card_out = shape('card_out', 0.72, 0.14, True, 0.07, M_MINT, bevel=0.012)
 card_out.location = (-1.15, -0.55, 0.72)
 attach(card_out)
 
 from mathutils import Matrix
-cal = shape('calendar', 1.30, 0.10, 'none', 0.14, M_PAPER, bevel=0.02, aspect=0.62)
+cal = shape('calendar', 1.30, 0.10, True, 0.14, M_PAPER, bevel=0.02, aspect=0.62)
 cal.location = (0.05, -1.16, 0.30)
 attach(cal)
 for k in range(5):
@@ -196,26 +198,17 @@ for k in range(5):
     sl.parent = cal
     sl.matrix_parent_inverse = Matrix.Identity(4)
     sl.location = (0, 0.16 - k * 0.08, 0.142)
-flap = cube('flap', 1.08, 0.075, 0.025, M_TEAL, loc=(0.05, -1.16 - 0.08, 0.45), bevel=0.005)
+flap = cube('flap', 1.08, 0.075, 0.025, M_PETROL, loc=(0.05, -1.16 - 0.08, 0.45), bevel=0.005)
 attach(flap)
 
-# Parked for good. They were two terracotta tabs hanging off the right edge and
-# they read as mistakes rather than as parts; the terracotta card carries the
-# second ink on its own. Kept in the scene so the anchor table stays whole.
-gate = cube('gate', 0.50, 0.36, 0.05, M_VERM, loc=(1.05, -40.0, 0.30), bevel=0.01)
+# Parked for good. They were two tabs hanging off the right edge and they read
+# as mistakes rather than as parts; the mint card carries the
+# second colour on its own. Kept in the scene so the anchor table stays whole.
+gate = cube('gate', 0.50, 0.36, 0.05, M_MINT, loc=(1.05, -40.0, 0.30), bevel=0.01)
 attach(gate)
-handoff = shape('handoff', 1.00, 0.16, 'br', 0.06, M_VERM, bevel=0.02, aspect=0.64)
+handoff = shape('handoff', 1.00, 0.16, True, 0.06, M_MINT, bevel=0.02, aspect=0.64)
 attach(handoff)
 handoff.location = (1.45, -40.0, -2.20)
-
-for ob in PARTS:
-    bpy.context.view_layer.objects.active = ob
-    ob.select_set(True)
-    try:
-        bpy.ops.object.shade_auto_smooth(angle=math.radians(34))
-    except Exception:
-        pass
-    ob.select_set(False)
 
 # ------------------------------------------------------------- anchor empties
 ANCH = {
@@ -402,7 +395,7 @@ key(rail, 'location', 85, (0.00, -40.0, 0.52))
 key(rail, 'location', 86, (0.00, -40.0, 0.52))
 key(rail, 'location', 100, (0.00, -40.0, 0.52), 'BEZIER')
 
-# the read: the teal card runs the rail and nudges each plate it passes
+# the read: the petrol card runs the rail and nudges each plate it passes
 key(card_in, 'location', 1, (-0.78, -40.0, 0.72))
 key(card_in, 'location', 85, (-0.78, -40.0, 0.72))
 key(card_in, 'location', 86, (-0.78, -0.55, 0.72))
@@ -417,7 +410,7 @@ for i, pl in enumerate(plates):
 key(flap, 'rotation_euler', 120, (0, 0, 0), 'BEZIER')
 key(flap, 'rotation_euler', 124, (math.radians(-78), 0, 0), 'BEZIER')
 
-# THE GATE — the terracotta card runs the same rail and nothing ticks
+# THE GATE — the mint card runs the same rail and nothing ticks
 key(card_out, 'location', 1, (-0.78, -40.0, 0.72))
 key(card_out, 'location', 121, (-0.78, -40.0, 0.72))
 key(card_out, 'location', 122, (-0.78, -0.55, 0.72))
@@ -473,8 +466,9 @@ for f, az, el, r in CAM_KEYS:
 # ------------------------------------------------------------------- render
 S.render.engine = 'CYCLES'
 S.cycles.device = 'CPU'
-S.cycles.samples = 40
+S.cycles.samples = int(os.environ.get('SAMPLES', '8'))   # the denoiser does the rest
 S.cycles.use_denoising = True
+S.render.use_persistent_data = True   # the scene is built once, not once a frame
 S.cycles.max_bounces = 8
 S.render.film_transparent = True
 S.render.image_settings.file_format = 'PNG'

@@ -1,8 +1,10 @@
 """Turn the rendered PNGs into the two sets the page actually loads.
 
 Desktop gets the whole sequence at the size it was rendered. A phone gets every
-second frame at 560px, renumbered from 001 — half the weight, and at a phone's
-scroll distance the step between frames is the same size on screen.
+second frame at 640px, renumbered from 001 — half the frames, and at a phone's
+scroll distance the step between frames is the same size on screen. 640, not
+smaller: the page fits the object, not the empty film around it, to the
+screen, so on a phone a frame is drawn about 500 CSS pixels wide.
 
 Nothing is ever enlarged. A frame resized up is a frame with invented detail in
 it, and on a canvas at full width that shows.
@@ -33,7 +35,7 @@ NAME = os.environ.get('NAME', 'frames')   # 'frames' or 'frames-b'
 
 sets = [
     (NAME, None, 86, 50, 1),
-    (NAME + '-sm', 560, 82, 45, 2),
+    (NAME + '-sm', 640, 82, 45, 2),
 ]
 
 for name, side, q, aq, step in sets:
