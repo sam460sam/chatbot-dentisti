@@ -40,7 +40,7 @@ export const nl: Translation = {
   pricing: {
     eyebrow: 'Wat het kost',
     title: 'De hele prijslijst, gewoon op de pagina',
-    lead: 'Geen telefoontje nodig om te weten wat u betaalt. Dit zijn introductieprijzen \u2014 ze gaan omhoog zodra we een portfolio hebben, en wie nu tekent houdt de zijne.',
+    lead: 'Geen telefoontje nodig om te weten wat u betaalt. Dit zijn introductieprijzen: ze gaan omhoog, en wie nu tekent houdt de zijne.',
     launch: {
       tag: 'Introductieaanbod \u2014 eerste drie klanten',
       body: 'Volledige site + Assistent, met de installatiekosten van de assistent eraf en de eerste drie maanden van ons. Vanaf maand vier geldt het normale bundelbedrag. Drie klanten, daarna is het weg.',
@@ -49,7 +49,7 @@ export const nl: Translation = {
         { label: 'Eerste drie maanden', value: '\u20AC0', was: 'in plaats van \u20AC108 per maand' },
         { label: 'Vanaf maand vier', value: '\u20AC79', was: 'in plaats van \u20AC108' },
       ],
-      savingLabel: 'Bespaard ten opzichte van los kopen (eenmalig + eerste drie maanden)',
+      savingLabel: 'U bespaart (eenmalig + eerste drie maanden)',
       saving: '\u20AC864',
     },
     bar: {
@@ -142,7 +142,7 @@ export const nl: Translation = {
       {
         kick: 'Hoe we werken',
         title: 'Elk onderdeel op maat.',
-        body: 'Een site is een stapel kleine beslissingen: de woorden, de openingstijden, de knop, dat wat antwoordt. Elke beslissing nemen we bewust.',
+        body: 'Een site is een stapel kleine beslissingen: de woorden, de openingstijden, de knop, het ding dat antwoordt. Elke keuze maken we bewust.',
       },
       {
         kick: 'In elkaar gezet',
@@ -184,7 +184,7 @@ export const nl: Translation = {
   },
   benefits: {
     title: 'Wat uw bedrijf eraan heeft',
-    lead: 'Het begon bij tandartspraktijken, waar een gemiste oproep een verloren patiënt is. Datzelfde probleem heeft elk bedrijf dat op afspraak werkt: een salon, een garage, een praktijk, een studio, een adviesbureau.',
+    lead: 'Het begon bij tandartspraktijken, waar een gemist telefoontje een verloren patiënt is. Datzelfde probleem heeft elk bedrijf dat op afspraak werkt: een salon, een garage, een praktijk, een studio, een adviesbureau.',
     items: [
       {
         title: 'Minder telefoontjes om op te nemen',
@@ -213,14 +213,14 @@ export const nl: Translation = {
         body: 'De assistent zegt dat voordat het gesprek begint. Hij geeft geen professioneel of medisch advies — alles waarvoor een oordeel nodig is, gaat naar u.',
       },
       {
-        title: 'Een ondertekende verwerkersovereenkomst',
+        title: 'Een ondertekende verwerkers\u00ADovereenkomst',
         body: 'Voor de livegang tekenen we een verwerkersovereenkomst met u: wat er verwerkt wordt, waarom en hoe lang. U blijft verwerkingsverantwoordelijke.',
       },
     ],
   },
   websites: {
     title: 'Websites voor kleine bedrijven',
-    lead: 'Naast de assistent bouwen we websites — het soort site dat een klein bedrijf echt nodig heeft, geen etalage voor onszelf.',
+    lead: 'Naast de assistent bouwen we websites — het soort site dat een klein bedrijf echt nodig heeft: duidelijk, snel en gebouwd rond wat uw klanten zoeken.',
     cta: 'Vraag naar een website',
     includesTitle: 'Wat een site omvat',
     includes: [
@@ -249,7 +249,7 @@ export const nl: Translation = {
       },
       {
         q: 'Wat kost het?',
-        a: 'De hele prijslijst staat op deze pagina — er wordt niets achtergehouden tot een telefoongesprek. De assistent kost €240 eenmalig en €79 per maand voor 300 gesprekken; sites beginnen bij €590. Neemt u allebei, dan gaat er dertig procent van de eenmalige kosten af en is het maandbedrag van de site van ons.',
+        a: 'De hele prijslijst voor websites en de assistent staat op deze pagina — er wordt niets achtergehouden tot een telefoongesprek. De assistent kost €240 eenmalig en €79 per maand voor 300 gesprekken; sites beginnen bij €590. Neemt u de volledige site en de assistent samen, dan gaat er dertig procent van de eenmalige kosten af en is het maandbedrag van de site van ons.',
       },
       {
         q: 'Werkt het met onze huidige website?',
