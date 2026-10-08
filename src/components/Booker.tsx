@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { pathFor, useRoute } from '../router'
 import { booking } from '../i18n/booking'
-import { waLink } from '../site'
+import { mailLink, waLink } from '../site'
 import { Arrow, Bubble, Diary } from './marks'
+import '../booker.css'
 
 /*
  * The booking flow: day → time → details → done. Everything the visitor sees
@@ -234,7 +235,9 @@ function Fail({ text, wa }: { text: string; wa: boolean }) {
 }
 
 /* ---------------------------------------------------------------- booker */
-type Load = { state: 'loading' } | { state: 'error' } | { state: 'ready'; slots: number[] }
+/* "setup": the server has no Google secrets yet, so nothing here can book or
+   send, and trying again cannot help. "down": a timeout or an outage. */
+type Load = { state: 'loading' } | { state: 'error'; why: 'setup' | 'down'; retrying?: boolean } | { state: 'ready'; slots: number[] }
 type Step = 'pick' | 'form' | 'done'
 type Draft = { name: string; email: string; phone: string; business: string; message: string; website: string }
 const EMPTY: Draft = { name: '', email: '', phone: '', business: '', message: '', website: '' }
@@ -256,15 +259,18 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
   const top = useRef<HTMLDivElement>(null)
 
   const fetchSlots = async () => {
-    setLoad({ state: 'loading' })
+    /* "Try again" keeps its card on screen while it asks */
+    setLoad((l) => (l.state === 'error' ? { ...l, retrying: true } : { state: 'loading' }))
+    let why: 'setup' | 'down' = 'down'
     try {
-      const { status, data } = await api<{ slots: string[] }>('/api/slots')
+      const { status, data } = await api<{ slots?: string[]; error?: string }>('/api/slots')
+      if (data?.error === 'not_configured') why = 'setup'
       if (status !== 200 || !data || !Array.isArray(data.slots)) throw new Error('slots')
       const slots = data.slots.map((s) => Date.parse(s)).filter(Number.isFinite)
       setLoad({ state: 'ready', slots })
       return slots
     } catch {
-      setLoad({ state: 'error' })
+      setLoad({ state: 'error', why })
       return []
     }
   }
@@ -383,23 +389,43 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
             </p>
           )}
 
-          <div className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">
-            <h3 className="font-display text-h4 font-bold text-ink">{c.pick.day}</h3>
-            {load.state === 'ready' && <span className="text-small capitalize text-ink-soft">{monthLabel}</span>}
-          </div>
+          {load.state !== 'error' && (
+            <div className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-0.5">
+              <h3 className="font-display text-h4 font-bold text-ink">{c.pick.day}</h3>
+              {load.state === 'ready' && <span className="text-small capitalize text-ink-soft">{monthLabel}</span>}
+            </div>
+          )}
 
           {load.state === 'loading' && <p className="mt-2 text-small text-ink-soft" aria-live="polite">{c.pick.loading}</p>}
 
+          {/* No calendar to show: what this visitor sees until the Google
+              setup is done, or on an outage. Not an error to them — two ways
+              to reach us that work right now, WhatsApp first. The request
+              form needs Google too, so before the setup it is email instead,
+              and "Try again" only appears when trying again can help. */}
           {load.state === 'error' && (
-            <div role="alert" className="mt-2 border-l-2 border-danger bg-paper px-2 py-1">
-              <p className="text-small text-ink">{c.pick.unavailable}</p>
-              <div className="mt-1 flex flex-wrap gap-1">
-                <button type="button" className="btn-petrol" onClick={() => void fetchSlots()}>{c.pick.retry}</button>
-                <button type="button" className="btn-ghost-dark" onClick={onRequest}>{c.hero.request}</button>
-                <a className="btn-ghost-dark" href={waLink(c.hero.waText)} rel="noopener">
+            <div role="status" data-unavailable={load.why}>
+              <span aria-hidden="true" className="cut cut-sm flex h-6 w-6 items-center justify-center text-paper [--cut-fill:#356F8E]">
+                <Bubble size={22} />
+              </span>
+              <h3 className="mt-2 font-display text-h4 font-bold text-ink">{c.pick.unavailableTitle}</h3>
+              <p className="mt-1 max-w-measure text-small text-ink-soft">{c.pick.unavailable}</p>
+              <div className="mt-3 grid gap-1 sm:flex sm:flex-wrap sm:items-center">
+                <a className="btn-petrol" href={waLink(c.hero.waText)} rel="noopener">
                   <Bubble size={16} />
                   {c.hero.whatsapp}
                 </a>
+                {load.why === 'setup' ? (
+                  <a className="btn-ghost-dark" href={`${mailLink(c.pick.emailSubject)}&body=${encodeURIComponent(c.hero.waText)}`}>{c.pick.email}</a>
+                ) : (
+                  <button type="button" className="btn-ghost-dark" onClick={onRequest}>{c.hero.request}</button>
+                )}
+                {load.why === 'down' && (
+                  <button type="button" aria-disabled={load.retrying} onClick={() => !load.retrying && void fetchSlots()}
+                    className="inline-flex min-h-[44px] items-center justify-center px-1 text-small font-semibold text-ink-soft underline underline-offset-2">
+                    {load.retrying ? c.pick.loading : c.pick.retry}
+                  </button>
+                )}
               </div>
             </div>
           )}

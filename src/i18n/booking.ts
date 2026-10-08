@@ -36,7 +36,10 @@ export interface BookingCopy {
     noSlotsDay: string
     noneAtAll: string
     loading: string
+    unavailableTitle: string
     unavailable: string
+    email: string
+    emailSubject: string
     back: string
     change: string
     changeLabel: string
@@ -61,7 +64,9 @@ export interface BookingCopy {
     badPhone: string
     needConsent: string
   }
-  errors: { slot_taken: string; already_booked: (when: string) => string; generic: string; bot: string; verifying: string; waCta: string }
+  errors: {
+    slot_taken: string; already_booked: (when: string) => string; generic: string; bot: string; verifying: string; waCta: string
+  }
   done: {
     title: string
     body: (email: string) => string
@@ -127,7 +132,10 @@ export const booking: Record<Lang, BookingCopy> = {
       noSlotsDay: 'No free times left on this day.',
       noneAtAll: 'No free times in the next two weeks. Send us a request or a WhatsApp and we will find one.',
       loading: 'Loading free times…',
-      unavailable: 'Booking is not available right now. Send us a request or a WhatsApp and we will answer just as fast.',
+      unavailableTitle: 'Book with a message',
+      unavailable: 'The online calendar is not reachable right now. Write to us and we will find a time with you, just as fast.',
+      email: 'Email us',
+      emailSubject: 'Booking a discovery call',
       back: 'Back',
       change: 'Change',
       changeLabel: 'Change the time',
@@ -243,7 +251,10 @@ export const booking: Record<Lang, BookingCopy> = {
       noSlotsDay: 'Op deze dag is niets meer vrij.',
       noneAtAll: 'De komende twee weken is er niets vrij. Stuur een aanvraag of een WhatsApp, dan zoeken we samen een moment.',
       loading: 'Vrije tijden laden…',
-      unavailable: 'Plannen lukt op dit moment niet. Stuur een aanvraag of een WhatsApp, dan reageren we net zo snel.',
+      unavailableTitle: 'Plan via een bericht',
+      unavailable: 'De online agenda is nu even niet bereikbaar. Stuur ons een bericht, dan zoeken we samen een moment, net zo snel.',
+      email: 'Stuur een e-mail',
+      emailSubject: 'Een kennismakingsgesprek plannen',
       back: 'Terug',
       change: 'Wijzigen',
       changeLabel: 'Tijd wijzigen',
@@ -359,7 +370,10 @@ export const booking: Record<Lang, BookingCopy> = {
       noSlotsDay: 'In questo giorno non ci sono più orari liberi.',
       noneAtAll: 'Nelle prossime due settimane non ci sono orari liberi. Mandaci una richiesta o un WhatsApp e lo troviamo insieme.',
       loading: 'Carico gli orari liberi…',
-      unavailable: 'In questo momento non si può prenotare. Mandaci una richiesta o un WhatsApp: rispondiamo altrettanto in fretta.',
+      unavailableTitle: 'Prenota con un messaggio',
+      unavailable: 'Il calendario online in questo momento non è raggiungibile. Scrivici e troviamo insieme un orario, altrettanto in fretta.',
+      email: 'Scrivici un’email',
+      emailSubject: 'Prenotare una chiamata conoscitiva',
       back: 'Indietro',
       change: 'Cambia',
       changeLabel: 'Cambia orario',
