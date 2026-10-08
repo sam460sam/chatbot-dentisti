@@ -40,10 +40,10 @@ export function Footer({ t }: { t: Translation }) {
           <div className="mt-8 grid gap-5 sm:grid-cols-2">
             <div>
               <p className="t-label">{h.footer.pages}</p>
-              <ul role="list" className="mt-2 grid gap-1">
+              <ul role="list" className="mt-1 grid">
                 {pages.map((p) => (
                   <li key={p.to}>
-                    <Link className="text-lead font-medium text-paper transition-colors hover:text-teal-bright" to={p.to}>
+                    <Link className="flex min-h-[44px] items-center text-lead font-medium text-paper transition-colors hover:text-teal-bright" to={p.to}>
                       {p.label}
                     </Link>
                   </li>
@@ -52,19 +52,19 @@ export function Footer({ t }: { t: Translation }) {
             </div>
             <div>
               <p className="t-label">{h.footer.contact}</p>
-              <ul role="list" className="mt-2 grid gap-1 text-body">
+              <ul role="list" className="mt-1 grid text-body">
                 <li>
-                  <a className="text-paper underline decoration-ink-edge underline-offset-4 hover:text-teal-bright [overflow-wrap:anywhere]" href={mailLink(t.contact.emailSubject)}>
+                  <a className="inline-flex min-h-[44px] items-center text-paper underline decoration-ink-edge underline-offset-4 hover:text-teal-bright [overflow-wrap:anywhere]" href={mailLink(t.contact.emailSubject)}>
                     {SITE.email}
                   </a>
                 </li>
                 <li>
-                  <a className="text-paper underline decoration-ink-edge underline-offset-4 hover:text-teal-bright" href={waLink(b.hero.waText)} rel="noopener">
+                  <a className="inline-flex min-h-[44px] items-center text-paper underline decoration-ink-edge underline-offset-4 hover:text-teal-bright" href={waLink(b.hero.waText)} rel="noopener">
                     WhatsApp {SITE.whatsappDisplay}
                   </a>
                 </li>
                 <li>
-                  <Link className="text-paper-dim underline decoration-ink-edge underline-offset-4 hover:text-paper" to={pathFor(lang, 'privacy')}>
+                  <Link className="inline-flex min-h-[44px] items-center text-paper-dim underline decoration-ink-edge underline-offset-4 hover:text-paper" to={pathFor(lang, 'privacy')}>
                     {t.footer.privacy}
                   </Link>
                 </li>

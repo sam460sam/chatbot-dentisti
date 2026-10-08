@@ -662,9 +662,12 @@ p, li, dd {
   background: var(--petrol);
 }
 
+/* On a phone the card is taller than the screen: a plate beside it read as
+   a thin petrol stripe at the screen's edge for whole screens of scrolling.
+   There it is a ledge under the card instead. */
 @media (max-width: 640px) {
   .book-card { --c: 18px; }
-  .book-card::before { inset: 8px -6px -8px 6px; }
+  .book-card::before { inset: 10px 0 -8px 0; }
 }
 
 /* service cards */
@@ -696,6 +699,19 @@ p, li, dd {
 
 .service-card:focus-visible .service-media img {
   transform: scale(1.045);
+}
+
+/* From a tablet up the three cards share their rows, so the titles, the
+   texts and the links line up across the row however long each title is. */
+@media (min-width: 768px) {
+  @supports (grid-template-rows: subgrid) {
+    .service-row > li,
+    .service-row .service-card {
+      display: grid;
+      grid-row: span 5;
+      grid-template-rows: subgrid;
+    }
+  }
 }
 
 /* full-bleed picture band (the closing call) */
@@ -806,7 +822,9 @@ p, li, dd {
   font-size: clamp(64px, 17vw, 260px);
   font-weight: 700;
   line-height: 0.8;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.035em;
+  /* room for the y's tail above the rule */
+  padding-bottom: 0.14em;
   color: transparent;
   -webkit-text-stroke: 1px rgba(150, 211, 192, 0.28);
   user-select: none;
