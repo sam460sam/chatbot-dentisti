@@ -1,5 +1,6 @@
 import { Link, pathFor, useRoute } from '../router'
 import { booking } from '../i18n/booking'
+import { home } from '../i18n/home'
 import { SITE, waLink } from '../site'
 import { keepTogether } from './BookingPage'
 import { Arrow, Bubble } from './marks'
@@ -65,16 +66,29 @@ function BookBand() {
 
 export function AssistantPage({ t }: { t: Translation }) {
   const { lang } = useRoute()
+  const demo = home[lang].demo
   return (
     <main id="main">
       <PageTitle title={t.split.assistant.title} lead={t.split.assistant.body} pic="assistant" eyebrow={booking[lang].nav.assistant}>
-        {/* the one page that loads the live assistant says so */}
-        {SITE.widget.enabled && (
-          <p className="mt-3 flex items-center gap-1 text-body font-semibold text-teal-bright">
-            <Bubble size={16} />
-            {t.demo.tryHere}
-          </p>
-        )}
+        {/* one child, so it rises in fourth with the head */}
+        <div className="mt-4">
+          {/* the demo practice: the assistant as a customer meets it, on a
+              client's website (public/demo), in this tab */}
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
+            <a className="btn-mint shrink-0" href={SITE.demo[lang]}>
+              {demo.cta}
+              <Arrow />
+            </a>
+            <p className="max-w-[46ch] text-small text-paper-dim">{demo.note}</p>
+          </div>
+          {/* the one page that loads the live assistant says so */}
+          {SITE.widget.enabled && (
+            <p className="mt-3 flex items-start gap-1 text-body font-semibold text-teal-bright">
+              <Bubble size={16} className="mt-[5px] shrink-0" />
+              {t.demo.tryHere}
+            </p>
+          )}
+        </div>
       </PageTitle>
       <DayStripSection t={t} />
       <HowSection t={t} />
