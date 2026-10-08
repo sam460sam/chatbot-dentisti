@@ -611,7 +611,10 @@ p, li, dd {
   --c: 22px;
   position: relative;
   aspect-ratio: 4 / 3;
+  /* clip, not hidden: hidden makes a scroll container, and the picture's
+     view() timeline would measure against this box instead of the page */
   overflow: hidden;
+  overflow: clip;
   background: var(--navy-2);
   clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
 }
@@ -632,6 +635,7 @@ p, li, dd {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  overflow: clip; /* see .service-media */
   background: var(--navy);
   color: var(--cream);
 }
@@ -697,6 +701,7 @@ p, li, dd {
 .site-footer {
   position: relative;
   overflow: hidden;
+  overflow: clip; /* see .service-media */
   background: var(--navy);
   color: var(--cream);
 }
@@ -718,7 +723,9 @@ p, li, dd {
 
 .mark-film video {
   opacity: 0;
-  transition: opacity 600ms ease;
+  /* the still is the film's first frame: a short cut, or both marks show
+     at once while the film is already turning */
+  transition: opacity 180ms linear;
   /* a video's navy is never exactly the page's navy: fade the square's edge out */
   -webkit-mask-image: radial-gradient(closest-side, #000 78%, transparent 100%);
   mask-image: radial-gradient(closest-side, #000 78%, transparent 100%);
@@ -744,10 +751,17 @@ p, li, dd {
    reduced motion. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
+    /* it settles instead of stopping dead; the service cards side by side
+       arrive one after the other */
     [data-rise] {
-      animation: scroll-rise linear both;
+      animation: scroll-rise cubic-bezier(0.2, 0.7, 0, 1) both;
       animation-timeline: view();
-      animation-range: entry 0% entry 55%;
+      animation-range: entry 0% cover 30%;
+    }
+
+    @media (min-width: 768px) {
+      #services ul > li[data-rise]:nth-child(2) { animation-range: entry 0% cover 36%; }
+      #services ul > li[data-rise]:nth-child(3) { animation-range: entry 0% cover 42%; }
     }
 
     .hero-media {
@@ -768,17 +782,27 @@ p, li, dd {
       animation-range: cover;
     }
 
+    /* the photographs settle into their frames as they arrive; `scale`, so
+       the hover zoom (a transform) still adds to it */
+    .service-media img {
+      animation: media-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 50%;
+    }
+
+    /* it comes to rest at the bottom of the page: the end of its view range
+       (exit) can never be reached there */
     .footer-word {
       animation: word-slide linear both;
       animation-timeline: view();
-      animation-range: entry 0% exit 0%;
+      animation-range: entry 0% cover 30%;
     }
   }
 }
 
 /* movement only, no fade: text keeps its full contrast at every moment */
 @keyframes scroll-rise {
-  from { transform: translateY(40px); }
+  from { transform: translateY(56px); }
   to { transform: none; }
 }
 
@@ -795,9 +819,14 @@ p, li, dd {
   to { transform: translateY(6%) scale(1.12); }
 }
 
+@keyframes media-settle {
+  from { scale: 1.12; }
+  to { scale: 1; }
+}
+
 @keyframes word-slide {
-  from { transform: translateX(6%); }
-  to { transform: translateX(-4%); }
+  from { transform: translateX(8%); }
+  to { transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
