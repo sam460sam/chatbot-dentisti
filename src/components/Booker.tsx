@@ -149,7 +149,7 @@ function Field({
     <div>
       <label htmlFor={id} className="text-small font-semibold text-ink">
         {label}
-        {optional && <> <span className="whitespace-nowrap font-normal text-ink-soft">·&nbsp;{optional}</span></>}
+        {optional && <> <span className="whitespace-nowrap font-normal text-ink-soft">({optional})</span></>}
       </label>
       {multiline ? (
         <textarea id={id} name={name} rows={3} value={value} maxLength={maxLength}
@@ -559,7 +559,7 @@ function BookForm({
     const err: Record<string, string> = {}
     if (!v.name.trim()) err.name = c.form.required
     if (!EMAIL.test(v.email.trim())) err.email = v.email.trim() ? c.form.badEmail : c.form.required
-    if (!PHONE.test(v.phone.trim())) err.phone = c.form.badPhone
+    if (!PHONE.test(v.phone.trim())) err.phone = v.phone.trim() ? c.form.badPhone : c.form.required
     if (!v.business.trim()) err.business = c.form.required
     if (!consent) err.consent = c.form.needConsent
     setErrors(err)

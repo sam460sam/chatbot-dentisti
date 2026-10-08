@@ -160,7 +160,7 @@ export const booking: Record<Lang, BookingCopy> = {
       sending: 'Booking…',
       required: 'Please fill this in.',
       badEmail: 'This does not look like an email address.',
-      badPhone: 'Please enter a phone number.',
+      badPhone: 'This number does not look right. Write it in full, with digits, spaces or +.',
       needConsent: 'Please tick the box to continue.',
     },
     errors: {
@@ -283,7 +283,7 @@ export const booking: Record<Lang, BookingCopy> = {
       sending: 'Bezig met inplannen…',
       required: 'Vul dit veld in.',
       badEmail: 'Dit lijkt geen e-mailadres.',
-      badPhone: 'Vul een telefoonnummer in.',
+      badPhone: 'Dit nummer lijkt niet te kloppen. Vul het volledig in, met cijfers, spaties of +.',
       needConsent: 'Vink het vakje aan om verder te gaan.',
     },
     errors: {
@@ -406,7 +406,7 @@ export const booking: Record<Lang, BookingCopy> = {
       sending: 'Prenotazione in corso…',
       required: 'Compila questo campo.',
       badEmail: 'Questo non sembra un indirizzo email.',
-      badPhone: 'Inserisci un numero di telefono.',
+      badPhone: 'Questo numero non sembra valido. Scrivilo per intero, con cifre, spazi o +.',
       needConsent: 'Spunta la casella per continuare.',
     },
     errors: {
