@@ -5,6 +5,7 @@ import { LANGS, LANG_LABELS, type Translation } from '../i18n'
 import { booking } from '../i18n/booking'
 import { home } from '../i18n/home'
 import { SITE, waLink } from '../site'
+import { prefersReducedMotion } from './motion'
 import type { Page } from '../router'
 
 const PAGES_IN_NAV: Page[] = ['assistant', 'websites', 'prices']
@@ -32,10 +33,13 @@ export function Header({ t }: { t: Translation }) {
   }, [])
 
   /*
-   * Reading progress. The read of scrollHeight forces layout, so it is cached
-   * and only re-measured on resize; the write happens inside a rAF.
+   * Reading progress, where the browser cannot drive it from the scroll
+   * itself (site.css .read-bar). The read of scrollHeight forces layout, so
+   * it is cached and only re-measured on resize; the write happens inside a
+   * rAF.
    */
   useEffect(() => {
+    if (CSS.supports('animation-timeline: scroll()') && !prefersReducedMotion()) return
     let frame = 0
     let max = 0
     const measure = () => {
@@ -155,7 +159,7 @@ export function Header({ t }: { t: Translation }) {
         </div>
 
         {/* reading progress: one 1px layer, transform only */}
-        <div aria-hidden="true" ref={barRef} className="h-px origin-left scale-x-0 bg-teal-bright" />
+        <div aria-hidden="true" ref={barRef} className="read-bar h-px origin-left scale-x-0 bg-teal-bright" />
       </header>
 
       {open && (
