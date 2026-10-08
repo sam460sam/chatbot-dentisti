@@ -31,7 +31,7 @@ export const twinbyteStudio: Studio = {
   faq: [
     {
       q: "What is Twinbyte",
-      a: "Twinbyte is Anna and Samuele. We put a digital assistant on a dental practice's website: it answers patients' questions around the clock and books appointments into the calendar the practice already uses. We also build websites for small businesses.",
+      a: "Twinbyte is a small digital studio. We put a digital assistant on a dental practice's website: it answers patients' questions around the clock and books appointments into the calendar the practice already uses. We also build websites for small businesses.",
     },
     {
       q: "How the assistant works",
@@ -71,7 +71,7 @@ export const twinbyteStudio: Studio = {
     },
     {
       q: "How to get in touch",
-      a: "WhatsApp +31 6 45745163 or info@twinbyteservices.com. Anna or Samuele answer personally; there is no call centre.",
+      a: "WhatsApp +31 6 45745163 or info@twinbyteservices.com. The Twinbyte team answers personally; there is no call centre.",
     },
     {
       q: "Demo",
