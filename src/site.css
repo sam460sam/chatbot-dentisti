@@ -87,7 +87,7 @@ p, li, dd {
   --c: 10px;
   position: relative;
   isolation: isolate;
-  transition: --cut-fill 180ms ease, --cut-ink 180ms ease, color 180ms ease;
+  transition: --cut-fill 180ms ease, --cut-ink 180ms ease, color 180ms ease, scale 160ms var(--ease);
 }
 
 .cut::before,
@@ -199,6 +199,24 @@ p, li, dd {
   cursor: wait;
   opacity: 0.6;
 }
+
+/* A press answers the finger at once. The preflight turns the grey tap
+   flash off and the hover fills above are for a mouse only, so without this
+   a tap on a phone looked like nothing had happened. The separate `scale`
+   property, so it adds to a scroll transform instead of replacing it. */
+.btn-mint:active,
+.btn-petrol:active,
+.btn-cream:active,
+.btn-ghost:active,
+.btn-ghost-dark:active,
+.btn-teal:active,
+.btn-verm:active,
+.btn-line:active,
+.btn-teal-bright:active,
+.btn-line-flood:active { scale: 0.97; }
+.cut-line.group:active,
+.service-card:active { scale: 0.99; }
+.wa-float:active { scale: 0.94; }
 
 /* ------------------------------------------------------------------ intro */
 .intro {
@@ -605,6 +623,7 @@ p, li, dd {
   display: flex;
   height: 100%;
   flex-direction: column;
+  transition: scale 160ms var(--ease);
 }
 
 .service-media {
@@ -676,7 +695,7 @@ p, li, dd {
   font-size: 14px;
   font-weight: 600;
   color: var(--cream);
-  transition: color 160ms ease;
+  transition: color 160ms ease, scale 160ms var(--ease);
 }
 
 .wa-float::before,

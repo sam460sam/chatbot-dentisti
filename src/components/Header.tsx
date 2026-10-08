@@ -23,6 +23,14 @@ export function Header({ t }: { t: Translation }) {
   const nav = booking[lang].nav
   const h = home[lang]
 
+  /* Safari on an iPhone shows :active (the press feedback in site.css) only
+     on a page that listens for touches. The listener does nothing else. */
+  useEffect(() => {
+    const noop = () => {}
+    document.addEventListener('touchstart', noop, { passive: true })
+    return () => document.removeEventListener('touchstart', noop)
+  }, [])
+
   /*
    * Reading progress. The read of scrollHeight forces layout, so it is cached
    * and only re-measured on resize; the write happens inside a rAF.
