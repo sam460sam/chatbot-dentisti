@@ -16,9 +16,12 @@ export const SITE = {
     api: 'https://chatbot-dentisti-production.up.railway.app',
     studio: 'twinbyte',
     name: 'Twinbyte',
-    /* Teal is the assistant's ink. If this changes, so does the widget on
-       every client site — and the privacy statement names these origins. */
-    color: '#0E5266',
+    /* If src or api change, so does the widget on every client site — and
+       the privacy statement names these origins. The colour is this site's
+       own embed only (clients set theirs): petrol, the assistant's ink.
+       The widget sets white text on it (5.5:1), and the launcher on the
+       navy page head clears 3.5:1 where the old teal had 2.2:1. */
+    color: '#356F8E',
   },
   /**
    * Live demo practice, served from this site (public/demo).
