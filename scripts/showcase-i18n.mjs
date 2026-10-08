@@ -147,7 +147,8 @@ const T = {
     'Libraries': 'Bibliotheken',
     'None': 'Geen',
     'Weight': 'Gewicht',
-    'WEIGHT_TBD': 'WEIGHT_TBD',
+    '2.5 MB on a phone, 6.6 MB on a wide screen, frames and fonts included. The first screen needs about 230 kB of it.':
+      '2,5 MB op een telefoon, 6,6 MB op een breed scherm, beelden en lettertypen inbegrepen. Het eerste scherm heeft daar ongeveer 230 kB van nodig.',
 
     'Talk to us': 'Neem contact op',
     'Tell us what you sell. <em>We will tell you what it takes.</em>': 'Vertel ons wat u verkoopt. <em>Wij vertellen u wat ervoor nodig is.</em>',
@@ -291,7 +292,8 @@ const T = {
     'Libraries': 'Librerie',
     'None': 'Nessuna',
     'Weight': 'Peso',
-    'WEIGHT_TBD': 'WEIGHT_TBD',
+    '2.5 MB on a phone, 6.6 MB on a wide screen, frames and fonts included. The first screen needs about 230 kB of it.':
+      '2,5 MB sul telefono, 6,6 MB su uno schermo largo, fotogrammi e font compresi. Alla prima schermata ne servono circa 230 kB.',
 
     'Talk to us': 'Parliamone',
     'Tell us what you sell. <em>We will tell you what it takes.</em>': 'Dicci cosa vendi. <em>Ti diciamo cosa serve.</em>',

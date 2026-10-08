@@ -30,9 +30,10 @@ The film is transparent: the page behind it can be any colour.
 
     FRAMES=./render OUT=./public/showcase python3 tools/showcase-pack.py
 
-Writes two sets of WebP with alpha — 900px for desktop, 560px for phones, about
-1.5 MB and 1.0 MB for the whole turn. The page picks one; a phone never
-downloads the large set.
+Writes two sets of WebP with alpha: every frame at the size it was rendered
+for wide screens, every second frame at 640px for phones. The page picks
+one; a phone never downloads the large set. For the sequences on the page
+now: A is 3.47 MB and 1.05 MB, B is 0.85 MB and 0.26 MB.
 
 Nothing here runs at build time. Re-run it only when the object changes.
 
@@ -58,8 +59,8 @@ Swap one in without editing the file:
 
 ## showcase-seq-a.py — sequence A, "the case"
 
-150 frames at 960px, Cycles CPU, 8 samples with denoising: about 15 seconds a
-frame on four cores, so a little under 40 minutes for the sequence. Python 3.11
+150 frames at 960px, Cycles CPU, 8 samples with denoising: 15 to 23 seconds a
+frame on four cores, so 40 to 60 minutes for the sequence. Python 3.11
 with `pip install bpy shapely` (bpy 5.0.1 is what rendered the frames on the
 page). Paths default to the repository: the HDRI from `tools/hdri/`, the PNGs
 into `render/` (`OUT=` moves them).
@@ -90,7 +91,7 @@ every button and card on the site does.
 
 ## showcase-seq-b.py — sequence B, "the page"
 
-84 frames, same size and sampling as sequence A, so about twenty minutes. A
+84 frames, same size and sampling as sequence A, so twenty to thirty minutes. A
 mint tile opens into a cream page with navy text, a mint header and a mint
 call button — the site's own call-to-action colour. This rig is lit more
 softly than A's, so it renders brighter (`EXPO=-0.7`) and its highlight is
@@ -121,6 +122,17 @@ The page fits the object, not the whole frame, to the screen: `fit` in the
 object can be, taken from the `EXT` / `extent` lines a proof run prints. Change
 the camera or the motion and update it there.
 
+After a re-render, update the "Weight" line in the spec on the page (and its
+two translations in `scripts/showcase-i18n.mjs`) to what a phone and a wide
+screen really download, and make `public/showcase/og.jpg` again — the share
+picture: the last frame of sequence A on navy at 1200 x 630, with the logo,
+the word "Showcase" and the address, one picture for all three languages.
+
+A proof is cheap and a sequence is not: render the proof frames first, put
+them on the navy of the page next to the brand swatches, and only then start
+the ranges (in the background — they resume, skipping PNGs already written).
+The last full run here took 51 minutes for A and 20 for B on four cores.
+
 ## film-pack.py — a generated film to the frames a page plays
 
 The third sequence on `/showcase` (the burger) and the one on the home page
@@ -130,7 +142,7 @@ generated between them (Wan 3.0, first and last frame, via Higgsfield). This
 script cuts the film into the frames the pages play:
 
     pip install pillow numpy imageio-ffmpeg
-    python3 tools/film-pack.py burger.mp4 public/showcase/frames-c --frames 72 --until 72
+    python3 tools/film-pack.py burger.mp4 public/showcase/frames-c --frames 84
     python3 tools/film-pack.py laptop.mp4 public/assembly/laptop --frames 100 --wide
 
 Square crop by default, `--wide` keeps the film's own width; the black is
