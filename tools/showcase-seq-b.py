@@ -1,6 +1,6 @@
 """Sequence B — THE PAGE.
 
-A terracotta bubble opens into the page a small business is judged on. The
+A mint tile opens into the page a small business is judged on. The
 camera never moves and never turns: it is dead frontal on a long lens, so the
 call button at the end lands on the same rectangle of the picture every time.
 The renderer writes that rectangle down, and the page lays a real <a href="tel:">
@@ -14,13 +14,14 @@ import bpy, bmesh, math, json, os, sys
 from mathutils import Vector, Matrix
 from bpy_extras.object_utils import world_to_camera_view
 
-OUT = '/tmp/claude-0/blend2'
-RES = 960
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUT = os.environ.get('OUT', os.path.join(ROOT, 'render'))
+RES = int(os.environ.get('RES', '960'))
 FRAMES = 84
 
 bpy.ops.wm.read_factory_settings(use_empty=True)
 S = bpy.context.scene
-HDRI = os.environ.get('HDRI', '/home/user/twinbyte-site/tools/hdri/studio_small_09_2k.hdr')
+HDRI = os.environ.get('HDRI', os.path.join(ROOT, 'tools/hdri/studio_small_09_2k.hdr'))
 HDRI_S = float(os.environ.get('HDRI_S', '0.55'))
 LAMP_S = float(os.environ.get('LAMP_S', '0.55'))
 S.render.resolution_x = RES
@@ -35,11 +36,13 @@ def hexc(h, a=1.0):
     return (lin(int(h[0:2], 16)), lin(int(h[2:4], 16)), lin(int(h[4:6], 16)), a)
 
 # Pre-darkened: these are the values that LAND on the brand colours once lit.
-# Putting the brand hex in here gives pale blue and pink. See tools/README.md.
-TEAL = os.environ.get('C_TEAL', '#03455C')
-VERM = os.environ.get('C_VERM', '#7A2E1E')
-COAT = float(os.environ.get('COAT', '0.07'))
-PAPER, INK, DIM = '#F5F2EC', '#1B1914', '#7E7668'
+# Putting the brand hex in here renders them pale. See tools/README.md.
+PETROL = os.environ.get('C_PETROL', '#164F6E')
+MINT   = os.environ.get('C_MINT', '#86CBB6')     # lands at about #86C9B5 on the last frame
+COAT   = float(os.environ.get('COAT', '0.07'))
+PAPER  = os.environ.get('C_PAPER', '#F4EFE6')    # cream
+INK    = os.environ.get('C_INK', '#0A0F1E')      # navy
+DIM    = os.environ.get('C_DIM', '#5B6B80')
 
 def mat(name, hexv, rough=0.30, coat=COAT, metal=0.0, coatr=0.06):
     m = bpy.data.materials.new(name)
@@ -53,42 +56,33 @@ def mat(name, hexv, rough=0.30, coat=COAT, metal=0.0, coatr=0.06):
         b.inputs['Coat Roughness'].default_value = coatr
     return m
 
-M_TEAL  = mat('teal', TEAL, rough=0.22)
-M_VERM  = mat('verm', VERM, rough=0.24)
+M_PETROL = mat('petrol', PETROL, rough=0.22)
+M_MINT   = mat('mint', MINT, rough=0.24)
 M_PAPER = mat('paper', PAPER, rough=0.40, coat=0.14, coatr=0.18)
 M_INK   = mat('ink', INK, rough=0.52, coat=0.04)
 M_DIM   = mat('dim', DIM, rough=0.55, coat=0.04)
 
 # ------------------------------------------------- the brand-mark generator
-def outline(size=2.0, r=0.42, sharp='bl', seg=10, aspect=1.0):
-    """Rounded rect, three corners radiused, ONE corner dead square.
-       This function IS the logo. It must never become a generic rounded box."""
+def outline(size=2.0, r=0.42, cut=True, seg=10, aspect=1.0):
+    """The cut corner: top-left and bottom-right chamfered at 45 degrees, the
+       other two square. A real paper fold cuts the outer corner along the
+       crease, which is why the two ribbons of the mark have flat tips — and
+       why every button and card on the site loses those same two corners.
+       This function IS the logo. It must never become a generic rounded box.
+       cut=False keeps all four corners square (the bevel still softens them)."""
     hx, hy = size / 2.0, size * aspect / 2.0
-    corners = [('br', Vector((hx, -hy)), 1, -1),
-               ('tr', Vector((hx, hy)), 1, 1),
-               ('tl', Vector((-hx, hy)), -1, 1),
-               ('bl', Vector((-hx, -hy)), -1, -1)]
-    pts = []
-    for name, c, cx, cy in corners:
-        if name == sharp:
-            pts.append(c.copy())
-            continue
-        cen = Vector((c.x - cx * r, c.y - cy * r))
-        if cx > 0 and cy < 0:   a0, a1 = -math.pi / 2, 0.0
-        elif cx > 0 and cy > 0: a0, a1 = 0.0, math.pi / 2
-        elif cx < 0 and cy > 0: a0, a1 = math.pi / 2, math.pi
-        else:                   a0, a1 = math.pi, 3 * math.pi / 2
-        for k in range(seg + 1):
-            t = a0 + (a1 - a0) * k / seg
-            pts.append(Vector((cen.x + math.cos(t) * r, cen.y + math.sin(t) * r)))
-    return pts
+    if not cut:
+        return [Vector((hx, -hy)), Vector((hx, hy)), Vector((-hx, hy)), Vector((-hx, -hy))]
+    r = min(r, hx, hy)
+    return [Vector((hx, -hy + r)), Vector((hx, hy)), Vector((-hx + r, hy)),
+            Vector((-hx, hy - r)), Vector((-hx, -hy)), Vector((hx - r, -hy))]
 
-def shape(name, size, r, sharp, depth, material, bevel=0.03, aspect=1.0, seg=10):
+def shape(name, size, r, cut, depth, material, bevel=0.03, aspect=1.0, seg=10):
     me = bpy.data.meshes.new(name)
     ob = bpy.data.objects.new(name, me)
     S.collection.objects.link(ob)
     bm = bmesh.new()
-    verts = [bm.verts.new((p.x, p.y, 0.0)) for p in outline(size, r, sharp, seg, aspect)]
+    verts = [bm.verts.new((p.x, p.y, 0.0)) for p in outline(size, r, cut, seg, aspect)]
     face = bm.faces.new(verts)
     ret = bmesh.ops.extrude_face_region(bm, geom=[face])
     moved = [e for e in ret['geom'] if isinstance(e, bmesh.types.BMVert)]
@@ -102,6 +96,10 @@ def shape(name, size, r, sharp, depth, material, bevel=0.03, aspect=1.0, seg=10)
         mo.limit_method = 'ANGLE'; mo.angle_limit = math.radians(30)
     for p in me.polygons:
         p.use_smooth = True
+    # Smooth, but not across a real edge: without this a flat face with only a
+    # few corners shades in dark triangles, because each corner's normal leans
+    # toward the side walls.
+    me.set_sharp_from_angle(angle=math.radians(34))
     return ob
 
 def bar(name, w, h, d, material, loc, bevel=0.008):
@@ -141,13 +139,13 @@ def attach(ob, parent=None):
 # ------------------------------------------------------------ the page itself
 PW, PA = 2.30, 1.42                      # width, and height as a multiple of it
 PH = PW * PA
-page = shape('page', PW, 0.20, 'br', 0.16, M_PAPER, bevel=0.030, aspect=PA)
+page = shape('page', PW, 0.20, True, 0.16, M_PAPER, bevel=0.030, aspect=PA)
 attach(page)
 page.location = (0, 0, 0)
 
-# The bubble the page grows out of. Same outline, same sharp corner, terracotta:
+# The tile the page grows out of. Same outline, same cut corners, mint:
 # at frame 1 it is the whole object, and it ends up as the button.
-bub = shape('bubble', 1.05, 0.18, 'br', 0.17, M_VERM, bevel=0.028, aspect=0.62)
+bub = shape('bubble', 1.05, 0.18, True, 0.17, M_MINT, bevel=0.028, aspect=0.62)
 attach(bub)
 
 # --- what is on the page. Everything is parented to the page and parked above
@@ -159,19 +157,19 @@ def row(name, w, h, material, x, y, z=0.17, bevel=0.008):
     CONTENT.append((ob, (x, y, z)))
     return ob
 
-head = shape('head', PW - 0.34, 0.12, 'br', 0.035, M_VERM, bevel=0.012, aspect=0.215)
+head = shape('head', PW - 0.34, 0.12, True, 0.035, M_MINT, bevel=0.012, aspect=0.215)
 head.location = (0, PH / 2 - 0.36, 0.163)
 attach(head, page)
-name = bar('name', 0.94, 0.100, 0.03, M_PAPER, (-0.38, PH / 2 - 0.36, 0.200))
+name = bar('name', 0.94, 0.100, 0.03, M_INK, (-0.38, PH / 2 - 0.36, 0.200))
 attach(name, page)
 row('t1',    1.62, 0.130, M_INK,   -0.22, 0.98)
 row('t2',    1.18, 0.130, M_INK,   -0.44, 0.76)
 row('sub',   1.44, 0.070, M_DIM,   -0.31, 0.54)
 
-# two facts, each with its own teal tick
+# two facts, each with its own petrol tick
 for i, (wdot, wline) in enumerate([(0.10, 1.34), (0.10, 1.06)]):
     y = 0.06 - i * 0.34
-    row('dot%d' % i, wdot, 0.10, M_TEAL, -0.94, y)
+    row('dot%d' % i, wdot, 0.10, M_PETROL, -0.94, y)
     row('line%d' % i, wline, 0.085, M_DIM, -0.94 + 0.18 + wline / 2, y)
 
 # the rule above the button
@@ -180,11 +178,11 @@ row('rule', PW - 0.44, 0.012, M_DIM, 0, -0.62)
 # --- the call button. This is the one part whose position on screen is a
 #     contract with the page, so it gets corner anchors, not a centre point.
 BW, BH = 1.66, 0.46
-btn = shape('button', BW, 0.14, 'br', 0.10, M_VERM, bevel=0.020, aspect=BH / BW)
+btn = shape('button', BW, 0.14, True, 0.10, M_MINT, bevel=0.020, aspect=BH / BW)
 attach(btn, page)
 BTN_AT = (0, -1.12, 0.16)
 btn.location = BTN_AT
-lab = bar('label', 0.84, 0.085, 0.02, M_PAPER, (0, 0, 0.101))
+lab = bar('label', 0.84, 0.085, 0.02, M_INK, (0, 0, 0.101))
 attach(lab, btn)
 
 ANCH = {}
@@ -223,7 +221,8 @@ def panel(name, loc, rot, sx, sy, strength, colour):
 
 panel('softbox_l', (-5.0, -5.0, 2.0), (74, 0, -36), 9, 8, 2.2, (0.88, 0.94, 1.0, 1))
 panel('softbox_r', (5.4, -3.0, 1.0), (80, 0, 56), 7, 7, 1.2, (1.0, 0.93, 0.84, 1))
-sweep = panel('sweep', (-4.6, -3.0, 0.4), (86, 0, -12), 0.9, 9, 46.0, (1, 1, 1, 1))
+# the highlight that crosses the page; SWEEP scales it without touching the rest
+sweep = panel('sweep', (-4.6, -3.0, 0.4), (86, 0, -12), 0.9, 9, 46.0 * float(os.environ.get('SWEEP', '0.35')), (1, 1, 1, 1))
 
 bpy.ops.mesh.primitive_plane_add(size=30, location=(0, 0, -PH / 2 - 0.30))
 floor = bpy.context.object
@@ -344,14 +343,15 @@ key(sweep, 'location', 84, (6.4, -3.0, 0.4))
 # ------------------------------------------------------------------- render
 S.render.engine = 'CYCLES'
 S.cycles.device = 'CPU'
-S.cycles.samples = int(os.environ.get('SAMPLES', '40'))
+S.cycles.samples = int(os.environ.get('SAMPLES', '8'))   # the denoiser does the rest
 S.cycles.use_denoising = True
+S.render.use_persistent_data = True   # the scene is built once, not once a frame
 S.cycles.max_bounces = 8
 S.render.film_transparent = True
 S.render.image_settings.file_format = 'PNG'
 S.render.image_settings.color_mode = 'RGBA'
 S.view_settings.view_transform = 'Standard'
-S.view_settings.exposure = float(os.environ.get('EXPO', '-1.2'))
+S.view_settings.exposure = float(os.environ.get('EXPO', '-0.7'))   # the page lands on cream, not grey
 
 def bake_anchors(path):
     data = {k: {} for k in ANCH}

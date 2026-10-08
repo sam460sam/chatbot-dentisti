@@ -2,12 +2,11 @@
 
 The pieces that make `public/showcase/` and are not part of the site build.
 
-## showcase-object.py — the object
+## showcase-object.py — the old object
 
-The two message bubbles, modelled in Blender from code: three rounded corners
-and one sharp one, and which corner is sharp is the brand mark. Teal is the
-assistant (sharp bottom-left, said TO you), terracotta is the websites (sharp
-bottom-right, your turn).
+The two message bubbles of the previous brand (three rounded corners, one
+sharp). No longer on the page: sequences A and B below replaced it. Kept for
+reference only.
 
 Blender is installed as a Python module, so there is nothing to click:
 
@@ -31,9 +30,10 @@ The film is transparent: the page behind it can be any colour.
 
     FRAMES=./render OUT=./public/showcase python3 tools/showcase-pack.py
 
-Writes two sets of WebP with alpha — 900px for desktop, 560px for phones, about
-1.5 MB and 1.0 MB for the whole turn. The page picks one; a phone never
-downloads the large set.
+Writes two sets of WebP with alpha: every frame at the size it was rendered
+for wide screens, every second frame at 640px for phones. The page picks
+one; a phone never downloads the large set. For the sequences on the page
+now: A is 3.47 MB and 1.05 MB, B is 0.85 MB and 0.26 MB.
 
 Nothing here runs at build time. Re-run it only when the object changes.
 
@@ -44,7 +44,7 @@ the repository and be re-used without asking anyone):
 
 | file | what it gives |
 |---|---|
-| `studio_small_09_2k.hdr` | tight three-softbox studio — the default, and what `showcase-seq-a.py` loads |
+| `studio_small_09_2k.hdr` | tight three-softbox studio — the default, and what both showcase sequences load |
 | `brown_photostudio_02_2k.hdr` | warmer, one large source, longer falloff |
 | `photo_studio_01_2k.hdr` | cooler and broader, softer edges |
 
@@ -59,11 +59,14 @@ Swap one in without editing the file:
 
 ## showcase-seq-a.py — sequence A, "the case"
 
-150 frames at 960px, Cycles CPU, 40 samples with denoising: about 35 seconds a
-frame on four cores, so roughly an hour and a half for the sequence.
+150 frames at 960px, Cycles CPU, 8 samples with denoising: 15 to 23 seconds a
+frame on four cores, so 40 to 60 minutes for the sequence. Python 3.11
+with `pip install bpy shapely` (bpy 5.0.1 is what rendered the frames on the
+page). Paths default to the repository: the HDRI from `tools/hdri/`, the PNGs
+into `render/` (`OUT=` moves them).
 
-    python3 tools/showcase-seq-a.py -- proof          # frames 86 and 150 only
-    python3 tools/showcase-seq-a.py -- range 1 150    # the whole thing
+    python3 tools/showcase-seq-a.py -- proof          # anchors.json, frames 86 and 150
+    python3 tools/showcase-seq-a.py -- range 1 150    # the whole thing (resumes: skips PNGs already there)
 
 It also writes `anchors.json` — where each part is in the frame, as a fraction,
 for every frame — so the page can hang a caption off a moving part instead of
@@ -71,18 +74,29 @@ guessing at a position.
 
 Every look decision is an environment variable with the approved value as its
 default, so a change can be tested against a single frame before it costs an
-hour: `C_TEAL`, `C_VERM`, `COAT`, `EXPO`, `HDRI`, `HDRI_S`, `HDRI_ROT`,
-`LAMP_S`, `R1`, `R2`, `AIM_Z`, `PROOF_FRAMES`, `TAG`.
+hour: `C_PETROL`, `C_MINT`, `C_PAPER`, `C_INK`, `C_STEEL`, `COAT`, `EXPO`,
+`HDRI`, `HDRI_S`, `HDRI_ROT`, `LAMP_S`, `R1`, `R2`, `AIM_Z`, `SAMPLES`, `RES`,
+`OUT`, `PROOF_FRAMES`, `TAG`.
 
-One warning worth the line: the brand teal does not survive being lit. Base
-colour `#03455C` under this rig lands at roughly `#22596F` on the flat faces,
-which is the teal the brand actually uses. Setting the base to the brand hex
-makes the render pale blue.
+The colours are the brand's: a petrol case, cream plates with navy bars, and a
+mint card for the booking. One warning worth the line: a colour does not
+survive being lit. The bases are pre-darkened so they LAND on the brand —
+`#17628A` lands at about `#34698B` on the case's flat faces (petrol is
+`#356F8E`), `#4A8376` at about `#94D9C3` on the card's lit face (mint is
+`#96D3C0`). Setting a base to the brand hex makes the render pale.
+
+Every flat part has the brand's cut corner — `outline()` chamfers top-left
+and bottom-right at 45 degrees, as the folded ribbons of the mark do and as
+every button and card on the site does.
 
 ## showcase-seq-b.py — sequence B, "the page"
 
-84 frames, same size and sampling as sequence A, so about three quarters of an
-hour.
+84 frames, same size and sampling as sequence A, so twenty to thirty minutes. A
+mint tile opens into a cream page with navy text, a mint header and a mint
+call button — the site's own call-to-action colour. This rig is lit more
+softly than A's, so it renders brighter (`EXPO=-0.7`) and its highlight is
+turned down (`SWEEP=0.35`) to keep the mint from washing out to white;
+`C_MINT=#86CBB6` lands at about `#86C9B5` on the last frame.
 
     python3 tools/showcase-seq-b.py -- proof
     python3 tools/showcase-seq-b.py -- range 1 84
@@ -95,12 +109,29 @@ camera and that contract is gone.
 
 ## Packing a sequence
 
-    NAME=frames   FRAMES=/path/to/a OUT=./public/showcase python3 tools/showcase-pack.py
-    NAME=frames-b FRAMES=/path/to/b OUT=./public/showcase python3 tools/showcase-pack.py
+    NAME=frames   FRAMES=render/a OUT=./public/showcase python3 tools/showcase-pack.py
+    NAME=frames-b FRAMES=render/b OUT=./public/showcase python3 tools/showcase-pack.py
 
 Then copy that sequence's `anchors.json` in beside its frames — the page fetches
 `<name>/anchors.json`, and without it the labels and the live button simply do
-not appear.
+not appear. The camera and the motion decide the anchors, not the colours, so
+a re-colour leaves them unchanged.
+
+The page fits the object, not the whole frame, to the screen: `fit` in the
+`Runway({...})` calls of `public/showcase/index.html` is where in a frame the
+object can be, taken from the `EXT` / `extent` lines a proof run prints. Change
+the camera or the motion and update it there.
+
+After a re-render, update the "Weight" line in the spec on the page (and its
+two translations in `scripts/showcase-i18n.mjs`) to what a phone and a wide
+screen really download, and make `public/showcase/og.jpg` again — the share
+picture: the last frame of sequence A on navy at 1200 x 630, with the logo,
+the word "Showcase" and the address, one picture for all three languages.
+
+A proof is cheap and a sequence is not: render the proof frames first, put
+them on the navy of the page next to the brand swatches, and only then start
+the ranges (in the background — they resume, skipping PNGs already written).
+The last full run here took 51 minutes for A and 20 for B on four cores.
 
 ## film-pack.py — a generated film to the frames a page plays
 
@@ -111,7 +142,7 @@ generated between them (Wan 3.0, first and last frame, via Higgsfield). This
 script cuts the film into the frames the pages play:
 
     pip install pillow numpy imageio-ffmpeg
-    python3 tools/film-pack.py burger.mp4 public/showcase/frames-c --frames 72 --until 72
+    python3 tools/film-pack.py burger.mp4 public/showcase/frames-c --frames 84
     python3 tools/film-pack.py laptop.mp4 public/assembly/laptop --frames 100 --wide
 
 Square crop by default, `--wide` keeps the film's own width; the black is
