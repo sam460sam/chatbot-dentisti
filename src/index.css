@@ -76,13 +76,20 @@
     /* No global tnum: in Inter it also widens the hyphen ("E - mail").
        Times, dates and prices that must line up carry tabular-nums. */
     font-feature-settings: 'cv11', 'ss01';
-    /* Dutch builds words like "verwerkersovereenkomst", and one of them in a
-       three-column grid was wider than its column and pushed the whole page
-       sideways on a tablet. Hyphenation breaks it properly (the html element
-       carries the language, so the browser uses the right dictionary); the
-       break-word is the fallback for a word no dictionary will split. */
-    hyphens: auto;
+    /* No hyphenation by default: on an iPhone it split headings, labels and
+       even the email address ("costrui-re", "twinbyte-services.com").
+       break-word is the fallback for a word wider than its column. */
     overflow-wrap: break-word;
+  }
+
+  /* Dutch builds words like "verwerkersovereenkomst", and one of them in a
+     three-column grid was wider than its column and pushed the whole page
+     sideways on a tablet. Running Dutch text still hyphenates (the html
+     element carries the language, so the browser uses the right dictionary).
+     Zero specificity on purpose: the headings, labels and buttons that must
+     never hyphenate (site.css) win over it. */
+  :where(:lang(nl)) :where(p, li, dd) {
+    hyphens: auto;
   }
 
   ::selection {

@@ -9,7 +9,7 @@ import { Picture, type PictureName } from './Picture'
 import { Arrow, ArrowOut, Bubble } from './marks'
 
 /* "15-minute" must not break at its hyphen in a big heading. */
-function keepTogether(text: string) {
+export function keepTogether(text: string) {
   return text.split(/(\S*\d-\S*)/).map((part, i) => (i % 2 ? <span key={i} className="whitespace-nowrap">{part}</span> : part))
 }
 

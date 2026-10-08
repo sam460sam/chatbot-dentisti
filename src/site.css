@@ -35,6 +35,27 @@ html {
   background: var(--navy);
 }
 
+/* ------------------------------------------------------------------ wrapping
+   A heading, a label or a button is never hyphenated: a word cut in two at
+   display size reads as a typo ("Cosa possiamo costrui-re"). Neither is an
+   address, which would read as a different one. Headings balance their
+   lines; running text avoids a lone last word. The first screen's lead
+   is not cut either. */
+h1, h2, h3, h4, summary, dt, button, label, .hero-lead,
+.t-label, .t-folio, .eyebrow, .hero-eyebrow, .font-display, .menu-big,
+.uppercase, .uppercase *, [class*='btn-'],
+a[href^='mailto:'], a[href^='http'] {
+  hyphens: manual;
+}
+
+h1, h2, h3, h4, summary, .t-h3, .eyebrow, .hero-eyebrow {
+  text-wrap: balance;
+}
+
+p, li, dd {
+  text-wrap: pretty;
+}
+
 /* ------------------------------------------------------------------ cut corners
    The fill lives on pseudo-elements so the element itself stays a rectangle:
    the focus ring is never clipped away. A line is a ring: the outer shape

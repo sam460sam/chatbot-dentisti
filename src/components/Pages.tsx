@@ -1,6 +1,7 @@
 import { Link, pathFor, useRoute } from '../router'
 import { booking } from '../i18n/booking'
 import { SITE, waLink } from '../site'
+import { keepTogether } from './BookingPage'
 import { Arrow, Bubble } from './marks'
 import {
   AssemblySection, BenefitsSection, DayStripSection, HowSection, PricesAndFaq,
@@ -44,7 +45,7 @@ function BookBand() {
     <section className="band-paper">
       <div className="container-page">
         <div className="book-card book-card-dark p-3 sm:p-6" data-rise>
-          <h2 className="max-w-[22ch] font-display text-h3 font-bold text-paper sm:text-h2">{c.page.book}</h2>
+          <h2 className="max-w-[22ch] font-display text-h3 font-bold text-paper sm:text-h2">{keepTogether(c.page.book)}</h2>
           <p className="mt-2 max-w-lead text-body text-paper-dim">{c.page.bookLead}</p>
           <div className="mt-4 flex flex-col gap-1 sm:flex-row">
             <Link className="btn-mint" to={`${pathFor(lang, 'home')}#book`}>
