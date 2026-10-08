@@ -46,8 +46,12 @@ export function text(v: unknown, max: number, multiline = false): string {
   return s
 }
 
+/* Exactly application/json. A looser test let "text/plain; x=application/json"
+   through, and text/plain is a type another site may POST to us from its
+   visitors' browsers without asking (no CORS preflight). */
 export async function readJson(request: Request): Promise<Record<string, unknown> | null> {
-  if (!(request.headers.get('content-type') || '').includes('application/json')) return null
+  const type = (request.headers.get('content-type') || '').split(';')[0].trim().toLowerCase()
+  if (type !== 'application/json') return null
   const len = Number(request.headers.get('content-length') || 0)
   if (len > 20000) return null
   try {

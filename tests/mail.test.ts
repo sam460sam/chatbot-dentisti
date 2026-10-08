@@ -2,6 +2,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { raw, isAddress } from '../functions/_lib/mail.ts'
+import { readJson } from '../functions/_lib/http.ts'
 
 const decode = (r: string) => Buffer.from(r.replace(/-/g, '+').replace(/_/g, '/'), 'base64').toString('utf8')
 
@@ -34,4 +35,17 @@ test('a display name with ":" and "@" is encoded, never a group of recipients', 
   const msg = decode(raw({ to: 'e@example.com', toName: 'Eve Bcc: all@example.com', from: 'x@y.com', fromName: 'X', subject: 's', text: 't', html: 'h' }))
   const to = msg.split('\r\n').find((l) => l.startsWith('To:'))!
   assert.match(to, /^To: =\?UTF-8\?B\?[A-Za-z0-9+/=]+\?= <e@example\.com>$/)
+})
+
+/* ---------------------------------------------------------------- the forms */
+
+const post = (type: string, body = '{"a":1}') =>
+  new Request('https://twinbyteservices.com/api/request', { method: 'POST', headers: { 'content-type': type }, body })
+
+test('the forms take JSON only, not text/plain dressed up as JSON', async () => {
+  assert.deepEqual(await readJson(post('application/json')), { a: 1 })
+  assert.deepEqual(await readJson(post('Application/JSON; charset=utf-8')), { a: 1 })
+  for (const t of ['text/plain; a=application/json', 'text/plain', 'application/jsonp', 'multipart/form-data; boundary=application/json']) {
+    assert.equal(await readJson(post(t)), null, t)
+  }
 })

@@ -10,9 +10,15 @@ import type { Env } from './config.ts'
 import { calendarId } from './config.ts'
 import type { Busy } from './slots.ts'
 
+/* Fields written out, not as constructor parameter properties: the tests
+   run on Node's type stripping, which cannot compile those. */
 export class GoogleError extends Error {
-  constructor(message: string, public status: number, public body: string) {
+  status: number
+  body: string
+  constructor(message: string, status: number, body: string) {
     super(message)
+    this.status = status
+    this.body = body
   }
 }
 
