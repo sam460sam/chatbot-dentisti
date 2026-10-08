@@ -224,7 +224,7 @@ function Fail({ text, wa, keep }: { text: string; wa: boolean; keep?: { wa: stri
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => ref.current?.focus({ preventScroll: false }), [text])
   return (
-    <div ref={ref} tabIndex={-1} role="alert" className={`border-l-2 bg-paper px-2 py-1 text-small text-ink outline-none ${keep ? 'border-teal py-2' : 'border-danger'}`}>
+    <div ref={ref} tabIndex={-1} role="alert" className={`animate-rise border-l-2 bg-paper px-2 py-1 text-small text-ink outline-none ${keep ? 'border-teal py-2' : 'border-danger'}`}>
       <p>{text}</p>
       {keep ? (
         <div className="mt-2 grid gap-1 sm:flex sm:flex-wrap">
@@ -391,10 +391,10 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
           }}
         />
       ) : (
-        <div className={load.state === 'ready' && byDay.size > 0 ? 'xl:grid xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] xl:gap-4' : ''}>
+        <div className={`animate-rise ${load.state === 'ready' && byDay.size > 0 ? 'xl:grid xl:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] xl:gap-4' : ''}`}>
           <div>
           {notice && (
-            <p data-notice tabIndex={-1} role="alert" className="mb-2 border-l-2 border-danger bg-paper px-2 py-1 text-small text-ink outline-none">
+            <p data-notice tabIndex={-1} role="alert" className="mb-2 animate-rise border-l-2 border-danger bg-paper px-2 py-1 text-small text-ink outline-none">
               {notice}
             </p>
           )}
@@ -414,7 +414,7 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
               form needs Google too, so before the setup it is email instead,
               and "Try again" only appears when trying again can help. */}
           {load.state === 'error' && (
-            <div role="status" data-unavailable={load.why}>
+            <div role="status" data-unavailable={load.why} className="animate-rise">
               <span aria-hidden="true" className="cut cut-sm flex h-6 w-6 items-center justify-center text-paper [--cut-fill:#356F8E]">
                 <Bubble size={22} />
               </span>
@@ -442,7 +442,7 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
 
           {load.state === 'ready' && (
             <>
-              <div className="mt-2 grid grid-cols-7 gap-0.5 text-center" role="group" aria-label={c.pick.day}>
+              <div className="mt-2 grid animate-fade grid-cols-7 gap-0.5 text-center" role="group" aria-label={c.pick.day}>
                 {c.pick.weekdays.map((w) => (
                   <span key={w} aria-hidden="true" className="pb-0.5 text-micro font-bold uppercase text-ink-soft">{w}</span>
                 ))}
@@ -499,26 +499,29 @@ export function Booker({ onRequest }: { onRequest: () => void }) {
           {load.state === 'ready' && byDay.size > 0 && (
                 <div className="mt-4 xl:mt-0 xl:border-l xl:border-paper-edge xl:pl-4">
                   <h3 className="font-display text-h4 font-bold text-ink">{c.pick.time}</h3>
-                  {day && <p className="mt-0.5 text-small text-ink-soft first-letter:uppercase">{fmtKey(day)}</p>}
-                  <ul role="list" className="mt-2 grid grid-cols-3 gap-1 sm:grid-cols-4">
-                    {daySlots.map((s) => (
-                      <li key={s}>
-                        <button
-                          type="button"
-                          aria-label={`${fmtDay(s)}, ${fmtTime(s)}`}
-                          onClick={() => {
-                            setSlot(s)
-                            setNotice('')
-                            goStep('form', () => document.getElementById('slot-title'))
-                          }}
-                          className="cut-line cut-sm flex h-6 w-full items-center justify-center text-small font-semibold tabular-nums text-teal [--cut-fill:#FFFFFF] [--cut-ink:#356F8E] hover:text-paper hover:[--cut-fill:#356F8E]"
-                        >
-                          {fmtTime(s)}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                  {daySlots.length === 0 && <p className="text-small text-ink-soft">{c.pick.noSlotsDay}</p>}
+                  {/* keyed by day: the new day's times rise in, so the change is seen */}
+                  <div key={day} className="animate-rise">
+                    {day && <p className="mt-0.5 text-small text-ink-soft first-letter:uppercase">{fmtKey(day)}</p>}
+                    <ul role="list" className="mt-2 grid grid-cols-3 gap-1 sm:grid-cols-4">
+                      {daySlots.map((s) => (
+                        <li key={s}>
+                          <button
+                            type="button"
+                            aria-label={`${fmtDay(s)}, ${fmtTime(s)}`}
+                            onClick={() => {
+                              setSlot(s)
+                              setNotice('')
+                              goStep('form', () => document.getElementById('slot-title'))
+                            }}
+                            className="cut-line cut-sm flex h-6 w-full items-center justify-center text-small font-semibold tabular-nums text-teal [--cut-fill:#FFFFFF] [--cut-ink:#356F8E] hover:text-paper hover:[--cut-fill:#356F8E]"
+                          >
+                            {fmtTime(s)}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                    {daySlots.length === 0 && <p className="text-small text-ink-soft">{c.pick.noSlotsDay}</p>}
+                  </div>
                   <p className="mt-2 text-small text-ink-soft">{c.card.tz(zoneLabel)}</p>
                 </div>
           )}
@@ -590,7 +593,7 @@ function BookForm({
   }
 
   return (
-    <form onSubmit={submit} noValidate className="relative grid gap-2">
+    <form onSubmit={submit} noValidate className="relative grid animate-rise gap-2">
       <div className="flex items-start justify-between gap-1 border-b border-paper-edge-deep pb-2">
         <div>
           <p className="t-label">{c.card.title}</p>
@@ -785,7 +788,7 @@ export function RequestForm({ onBack }: { onBack: () => void }) {
     )
 
   return (
-    <form onSubmit={submit} noValidate className="relative grid gap-2">
+    <form onSubmit={submit} noValidate className="relative grid animate-rise gap-2">
       <div>
         <h3 id="request-title" tabIndex={-1} className="font-display text-h3 font-bold text-ink outline-none">{c.request.title}</h3>
         <p className="mt-1 text-small text-ink-soft">{c.request.lead}</p>
