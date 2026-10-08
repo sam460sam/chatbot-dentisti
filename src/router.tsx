@@ -2,7 +2,8 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import type { AnchorHTMLAttributes, ReactNode } from 'react'
 import { LANGS, type Lang } from './i18n'
 
-export type Page = 'home' | 'assistant' | 'websites' | 'prices' | 'privacy'
+/** 'notfound' is any address that is not one of the pages: it has no path of its own. */
+export type Page = 'home' | 'assistant' | 'websites' | 'prices' | 'privacy' | 'notfound'
 
 /** Every page, in the order the prerender writes them. */
 export const PAGES: Page[] = ['home', 'assistant', 'websites', 'prices', 'privacy']
@@ -12,20 +13,28 @@ export interface Route {
   page: Page
 }
 
+/*
+ * Only the fifteen real addresses parse to a page. Anything else is served
+ * by Cloudflare with a 404 status and the not-found shell of its language
+ * (dist/404.html, nl/404.html, it/404.html), and must say so here too:
+ * showing the home page there made every typo a duplicate of it.
+ */
 function parse(pathname: string): Route {
   const parts = pathname.split('/').filter(Boolean)
   let lang: Lang = 'en'
-  if (parts.length > 0 && (LANGS as string[]).includes(parts[0])) {
-    lang = parts.shift() as Lang
-  }
-  const page: Page = (PAGES as string[]).includes(parts[0]) ? (parts[0] as Page) : 'home'
-  return { lang, page }
+  // English lives at the root: /en/... is not an address of ours
+  if (parts[0] !== 'en' && (LANGS as string[]).includes(parts[0])) lang = parts.shift() as Lang
+  if (parts.length === 0) return { lang, page: 'home' }
+  const slug = parts[0] as Page
+  const known = parts.length === 1 && slug !== 'home' && PAGES.includes(slug)
+  return { lang, page: known ? slug : 'notfound' }
 }
 
-/** Builds an internal path: English lives at the root, the others under /nl and /it. */
+/** Builds an internal path: English lives at the root, the others under /nl and /it.
+    The not-found page has no address, so its links lead to the home page. */
 export function pathFor(lang: Lang, page: Page): string {
   const prefix = lang === 'en' ? '' : `/${lang}`
-  const suffix = page === 'home' ? '' : `/${page}`
+  const suffix = page === 'home' || page === 'notfound' ? '' : `/${page}`
   return prefix + suffix || '/'
 }
 

@@ -9,7 +9,10 @@
     "websitesTitle": "Websites for small businesses — Twinbyte",
     "websitesDescription": "Fast, clear websites for small businesses: hours, prices, where you are and one tap to call, on any phone.",
     "pricesTitle": "Prices: sites from €590, assistant from €79 a month — Twinbyte",
-    "pricesDescription": "The whole Twinbyte price list: websites from €590 to set up, the digital assistant from €79 a month, and the bundle. Month to month, no long contract."
+    "pricesDescription": "The whole Twinbyte price list: websites from €590 to set up, the digital assistant from €79 a month, and the bundle. Month to month, no long contract.",
+    "notfoundTitle": "Page not found — Twinbyte",
+    "notfoundHeading": "Page not found",
+    "notfoundDescription": "There is no page at this address: it may have moved, or the link has a typo. Start again from the home page, or book a free 15-minute call."
   },
   "nl": {
     "title": "Twinbyte — Websites en digitale assistent voor kleine bedrijven",
@@ -21,7 +24,10 @@
     "websitesTitle": "Websites voor kleine bedrijven — Twinbyte",
     "websitesDescription": "Snelle, duidelijke websites voor kleine bedrijven: openingstijden, prijzen, waar u zit en met één tik bellen, op elke telefoon.",
     "pricesTitle": "Tarieven: sites vanaf €590, assistent vanaf €79 per maand — Twinbyte",
-    "pricesDescription": "De hele prijslijst van Twinbyte: websites vanaf €590 eenmalig, digitale assistent vanaf €79 per maand en het pakket. Maand per maand, geen lang contract."
+    "pricesDescription": "De hele prijslijst van Twinbyte: websites vanaf €590 eenmalig, digitale assistent vanaf €79 per maand en het pakket. Maand per maand, geen lang contract.",
+    "notfoundTitle": "Pagina niet gevonden — Twinbyte",
+    "notfoundHeading": "Pagina niet gevonden",
+    "notfoundDescription": "Op dit adres staat geen pagina: misschien is hij verplaatst, of zit er een typfout in de link. Begin opnieuw op de homepage, of plan een gratis gesprek van 15 minuten."
   },
   "it": {
     "title": "Twinbyte — Siti web e assistente digitale per piccole attività",
@@ -33,6 +39,9 @@
     "websitesTitle": "Siti web per piccole attività — Twinbyte",
     "websitesDescription": "Siti veloci e chiari per piccole attività: orari, prezzi, dove sei e un tocco per chiamare, su qualsiasi telefono.",
     "pricesTitle": "Prezzi: siti da €490, assistente da €59 al mese — Twinbyte",
-    "pricesDescription": "Il listino completo di Twinbyte: siti web da €490 di attivazione, assistente digitale da €59 al mese e il pacchetto. Mese per mese, nessun contratto lungo."
+    "pricesDescription": "Il listino completo di Twinbyte: siti web da €490 di attivazione, assistente digitale da €59 al mese e il pacchetto. Mese per mese, nessun contratto lungo.",
+    "notfoundTitle": "Pagina non trovata — Twinbyte",
+    "notfoundHeading": "Pagina non trovata",
+    "notfoundDescription": "A questo indirizzo non c’è nessuna pagina: forse è stata spostata, o nel link c’è un errore. Riparti dalla home, oppure prenota una chiamata gratuita di 15 minuti."
   }
 }
