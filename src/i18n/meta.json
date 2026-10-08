@@ -12,7 +12,8 @@
     "pricesDescription": "The whole Twinbyte price list: websites from €590 to set up, the digital assistant from €79 a month, and the bundle. Month to month, no long contract.",
     "notfoundTitle": "Page not found — Twinbyte",
     "notfoundHeading": "Page not found",
-    "notfoundDescription": "There is no page at this address: it may have moved, or the link has a typo. Start again from the home page, or book a free 15-minute call."
+    "notfoundDescription": "There is no page at this address: it may have moved, or the link has a typo. Start again from the home page, or book a free 15-minute call.",
+    "ogImageAlt": "Twinbyte: websites, digital assistant and online ads for local businesses"
   },
   "nl": {
     "title": "Twinbyte — Websites en digitale assistent voor kleine bedrijven",
@@ -27,7 +28,8 @@
     "pricesDescription": "De hele prijslijst van Twinbyte: websites vanaf €590 eenmalig, digitale assistent vanaf €79 per maand en het pakket. Maand per maand, geen lang contract.",
     "notfoundTitle": "Pagina niet gevonden — Twinbyte",
     "notfoundHeading": "Pagina niet gevonden",
-    "notfoundDescription": "Op dit adres staat geen pagina: misschien is hij verplaatst, of zit er een typfout in de link. Begin opnieuw op de homepage, of plan een gratis gesprek van 15 minuten."
+    "notfoundDescription": "Op dit adres staat geen pagina: misschien is hij verplaatst, of zit er een typfout in de link. Begin opnieuw op de homepage, of plan een gratis gesprek van 15 minuten.",
+    "ogImageAlt": "Twinbyte: websites, digitale assistent en online advertenties voor lokale bedrijven"
   },
   "it": {
     "title": "Twinbyte — Siti web e assistente digitale per piccole attività",
@@ -42,6 +44,7 @@
     "pricesDescription": "Il listino completo di Twinbyte: siti web da €490 di attivazione, assistente digitale da €59 al mese e il pacchetto. Mese per mese, nessun contratto lungo.",
     "notfoundTitle": "Pagina non trovata — Twinbyte",
     "notfoundHeading": "Pagina non trovata",
-    "notfoundDescription": "A questo indirizzo non c’è nessuna pagina: forse è stata spostata, o nel link c’è un errore. Riparti dalla home, oppure prenota una chiamata gratuita di 15 minuti."
+    "notfoundDescription": "A questo indirizzo non c’è nessuna pagina: forse è stata spostata, o nel link c’è un errore. Riparti dalla home, oppure prenota una chiamata gratuita di 15 minuti.",
+    "ogImageAlt": "Twinbyte: siti web, assistente digitale e annunci online per attività locali"
   }
 }

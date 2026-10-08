@@ -7,7 +7,13 @@ import './site.css'
 
 followBrowserLanguage()
 
-createRoot(document.getElementById('root')!).render(
+/* The shell carries a plain fallback (scripts/prerender-meta.mjs) for
+   readers that run no script. The app starts from an empty root rather
+   than diffing its own markup against it. */
+const root = document.getElementById('root')!
+root.textContent = ''
+
+createRoot(root).render(
   <StrictMode>
     <RouterProvider>
       <App />
