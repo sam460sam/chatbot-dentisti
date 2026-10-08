@@ -3,6 +3,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { parseHours, candidateSlots, freeSlots, wallClockToUtc, type SlotRules } from '../functions/_lib/slots.ts'
 import { onRequestGet as getSlots } from '../functions/api/slots.ts'
+import { onRequestGet as getHealth } from '../functions/api/health.ts'
 
 const ROME = 'Europe/Rome'
 const rules = (over: Partial<SlotRules> = {}): SlotRules => ({
@@ -138,6 +139,28 @@ test('/api/slots when Google fails: "unavailable" at once, the report after the 
     assert.deepEqual(await res.json(), { error: 'unavailable' })
     assert.equal(later.length, 1)
     await Promise.all(later)
+  } finally {
+    globalThis.fetch = real
+  }
+})
+
+/* ---------------------------------------------------------------- GET /api/health */
+
+test('/api/health refreshes the token, but not again for every caller', async () => {
+  const real = globalThis.fetch
+  let refreshes = 0
+  globalThis.fetch = (async (url: string) => {
+    assert.equal(String(url), 'https://oauth2.googleapis.com/token')
+    refreshes++
+    return Response.json({ access_token: 'token', expires_in: 3599 })
+  }) as typeof fetch
+  try {
+    const env = { GOOGLE_CLIENT_ID: 'id', GOOGLE_CLIENT_SECRET: 'secret', GOOGLE_REFRESH_TOKEN: 'refresh' }
+    for (let i = 0; i < 5; i++) {
+      const res = await getHealth(call(env).ctx)
+      assert.deepEqual(await res.json(), { ok: true })
+    }
+    assert.equal(refreshes, 1)
   } finally {
     globalThis.fetch = real
   }

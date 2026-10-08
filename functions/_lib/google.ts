@@ -62,7 +62,7 @@ async function ok(res: Response, what: string): Promise<Response> {
 }
 
 /** Token cached per isolate; Google gives an hour, we keep it 50 minutes. */
-let cached: { token: string; until: number } | null = null
+let cached: { token: string; until: number; at: number } | null = null
 
 async function accessToken(env: Env): Promise<string> {
   if (cached && cached.until > Date.now()) return cached.token
@@ -83,7 +83,7 @@ async function accessToken(env: Env): Promise<string> {
     'token refresh',
   )
   const json = (await res.json()) as { access_token: string; expires_in: number }
-  cached = { token: json.access_token, until: Date.now() + Math.min(json.expires_in, 3000) * 1000 }
+  cached = { token: json.access_token, until: Date.now() + Math.min(json.expires_in, 3000) * 1000, at: Date.now() }
   return json.access_token
 }
 
@@ -179,7 +179,11 @@ export function realGoogle(env: Env): Google {
       }, 'gmail.send')
     },
 
+    /* A token fetched in the last 10 minutes already proves the refresh
+       token works. Refreshing on every call would let anyone hammer
+       Google's token endpoint through this public URL. */
     async ping() {
+      if (cached && Date.now() - cached.at < 10 * 60000) return
       cached = null
       await accessToken(env)
     },

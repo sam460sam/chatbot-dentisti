@@ -1,5 +1,6 @@
 /*
- * GET /api/health — refreshes the Google token and says whether it worked.
+ * GET /api/health — refreshes the Google token (at most every 10 minutes)
+ * and says whether it worked.
  * A refresh token that goes six months unused dies. Point any free uptime
  * monitor at this URL once a week and it never will, even in a quiet month.
  */
