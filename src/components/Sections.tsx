@@ -158,10 +158,13 @@ export function BenefitsSection({ t }: { t: Translation }) {
    lead, so only the substance is shown. */
 export function WebsitesSection({ t, bare }: { t: Translation; bare?: boolean }) {
   const { lang } = useRoute()
+  /* bare, on /websites, it follows the page's h1 directly: its headings move
+     up a level so none is skipped */
+  const H = bare ? 'h2' : 'h3'
   const body = (
         <div className="grid items-start gap-5 lg:grid-cols-[1fr_1fr] lg:gap-6">
           <div>
-            <h3 className="t-h3">{t.websites.includesTitle}</h3>
+            <H className="t-h3">{t.websites.includesTitle}</H>
             <ul role="list" className="mt-2">
               {t.websites.includes.map((item) => (
                 <li
@@ -174,7 +177,7 @@ export function WebsitesSection({ t, bare }: { t: Translation; bare?: boolean })
               ))}
             </ul>
 
-            <h3 className="t-h3 mt-4">{t.websites.whoTitle}</h3>
+            <H className="t-h3 mt-4">{t.websites.whoTitle}</H>
             <p className="t-body mt-1 text-small">{t.websites.who}</p>
           </div>
 
