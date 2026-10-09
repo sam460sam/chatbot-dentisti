@@ -167,23 +167,22 @@ The last full run here took 51 minutes for A and 20 for B on four cores.
 
 ## film-pack.py — a generated film to the frames a page plays
 
-The third sequence on `/showcase` (the burger) and the one on the home page
-(the laptop) are not rendered in Blender. Each is two photographs on black —
-the object pulled apart, and the object finished — and a five-second film
-generated between them (Wan 3.0, first and last frame, via Higgsfield). This
-script cuts the film into the frames the pages play:
+The third sequence on `/showcase` (the burger) is not rendered in Blender. It
+is two photographs on black — the object pulled apart, and the object
+finished — and a five-second film generated between them (Wan 3.0, first and
+last frame, via Higgsfield). This script cuts the film into the frames the
+page plays:
 
     pip install pillow numpy imageio-ffmpeg
     python3 tools/film-pack.py burger.mp4 public/showcase/frames-c --frames 84
-    python3 tools/film-pack.py laptop.mp4 public/assembly/laptop --frames 100 --wide
 
 Square crop by default, `--wide` keeps the film's own width; the black is
 keyed to a hard alpha so the frames sit on black. `--until` drops the tail of
 a film that finishes its move early and then holds. `DIR-sm/` holds every
 second frame at 560px, as for the rendered sequences: a phone plays half the
 frames, and a `-sm` set with all of them would end the film halfway. A wide
-set also gets `bounds.json`, where the object is in every frame, so the home
-page can keep it framed on a phone. `--resm` and `--bounds` rebuild those two
+set also gets `bounds.json`, where the object is in every frame, so a page
+can keep it framed on a phone (nothing uses a wide set at the moment). `--resm` and `--bounds` rebuild those two
 things from frames already written. Frames are never upscaled past the
 film's own height, so a 480p film gives 854px frames.
 
