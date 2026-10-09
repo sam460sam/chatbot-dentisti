@@ -136,26 +136,19 @@ export const it: Translation = {
       body: 'Urgente, insolito o fuori da quello che sa: l\u2019assistente si ferma, prende i dati e mette un richiamo nella tua agenda. Chiude il cerchio qualcuno del tuo team.',
     },
   },
-  assembly: {
-    title: 'Come lo costruiamo',
-    beats: [
-      {
-        kick: 'Come lavoriamo',
-        title: 'Ogni pezzo, fatto su misura.',
-        body: 'Un sito è una pila di piccole decisioni: le parole, gli orari, il bottone, la cosa che risponde. Ognuna è una scelta precisa.',
-      },
-      {
-        kick: 'Montato',
-        title: 'Niente di preconfezionato.',
-        body: 'Nessun template con il tuo logo incollato sopra. I pezzi sono tagliati per la tua attività e montati a mano, nell’ordine giusto.',
-      },
-      {
-        kick: 'Consegnato',
-        title: 'Chiuso, testato, tuo.',
-        body: 'Una cosa finita che funziona sul telefono, a un prezzo scritto sulla pagina, mese per mese.',
-      },
+  devices: {
+    eyebrow: 'Un esempio dal vivo',
+    title: 'Fatto per il telefono. Altrettanto chiaro sul portatile.',
+    lead: 'Un sito demo che abbiamo fatto per uno studio dentistico immaginario. Continua a scorrere: le sue pagine scorrono con te.',
+    points: [
+      { title: 'Le tue pagine', body: 'Orari, cosa fai e come contattarti, trovabili in dieci secondi.' },
+      { title: 'Funziona sul telefono', body: 'Veloce dal telefono, anche con poca linea: è da lì che i tuoi clienti ti cercano.' },
+      { title: 'L\u2019assistente, se lo vuoi', body: 'Aggiunto allo stesso sito, risponde alle domande e prenota gli appuntamenti in chat.' },
     ],
-    pins: ['Le tue pagine', 'L\u2019assistente', 'Hosting incluso', 'Funziona sul telefono', 'Prezzo sulla pagina', 'Mese per mese'],
+    chips: ['Hosting incluso', 'Prezzo sulla pagina', 'Mese per mese'],
+    cta: 'Guarda la demo dal vivo',
+    note: 'Lo studio è immaginario. Il sito e l\u2019assistente sono fatti da Twinbyte.',
+    alt: 'Il sito dello studio demo immaginario, su un portatile e su un telefono',
   },
   dayStrip: {
     eyebrow: 'Un martedì',

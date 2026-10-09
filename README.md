@@ -51,6 +51,9 @@ npm test         # the slot and mail tests
 - `node tools/logo-png.mjs` — PNG icons and `og.png` from the SVGs.
 - `python tools/logo-3d.py` — the turning 3D mark for the footer (Blender as
   a Python module). Pack the frames as described at the top of the file.
+- `node tools/demo-screens.mjs` — the demo practice's screenshots on the
+  laptop and phone on `/websites`. Run it again whenever `public/demo/`
+  changes (steps in `tools/README.md`).
 
 ## Deploy — Cloudflare Pages (free plan)
 

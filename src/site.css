@@ -831,6 +831,207 @@ p, li, dd {
   white-space: nowrap;
 }
 
+/* ------------------------------------------------------------------ the devices
+   /websites: the demo practice on a laptop and a phone drawn in code
+   (src/components/DeviceScroll.tsx). Front view, so each screen is a plain
+   rectangle with the screenshot inside it; the motion is in the scroll
+   motion block below. The stage keeps its shape from aspect-ratio and the
+   drawings from their viewBox, so nothing moves while pictures arrive. */
+.dvs {
+  position: relative;
+  overflow: hidden;
+  overflow: clip;
+}
+
+/* a petrol glow behind the devices; a gradient, not a blur */
+.dvs::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(46% 26% at 50% 48%, rgba(53, 111, 142, 0.34), rgba(53, 111, 142, 0) 72%),
+    radial-gradient(30% 18% at 66% 56%, rgba(150, 211, 192, 0.10), rgba(150, 211, 192, 0) 70%);
+}
+
+.dvs-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+}
+
+.dvs-stage {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin-inline: auto;
+  aspect-ratio: 25 / 22;
+}
+
+@media (min-width: 640px) {
+  .dvs-stage { aspect-ratio: 25 / 17; }
+}
+
+@media (min-width: 1024px) {
+  .dvs-grid { row-gap: 56px; }
+  .dvs-stage { max-width: 880px; }
+
+  /* the title on the left, the lead under its last line on the right */
+  .dvs-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
+    align-items: end;
+    column-gap: 56px;
+  }
+
+  .dvs-head .section-title { max-width: 16ch; }
+}
+
+.dvs-laptop,
+.dvs-phone {
+  position: absolute;
+  isolation: isolate;
+}
+
+.dvs-laptop svg,
+.dvs-phone svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.dvs-laptop {
+  left: 0;
+  top: 0;
+  width: 84%;
+  z-index: 1;
+}
+
+.dvs-phone {
+  right: 0;
+  bottom: 0;
+  width: 34%;
+  z-index: 2;
+}
+
+@media (min-width: 640px) {
+  .dvs-laptop { width: 88%; }
+  .dvs-phone { width: 24%; }
+}
+
+/* contact shadows: flat ellipses under the base and the phone */
+.dvs-laptop::before,
+.dvs-phone::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+}
+
+.dvs-laptop::before { left: -2%; right: -2%; bottom: -5%; height: 12%; }
+.dvs-phone::before { left: -6%; right: -6%; bottom: -3%; height: 7%; }
+
+.dvs-screen {
+  position: absolute;
+  overflow: hidden;
+  overflow: clip;
+  border-radius: 2px;
+  /* the demo's own ground, while the picture is on its way */
+  background: #f3f6f2;
+}
+
+.dvs-screen-phone {
+  border-radius: 12.6% / 5.7%;
+}
+
+/* glass: one crisp sheen across the screen */
+.dvs-screen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.04) 34%, rgba(255, 255, 255, 0) 34.2%);
+}
+
+/* the phone's camera: a small dot in the glass, nothing more */
+.dvs-screen-phone::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 1.9%;
+  width: 6.4%;
+  aspect-ratio: 1;
+  margin-left: -3.2%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 36%, #34405a 0 18%, #06070a 42%);
+}
+
+.dvs-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+
+/* just under the laptop's base */
+.dvs-url {
+  position: absolute;
+  left: 0;
+  top: 64%;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 62%;
+  padding: 6px 12px;
+  --cut-fill: #111a30;
+  --cut-ink: rgba(150, 211, 192, 0.32);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #d9d0c0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dvs-url-dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 0 3px rgba(150, 211, 192, 0.18);
+}
+
+@media (min-width: 640px) {
+  .dvs-url { left: 3%; top: 85%; }
+}
+
+.dvs-tick {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin-top: 7px;
+  background: var(--mint);
+  clip-path: polygon(30% 0, 100% 0, 100% 70%, 70% 100%, 0 100%, 0 30%);
+}
+
+.dvs-chip {
+  padding: 4px 10px;
+  --cut-ink: rgba(244, 239, 230, 0.28);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--cream);
+}
+
 /* ------------------------------------------------------------------ scroll motion
    Only where the browser drives it from the scroll position itself, only
    transform (the hero copy alone also fades as it leaves), and never with
@@ -876,6 +1077,36 @@ p, li, dd {
       animation-range: entry 0% cover 50%;
     }
 
+    /* /websites: the demo scrolls inside both screens while the devices
+       cross the viewport, from about half in to about half out. The phone
+       has more page to show and a shorter run, so it moves faster; both
+       devices settle a little as they arrive, the phone from further. */
+    .dvs-stage {
+      view-timeline: --dvs block;
+    }
+
+    .dvs-shot {
+      animation: dvs-scroll linear both;
+      animation-timeline: --dvs;
+      animation-range: entry 50% exit 50%;
+    }
+
+    .dvs-shot-phone {
+      animation-range: entry 60% exit 40%;
+    }
+
+    .dvs-laptop {
+      animation: dvs-settle-a cubic-bezier(0.2, 0.7, 0, 1) both;
+      animation-timeline: --dvs;
+      animation-range: entry 0% entry 100%;
+    }
+
+    .dvs-phone {
+      animation: dvs-settle-b cubic-bezier(0.2, 0.7, 0, 1) both;
+      animation-timeline: --dvs;
+      animation-range: entry 0% cover 50%;
+    }
+
     /* it comes to rest at the bottom of the page: the end of its view range
        (exit) can never be reached there */
     .footer-word {
@@ -912,6 +1143,21 @@ p, li, dd {
 
 @keyframes word-slide {
   from { transform: translateX(8%); }
+  to { transform: none; }
+}
+
+@keyframes dvs-scroll {
+  from { transform: none; }
+  to { transform: translateY(var(--end, 0%)); }
+}
+
+@keyframes dvs-settle-a {
+  from { transform: translateY(5%); }
+  to { transform: none; }
+}
+
+@keyframes dvs-settle-b {
+  from { transform: translateY(16%); }
   to { transform: none; }
 }
 
