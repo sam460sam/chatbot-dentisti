@@ -1,4 +1,3 @@
-import { Assembly } from './Assembly'
 import { DayStrip } from './DayStrip'
 import { Diary } from './Diary'
 import { Pricing } from './Pricing'
@@ -251,8 +250,4 @@ export function PricesAndFaq({ t, head = true }: { t: Translation; head?: boolea
       </section>
     </>
   )
-}
-
-export function AssemblySection({ t }: { t: Translation }) {
-  return <Assembly t={t} />
 }

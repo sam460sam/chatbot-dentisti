@@ -136,26 +136,19 @@ export const nl: Translation = {
       body: 'Dringend, ongewoon of buiten zijn kennis: de assistent stopt, noteert de gegevens en zet een terugbelafspraak in uw agenda. Iemand van uw team maakt het af.',
     },
   },
-  assembly: {
-    title: 'Hoe we het bouwen',
-    beats: [
-      {
-        kick: 'Hoe we werken',
-        title: 'Elk onderdeel op maat.',
-        body: 'Een site is een stapel kleine beslissingen: de woorden, de openingstijden, de knop, het ding dat antwoordt. Elke keuze maken we bewust.',
-      },
-      {
-        kick: 'In elkaar gezet',
-        title: 'Niets van de plank.',
-        body: 'Geen sjabloon met uw logo erin geplakt. De onderdelen zijn op maat gesneden voor uw bedrijf en met de hand in elkaar gezet, in de volgorde waarin ze horen.',
-      },
-      {
-        kick: 'Opgeleverd',
-        title: 'Afgerond, getest, van u.',
-        body: 'Eén afgewerkt geheel dat werkt op een telefoon, voor een prijs die op de pagina staat, per maand opzegbaar.',
-      },
+  devices: {
+    eyebrow: 'Een live voorbeeld',
+    title: 'Gemaakt voor de telefoon. Net zo duidelijk op een laptop.',
+    lead: 'Een demosite die we maakten voor een fictieve tandartspraktijk. Scrol verder, en de pagina\u2019s scrollen met u mee.',
+    points: [
+      { title: 'Uw pagina\u2019s', body: 'Openingstijden, wat u doet en hoe men u bereikt, binnen tien seconden te vinden.' },
+      { title: 'Werkt op een telefoon', body: 'Snel op de telefoon, ook bij slecht bereik: daar zoeken uw klanten u op.' },
+      { title: 'De assistent, als u wilt', body: 'Toegevoegd aan dezelfde site beantwoordt hij vragen en plant hij afspraken in de chat.' },
     ],
-    pins: ['Uw pagina\u2019s', 'De assistent', 'Hosting inbegrepen', 'Werkt op een telefoon', 'Prijs op de pagina', 'Per maand opzegbaar'],
+    chips: ['Hosting inbegrepen', 'Prijs op de pagina', 'Per maand opzegbaar'],
+    cta: 'Bekijk de live demo',
+    note: 'De praktijk is fictief. De website en de assistent zijn gemaakt door Twinbyte.',
+    alt: 'De website van de fictieve demopraktijk, op een laptop en op een telefoon',
   },
   dayStrip: {
     eyebrow: 'Een dinsdag',

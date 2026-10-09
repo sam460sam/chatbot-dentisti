@@ -136,26 +136,19 @@ export const en: Translation = {
       body: 'Urgent, unusual, or outside what it knows: the assistant stops, takes the details and puts a call back in your calendar. Someone on your team closes it.',
     },
   },
-  assembly: {
-    title: 'How we build it',
-    beats: [
-      {
-        kick: 'How we work',
-        title: 'Every part, made to fit.',
-        body: 'A site is a stack of small decisions: the words, the hours, the button, the thing that answers. We make each one on purpose.',
-      },
-      {
-        kick: 'Put together',
-        title: 'Nothing off the shelf.',
-        body: 'No template with your logo dropped in. The pieces are cut for your business and fitted by hand, in the order they belong.',
-      },
-      {
-        kick: 'Delivered',
-        title: 'Closed, tested, yours.',
-        body: 'One finished thing that works on a phone, at a price on the page, month to month.',
-      },
+  devices: {
+    eyebrow: 'A live example',
+    title: 'Built for the phone. Just as clear on a laptop.',
+    lead: 'A demo site we made for a fictional dental practice. Scroll on, and its pages scroll with you.',
+    points: [
+      { title: 'Your pages', body: 'Opening hours, what you do and how to reach you, findable in ten seconds.' },
+      { title: 'Works on a phone', body: 'Fast on a phone, even on a bad connection — that is where your customers look you up.' },
+      { title: 'The assistant, if you want it', body: 'Added to the same site, it answers questions and books appointments in the chat.' },
     ],
-    pins: ['Your pages', 'The assistant', 'Hosting, included', 'Works on a phone', 'Price on the page', 'Month to month'],
+    chips: ['Hosting included', 'Price on the page', 'Month to month'],
+    cta: 'See the live demo',
+    note: 'The practice is fictional. The website and the assistant are made by Twinbyte.',
+    alt: 'The website of the fictional demo practice, on a laptop and on a phone',
   },
   dayStrip: {
     eyebrow: 'One Tuesday',

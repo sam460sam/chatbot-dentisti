@@ -95,13 +95,22 @@ export interface Translation {
     fine: string[]
     cta: string
   }
-  /** The object that comes together on scroll, and the three passages over it. */
-  assembly: {
+  /** The demo practice on a laptop and a phone, its pages scrolling past on
+      both screens as the visitor scrolls (src/components/DeviceScroll.tsx).
+      Only promises the site already makes. */
+  devices: {
+    eyebrow: string
     title: string
-    beats: { kick: string; title: string; body: string }[]
-    /** three labels on the parts while the object is open, three under it once
-        it is closed; desktop only */
-    pins: [string, string, string, string, string, string]
+    lead: string
+    points: TitledItem[]
+    /** three short chips under the points */
+    chips: [string, string, string]
+    /** the link to the demo practice (SITE.demo) */
+    cta: string
+    /** one line next to the link: the practice is made up */
+    note: string
+    /** the laptop screenshot; the phone repeats it and is left unnamed */
+    alt: string
   }
   /** The day strip: the hours a business is not there to answer. */
   dayStrip: {

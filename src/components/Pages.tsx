@@ -5,10 +5,11 @@ import { SITE, waLink } from '../site'
 import { keepTogether } from './BookingPage'
 import { Arrow, Bubble } from './marks'
 import {
-  AssemblySection, BenefitsSection, DayStripSection, HowSection, PricesAndFaq,
+  BenefitsSection, DayStripSection, HowSection, PricesAndFaq,
   SecuritySection, WebsitesSection,
 } from './Sections'
 import { Picture, type PictureName } from './Picture'
+import { DeviceScroll } from './DeviceScroll'
 import type { Translation } from '../i18n'
 
 /*
@@ -105,7 +106,7 @@ export function WebsitesPage({ t }: { t: Translation }) {
     <main id="main">
       <PageTitle title={t.websites.title} lead={t.websites.lead} pic="websites" eyebrow={booking[lang].nav.websites} />
       <WebsitesSection t={t} bare />
-      <AssemblySection t={t} />
+      <DeviceScroll t={t} />
       <OtherHalf t={t} />
       <BookBand />
     </main>
