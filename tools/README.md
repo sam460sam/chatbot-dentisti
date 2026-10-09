@@ -1,6 +1,38 @@
 # tools
 
-The pieces that make `public/showcase/` and are not part of the site build.
+The pieces that make `public/showcase/` and the pictures on `/websites`, and
+are not part of the site build.
+
+## demo-screens.mjs — the demo practice on the laptop and the phone
+
+`/websites` shows the demo practice (`public/demo/`, one page per language)
+on a laptop and a phone drawn in code (`src/components/DeviceScroll.tsx`);
+its pages scroll past inside both screens as the visitor scrolls. The
+screens are full-page screenshots of the real demo, so they go stale when the
+demo changes. To make them again:
+
+    npm run build
+    npx -y wrangler@4 pages dev dist --port 8806 --compatibility-date 2026-09-01
+    node tools/demo-screens.mjs            # or: node tools/demo-screens.mjs http://localhost:8806
+
+The script opens `/demo/`, `/demo/nl/` and `/demo/it/` at 1440 wide (desktop)
+and 390 wide (phone) with reduced motion, so no film plays and every picture
+is the still. It scrolls down once so lazy pictures load, waits for fonts and
+images, hides the floating chat button and the phone's bottom bar (a fixed
+bar would be painted once, in the middle of a full-page shot) and cuts the
+page above the footer. Each shot is rendered straight at the width the screen
+needs (1280 and 400 pixels, the screens' largest size at 2x, and half that
+for 1x) and encoded to WebP at quality 0.7 by the browser itself:
+
+    public/media/screens/demo-desk-{en,nl,it}.webp      1280 wide, ~130 KB
+    public/media/screens/demo-desk-{en,nl,it}-1x.webp    640 wide,  ~48 KB
+    public/media/screens/demo-phone-{en,nl,it}.webp      400 wide, ~103 KB
+    public/media/screens/demo-phone-{en,nl,it}-1x.webp   200 wide,  ~38 KB
+
+It also rewrites `src/components/demoScreens.ts` with the pictures' sizes: the
+page works out from them how far each picture has to travel, so commit the
+two together. If the screens in `DeviceScroll.tsx` are ever drawn larger,
+raise `out` in the script to twice their largest CSS width.
 
 ## showcase-object.py — the old object
 
