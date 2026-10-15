@@ -9,6 +9,8 @@ import { ContactPlate } from './Contact'
 import { DEMO_SCREENS } from './demoScreens'
 import { PhoneFrame } from './PhoneFrame'
 import { Picture, type PictureName } from './Picture'
+import { FaqSection } from './Sections'
+import { translations } from '../i18n'
 import { Arrow, ArrowOut, Bubble, Mail } from './marks'
 
 /* The calendar card, only while SITE.booking.calendar is on: a chunk of its
@@ -22,6 +24,7 @@ const CalendarCardLazy = lazy(() => import('./CalendarCard').then((m) => ({ defa
  * try, what we promise, and a last word before the footer.
  */
 export function BookingPage() {
+  const { lang } = useRoute()
   return (
     <main id="main">
       <HomeHero />
@@ -36,6 +39,7 @@ export function BookingPage() {
       <Services />
       <ProofBand />
       <Promises />
+      <FaqSection t={translations[lang]} only="home" />
       <Closing />
     </main>
   )

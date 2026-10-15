@@ -37,14 +37,17 @@ const OG_LOCALE = { en: 'en_GB', nl: 'nl_NL', it: 'it_IT' }
 const meta = JSON.parse(await readFile(join(root, 'src/i18n/meta.json'), 'utf8'))
 let template = await readFile(join(root, 'dist/index.html'), 'utf8')
 
-// Preload the latin font: it is requested by the CSS, so without this hint the
-// browser only discovers it after the stylesheet has been parsed.
+// Preload the latin fonts: they are requested by the CSS, so without this hint
+// the browser only discovers them after the stylesheet has been parsed. Inter
+// sets the text; Bricolage sets the headlines, the largest paint on most pages.
 const assets = await readdir(join(root, 'dist/assets'))
-const font = assets.find((f) => f.startsWith('inter-latin-var') && f.endsWith('.woff2'))
-if (font && !template.includes('rel="preload" as="font"')) {
+const fonts = ['inter-latin-var', 'bricolage-latin-var']
+  .map((name) => assets.find((f) => f.startsWith(name + '-') && f.endsWith('.woff2')))
+  .filter(Boolean)
+if (fonts.length && !template.includes('rel="preload" as="font"')) {
   template = template.replace(
     '</head>',
-    `  <link rel="preload" as="font" type="font/woff2" href="/assets/${font}" crossorigin />\n  </head>`,
+    fonts.map((f) => `  <link rel="preload" as="font" type="font/woff2" href="/assets/${f}" crossorigin />\n`).join('') + '  </head>',
   )
   await writeFile(join(root, 'dist/index.html'), template, 'utf8')
 }

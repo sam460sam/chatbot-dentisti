@@ -5,7 +5,7 @@ import { SITE } from '../site'
 import { ContactBand } from './Contact'
 import { Arrow, Bubble } from './marks'
 import {
-  BenefitsSection, DayStripSection, HowSection, PricesAndFaq,
+  BenefitsSection, DayStripSection, FaqSection, HowSection, PricesAndFaq,
   SecuritySection, WebsitesSection,
 } from './Sections'
 import { Picture, type PictureName } from './Picture'
@@ -69,6 +69,7 @@ export function AssistantPage({ t }: { t: Translation }) {
       <HowSection t={t} />
       <SecuritySection t={t} />
       <BenefitsSection t={t} />
+      <FaqSection t={t} only="assistant" />
       <ContactBand page="assistant" />
     </main>
   )
