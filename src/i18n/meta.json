@@ -1,7 +1,7 @@
 {
   "en": {
-    "title": "Twinbyte — Websites & digital assistant for small businesses",
-    "description": "Fast websites, a digital assistant that answers your customers and books appointments 24/7, and local online ads. Prices on the site, free 15-minute call.",
+    "title": "Twinbyte — Websites, digital assistant and local ads for small businesses",
+    "description": "Fast websites, a digital assistant that answers your customers and books appointments 24/7, and local online ads. Prices on the site. Write to us on WhatsApp or by email.",
     "privacyTitle": "Privacy statement — Twinbyte",
     "privacyDescription": "How Twinbyte handles personal data. No cookies, no analytics, no tracking on this website.",
     "assistantTitle": "Digital assistant for small businesses — Twinbyte",
@@ -12,12 +12,12 @@
     "pricesDescription": "The whole Twinbyte price list: websites from €590 to set up, the digital assistant from €79 a month, and the bundle. Month to month, no long contract.",
     "notfoundTitle": "Page not found — Twinbyte",
     "notfoundHeading": "Page not found",
-    "notfoundDescription": "There is no page at this address: it may have moved, or the link has a typo. Start again from the home page, or book a free 15-minute call.",
+    "notfoundDescription": "There is no page at this address: it may have moved, or the link has a typo. Start again from the home page, or write to us on WhatsApp or by email.",
     "ogImageAlt": "Twinbyte: websites, digital assistant and online ads for local businesses"
   },
   "nl": {
-    "title": "Twinbyte — Websites en digitale assistent voor kleine bedrijven",
-    "description": "Websites, een digitale assistent die 24/7 antwoordt en afspraken inplant, en lokale online advertenties. Prijzen op de site, gratis gesprek van 15 minuten.",
+    "title": "Twinbyte — Websites, digitale assistent en lokale advertenties voor kleine bedrijven",
+    "description": "Websites, een digitale assistent die 24/7 antwoordt en afspraken inplant, en lokale online advertenties. Prijzen op de site. Stuur ons een WhatsApp of e-mail.",
     "privacyTitle": "Privacyverklaring — Twinbyte",
     "privacyDescription": "Hoe Twinbyte omgaat met persoonsgegevens. Geen cookies, geen analytics, geen tracking op deze website.",
     "assistantTitle": "Digitale assistent voor kleine bedrijven — Twinbyte",
@@ -28,12 +28,12 @@
     "pricesDescription": "De hele prijslijst van Twinbyte: websites vanaf €590 eenmalig, digitale assistent vanaf €79 per maand en het pakket. Maand per maand, geen lang contract.",
     "notfoundTitle": "Pagina niet gevonden — Twinbyte",
     "notfoundHeading": "Pagina niet gevonden",
-    "notfoundDescription": "Op dit adres staat geen pagina: misschien is hij verplaatst, of zit er een typfout in de link. Begin opnieuw op de homepage, of plan een gratis gesprek van 15 minuten.",
+    "notfoundDescription": "Op dit adres staat geen pagina: misschien is hij verplaatst, of zit er een typfout in de link. Begin opnieuw op de homepage, of stuur ons een WhatsApp of e-mail.",
     "ogImageAlt": "Twinbyte: websites, digitale assistent en online advertenties voor lokale bedrijven"
   },
   "it": {
-    "title": "Twinbyte — Siti web e assistente digitale per piccole attività",
-    "description": "Siti web, un assistente digitale che risponde e fissa appuntamenti 24 ore su 24, e annunci online in zona. Prezzi sul sito, chiamata gratuita di 15 minuti.",
+    "title": "Twinbyte — Siti web, assistente digitale e pubblicità locale per piccole attività",
+    "description": "Siti web, un assistente digitale che risponde e fissa appuntamenti 24 ore su 24, e pubblicità online in zona. Prezzi sul sito. Scrivici su WhatsApp o per email.",
     "privacyTitle": "Informativa privacy — Twinbyte",
     "privacyDescription": "Come Twinbyte tratta i dati personali. Nessun cookie, nessuna analisi statistica, nessun tracciamento su questo sito.",
     "assistantTitle": "Assistente digitale per piccole attività — Twinbyte",
@@ -44,7 +44,7 @@
     "pricesDescription": "Il listino completo di Twinbyte: siti web da €490 di attivazione, assistente digitale da €59 al mese e il pacchetto. Mese per mese, nessun contratto lungo.",
     "notfoundTitle": "Pagina non trovata — Twinbyte",
     "notfoundHeading": "Pagina non trovata",
-    "notfoundDescription": "A questo indirizzo non c’è nessuna pagina: forse è stata spostata, o nel link c’è un errore. Riparti dalla home, oppure prenota una chiamata gratuita di 15 minuti.",
-    "ogImageAlt": "Twinbyte: siti web, assistente digitale e annunci online per attività locali"
+    "notfoundDescription": "A questo indirizzo non c’è nessuna pagina: forse è stata spostata, o nel link c’è un errore. Riparti dalla home, oppure scrivici su WhatsApp o per email.",
+    "ogImageAlt": "Twinbyte: siti web, assistente digitale e pubblicità online per attività locali"
   }
 }
