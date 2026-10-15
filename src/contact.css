@@ -1,0 +1,1286 @@
+/* ==========================================================================
+   The contact panel on the home page, the contact band at the end of the
+   inner pages, and the drawn phone with its example conversation.
+
+   Loaded after site.css, and held to the same rules: no blur or other
+   paint effects, no 3D transforms, no standing compositor hints. Motion is
+   transform and opacity only (the masks and clip-paths never animate). Nothing here is hidden until a script decides
+   to show it: the chat waits at opacity 0 only while it is off screen
+   (.is-armed, set by PhoneChat), and scroll motion is CSS scroll-driven,
+   inside @supports and prefers-reduced-motion: no-preference.
+   ========================================================================== */
+
+/* ------------------------------------------------------------------ section */
+.contact-home {
+  padding-top: 24px;
+}
+
+/* #book is the old address of the booking card: links to it still land here */
+.contact-alias {
+  display: block;
+  height: 0;
+}
+
+@media (min-width: 1024px) {
+  .contact-home {
+    padding-top: 0;
+  }
+
+  /* The plate overlaps the hero by 72px, so the section's own top is 72px
+     below the plate's: the extra margin lands the plate, not the section,
+     below the fixed header. On a phone there is no overlap and the page's
+     scroll-padding is enough. */
+  .contact-home,
+  .contact-alias {
+    scroll-margin-top: 80px;
+  }
+}
+
+/* The headline's measure in em, not ch: 13ch is 7.72em in Bricolage but
+   6.5em in a fallback serif, so the box itself changed width when the
+   font arrived and the headline went from three lines to two (a layout
+   shift of the whole hero and everything below it). Same box in both
+   fonts, same breaks. */
+.hero.hero-plate .hero-title {
+  max-width: 7.72em;
+}
+
+/* On phones and tablets the two fonts can still break differently (three
+   lines in one, two in the other). The hero is bottom-aligned, so a line
+   fewer when the font arrives would move everything above it. Three lines
+   are always reserved, with the words at the bottom of that box: when
+   Bricolage takes two, the space opens under the eyebrow and nothing
+   moves. */
+@media (max-width: 1023.98px) {
+  .hero.hero-plate .hero-title {
+    display: flex;
+    min-height: 2.88em; /* 3 x line-height 0.96 */
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+}
+
+/* the hero's price line: the lowest prices, with a link to all of them */
+.hero-price {
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 22px;
+  color: #b5ad9e;
+}
+
+.hero-price-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  color: var(--cream);
+  text-decoration: underline;
+  text-decoration-color: rgba(244, 239, 230, 0.45);
+  text-underline-offset: 4px;
+  white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-price-link:hover { color: var(--mint); text-decoration-color: var(--mint); }
+}
+
+/* it rises fifth, after the buttons */
+.hero-copy > *:nth-child(5) { animation-delay: 280ms; }
+.hero-copy.after-intro > *:nth-child(5) { animation-delay: 800ms; }
+
+/* the hero makes room for the plate that overlaps its bottom edge */
+@media (min-width: 1024px) {
+  .hero.hero-plate .hero-copy {
+    padding-bottom: calc(clamp(56px, 9vh, 112px) + 72px);
+  }
+
+  .hero.hero-plate .hero-cue {
+    bottom: calc(clamp(56px, 9vh, 112px) + 72px);
+  }
+}
+
+/* ------------------------------------------------------------------ plate
+   The navy booking card with its petrol ribbon (.book-card in site.css),
+   plus one glow in the fill and a thin mint line on the cut outline. */
+.contact-plate {
+  --c: 18px;
+  padding: 24px 20px 28px;
+  color: var(--cream);
+}
+
+.contact-plate::after {
+  background:
+    radial-gradient(40% 60% at 82% 38%, rgba(53, 111, 142, 0.5), rgba(53, 111, 142, 0) 72%),
+    var(--navy);
+}
+
+.contact-plate::before {
+  inset: 10px 0 -8px 0;
+}
+
+.cp-ring {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(150, 211, 192, 0.22);
+  clip-path: polygon(evenodd,
+    var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c),
+    calc(var(--c) + 0.41px) 1px, calc(100% - 1px) 1px, calc(100% - 1px) calc(100% - var(--c) - 0.41px),
+    calc(100% - var(--c) - 0.41px) calc(100% - 1px), 1px calc(100% - 1px), 1px calc(var(--c) + 0.41px));
+}
+
+@media (min-width: 1024px) {
+  .contact-plate {
+    --c: 28px;
+    padding: 56px;
+  }
+
+  .contact-plate::before {
+    inset: 12px -12px -12px 12px;
+  }
+
+  .contact-home .contact-plate {
+    z-index: 2;
+    margin-top: -72px;
+  }
+}
+
+/* the focus ring on the plate is mint, offset clear of the cut corners */
+.contact-plate :focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 4px;
+}
+
+/* ------------------------------------------------------------------ top: words left, phone right */
+.cp-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 1024px) {
+  .cp-top {
+    grid-template-columns: minmax(0, 1fr) 360px;
+    column-gap: 48px;
+    align-items: center;
+  }
+}
+
+.cp-title {
+  margin-top: 16px;
+  max-width: 14ch;
+  font-size: 34px;
+  line-height: 34px;
+}
+
+@media (min-width: 1024px) {
+  .cp-title {
+    font-size: clamp(34px, 4.6vw, 62px);
+    line-height: 1;
+  }
+}
+
+/* the one serif word; below the fold, so its font arriving moves nothing on screen */
+.accent {
+  font-family: InstrumentSerif, Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.08em;
+  letter-spacing: -0.01em;
+  color: var(--mint);
+}
+
+.cp-lead {
+  margin-top: 20px;
+  max-width: 44ch;
+  font-size: 16px;
+  line-height: 26px;
+  color: #b5ad9e;
+}
+
+@media (min-width: 1024px) {
+  .cp-lead {
+    font-size: 19px;
+    line-height: 30px;
+  }
+}
+
+/* ------------------------------------------------------------------ topics */
+.cp-topics {
+  margin-top: 24px;
+}
+
+.cp-topics-label,
+.cp-facts-label {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9a9282;
+}
+
+.cp-topics-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.cp-topic {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 0 16px;
+  --cut-ink: rgba(244, 239, 230, 0.35);
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 600;
+  color: var(--cream);
+}
+
+.cp-topic[aria-pressed='true'] {
+  --cut-fill: var(--mint);
+  --cut-ink: var(--mint);
+  color: var(--navy);
+}
+
+.cp-topic:active { scale: 0.97; }
+
+@media (hover: hover) and (pointer: fine) {
+  .cp-topic:hover { --cut-ink: var(--cream); }
+  .cp-topic[aria-pressed='true']:hover { --cut-ink: var(--mint); }
+}
+
+/* ------------------------------------------------------------------ the two buttons
+   Horizontal on a phone and in the inner-page band (icon, label, address);
+   tall tiles side by side on the home panel from 1024px. The fill is a
+   pseudo-element, so the focus ring is never clipped by the cut corners. */
+.cbtns {
+  display: grid;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.cbtn {
+  --c: 14px;
+  --cut-fill: var(--mint);
+  --fold: #cbc1ae;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  column-gap: 16px;
+  align-items: center;
+  min-height: 80px;
+  padding: 14px 44px 14px 16px;
+  color: var(--navy);
+  text-decoration: none;
+  transition: --cut-fill 180ms ease, color 180ms ease, scale 160ms var(--ease);
+}
+
+.cbtn::before,
+.cbtn::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.cbtn::before {
+  inset: 0;
+  background: var(--cut-fill);
+  clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+}
+
+/* the corner fold: the cut corner folds over on hover and focus */
+.cbtn::after {
+  right: 0;
+  bottom: 0;
+  width: var(--c);
+  height: var(--c);
+  background: var(--fold);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  transform: scale(0);
+  transform-origin: 100% 100%;
+  transition: transform 220ms var(--ease);
+}
+
+.cbtn-mail {
+  --cut-fill: transparent;
+  color: var(--cream);
+}
+
+.cbtn-ring {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: rgba(244, 239, 230, 0.55);
+  clip-path: polygon(evenodd,
+    var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c),
+    calc(var(--c) + 0.41px) 1px, calc(100% - 1px) 1px, calc(100% - 1px) calc(100% - var(--c) - 0.41px),
+    calc(100% - var(--c) - 0.41px) calc(100% - 1px), 1px calc(100% - 1px), 1px calc(var(--c) + 0.41px));
+}
+
+.cbtn-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  background: var(--navy);
+  color: var(--mint);
+  clip-path: polygon(8px 0, 100% 0, 100% 100%, 0 100%, 0 8px);
+}
+
+.cbtn-mail .cbtn-icon {
+  background: var(--petrol);
+  color: var(--cream);
+}
+
+.cbtn-text {
+  display: block;
+  min-width: 0;
+}
+
+.cbtn-label {
+  display: block;
+  font-family: Bricolage, Georgia, serif;
+  font-size: 22px;
+  line-height: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.cbtn-sub {
+  display: block;
+  margin-top: 2px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.cbtn-wa .cbtn-sub { color: #1b2742; }
+.cbtn-mail .cbtn-sub { color: #b5ad9e; transition: color 180ms ease; }
+
+.cbtn-arrow {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  transition: transform 180ms var(--ease);
+}
+
+.cbtn:active { scale: 0.98; }
+
+.cbtn:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 4px;
+  border-radius: 0;
+}
+
+.cbtn:focus-visible::after { transform: scale(1); }
+.cbtn:focus-visible .cbtn-arrow { transform: translate(2px, -2px); }
+
+@media (hover: hover) and (pointer: fine) {
+  .cbtn:hover { --cut-fill: var(--cream); color: var(--navy); }
+  .cbtn:hover::after { transform: scale(1); }
+  .cbtn:hover .cbtn-arrow { transform: translate(2px, -2px); }
+  .cbtn-mail:hover .cbtn-sub { color: #3f4659; }
+}
+
+@media (max-width: 359.98px) {
+  .cbtn {
+    grid-template-columns: 40px minmax(0, 1fr);
+    column-gap: 14px;
+    padding: 14px 40px 14px 14px;
+  }
+
+  .cbtn-icon {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* the copy button: small, under the email button */
+.cbtn-copy button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: #b5ad9e;
+  text-decoration: underline;
+  text-decoration-color: #5a6173;
+  text-underline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cbtn-copy button:hover { color: var(--cream); text-decoration-color: var(--cream); }
+}
+
+/* tiles: the home panel from 1024px */
+@media (min-width: 1024px) {
+  .cbtns-tiles {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .cbtns-tiles .cbtn {
+    display: flex;
+    height: 156px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 20px;
+  }
+
+  .cbtns-tiles .cbtn-label {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .cbtns-tiles .cbtn-arrow {
+    top: 16px;
+    right: 16px;
+  }
+
+  .cbtns-tiles .cbtn-copy {
+    grid-column: 2;
+    margin-top: -4px;
+  }
+
+  .cb-actions .cbtn { min-height: 88px; }
+}
+
+/* ------------------------------------------------------------------ the message, and the QR code */
+.cp-ready {
+  display: grid;
+  gap: 24px;
+  margin-top: 12px;
+}
+
+@media (min-width: 1280px) {
+  .contact-home .cp-ready {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+}
+
+.cp-ready-note {
+  font-size: 14px;
+  line-height: 20px;
+  color: #b5ad9e;
+}
+
+.cp-quote {
+  margin-top: 6px;
+  font-family: InstrumentSerif, Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 26px;
+  color: var(--cream);
+  text-wrap: pretty;
+}
+
+/* Only with a mouse on a wide screen: a phone already is the phone. Hidden,
+   the image inside is never requested. */
+.cp-qr {
+  display: none;
+}
+
+@media (min-width: 1024px) and (hover: hover) and (pointer: fine) {
+  .cp-qr {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+}
+
+.cp-qr-tile {
+  flex: none;
+  width: 160px;
+  height: 160px;
+  padding: 8px;
+  background: var(--cream);
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+
+.cp-qr-tile img {
+  display: block;
+  width: 144px;
+  height: 144px;
+}
+
+.cp-qr-text {
+  max-width: 17ch;
+}
+
+.cp-qr-title {
+  display: block;
+  font-family: Bricolage, Georgia, serif;
+  font-size: 17px;
+  line-height: 22px;
+  font-weight: 700;
+  color: var(--cream);
+}
+
+.cp-qr-body {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #b5ad9e;
+}
+
+/* ------------------------------------------------------------------ the phone and its backdrop */
+.cp-side {
+  position: relative;
+  margin: 32px -20px 0;
+  padding: 32px 20px 0;
+}
+
+.cp-backdrop {
+  position: absolute;
+  top: 0;
+  left: 1px;
+  right: 1px;
+  height: calc(2 * min(272px, 72vw) + 64px);
+  overflow: hidden;
+  overflow: clip;
+}
+
+.cp-backdrop-media {
+  position: absolute;
+  inset: 0;
+}
+
+.cp-backdrop-media img,
+.cp-backdrop-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 55%;
+}
+
+.cp-backdrop-media video {
+  opacity: 0;
+  transition: opacity 900ms ease;
+}
+
+.cp-backdrop-media video.is-on { opacity: 1; }
+
+/* On a phone the street bleeds to the plate's edges behind the phone and
+   fades out at the top and bottom into whatever is there (navy, or the
+   glow), so it never shows a box edge. */
+.cp-backdrop {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 80%, transparent 100%);
+}
+
+.cp-backdrop-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(10, 15, 30, 0.6) 0%, rgba(10, 15, 30, 0.3) 30%, rgba(10, 15, 30, 0.3) 70%, rgba(10, 15, 30, 0.7) 100%);
+}
+
+.cp-phone {
+  position: relative;
+}
+
+.pc-fig .pc-phone {
+  width: min(272px, 72vw);
+  margin-inline: auto;
+}
+
+@media (min-width: 1024px) {
+  .cp-side {
+    display: flex;
+    align-self: stretch;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* from the plate's top and right edges (1px inside the ring) to just
+     above the facts row, and a little into the gap on the left */
+  .cp-backdrop {
+    inset: -55px -55px -47px -24px;
+    height: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .cp-backdrop-shade {
+    background:
+      linear-gradient(to top, #0a0f1e 0%, rgba(10, 15, 30, 0) 24%),
+      linear-gradient(90deg, #0a0f1e 0%, rgba(10, 15, 30, 0.55) 30%, rgba(10, 15, 30, 0.35) 70%, rgba(10, 15, 30, 0.8) 100%);
+  }
+
+  .pc-fig .pc-phone { width: 280px; }
+}
+
+/* ------------------------------------------------------------------ facts */
+.cp-facts {
+  display: grid;
+  gap: 32px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #1b2742;
+}
+
+@media (min-width: 1024px) {
+  .cp-facts {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 48px;
+    margin-top: 48px;
+    padding-top: 32px;
+  }
+}
+
+.cp-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cp-chips li {
+  padding: 5px 10px;
+  --cut-ink: rgba(244, 239, 230, 0.35);
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+
+.cp-chips li.cp-chip-free {
+  --cut-fill: var(--mint);
+  color: var(--navy);
+}
+
+.cp-steps {
+  margin-top: 8px;
+}
+
+.cp-steps li {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #1b2742;
+  font-size: 15px;
+  line-height: 22px;
+  color: #e4ddd0;
+}
+
+.cp-steps li:last-child { border-bottom: 0; }
+
+.cp-step-n {
+  flex: none;
+  padding-top: 3px;
+  font-size: 11px;
+  line-height: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--mint);
+}
+
+.cp-note {
+  font-family: Bricolage, Georgia, serif;
+  font-size: 19px;
+  line-height: 25px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+  text-wrap: balance;
+}
+
+.cp-prep {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 22px;
+  color: #b5ad9e;
+}
+
+.cp-prep-link {
+  font-weight: 600;
+  color: var(--mint);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ------------------------------------------------------------------ inner-page band */
+.cb-plate {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'head' 'actions' 'chips';
+  row-gap: 24px;
+  padding: 24px 20px;
+}
+
+.cb-head { grid-area: head; }
+.cb-actions { grid-area: actions; }
+.cb-chips { grid-area: chips; }
+.cb-actions .cbtns { margin-top: 0; }
+
+.cb-title {
+  margin-top: 16px;
+  max-width: 16ch;
+  font-family: Bricolage, Georgia, serif;
+  font-size: clamp(30px, 3.4vw, 48px);
+  line-height: 1.04;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--cream);
+}
+
+.cb-lead {
+  margin-top: 16px;
+  max-width: 44ch;
+  font-size: 16px;
+  line-height: 26px;
+  color: #b5ad9e;
+}
+
+@media (min-width: 1024px) {
+  .cb-plate {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas: 'head actions' 'chips actions';
+    column-gap: 48px;
+    padding: 48px;
+  }
+
+  .cb-chips { align-self: start; }
+
+  .cb-lead {
+    font-size: 19px;
+    line-height: 30px;
+  }
+}
+
+/* ------------------------------------------------------------------ the drawn phone (PhoneFrame) */
+.pf {
+  position: relative;
+}
+
+.pf svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.pf-screen {
+  position: absolute;
+  overflow: hidden;
+  overflow: clip;
+  border-radius: 12.6% / 5.7%;
+  background: #0b1222;
+  container-type: inline-size;
+}
+
+/* glass: one crisp sheen, and the camera dot */
+.pf-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(118deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.03) 34%, rgba(255, 255, 255, 0) 34.2%);
+}
+
+.pf-cam {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 1.9%;
+  width: 6.4%;
+  aspect-ratio: 1;
+  margin-left: -3.2%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 36%, #34405a 0 18%, #06070a 42%);
+}
+
+/* ------------------------------------------------------------------ the chat on the screen
+   Every size in cqw (the screen's width), so the conversation scales with
+   the phone and wraps the same way at every size. */
+.pc {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(#111a30, #0b1222 40%);
+  color: var(--cream);
+}
+
+.pc-status {
+  display: flex;
+  flex: none;
+  height: 13cqw;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1cqw 8cqw 0;
+  font-size: 3.8cqw;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.pc-battery {
+  position: relative;
+  display: block;
+  width: 6.6cqw;
+  height: 3.4cqw;
+  padding: 0.5cqw;
+  border: 0.35cqw solid rgba(244, 239, 230, 0.75);
+  border-radius: 0.9cqw;
+}
+
+.pc-battery::after {
+  content: '';
+  position: absolute;
+  right: -1.1cqw;
+  top: 0.8cqw;
+  width: 0.6cqw;
+  height: 1.2cqw;
+  border-radius: 0 0.4cqw 0.4cqw 0;
+  background: rgba(244, 239, 230, 0.75);
+}
+
+.pc-battery span {
+  display: block;
+  width: 72%;
+  height: 100%;
+  border-radius: 0.3cqw;
+  background: var(--cream);
+}
+
+.pc-head {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 3cqw;
+  padding: 1cqw 4.5cqw 3.4cqw;
+  border-bottom: 1px solid #1b2742;
+}
+
+.pc-avatar {
+  display: grid;
+  flex: none;
+  width: 10cqw;
+  height: 10cqw;
+  place-items: center;
+  background: var(--cream);
+  clip-path: polygon(2cqw 0, 100% 0, 100% calc(100% - 2cqw), calc(100% - 2cqw) 100%, 0 100%, 0 2cqw);
+}
+
+.pc-avatar img {
+  width: 7cqw;
+  height: 7cqw;
+}
+
+.pc-who {
+  display: block;
+  min-width: 0;
+}
+
+.pc-name {
+  display: block;
+  font-family: Bricolage, Georgia, serif;
+  font-size: 5.2cqw;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.pc-sub {
+  display: block;
+  margin-top: 0.4cqw;
+  font-size: 3.2cqw;
+  line-height: 1.3;
+  color: #9a9282;
+}
+
+.pc-list {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2.6cqw;
+  padding: 4.5cqw;
+  overflow: hidden;
+  font-size: 4.5cqw;
+  line-height: 1.36;
+}
+
+.pc-row {
+  position: relative;
+  display: flex;
+}
+
+.pc-you { justify-content: flex-end; }
+.pc-us { justify-content: flex-start; }
+
+.pc-bubble {
+  display: block;
+  max-width: 80%;
+  padding: 2.4cqw 3.4cqw;
+  text-wrap: pretty;
+}
+
+/* the visitor: cream, on the right, the cut corner at the bottom right is the tail */
+.pc-you .pc-bubble {
+  background: var(--cream);
+  color: var(--navy);
+  transform-origin: 100% 100%;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 2.6cqw), calc(100% - 2.6cqw) 100%, 0 100%);
+}
+
+/* Twinbyte: petrol, on the left, cut at the top left (cream on petrol 4.8:1) */
+.pc-us .pc-bubble {
+  background: var(--petrol);
+  color: var(--cream);
+  transform-origin: 0 100%;
+  clip-path: polygon(2.6cqw 0, 100% 0, 100% 100%, 0 100%, 0 2.6cqw);
+}
+
+/* the typing dots sit in the slot of the reply that follows them, so the
+   conversation never moves; they exist only while the chat plays */
+.pc-typing {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+  align-items: center;
+  gap: 1.2cqw;
+  padding: 3.4cqw 3.8cqw;
+  background: var(--petrol);
+  transform-origin: 0 100%;
+  clip-path: polygon(2.6cqw 0, 100% 0, 100% 100%, 0 100%, 0 2.6cqw);
+}
+
+.pc-typing i {
+  display: block;
+  width: 1.8cqw;
+  height: 1.8cqw;
+  border-radius: 50%;
+  background: var(--cream);
+}
+
+/* the confirmed call */
+.pc-card {
+  --c: 2.6cqw;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  width: 88%;
+  align-items: center;
+  gap: 3cqw;
+  padding: 3.2cqw 3.6cqw;
+  transform-origin: 0 100%;
+}
+
+.pc-card::before,
+.pc-card::after,
+.pc-pulse {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  clip-path: polygon(var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c));
+}
+
+.pc-card::before { background: #111a30; }
+
+.pc-card::after,
+.pc-pulse {
+  background: var(--mint);
+  clip-path: polygon(evenodd,
+    var(--c) 0, 100% 0, 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, 0 100%, 0 var(--c),
+    calc(var(--c) + 0.41px) 1px, calc(100% - 1px) 1px, calc(100% - 1px) calc(100% - var(--c) - 0.41px),
+    calc(100% - var(--c) - 0.41px) calc(100% - 1px), 1px calc(100% - 1px), 1px calc(var(--c) + 0.41px));
+}
+
+/* the pulse exists only while the chat plays; the final frame has none */
+.pc-pulse {
+  display: none;
+  opacity: 0;
+}
+
+.pc-fig.is-playing .pc-pulse { display: block; }
+
+.pc-check {
+  display: grid;
+  flex: none;
+  width: 8cqw;
+  height: 8cqw;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--mint);
+  color: var(--navy);
+}
+
+.pc-check svg {
+  width: 5cqw;
+  height: 5cqw;
+}
+
+.pc-card-text {
+  display: block;
+  min-width: 0;
+}
+
+.pc-card-title {
+  display: block;
+  font-family: Bricolage, Georgia, serif;
+  font-size: 4.6cqw;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.pc-card-meta {
+  display: block;
+  margin-top: 0.6cqw;
+  font-size: 3.6cqw;
+  line-height: 1.35;
+  color: #b5ad9e;
+}
+
+.pc-compose {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 2.4cqw;
+  padding: 2.4cqw 4.5cqw 6cqw;
+}
+
+.pc-field {
+  flex: 1;
+  min-width: 0;
+  padding: 2.6cqw 3.4cqw;
+  overflow: hidden;
+  background: #1b2742;
+  font-size: 4cqw;
+  line-height: 1.3;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #9a9282;
+  clip-path: polygon(2cqw 0, 100% 0, 100% calc(100% - 2cqw), calc(100% - 2cqw) 100%, 0 100%, 0 2cqw);
+}
+
+.pc-send {
+  display: grid;
+  flex: none;
+  width: 10cqw;
+  height: 10cqw;
+  place-items: center;
+  background: var(--mint);
+  color: var(--navy);
+  clip-path: polygon(2cqw 0, 100% 0, 100% calc(100% - 2cqw), calc(100% - 2cqw) 100%, 0 100%, 0 2cqw);
+}
+
+.pc-send svg {
+  width: 5.4cqw;
+  height: 5.4cqw;
+}
+
+.pc-caption {
+  margin-top: 12px;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  color: #9a9282;
+}
+
+/* ------------------------------------------------------------------ the conversation, played once
+   Armed only while off screen (PhoneChat); each item arrives on its own
+   delay (--d). With reduced motion it is never armed: the final frame. */
+.pc-fig.is-armed .pc-anim {
+  opacity: 0;
+}
+
+.pc-fig.is-armed .pc-typing {
+  display: flex;
+  opacity: 0;
+}
+
+.pc-fig.is-playing .pc-anim {
+  animation: chat-in 420ms var(--ease) var(--d, 0ms) both;
+}
+
+.pc-fig.is-playing .pc-card {
+  animation-duration: 520ms;
+}
+
+.pc-fig.is-playing .pc-typing {
+  animation:
+    chat-in 420ms var(--ease) var(--d, 0ms) both,
+    typing-out 140ms ease var(--out, 0ms) forwards;
+}
+
+.pc-fig.is-playing .pc-typing i {
+  animation: typing-dot 900ms ease-in-out var(--d, 0ms) 2 both;
+}
+
+.pc-fig.is-playing .pc-typing i:nth-child(2) { animation-delay: calc(var(--d, 0ms) + 150ms); }
+.pc-fig.is-playing .pc-typing i:nth-child(3) { animation-delay: calc(var(--d, 0ms) + 300ms); }
+
+.pc-fig.is-playing .pc-check {
+  animation: check-pop 360ms var(--ease) var(--d, 0ms) both;
+}
+
+.pc-fig.is-playing .pc-pulse {
+  animation: card-pulse 900ms var(--ease) var(--d, 0ms) forwards;
+}
+
+@keyframes chat-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes typing-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes typing-dot {
+  0%, 100% { opacity: 0.3; transform: none; }
+  50% { opacity: 1; transform: translateY(-1.5px); }
+}
+
+@keyframes check-pop {
+  0% { transform: scale(0.6); }
+  60% { transform: scale(1.12); }
+  100% { transform: none; }
+}
+
+@keyframes card-pulse {
+  from { opacity: 0.5; transform: none; }
+  to { opacity: 0; transform: scale(1.08); }
+}
+
+/* ------------------------------------------------------------------ scroll motion
+   The phone settles as it arrives and the street behind it drifts. The
+   buttons and the words never move. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .cp-phone .pc-phone {
+      animation: phone-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 35%;
+    }
+
+    .cp-backdrop-media {
+      animation: night-drift linear both;
+      animation-timeline: view();
+      animation-range: cover;
+    }
+  }
+}
+
+@keyframes phone-rise {
+  from { transform: translateY(48px); }
+  to { transform: none; }
+}
+
+@keyframes night-drift {
+  from { transform: translateY(-4%) scale(1.1); }
+  to { transform: translateY(4%) scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cp-backdrop-media video { display: none; }
+}
+
+/* ------------------------------------------------------------------ home: proof band */
+.proof-grid {
+  display: grid;
+  gap: 48px;
+}
+
+@media (min-width: 1024px) {
+  .proof-grid {
+    grid-template-columns: minmax(0, 1fr) 320px;
+    align-items: center;
+    column-gap: 64px;
+  }
+}
+
+.proof-title {
+  max-width: 20ch;
+  font-size: clamp(30px, 3.8vw, 52px);
+  line-height: 1.04;
+}
+
+.proof-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--cream);
+  text-decoration: underline;
+  text-decoration-color: rgba(244, 239, 230, 0.4);
+  text-underline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .proof-link:hover { color: var(--mint); text-decoration-color: var(--mint); }
+}
+
+.proof-phone {
+  width: min(260px, 64vw);
+  margin-inline: auto;
+}
+
+.proof-shot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+/* ------------------------------------------------------------------ home: promises */
+.promise {
+  display: flex;
+  gap: 16px;
+  padding: 24px;
+  --cut-fill: #fbf8f2;
+  --cut-ink: #cbc1ae;
+}
+
+.promise-n {
+  flex: none;
+  padding-top: 4px;
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--petrol-deep);
+}
+
+.promise-text {
+  font-family: Bricolage, Georgia, serif;
+  font-size: 19px;
+  line-height: 26px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--navy);
+  text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------------ page-head crops */
+.hero-img.pic-prices { object-position: 75% 50%; }
+.hero-img.pic-workshop { object-position: 70% 50%; }

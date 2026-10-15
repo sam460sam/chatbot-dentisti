@@ -3,7 +3,7 @@
  * all 3:2 at 1600 x 1063. Decorative: the text next to each one says what it
  * is about, so they carry an empty alt.
  */
-export type PictureName = 'assistant' | 'websites' | 'call' | 'ads'
+export type PictureName = 'assistant' | 'websites' | 'call' | 'ads' | 'prices' | 'workshop'
 
 export function Picture({
   name, sizes, className, eager = false,

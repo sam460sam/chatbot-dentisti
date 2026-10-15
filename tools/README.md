@@ -219,3 +219,54 @@ people. Each photograph is shipped as WebP at 640, 960 and 1600 px; the hero
 still at 800, 1280, 1920 and a 640 x 1080 portrait crop for phones; the loop
 (hero-loop.webm/.mp4, 1600 x 900, wide screens only) is the Kling clip minus its
 last frame, which equals the first.
+
+### The contact panel and the new page heads
+
+- `contact-night-640.webp` (640 x 1132) and `contact-night-880.webp`
+  (880 x 1556): the night street behind the phone in the home contact panel
+  (asset A1, GPT Image 2.5, 9:16 at 2k: a rainy shop window, petrol and mint
+  bokeh, the centre left dark for the phone). Each 120 KB or less (33 KB and
+  53 KB). The panel crops it with `object-position: 50% 55%`.
+- `contact-loop.webm` / `contact-loop.mp4` (720 x 1274, 5 s, no audio): the
+  same picture with the rain moving (asset A2, Kling 3, A1 as first and last
+  frame), minus its last frame so it loops without a cut. VP9 and H.264
+  (`+faststart`), each 900 KB or less (52 KB and 96 KB). Like the
+  hero loop it is wide screens only (1024 px and up), injected after the load
+  event, never with Save-Data or reduced motion, and paused off screen
+  (`Backdrop` in src/components/Contact.tsx).
+- `prices-{640,960,1600}.webp` (asset A3, blank cut-corner tags on a rail)
+  and `workshop-{640,960,1600}.webp` (asset A4, paper wireframes on a
+  workbench): the /prices and /websites page heads, 3:2 at 1600 x 1063 like
+  the other photographs. Their crops are `.pic-prices` and `.pic-workshop` in
+  src/contact.css.
+
+## qr.py — the WhatsApp QR codes, and the /wa/* short links
+
+The contact panel (desktop, with a mouse) shows a QR code that opens the same
+WhatsApp chat on the visitor's phone. Each code encodes a short address on
+this site, not the long wa.me link:
+
+    https://twinbyteservices.com/wa/{en,nl,it}                         home panel
+    https://twinbyteservices.com/wa/{lang}/{assistant,websites,prices}  inner-page bands
+
+`npm run build` ends with `scripts/wa-redirects.mjs`, which reads the
+prefilled messages from src/i18n/contact.ts and appends the twelve 302
+redirects to `dist/_redirects`. Button, code and message therefore come from
+one place: change a message there and the next build changes the redirect.
+The script fails the build if a message is missing.
+
+The SVGs only need making again if the domain or the list of pages changes.
+segno is a build-time tool, not a site dependency, so use a scratch venv:
+
+    python3 -m venv /tmp/qr-venv
+    /tmp/qr-venv/bin/pip install segno
+    /tmp/qr-venv/bin/python tools/qr.py
+
+It writes `public/brand/qr-wa-{lang}.svg` and
+`public/brand/qr-wa-{lang}-{page}.svg`: error correction M, a 4-module quiet
+zone, navy modules on a transparent ground (the cream tile is CSS), a viewBox
+and no fixed size, no XML declaration, `shape-rendering="crispEdges"`. To
+check a redirect locally, after a build:
+
+    npx -y wrangler@4 pages dev dist --port 8806 --compatibility-date 2026-09-01
+    curl -sI http://localhost:8806/wa/it/prices    # 302, Location: https://wa.me/...

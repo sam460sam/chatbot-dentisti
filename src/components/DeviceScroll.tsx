@@ -4,24 +4,13 @@ import { SITE } from '../site'
 import type { Translation } from '../i18n'
 import { Arrow } from './marks'
 import { DEMO_SCREENS } from './demoScreens'
+import { PHONE, PhoneFrame, place, type Box } from './PhoneFrame'
 
 /* Where each screen sits inside its drawing, in the drawing's own units. The
    screenshots (tools/demo-screens.mjs) are exactly as wide as the screen, so
    only their height varies: how far a picture travels is what is left of it
    below the screen, as a share of its own height. */
-const LAPTOP = { w: 1000, h: 606, x: 91, y: 24, sw: 818, sh: 511 }
-const PHONE = { w: 210, h: 420, x: 14, y: 9, sw: 182, sh: 402 }
-
-type Box = typeof LAPTOP
-
-function place(d: Box): CSSProperties {
-  return {
-    left: `${(d.x / d.w) * 100}%`,
-    top: `${(d.y / d.h) * 100}%`,
-    width: `${(d.sw / d.w) * 100}%`,
-    height: `${(d.sh / d.h) * 100}%`,
-  }
-}
+const LAPTOP: Box = { w: 1000, h: 606, x: 91, y: 24, sw: 818, sh: 511 }
 
 function travel(d: Box, shot: { w: number; h: number }): CSSProperties {
   const end = Math.max(0, 1 - (d.sh / d.sw) * (shot.w / shot.h))
@@ -107,37 +96,22 @@ export function DeviceScroll({ t }: { t: Translation }) {
               </div>
             </div>
 
-            <div className="dvs-phone">
-              <svg viewBox={`0 0 ${PHONE.w} ${PHONE.h}`} aria-hidden="true" focusable="false">
-                <defs>
-                  <linearGradient id="dvs-body" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stopColor="#5b626e" />
-                    <stop offset="0.45" stopColor="#30353e" />
-                    <stop offset="1" stopColor="#1c1f25" />
-                  </linearGradient>
-                </defs>
-                <rect x="1.5" y="98" width="5" height="30" rx="2.5" fill="#3b4049" />
-                <rect x="1.5" y="136" width="5" height="30" rx="2.5" fill="#3b4049" />
-                <rect x="203.5" y="116" width="5" height="46" rx="2.5" fill="#3b4049" />
-                <rect x="5" y="0" width="200" height="420" rx="32" fill="url(#dvs-body)" />
-                <rect x="5.75" y="0.75" width="198.5" height="418.5" rx="31.25" fill="none" stroke="#ffffff" strokeOpacity="0.16" strokeWidth="1.5" />
-                <rect x="8.5" y="3.5" width="193" height="413" rx="28.5" fill="#07090c" />
-              </svg>
-              <div className="dvs-screen dvs-screen-phone" style={place(PHONE)}>
-                <img
-                  className="dvs-shot dvs-shot-phone"
-                  style={travel(PHONE, shots.phone)}
-                  src={`${src('phone')}.webp`}
-                  srcSet={`${src('phone')}-1x.webp ${shots.phone.w1}w, ${src('phone')}.webp ${shots.phone.w}w`}
-                  sizes="(min-width: 1024px) 184px, (min-width: 640px) 134px, calc(29.5vw - 10px)"
-                  width={shots.phone.w}
-                  height={shots.phone.h}
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-            </div>
+            {/* the phone drawing is shared (PhoneFrame); its camera dot and
+                sheen stay on .dvs-screen-phone in site.css */}
+            <PhoneFrame className="dvs-phone" screenClassName="dvs-screen dvs-screen-phone" glass={false}>
+              <img
+                className="dvs-shot dvs-shot-phone"
+                style={travel(PHONE, shots.phone)}
+                src={`${src('phone')}.webp`}
+                srcSet={`${src('phone')}-1x.webp ${shots.phone.w1}w, ${src('phone')}.webp ${shots.phone.w}w`}
+                sizes="(min-width: 1024px) 184px, (min-width: 640px) 134px, calc(29.5vw - 10px)"
+                width={shots.phone.w}
+                height={shots.phone.h}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            </PhoneFrame>
 
             <p className="dvs-url cut-line cut-sm" aria-hidden="true">
               <span className="dvs-url-dot" />

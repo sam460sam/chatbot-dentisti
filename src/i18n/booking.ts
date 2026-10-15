@@ -1,4 +1,5 @@
 import type { Lang } from './types'
+import { contact } from './contact'
 
 /*
  * Copy for the booking page and the pages around it. Kept apart from the big
@@ -14,7 +15,9 @@ export interface BookingCopy {
     or: string
     request: string
     whatsapp: string
+    /** the default WhatsApp message: contact[lang].prefill.default */
     waText: string
+    email: string
     note: string
   }
   card: {
@@ -105,15 +108,16 @@ export interface BookingCopy {
 
 export const booking: Record<Lang, BookingCopy> = {
   en: {
-    nav: { book: 'Book a call', bookShort: 'Book', assistant: 'Digital assistant', websites: 'Websites', prices: 'Prices' },
+    nav: { book: 'Write to us', bookShort: 'Contact', assistant: 'Digital assistant', websites: 'Websites', prices: 'Prices' },
     hero: {
       eyebrow: 'Discovery call · 15 minutes · free',
-      title: 'Let’s talk about your business.',
-      lead: 'We build digital assistants and fast websites for small businesses. In a free 15-minute call we get to know each other, hear what you need and show you how we work.',
+      title: 'The shop is closed. Your website isn’t.',
+      lead: 'We build fast websites like this one for local businesses, with an assistant that answers your customers and books their appointments, even at night. And if you want them, Instagram and Facebook ads for people nearby.',
       or: 'Or',
       request: 'Send a request',
       whatsapp: 'WhatsApp us',
-      waText: 'Hi Twinbyte, I would like to talk about my business.',
+      waText: contact.en.prefill.default,
+      email: 'Email us',
       note: 'You always talk directly to the Twinbyte team. There is no call centre.',
     },
     card: {
@@ -196,9 +200,9 @@ export const booking: Record<Lang, BookingCopy> = {
       mailSubject: 'Request from the website',
     },
     related: {
-      eyebrow: 'Before you book',
-      title: 'Want to look around first?',
-      lead: 'Everything we do, on separate pages. Read what you need, then book the call.',
+      eyebrow: 'What we do',
+      title: 'Three things, done properly.',
+      lead: 'Read what interests you. Website and assistant prices are on the site; ads we agree with you.',
       cards: [
         { key: 'assistant', tag: 'Digital assistant', title: 'Answers your customers when you cannot', body: 'It sits on your website, answers from your information only, and books appointments into the calendar you already use.', cta: 'How the assistant works' },
         { key: 'websites', tag: 'Websites', title: 'The page they judge you on', body: 'Fast, clear websites for small businesses: hours, prices, where you are, one tap to call.', cta: 'What a website includes' },
@@ -208,12 +212,12 @@ export const booking: Record<Lang, BookingCopy> = {
     },
     closing: {
       title: 'A missed call does not leave a message. It calls the next business on the list.',
-      lead: '15 minutes is enough to see whether we can help.',
+      lead: 'Send us two lines: what your business is and what you need. We set up the free 15-minute call at a time that suits you.',
       book: 'Book the 15-minute call',
       whatsapp: 'WhatsApp us',
     },
     page: { book: 'Book a free 15-minute call', bookLead: 'Questions about this page? Ask them in the call.' },
-    mail: { websitesSubject: 'Question about a website for my business', bundleWa: 'Hello Twinbyte, I would like a quote for the full site + assistant bundle.' },
+    mail: { websitesSubject: 'Question about a website for my business', bundleWa: 'Hi Twinbyte, I am interested in the Full site + Assistant bundle. When could we talk?' },
     float: 'WhatsApp',
     privacy: {
       title: 'When you book a call or send a request',
@@ -228,15 +232,16 @@ export const booking: Record<Lang, BookingCopy> = {
   },
 
   nl: {
-    nav: { book: 'Plan een gesprek', bookShort: 'Plannen', assistant: 'Digitale assistent', websites: 'Websites', prices: 'Tarieven' },
+    nav: { book: 'Neem contact op', bookShort: 'Contact', assistant: 'Digitale assistent', websites: 'Websites', prices: 'Tarieven' },
     hero: {
       eyebrow: 'Kennismakings\u00ADgesprek · 15 minuten · gratis',
-      title: 'Laten we het over uw bedrijf hebben.',
-      lead: 'We bouwen digitale assistenten en snelle websites voor kleine bedrijven. In een gratis gesprek van 15 minuten maken we kennis, horen we wat u nodig heeft en laten we zien hoe we werken.',
+      title: 'De winkel is dicht. Uw website niet.',
+      lead: 'Wij bouwen snelle websites zoals deze voor lokale bedrijven, met een assistent die uw klanten antwoordt en hun afspraken inplant, ook ’s avonds laat. En als u wilt: advertenties op Instagram en Facebook voor mensen in uw buurt.',
       or: 'Of',
       request: 'Stuur een aanvraag',
       whatsapp: 'Stuur een WhatsApp',
-      waText: 'Hallo Twinbyte, ik wil graag over mijn bedrijf praten.',
+      waText: contact.nl.prefill.default,
+      email: 'Stuur een e-mail',
       note: 'U spreekt altijd rechtstreeks met het team van Twinbyte. Er is geen callcenter.',
     },
     card: {
@@ -319,24 +324,24 @@ export const booking: Record<Lang, BookingCopy> = {
       mailSubject: 'Aanvraag via de website',
     },
     related: {
-      eyebrow: 'Voordat u plant',
-      title: 'Wilt u eerst meer weten?',
-      lead: 'Alles wat we doen, op aparte pagina’s. Lees wat u nodig heeft en plan dan het gesprek.',
+      eyebrow: 'Wat we doen',
+      title: 'Drie dingen, goed gedaan.',
+      lead: 'Lees wat u interesseert. De prijzen van websites en assistent staan op de site; advertenties spreken we met u af.',
       cards: [
         { key: 'assistant', tag: 'Digitale assistent', title: 'Staat uw klanten te woord als u dat niet kunt', body: 'Hij staat op uw website, antwoordt alleen met uw eigen informatie en zet afspraken in de agenda die u al gebruikt.', cta: 'Hoe de assistent werkt' },
-        { key: 'websites', tag: 'Websites', title: 'De pagina waarop men u beoordeelt', body: 'Snelle, duidelijke websites voor kleine bedrijven: openingstijden, prijzen, waar u zit, met één tik bellen.', cta: 'Wat een website omvat' },
+        { key: 'websites', tag: 'Websites', title: 'De pagina waarop klanten u beoordelen', body: 'Snelle, duidelijke websites voor kleine bedrijven: openingstijden, prijzen, waar u zit, met één tik bellen.', cta: 'Wat u krijgt bij een website' },
         { key: 'prices', tag: 'Tarieven', title: 'De hele prijslijst, gewoon op de pagina', body: 'Elk pakket met zijn prijs. De eerste drie klanten krijgen het introductieaanbod.', cta: 'Bekijk de tarieven' },
         { key: 'showcase', tag: 'Showcase', title: 'Wat we kunnen bouwen', body: 'Een pagina die meebeweegt met het scrollen, gebouwd om te laten zien wat voor werk we maken.', cta: 'Open de showcase' },
       ],
     },
     closing: {
       title: 'Wie u niet bereikt, spreekt geen bericht in. Die belt het volgende bedrijf op de lijst.',
-      lead: '15 minuten is genoeg om te zien of we u kunnen helpen.',
+      lead: 'Stuur ons twee regels: wat voor bedrijf u heeft en wat u nodig heeft. Het gratis gesprek van 15 minuten plannen we op een moment dat u uitkomt.',
       book: 'Plan het gesprek van 15 minuten',
       whatsapp: 'Stuur een WhatsApp',
     },
     page: { book: 'Plan een gratis gesprek van 15 minuten', bookLead: 'Vragen over deze pagina? Stel ze in het gesprek.' },
-    mail: { websitesSubject: 'Vraag over een website voor mijn bedrijf', bundleWa: 'Hallo Twinbyte, ik wil graag een offerte voor het pakket volledige site + assistent.' },
+    mail: { websitesSubject: 'Vraag over een website voor mijn bedrijf', bundleWa: 'Hallo Twinbyte, ik heb interesse in het pakket Volledige site + Assistent. Wanneer kunnen we even bellen?' },
     float: 'WhatsApp',
     privacy: {
       title: 'Als u een gesprek plant of een aanvraag stuurt',
@@ -351,15 +356,16 @@ export const booking: Record<Lang, BookingCopy> = {
   },
 
   it: {
-    nav: { book: 'Prenota una chiamata', bookShort: 'Prenota', assistant: 'Assistente digitale', websites: 'Siti web', prices: 'Prezzi' },
+    nav: { book: 'Scrivici', bookShort: 'Scrivici', assistant: 'Assistente digitale', websites: 'Siti web', prices: 'Prezzi' },
     hero: {
       eyebrow: 'Chiamata conoscitiva · 15 minuti · gratuita',
-      title: 'Parliamo della tua attività.',
-      lead: 'Creiamo assistenti digitali e siti web veloci per piccole attività. In una chiamata gratuita di 15 minuti ci conosciamo, capiamo cosa ti serve e ti mostriamo come lavoriamo.',
+      title: 'Il negozio è chiuso. Il tuo sito no.',
+      lead: 'Facciamo siti veloci come questo per attività locali, con un assistente che risponde ai clienti e fissa gli appuntamenti, anche di notte. E se vuoi, pubblicità su Instagram e Facebook per chi abita in zona.',
       or: 'Oppure',
       request: 'Invia una richiesta',
       whatsapp: 'Scrivici su WhatsApp',
-      waText: 'Ciao Twinbyte, vorrei parlare della mia attività.',
+      waText: contact.it.prefill.default,
+      email: 'Scrivici un’email',
       note: 'Parli sempre direttamente con il team Twinbyte. Nessun call center.',
     },
     card: {
@@ -442,24 +448,24 @@ export const booking: Record<Lang, BookingCopy> = {
       mailSubject: 'Richiesta dal sito',
     },
     related: {
-      eyebrow: 'Prima di prenotare',
-      title: 'Vuoi dare prima un’occhiata?',
-      lead: 'Tutto quello che facciamo, in pagine separate. Leggi quello che ti serve, poi prenota la chiamata.',
+      eyebrow: 'Cosa facciamo',
+      title: 'Tre cose, fatte bene.',
+      lead: 'Leggi quello che ti interessa. I prezzi di siti e assistente sono sul sito; la pubblicità la concordiamo con te.',
       cards: [
         { key: 'assistant', tag: 'Assistente digitale', title: 'Risponde ai tuoi clienti quando tu non puoi', body: 'Sta sul tuo sito, risponde solo con le tue informazioni e fissa gli appuntamenti nell’agenda che usi già.', cta: 'Come funziona l’assistente' },
         { key: 'websites', tag: 'Siti web', title: 'La pagina su cui ti giudicano', body: 'Siti veloci e chiari per piccole attività: orari, prezzi, dove sei, un tocco per chiamare.', cta: 'Cosa comprende un sito' },
-        { key: 'prices', tag: 'Prezzi', title: 'Il listino completo, scritto sulla pagina', body: 'Ogni piano con il suo prezzo. I primi tre clienti hanno l’offerta di lancio.', cta: 'Vedi i prezzi' },
+        { key: 'prices', tag: 'Prezzi', title: 'Tutti i prezzi, nero su bianco', body: 'Ogni piano con il suo prezzo. I primi tre clienti hanno l’offerta di lancio.', cta: 'Vedi i prezzi' },
         { key: 'showcase', tag: 'Showcase', title: 'Cosa possiamo costruire', body: 'Una pagina che si muove con lo scroll, costruita per mostrare il tipo di lavoro che facciamo.', cta: 'Apri lo showcase' },
       ],
     },
     closing: {
-      title: 'Chi non ti trova non lascia un messaggio: chiama l’attività successiva della lista.',
-      lead: '15 minuti bastano per capire se possiamo aiutarti.',
+      title: 'Chi non ti trova non lascia un messaggio. Chiama il prossimo della lista.',
+      lead: 'Scrivici due righe: che attività hai e cosa ti serve. La chiamata gratuita di 15 minuti la fissiamo quando va bene a te.',
       book: 'Prenota la chiamata da 15 minuti',
       whatsapp: 'Scrivici su WhatsApp',
     },
     page: { book: 'Prenota una chiamata gratuita di 15 minuti', bookLead: 'Domande su questa pagina? Falle durante la chiamata.' },
-    mail: { websitesSubject: 'Domanda su un sito web per la mia attività', bundleWa: 'Ciao Twinbyte, vorrei un preventivo per il pacchetto sito completo + assistente.' },
+    mail: { websitesSubject: 'Domanda su un sito web per la mia attività', bundleWa: 'Ciao Twinbyte, mi interessa il pacchetto Sito completo + Assistente. Quando possiamo sentirci?' },
     float: 'WhatsApp',
     privacy: {
       title: 'Quando prenoti una chiamata o invii una richiesta',
