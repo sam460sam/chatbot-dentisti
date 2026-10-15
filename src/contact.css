@@ -36,13 +36,22 @@
   }
 }
 
-/* On a phone the headline is three lines in the fallback serif and two or
-   three in Bricolage. The hero is bottom-aligned, so one line fewer when
-   the font arrives would move everything above it (a layout shift on the
-   LCP text). Three lines are always reserved, and the words sit at the
-   bottom of that box: when Bricolage takes two, the space opens under the
-   eyebrow and nothing moves. */
-@media (max-width: 767.98px) {
+/* The headline's measure in em, not ch: 13ch is 7.72em in Bricolage but
+   6.5em in a fallback serif, so the box itself changed width when the
+   font arrived and the headline went from three lines to two (a layout
+   shift of the whole hero and everything below it). Same box in both
+   fonts, same breaks. */
+.hero.hero-plate .hero-title {
+  max-width: 7.72em;
+}
+
+/* On phones and tablets the two fonts can still break differently (three
+   lines in one, two in the other). The hero is bottom-aligned, so a line
+   fewer when the font arrives would move everything above it. Three lines
+   are always reserved, with the words at the bottom of that box: when
+   Bricolage takes two, the space opens under the eyebrow and nothing
+   moves. */
+@media (max-width: 1023.98px) {
   .hero.hero-plate .hero-title {
     display: flex;
     min-height: 2.88em; /* 3 x line-height 0.96 */
