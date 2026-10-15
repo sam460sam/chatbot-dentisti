@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/prerender-meta.mjs && node scripts/showcase-i18n.mjs && node scripts/check-placeholders.mjs",
+    "build": "tsc -b && vite build && node scripts/prerender-meta.mjs && node scripts/showcase-i18n.mjs && node scripts/check-placeholders.mjs && node --experimental-strip-types scripts/wa-redirects.mjs",
     "preview": "vite preview",
     "test": "node --experimental-strip-types --test tests/slots.test.ts tests/mail.test.ts",
     "dev:api": "npm run build && npx -y wrangler@4 pages dev dist --compatibility-date 2026-09-01"
