@@ -133,8 +133,8 @@ function Chips({ lang, className = '' }: { lang: Lang; className?: string }) {
   )
 }
 
-/* The night street behind the phone (A1), and on a wide screen its slow loop
-   (A2). The loop follows the hero's rules: only from 1024px, only after the
+/* The night street behind the phone (A1), after the load event, and on a
+   wide screen its slow loop (A2). The loop follows the hero's rules: only from 1024px, only after the
    page has loaded, never with Save-Data or reduced motion, paused while the
    panel is off screen. If it never comes, the still is the backdrop. */
 const NIGHT = {
@@ -144,9 +144,22 @@ const NIGHT = {
 const NIGHT_LOOP = { webm: '/media/contact-loop.webm', mp4: '/media/contact-loop.mp4' }
 
 function Backdrop({ panel }: { panel: React.RefObject<HTMLElement> }) {
+  const [still, setStill] = useState(false)
   const [loop, setLoop] = useState(false)
   const [playing, setPlaying] = useState(false)
   const video = useRef<HTMLVideoElement>(null)
+
+  /* The still waits for the load event too. On a phone the panel starts
+     just under the hero, inside the lazy-loading distance, so a plain lazy
+     image would share the first second's bandwidth with the hero picture
+     (the LCP). It is only a shaded backdrop: until it comes, the plate's
+     own navy is behind the phone, in a box that never changes size. */
+  useEffect(() => {
+    const show = () => setStill(true)
+    if (document.readyState === 'complete') show()
+    else window.addEventListener('load', show, { once: true })
+    return () => window.removeEventListener('load', show)
+  }, [])
 
   useEffect(() => {
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData
@@ -178,16 +191,18 @@ function Backdrop({ panel }: { panel: React.RefObject<HTMLElement> }) {
   return (
     <div className="cp-backdrop" aria-hidden="true">
       <div className="cp-backdrop-media">
-        <img
-          src={NIGHT.src}
-          srcSet={NIGHT.srcSet}
-          sizes="(min-width: 1024px) 440px, 100vw"
-          alt=""
-          width={880}
-          height={1556}
-          loading="lazy"
-          decoding="async"
-        />
+        {still && (
+          <img
+            src={NIGHT.src}
+            srcSet={NIGHT.srcSet}
+            sizes="(min-width: 1024px) 440px, 100vw"
+            alt=""
+            width={880}
+            height={1556}
+            loading="lazy"
+            decoding="async"
+          />
+        )}
         {loop && (
           <video
             ref={video}
