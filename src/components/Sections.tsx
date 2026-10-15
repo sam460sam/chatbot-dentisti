@@ -184,9 +184,12 @@ export function WebsitesSection({ t, bare }: { t: Translation; bare?: boolean })
           {/* The websites column sits 48px lower, so the spread reads as typeset
               rather than as two matched columns. */}
           <div className="lg:pt-6">
-            <SiteWireframe t={t} />
+            {/* On /websites (bare) the next section shows the demo site on a
+                laptop and a phone, so a drawn wireframe here would only
+                repeat it less well. */}
+            {!bare && <SiteWireframe t={t} />}
 
-            <p className="t-body mt-3 text-small">{t.websites.quoteNote}</p>
+            <p className={`t-body text-small ${bare ? '' : 'mt-3'}`}>{t.websites.quoteNote}</p>
 
             <div className="mt-2 flex flex-col gap-1 sm:flex-row sm:flex-wrap">
               <a className="btn-verm" href={waLink(t.wa.websitesQuote)} rel="noopener">
@@ -221,36 +224,66 @@ export function WebsitesSection({ t, bare }: { t: Translation; bare?: boolean })
 export function PricesAndFaq({ t, head = true }: { t: Translation; head?: boolean }) {
   return (
     <>
-      {/* ----------------------------------------------------------- FAQ */}
       <Pricing t={t} head={head} />
-
-      <section id="faq" aria-labelledby="faq-title" className="band-deep">
-        <div className="container-page">
-          <div className="border-t-2 border-ink pt-2">
-            <h2 id="faq-title" className="t-h2">
-              {t.faq.title}
-            </h2>
-          </div>
-          <p className="t-lead mt-2">{t.faq.lead}</p>
-
-          <div className="mt-5 max-w-measure">
-            {t.faq.items.map((item) => (
-              <details key={item.q} className="group border-b border-paper-edge-deep first:border-t">
-                <summary className="flex cursor-pointer list-none items-start justify-between gap-2 py-2 font-display text-h4 font-bold text-ink marker:content-none">
-                  {item.q}
-                  <span
-                    aria-hidden="true"
-                    className="mt-0.5 shrink-0 text-h4 font-normal text-ink-mute transition-transform group-open:rotate-45"
-                  >
-                    +
-                  </span>
-                </summary>
-                <p className="t-body pb-2 text-small">{item.a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FaqSection t={t} />
     </>
+  )
+}
+
+/* The word "WhatsApp" in the FAQ lead becomes the link it talks about. The
+   copy is split on the word rather than marked up, so a translation that
+   drops it simply renders as plain text. */
+function FaqLead({ t }: { t: Translation }) {
+  const [before, ...after] = t.faq.lead.split('WhatsApp')
+  if (!after.length) return <p className="t-lead mt-2">{t.faq.lead}</p>
+  return (
+    <p className="t-lead mt-2">
+      {before}
+      <a
+        className="font-semibold text-ink underline decoration-ink-mute underline-offset-4 hover:decoration-ink"
+        href={waLink(t.wa.generic)}
+        rel="noopener"
+      >
+        WhatsApp
+      </a>
+      {after.join('WhatsApp')}
+    </p>
+  )
+}
+
+/* The FAQ. On /prices it lists every item; `only` repeats the short set
+   tagged for the home page or /assistant (`show` in the copy), in the same
+   order, so each page answers its own visitor's worries without a second list
+   to keep in step. */
+export function FaqSection({ t, only }: { t: Translation; only?: 'home' | 'assistant' }) {
+  const items = only ? t.faq.items.filter((item) => item.show?.includes(only)) : t.faq.items
+  return (
+    <section id="faq" aria-labelledby="faq-title" className="band-deep">
+      <div className="container-page">
+        <div className="border-t-2 border-ink pt-2">
+          <h2 id="faq-title" className="t-h2">
+            {t.faq.title}
+          </h2>
+        </div>
+        <FaqLead t={t} />
+
+        <div className="mt-5 max-w-measure">
+          {items.map((item) => (
+            <details key={item.q} className="group border-b border-paper-edge-deep first:border-t">
+              <summary className="flex cursor-pointer list-none items-start justify-between gap-2 py-2 font-display text-h4 font-bold text-ink marker:content-none">
+                {item.q}
+                <span
+                  aria-hidden="true"
+                  className="mt-0.5 shrink-0 text-h4 font-normal text-ink-mute transition-transform group-open:rotate-45"
+                >
+                  +
+                </span>
+              </summary>
+              <p className="t-body pb-2 text-small">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }

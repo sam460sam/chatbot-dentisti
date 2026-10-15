@@ -39,7 +39,7 @@ export const it: Translation = {
   },
   pricing: {
     eyebrow: 'Quanto costa',
-    title: 'Il listino completo, scritto sulla pagina',
+    title: 'Tutti i prezzi, nero su bianco',
     lead: 'Non serve una telefonata per sapere quanto spendi. Questi sono prezzi di lancio: saliranno, e chi firma adesso tiene i suoi.',
     launch: {
       tag: 'Offerta di lancio \u2014 primi tre clienti',
@@ -51,6 +51,8 @@ export const it: Translation = {
       ],
       savingLabel: 'Risparmi (attivazione + primi tre mesi)',
       saving: '\u20AC724',
+      cta: 'Chiedi uno dei tre posti',
+      wa: 'Ciao Twinbyte, vorrei l’offerta di lancio (sito completo + assistente). C’è ancora un posto libero?',
     },
     bar: {
       text: 'Primi tre clienti: l\u2019assistente \u00e8 incluso con il sito.',
@@ -75,7 +77,7 @@ export const it: Translation = {
         name: 'Assistente',
         setup: '\u20AC190',
         month: '\u20AC59',
-        points: ['300 conversazioni al mese', 'Fissa nell\u2019agenda che usi gi\u00e0', 'Una lingua'],
+        points: ['300 conversazioni al mese', 'Fissa gli appuntamenti nell\u2019agenda che usi gi\u00e0', 'Una lingua'],
       },
       {
         name: 'Assistente Pro',
@@ -98,7 +100,9 @@ export const it: Translation = {
       'Mese per mese, un mese di preavviso. Mai un contratto lungo.',
       'Prezzi in euro, per aziende. L\u2019IVA, dove dovuta, \u00e8 indicata in preventivo.',
     ],
-    cta: 'Chiedi un preventivo',
+    cta: 'Chiedi il pacchetto',
+    planCta: 'Chiedi questo piano',
+    planWa: 'Ciao Twinbyte, mi interessa il piano «{plan}». Quando possiamo sentirci?',
   },
   split: {
     title: 'Due servizi, fatti bene entrambi',
@@ -152,7 +156,7 @@ export const it: Translation = {
   },
   dayStrip: {
     eyebrow: 'Un martedì',
-    title: 'Sei aperto otto di queste ventiquattro ore',
+    title: 'Sei aperto 8 ore su 24',
     caption: 'Le altre sedici non sono di nessuno. Chi scrive alle 21:40 non è un rompiscatole: è l’ora in cui finalmente si è seduto.',
     legendOpen: 'Aperto — rispondi tu',
     legendShut: 'Chiuso — risponde l’assistente',
@@ -177,7 +181,7 @@ export const it: Translation = {
   },
   benefits: {
     title: 'Cosa ci guadagna la tua attività',
-    lead: 'È nato negli studi dentistici, dove una chiamata persa è un paziente perso. Lo stesso problema c’è in qualsiasi attività che prende appuntamenti: un salone, un’officina, uno studio professionale, una clinica, un centro estetico.',
+    lead: 'L’abbiamo progettato prima per gli studi dentistici, dove una chiamata persa è un paziente perso. Lo stesso problema c’è in qualsiasi attività che prende appuntamenti: un salone, un’officina, uno studio professionale, una clinica, un centro estetico.',
     items: [
       {
         title: 'Meno telefonate a cui rispondere',
@@ -213,15 +217,15 @@ export const it: Translation = {
   },
   websites: {
     title: 'Siti web per piccole attività',
-    lead: 'Oltre all’assistente realizziamo siti web: quelli che servono davvero a una piccola attività. Chiari, veloci e costruiti intorno a quello che cercano i tuoi clienti.',
+    lead: 'Siti chiari e veloci per piccole attività: i tuoi orari, cosa fai, dove sei e un tocco per chiamare, facili da trovare su qualsiasi telefono.',
     cta: 'Chiedi informazioni su un sito',
     includesTitle: 'Cosa comprende un sito',
     includes: [
-      'Pagine scritte insieme a te — parole tue, niente testo riempitivo',
+      'Pagine scritte insieme a te: parole tue, niente frasi fatte',
       'Impostato bene per Google: titoli, descrizioni, la tua attività sulla mappa',
       'Contatti che la gente usa davvero: WhatsApp, telefono, email',
       'Hosting e piccole modifiche compresi nel canone mensile, nessuna spesa di hosting a parte',
-      'Niente cookie e niente tracciamento, quindi nessun banner in faccia al cliente',
+      'Niente cookie e niente tracciamento, quindi nessun banner che copre la pagina',
     ],
     whoTitle: 'Per chi va bene',
     who: 'Negozi, officine, artigiani, studi, centri, chiunque venga cercato dal telefono prima di essere chiamato. Se ti serve un e-commerce con centinaia di prodotti non siamo le persone giuste, e te lo diciamo.',
@@ -234,10 +238,12 @@ export const it: Translation = {
     items: [
       {
         q: 'I miei clienti odiano i chatbot. Perché questo dovrebbe essere diverso?',
+        show: ['home', 'assistant'],
         a: 'Perché la maggior parte non risponde: filtra. Menu infiniti per evitare una persona. Questo risponde alla domanda, fissa l’appuntamento e, appena non può aiutare, prende nome e numero e passa la palla a te. Al cliente viene detto dalla prima riga che non è una persona.',
       },
       {
         q: 'Cosa gli impedisce di dire cose sbagliate?',
+        show: ['assistant'],
         a: 'Risponde partendo dalle informazioni che ci dai — i tuoi orari, i tuoi servizi, i tuoi prezzi — e da nient’altro. Quando non sa una cosa lo dice, prende i dati e passa la domanda a te invece di inventare una risposta.',
       },
       {
@@ -246,27 +252,45 @@ export const it: Translation = {
       },
       {
         q: 'Funziona con il sito che abbiamo già?',
+        show: ['assistant'],
         a: 'Sì, se possiamo aggiungerci una riga di codice. È possibile su quasi tutti i siti — WordPress, Wix, Squarespace, Shopify o sviluppati su misura. Per il resto il tuo sito resta esattamente com’è.',
       },
       {
         q: 'Dobbiamo cambiare agenda o gestionale?',
+        show: ['assistant'],
         a: 'No. Configuriamo l’assistente sull’agenda con cui lavori già: con Google Calendar è pronto, per altri gestionali valutiamo insieme l’integrazione prima di partire. Gli appuntamenti compaiono come eventi normali e puoi spostarli o cancellarli come sempre.',
       },
       {
         q: 'E se volessimo smettere?',
+        show: ['assistant'],
         a: 'Ce lo dici e togliamo l’assistente dal sito. L’abbonamento è mese per mese, con un mese di preavviso.',
+      },
+      {
+        q: 'Non sono pratico di computer. È un problema?',
+        show: ['home'],
+        a: 'No. Non devi imparare niente: nessun pannello da gestire. I testi li scriviamo insieme, e quando cambia qualcosa (un orario, un prezzo, una foto) ce lo scrivi su WhatsApp e lo aggiorniamo noi. Le piccole modifiche sono comprese nel canone.',
+      },
+      {
+        q: 'Ho già un sito. Me ne serve uno nuovo?',
+        show: ['home'],
+        a: 'Per l’assistente no: si aggiunge al sito che hai già con una riga di codice, e il resto non cambia. Se il tuo sito è lento o si legge male dal telefono, te ne facciamo uno nuovo: i prezzi sono nella pagina Prezzi.',
+      },
+      {
+        q: 'L’assistente risponde al telefono?',
+        show: ['home', 'assistant'],
+        a: 'No. Risponde in chat sul tuo sito, solo con le tue informazioni, e fissa gli appuntamenti nella tua agenda. Quello che non sa gestire passa a te, con nome e numero del cliente.',
       },
     ],
   },
   contact: {
     title: 'Parliamone',
     email: 'Scrivici un’email',
-    emailSubject: 'Domanda sull’assistente Twinbyte',
+    emailSubject: 'Domanda per Twinbyte',
     note: 'Ti risponde sempre direttamente il team Twinbyte: dietro non c’è nessun call center.',
     regions: 'Lavoriamo da remoto con attività in qualsiasi parte del mondo. Ovunque tu sia, l’assistente risponde nella lingua dei tuoi clienti.',
   },
   footer: {
-    tagline: 'Assistenti digitali e siti web veloci per piccole attività.',
+    tagline: 'Siti web veloci, assistente digitale e pubblicità online per attività locali.',
     colophon: 'Composto in Bricolage Grotesque, Inter e Instrument Serif. Fatto nei Paesi Bassi. Questo sito non usa cookie, non fa analytics e non carica pixel di tracciamento.',
     privacy: 'Informativa privacy',
     rights: 'Tutti i diritti riservati.',
@@ -363,7 +387,7 @@ export const it: Translation = {
   wa: {
     generic: 'Ciao Twinbyte, ho una domanda sull’assistente digitale.',
     assistantQuote:
-      'Ciao Twinbyte, vorrei un preventivo per l’assistente digitale per la mia attività.',
-    websitesQuote: 'Ciao Twinbyte, vorrei un preventivo per un sito web per la mia attività.',
+      'Ciao Twinbyte, ho letto dell’assistente digitale e lo vorrei per la mia attività. Quando possiamo sentirci?',
+    websitesQuote: 'Ciao Twinbyte, vorrei un sito per la mia attività. Quando possiamo sentirci?',
   },
 }

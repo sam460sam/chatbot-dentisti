@@ -68,6 +68,11 @@ export function Pricing({ t, head = true }: { t: Translation; head?: boolean }) 
               {p.launch.saving}
             </span>
           </p>
+
+          <a className="btn-mint mt-3" href={waLink(p.launch.wa)} rel="noopener">
+            {p.launch.cta}
+            <Arrow />
+          </a>
         </div>
 
         <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -117,6 +122,22 @@ export function Pricing({ t, head = true }: { t: Translation; head?: boolean }) 
                     </li>
                   ))}
                 </ul>
+
+                {/* A small button, not a big one: the plan cards are for
+                    comparing, and the bundle below is the offer we push. The
+                    message names the plan, so nobody has to say it again. The
+                    shared button rule (site.css) sets 52px and 15px, which
+                    the ! utilities bring down to a compact 44px tap target. */}
+                <div className="mt-auto pt-3">
+                  <a
+                    className="btn-line !min-h-[44px] !gap-1 !px-2 !text-small"
+                    href={waLink(p.planWa.replace('{plan}', plan.name))}
+                    rel="noopener"
+                  >
+                    {p.planCta}
+                    <Arrow size={16} />
+                  </a>
+                </div>
               </article>
             )
           })}

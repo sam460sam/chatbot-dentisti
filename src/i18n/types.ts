@@ -84,6 +84,10 @@ export interface Translation {
       rows: { label: string; value: string; was: string }[]
       savingLabel: string
       saving: string
+      /** the button under the plate */
+      cta: string
+      /** its prefilled WhatsApp message */
+      wa: string
     }
     /** the one-line version that sits at the top of the first screen */
     bar: { text: string; cta: string }
@@ -93,7 +97,12 @@ export interface Translation {
     plans: { name: string; setup: string; month: string; plus?: string; points: string[] }[]
     bundle: { tag: string; name: string; setup: string; month: string; body: string }
     fine: string[]
+    /** the bundle button */
     cta: string
+    /** the small button at the foot of every plan card */
+    planCta: string
+    /** its prefilled WhatsApp message; '{plan}' becomes the plan's name */
+    planWa: string
   }
   /** The demo practice on a laptop and a phone, its pages scrolling past on
       both screens as the visitor scrolls (src/components/DeviceScroll.tsx).
@@ -135,7 +144,9 @@ export interface Translation {
     /** link to /showcase, the scroll-driven demonstration page */
     showcase: string
   }
-  faq: { title: string; lead: string; items: { q: string; a: string }[] }
+  /** `show` picks the pages that repeat an item in a short FAQ (FaqSection
+      with `only`); the full list on /prices shows every item regardless. */
+  faq: { title: string; lead: string; items: { q: string; a: string; show?: ('home' | 'assistant')[] }[] }
   contact: {
     title: string
     email: string

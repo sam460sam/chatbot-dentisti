@@ -51,6 +51,8 @@ export const nl: Translation = {
       ],
       savingLabel: 'U bespaart (eenmalig + eerste drie maanden)',
       saving: '\u20AC864',
+      cta: 'Vraag een van de drie plekken aan',
+      wa: 'Hallo Twinbyte, ik wil graag het introductieaanbod (volledige site + assistent). Is er nog een plek vrij?',
     },
     bar: {
       text: 'Eerste drie klanten: de assistent krijgt u gratis bij een website.',
@@ -60,7 +62,7 @@ export const nl: Translation = {
     monthLabel: 'Per maand',
     plans: [
       {
-        name: 'E\u00e9npagina-site',
+        name: 'Website van \u00e9\u00e9n pagina',
         setup: '\u20AC590',
         month: '\u20AC19',
         points: ['Alles op \u00e9\u00e9n scherm: openingstijden, adres, \u00e9\u00e9n tik om te bellen', 'Geschreven in uw eigen taal', 'Hosting en kleine wijzigingen inbegrepen'],
@@ -86,7 +88,7 @@ export const nl: Translation = {
       },
     ],
     bundle: {
-      tag: 'Allebei samen',
+      tag: 'Samen in \u00e9\u00e9n pakket',
       name: 'Volledige site + Assistent',
       setup: '\u20AC860',
       month: '\u20AC79',
@@ -98,7 +100,9 @@ export const nl: Translation = {
       'Maand per maand, \u00e9\u00e9n maand opzegtermijn. Nooit een lang contract.',
       'Prijzen in euro, zakelijk. Btw wordt, waar van toepassing, op de offerte vermeld.',
     ],
-    cta: 'Vraag een offerte',
+    cta: 'Vraag het pakket aan',
+    planCta: 'Vraag dit pakket aan',
+    planWa: 'Hallo Twinbyte, ik heb interesse in het pakket “{plan}”. Wanneer kunnen we even bellen?',
   },
   split: {
     title: 'Twee diensten, allebei goed gedaan',
@@ -177,7 +181,7 @@ export const nl: Translation = {
   },
   benefits: {
     title: 'Wat uw bedrijf eraan heeft',
-    lead: 'Het begon bij tandartspraktijken, waar een gemist telefoontje een verloren patiënt is. Datzelfde probleem heeft elk bedrijf dat op afspraak werkt: een salon, een garage, een praktijk, een studio, een adviesbureau.',
+    lead: 'We hebben hem eerst ontworpen voor tandartspraktijken, waar een gemist telefoontje een verloren patiënt is. Datzelfde probleem heeft elk bedrijf dat op afspraak werkt: een salon, een garage, een praktijk, een studio, een adviesbureau.',
     items: [
       {
         title: 'Minder telefoontjes om op te nemen',
@@ -213,9 +217,9 @@ export const nl: Translation = {
   },
   websites: {
     title: 'Websites voor kleine bedrijven',
-    lead: 'Naast de assistent bouwen we websites — het soort site dat een klein bedrijf echt nodig heeft: duidelijk, snel en gebouwd rond wat uw klanten zoeken.',
+    lead: 'Duidelijke, snelle websites voor kleine bedrijven: uw openingstijden, wat u doet, waar u zit en met één tik bellen, makkelijk te vinden op elke telefoon.',
     cta: 'Vraag naar een website',
-    includesTitle: 'Wat een site omvat',
+    includesTitle: 'Wat er bij een website hoort',
     includes: [
       'Pagina\u2019s samen met u geschreven — uw woorden, geen opvultekst',
       'Goed ingesteld voor Google: titels, omschrijvingen, uw bedrijf op de kaart',
@@ -234,10 +238,12 @@ export const nl: Translation = {
     items: [
       {
         q: 'Mijn klanten hebben een hekel aan chatbots. Waarom zou dit anders zijn?',
+        show: ['home', 'assistant'],
         a: 'Omdat de meeste geen antwoord geven maar afhouden: eindeloze menu’s om een mens te vermijden. Deze beantwoordt de vraag, plant de afspraak en geeft, zodra hij niet kan helpen, naam en nummer door aan u. De klant krijgt vanaf de eerste regel te horen dat het geen persoon is.',
       },
       {
         q: 'Wat voorkomt dat hij iets verkeerds zegt?',
+        show: ['assistant'],
         a: 'Hij antwoordt op basis van de informatie die u ons geeft — uw tijden, uw diensten, uw prijzen — en niets anders. Weet hij iets niet, dan zegt hij dat, noteert de gegevens en legt de vraag bij u neer in plaats van een antwoord te verzinnen.',
       },
       {
@@ -246,27 +252,45 @@ export const nl: Translation = {
       },
       {
         q: 'Werkt het met onze huidige website?',
+        show: ['assistant'],
         a: 'Ja, zolang we er één regel code aan kunnen toevoegen. Dat kan bij vrijwel elke site — WordPress, Wix, Squarespace, Shopify of maatwerk. Verder blijft uw site precies zoals hij is.',
       },
       {
         q: 'Moeten we onze agenda of software aanpassen?',
+        show: ['assistant'],
         a: 'Nee. We stellen de assistent in op de agenda waarmee u al werkt: met Google Agenda is het meteen klaar, en voor andere boekingssoftware bekijken we de koppeling samen voordat we beginnen. Afspraken verschijnen als gewone items die u kunt verzetten of annuleren zoals altijd.',
       },
       {
         q: 'En als we willen stoppen?',
+        show: ['assistant'],
         a: 'U geeft het aan en wij halen de assistent van uw site. Het abonnement loopt per maand, met een maand opzegtermijn.',
+      },
+      {
+        q: 'Ik ben niet handig met computers. Is dat een probleem?',
+        show: ['home'],
+        a: 'Nee. U hoeft niets te leren: geen CMS, geen beheeromgeving. We schrijven de pagina’s samen met u, en verandert er iets (openingstijden, een prijs, een foto), dan stuurt u ons een WhatsApp en passen wij het aan. Kleine wijzigingen zitten in het maandbedrag.',
+      },
+      {
+        q: 'Ik heb al een website. Heb ik een nieuwe nodig?',
+        show: ['home'],
+        a: 'Niet voor de assistent: die komt met één regel code op de site die u al heeft, en de rest blijft zoals het is. Is uw site traag of slecht leesbaar op een telefoon, dan bouwen we een nieuwe; de prijzen staan op de pagina Tarieven.',
+      },
+      {
+        q: 'Neemt de assistent mijn telefoon op?',
+        show: ['home', 'assistant'],
+        a: 'Nee. Hij antwoordt in een chat op uw website, alleen met uw eigen informatie, en zet afspraken in uw agenda. Wat hij niet kan afhandelen, komt bij u terecht met de naam en het nummer van de klant.',
       },
     ],
   },
   contact: {
     title: 'Neem contact op',
     email: 'Stuur een e-mail',
-    emailSubject: 'Vraag over de Twinbyte-assistent',
+    emailSubject: 'Vraag aan Twinbyte',
     note: 'U krijgt altijd antwoord van het team van Twinbyte zelf — er zit geen callcenter achter.',
     regions: 'We werken op afstand met bedrijven waar ook ter wereld. Waar u ook zit, de assistent antwoordt in de taal van uw klanten.',
   },
   footer: {
-    tagline: 'Digitale assistenten en snelle websites voor kleine bedrijven.',
+    tagline: 'Snelle websites, een digitale assistent en online advertenties voor lokale bedrijven.',
     colophon: 'Gezet in Bricolage Grotesque, Inter en Instrument Serif. Gemaakt in Nederland. Deze site plaatst geen cookies, gebruikt geen analytics en laadt geen trackingpixels.',
     privacy: 'Privacyverklaring',
     rights: 'Alle rechten voorbehouden.',
@@ -363,7 +387,7 @@ export const nl: Translation = {
   wa: {
     generic: 'Hallo Twinbyte, ik heb een vraag over jullie digitale assistent.',
     assistantQuote:
-      'Hallo Twinbyte, ik wil graag een prijs voor de digitale assistent voor mijn bedrijf.',
-    websitesQuote: 'Hallo Twinbyte, ik wil graag een offerte voor een website voor mijn bedrijf.',
+      'Hallo Twinbyte, ik las over de digitale assistent en wil die graag voor mijn bedrijf. Wanneer kunnen we even bellen?',
+    websitesQuote: 'Hallo Twinbyte, ik wil graag een website voor mijn bedrijf. Wanneer kunnen we even bellen?',
   },
 }

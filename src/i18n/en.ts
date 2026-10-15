@@ -51,6 +51,8 @@ export const en: Translation = {
       ],
       savingLabel: 'You save (setup + first three months)',
       saving: '\u20AC864',
+      cta: 'Ask for one of the three places',
+      wa: 'Hi Twinbyte, I would like the launch offer (full site + assistant). Is a place still free?',
     },
     bar: {
       text: 'First three clients: the assistant comes free with a website.',
@@ -98,7 +100,9 @@ export const en: Translation = {
       'Month to month, one month\u2019s notice. No long contract, ever.',
       'Prices in euro, for businesses. VAT, where it applies, is shown on the quote.',
     ],
-    cta: 'Ask for a quote',
+    cta: 'Ask for the bundle',
+    planCta: 'Ask for this plan',
+    planWa: 'Hi Twinbyte, I am interested in the “{plan}” plan. When could we talk?',
   },
   split: {
     title: 'Two services, both done properly',
@@ -177,7 +181,7 @@ export const en: Translation = {
   },
   benefits: {
     title: 'What your business gets out of it',
-    lead: 'It started in dental practices, where a missed call is a lost patient. The same problem shows up in any business that takes bookings — a salon, a garage, a studio, a clinic, a consultancy.',
+    lead: 'We first designed it for dental practices, where a missed call is a lost patient. The same problem shows up in any business that takes bookings — a salon, a garage, a studio, a clinic, a consultancy.',
     items: [
       {
         title: 'Fewer calls to answer',
@@ -213,7 +217,7 @@ export const en: Translation = {
   },
   websites: {
     title: 'Websites for small businesses',
-    lead: 'Besides the assistant we build websites — the kind a small business actually needs: clear, fast, and built around what your customers look for.',
+    lead: 'Clear, fast websites for small businesses: your hours, what you do, where you are and one tap to call, easy to find on any phone.',
     cta: 'Ask about a website',
     includesTitle: 'What a site includes',
     includes: [
@@ -234,10 +238,12 @@ export const en: Translation = {
     items: [
       {
         q: 'My customers hate chatbots. Why would this be different?',
+        show: ['home', 'assistant'],
         a: 'Because most of them are not answering, they are deflecting — endless menus to avoid a human. This one answers the question, books the appointment and, the moment it cannot help, takes a name and a number and passes it to you. Customers are told from the first line that it is not a person.',
       },
       {
         q: 'What stops it from saying the wrong thing?',
+        show: ['assistant'],
         a: 'It answers from the information you give us — your hours, your services, your prices — and nothing else. When it does not know, it says so, takes the details and hands the question to you instead of inventing an answer.',
       },
       {
@@ -246,27 +252,45 @@ export const en: Translation = {
       },
       {
         q: 'Does it work with our current website?',
+        show: ['assistant'],
         a: 'Yes, as long as we can add one line of code to it. That is the case for almost every site — WordPress, Wix, Squarespace, Shopify or a custom build. Your site otherwise stays exactly as it is.',
       },
       {
         q: 'Do we have to change our calendar or software?',
+        show: ['assistant'],
         a: 'No. We set the assistant up around the calendar you already work with: with Google Calendar it is ready to go, and for other booking software we look at the integration together before we start. Appointments appear as ordinary events you can move or cancel as always.',
       },
       {
         q: 'What if we want to stop?',
+        show: ['assistant'],
         a: 'You tell us and we remove the assistant from your site. The subscription runs month by month, with one month of notice.',
+      },
+      {
+        q: 'I’m not good with computers. Is that a problem?',
+        show: ['home'],
+        a: 'No. There is nothing to learn: no CMS, no dashboard. We write the pages with you, and when something changes (hours, a price, a photo) you tell us on WhatsApp and we update it. Small changes are included in the monthly fee.',
+      },
+      {
+        q: 'I already have a website. Do I need a new one?',
+        show: ['home'],
+        a: 'Not for the assistant: it goes on the site you already have with one line of code, and the rest stays as it is. If your site is slow or hard to read on a phone, we can build you a new one; the prices are on the Prices page.',
+      },
+      {
+        q: 'Does the assistant answer my phone?',
+        show: ['home', 'assistant'],
+        a: 'No. It answers in a chat on your website, from your information only, and books appointments into your calendar. Anything it cannot handle goes to you with the customer’s name and number.',
       },
     ],
   },
   contact: {
     title: 'Talk to us',
     email: 'Send an email',
-    emailSubject: 'Question about the Twinbyte assistant',
+    emailSubject: 'Question for Twinbyte',
     note: 'You will always get a reply from the Twinbyte team itself — there is no call centre behind this.',
     regions: 'We work remotely with businesses anywhere in the world. Wherever you are, the assistant answers in your customers’ language.',
   },
   footer: {
-    tagline: 'Digital assistants and fast websites for small businesses.',
+    tagline: 'Fast websites, a digital assistant and online ads for local businesses.',
     colophon: 'Set in Bricolage Grotesque, Inter and Instrument Serif. Built in the Netherlands. This site sets no cookies, runs no analytics and loads no tracking pixels.',
     privacy: 'Privacy statement',
     rights: 'All rights reserved.',
@@ -363,7 +387,7 @@ export const en: Translation = {
   wa: {
     generic: 'Hello Twinbyte, I have a question about your digital assistant.',
     assistantQuote:
-      'Hello Twinbyte, I would like a price for the digital assistant for my business.',
-    websitesQuote: 'Hello Twinbyte, I would like a quote for a website for my business.',
+      'Hi Twinbyte, I read about the digital assistant and would like it for my business. When could we talk?',
+    websitesQuote: 'Hi Twinbyte, I would like a website for my business. When could we talk?',
   },
 }
