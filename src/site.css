@@ -1072,6 +1072,16 @@ a:focus-visible .service-media::after { transform: scale(1); }
    company), so they stay out of the text that contrast checks read */
 .footer-word::before { content: attr(data-word); }
 
+/* The variable font builds its letters from overlapping pieces, and a bare
+   outline showed every seam (the bar of the e, the joins of the t). The
+   fill painted over a 2px stroke hides them and leaves a 1px outer line. */
+@supports (paint-order: stroke fill) {
+  .footer-word {
+    -webkit-text-stroke-width: 2px;
+    paint-order: stroke fill;
+  }
+}
+
 /* ------------------------------------------------------------------ the devices
    /websites: the demo practice on a laptop and a phone drawn in code
    (src/components/DeviceScroll.tsx). Front view, so each screen is a plain
