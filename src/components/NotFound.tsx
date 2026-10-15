@@ -3,14 +3,14 @@ import { Link, pathFor, useRoute } from '../router'
 import { booking } from '../i18n/booking'
 import meta from '../i18n/meta.json'
 import { pageMeta } from '../pageMeta'
-import { waLink } from '../site'
-import { Arrow, Bubble } from './marks'
+import { mailLink, waLink } from '../site'
+import { Arrow, Bubble, Mail } from './marks'
 import type { Translation } from '../i18n'
 
 /*
  * Any address that is not a page. Cloudflare answers it with a 404 status
  * and the not-found shell of its language; this is what the app draws in
- * it: where you are, and the three ways on — home, the call, WhatsApp.
+ * it: where you are, and the three ways on — home, WhatsApp, email.
  */
 export function NotFound({ t }: { t: Translation }) {
   const { lang } = useRoute()
@@ -51,12 +51,13 @@ export function NotFound({ t }: { t: Translation }) {
               {t.privacyPage.back}
               <Arrow />
             </Link>
-            <Link className="btn-ghost" to={`${home}#book`}>
-              {c.nav.book}
-            </Link>
             <a className="btn-ghost" href={waLink(c.hero.waText)} rel="noopener">
               <Bubble size={16} />
               {c.hero.whatsapp}
+            </a>
+            <a className="btn-ghost" href={mailLink(t.contact.emailSubject)}>
+              <Mail size={16} />
+              {t.contact.email}
             </a>
           </div>
         </div>

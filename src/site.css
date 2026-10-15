@@ -371,6 +371,7 @@ p, li, dd {
   .menu-sheet li:nth-child(2) { animation-delay: 40ms; }
   .menu-sheet li:nth-child(3) { animation-delay: 80ms; }
   .menu-sheet li:nth-child(4) { animation-delay: 120ms; }
+  .menu-sheet li:nth-child(5) { animation-delay: 160ms; }
   .site-header button[aria-expanded='true'] svg { animation: icon-turn 260ms var(--ease) both; }
 }
 
@@ -385,7 +386,9 @@ p, li, dd {
 }
 
 .menu-sheet a.menu-big {
-  display: block;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
   padding: 10px 0;
   font-family: Bricolage, Georgia, serif;
   font-size: clamp(34px, 9vw, 48px);
@@ -396,6 +399,35 @@ p, li, dd {
 }
 
 .menu-sheet a.menu-big[aria-current='page'] { color: var(--mint); }
+
+/* the thumb-index number in front of each big link */
+.menu-sheet .menu-num {
+  flex: none;
+  min-width: 2.4ch;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.1em;
+  font-variant-numeric: tabular-nums;
+  color: var(--mint);
+  transform: translateY(-0.9em);
+}
+
+/* the current page: the mint colour and a cut-corner tick at the row's end */
+.menu-sheet .menu-tick {
+  flex: none;
+  align-self: center;
+  width: 10px;
+  height: 10px;
+  margin-left: auto;
+  background: var(--mint);
+  clip-path: polygon(30% 0, 100% 0, 100% 70%, 70% 100%, 0 100%, 0 30%);
+}
+
+/* the two ways to write, as big as the links above them */
+.menu-sheet .menu-tile {
+  min-height: 64px;
+  font-size: 17px;
+}
 
 /* ------------------------------------------------------------------ hero */
 .hero {
@@ -760,7 +792,23 @@ p, li, dd {
   font-size: 14px;
   font-weight: 600;
   color: var(--cream);
-  transition: color 160ms ease, scale 160ms var(--ease);
+  transition: color 160ms ease, scale 160ms var(--ease), opacity 220ms var(--ease), transform 220ms var(--ease), visibility 0s linear 0s;
+}
+
+/* Over the contact panel and the closing band (WhatsAppFloat.tsx): it sinks
+   away, and once it has faded it is hidden, so it cannot take the focus or
+   a tap. */
+.wa-float.is-away {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  visibility: hidden;
+  transition: color 160ms ease, scale 160ms var(--ease), opacity 220ms var(--ease), transform 220ms var(--ease), visibility 0s linear 220ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-float,
+  .wa-float.is-away { transition: none; }
 }
 
 .wa-float::before,
@@ -788,12 +836,49 @@ p, li, dd {
   overflow: clip; /* see .service-media */
   background: var(--navy);
   color: var(--cream);
+  /* a mint hairline on the top edge, so the closing band and the footer never
+     run together: mint at 25% over the navy, written as the solid colour it
+     makes (a hairline is never translucent, see index.css .rule-ink) */
+  border-top: 1px solid #2d4046;
 }
 
+/* the two ways to write, one big row each */
+.footer-row {
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid #1b2742;
+  font-size: 19px;
+  line-height: 30px;
+  font-weight: 500;
+  color: var(--cream);
+  transition: color 160ms ease;
+}
+
+.footer-row svg { flex: none; color: var(--mint); }
+
+@media (hover: hover) and (pointer: fine) {
+  .footer-row:hover { color: var(--mint); }
+}
+
+/* the last line clears the floating WhatsApp button and the home indicator */
+.footer-base {
+  padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+}
+
+/* small beside the logo on a phone and a tablet, the whole right-hand column
+   from 1024px */
 .mark-film {
   position: relative;
-  width: min(72vw, 440px);
+  width: 168px;
   aspect-ratio: 1;
+}
+
+@media (min-width: 1024px) {
+  .mark-film { width: 440px; }
 }
 
 .mark-film img,
@@ -819,16 +904,20 @@ p, li, dd {
 
 .footer-word {
   font-family: Bricolage, Georgia, serif;
-  font-size: clamp(64px, 17vw, 260px);
+  font-size: clamp(72px, 23vw, 300px);
   font-weight: 700;
   line-height: 0.8;
   letter-spacing: -0.035em;
   /* room for the y's tail above the rule */
   padding-bottom: 0.14em;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(150, 211, 192, 0.28);
+  /* a raised-navy fill under a mint outline: the word reads as a plate */
+  color: #111a30;
+  -webkit-text-stroke: 1px rgba(150, 211, 192, 0.45);
   user-select: none;
   white-space: nowrap;
+  /* wider than the container on purpose: cut at its edges, sideways only,
+     so the tall letters keep their tops */
+  overflow-x: clip;
 }
 
 /* ------------------------------------------------------------------ the devices

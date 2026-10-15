@@ -1,14 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
-import { Menu, Close, Bubble } from './marks'
+import { Menu, Close, Bubble, Mail } from './marks'
 import { Link, pathFor, rememberLang, useRoute } from '../router'
 import { LANGS, LANG_LABELS, type Translation } from '../i18n'
 import { booking } from '../i18n/booking'
 import { home } from '../i18n/home'
-import { SITE, waLink } from '../site'
+import { SITE, mailLink, waLink } from '../site'
 import { prefersReducedMotion } from './motion'
 import type { Page } from '../router'
 
 const PAGES_IN_NAV: Page[] = ['assistant', 'websites', 'prices']
+/* The pages that end in the contact panel (#contact): there the button
+   stays on the page. Privacy and the 404 page send it to the home page's. */
+const PAGES_WITH_CONTACT: Page[] = ['home', 'assistant', 'websites', 'prices']
 
 /*
  * One bar on every page. Over the home hero it starts clear and fills in as
@@ -94,6 +97,16 @@ export function Header({ t }: { t: Translation }) {
     ...PAGES_IN_NAV.map((p) => ({ id: p as string, label: nav[p as 'assistant' | 'websites' | 'prices'], to: pathFor(lang, p) })),
   ]
   links.splice(2, 0, { id: 'ads', label: h.footer.adsLink, to: `${homePath}#ads` })
+  /* the phone menu has one more: the live demo, a page of its own outside the app */
+  const menuLinks = [...links, { id: 'demo', label: h.menuDemo, to: SITE.demo[lang] }]
+
+  const contactLabel = (
+    <>
+      <span className="xl:hidden">{nav.bookShort}</span>
+      <span className="hidden xl:inline">{nav.book}</span>
+    </>
+  )
+  const contactClass = 'btn-mint !min-h-[44px] whitespace-nowrap !px-2'
 
   /* The small switch is a whole touch target (44px) on a tablet; next to
      the desktop nav it keeps its compact size, or the two pills would touch
@@ -142,11 +155,17 @@ export function Header({ t }: { t: Translation }) {
 
           <div className="flex items-center gap-1 justify-self-end">
             <div className="hidden sm:block">{langSwitch(false)}</div>
-            {/* the long label only where the bar has room for it on one line in every language */}
-            <Link to={`${homePath}#book`} className="btn-mint !min-h-[44px] whitespace-nowrap !px-2">
-              <span className="xl:hidden">{nav.bookShort}</span>
-              <span className="hidden xl:inline">{nav.book}</span>
-            </Link>
+            {/* the long label only where the bar has room for it on one line in
+                every language; a plain link where the panel is on this page */}
+            {PAGES_WITH_CONTACT.includes(page) ? (
+              <a href="#contact" className={contactClass} onClick={() => setOpen(false)}>
+                {contactLabel}
+              </a>
+            ) : (
+              <Link to={`${homePath}#contact`} className={contactClass} onClick={() => setOpen(false)}>
+                {contactLabel}
+              </Link>
+            )}
             <button
               ref={menuButton}
               type="button"
@@ -169,27 +188,44 @@ export function Header({ t }: { t: Translation }) {
         <div id="mobile-menu" className="menu-sheet lg:hidden">
           <nav aria-label={t.nav.main}>
             <ul role="list">
-              {links.map((l) => (
-                <li key={l.id} className="border-b border-ink-edge">
-                  <Link to={l.to} className="menu-big" aria-current={page === l.id ? 'page' : undefined} onClick={() => setOpen(false)}>
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
+              {menuLinks.map((l, i) => {
+                const current = page === l.id
+                const inner = (
+                  <>
+                    <span className="t-folio menu-num">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="min-w-0">{l.label}</span>
+                    {current && <span aria-hidden="true" className="menu-tick" />}
+                  </>
+                )
+                return (
+                  <li key={l.id} className="border-b border-ink-edge">
+                    {l.id === 'demo' ? (
+                      <a href={l.to} className="menu-big">
+                        {inner}
+                      </a>
+                    ) : (
+                      <Link to={l.to} className="menu-big" aria-current={current ? 'page' : undefined} onClick={() => setOpen(false)}>
+                        {inner}
+                      </Link>
+                    )}
+                  </li>
+                )
+              })}
             </ul>
           </nav>
           <div className="mt-5 grid gap-1">
-            <Link to={`${homePath}#book`} onClick={() => setOpen(false)} className="btn-mint w-full">
-              {nav.book}
-            </Link>
-            <a className="btn-ghost w-full" href={waLink(booking[lang].hero.waText)} rel="noopener">
-              <Bubble size={16} />
+            <a className="btn-mint menu-tile w-full" href={waLink(booking[lang].hero.waText)} rel="noopener">
+              <Bubble size={20} />
               {booking[lang].hero.whatsapp}
+            </a>
+            <a className="btn-ghost menu-tile w-full" href={mailLink(t.contact.emailSubject)}>
+              <Mail size={20} />
+              {t.contact.email}
             </a>
           </div>
           <div className="mt-auto flex flex-wrap items-end justify-between gap-2 pt-6">
             {langSwitch(true)}
-            <a href={`mailto:${SITE.email}`} className="text-small text-paper-dim underline underline-offset-4">
+            <a href={mailLink(t.contact.emailSubject)} className="text-small text-paper-dim underline underline-offset-4">
               {SITE.email}
             </a>
           </div>
