@@ -2,7 +2,7 @@ import { Link, pathFor, useRoute } from '../router'
 import { booking } from '../i18n/booking'
 import { home } from '../i18n/home'
 import { SITE, waLink } from '../site'
-import { keepTogether } from './BookingPage'
+import { keepTogether } from './Contact'
 import { Arrow, Bubble } from './marks'
 import {
   BenefitsSection, DayStripSection, HowSection, PricesAndFaq,

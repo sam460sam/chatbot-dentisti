@@ -4,6 +4,7 @@ import { App } from './App'
 import { RouterProvider, followBrowserLanguage } from './router'
 import './index.css'
 import './site.css'
+import './contact.css'
 
 followBrowserLanguage()
 

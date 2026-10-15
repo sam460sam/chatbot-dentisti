@@ -4,13 +4,9 @@ import { booking } from '../i18n/booking'
 import { home } from '../i18n/home'
 import { SITE, waLink } from '../site'
 import { HomeHero } from './HomeHero'
+import { ContactPlate } from './Contact'
 import { Picture, type PictureName } from './Picture'
 import { Arrow, ArrowOut, Bubble } from './marks'
-
-/* "15-minute" must not break at its hyphen in a big heading. */
-export function keepTogether(text: string) {
-  return text.split(/(\S*\d-\S*)/).map((part, i) => (i % 2 ? <span key={i} className="whitespace-nowrap">{part}</span> : part))
-}
 
 /* The calendar card, only while SITE.booking.calendar is on: a chunk of its
    own, so Booker and booker.css are never fetched while it is off. */
@@ -30,7 +26,9 @@ export function BookingPage() {
         <Suspense fallback={null}>
           <CalendarCardLazy />
         </Suspense>
-      ) : null}
+      ) : (
+        <ContactPlate />
+      )}
 
       <Services />
       <Closing />

@@ -3,7 +3,7 @@ import { Link, pathFor, useRoute } from '../router'
 import { booking } from '../i18n/booking'
 import { waLink } from '../site'
 import { Booker, RequestForm, smooth } from './Booker'
-import { keepTogether } from './BookingPage'
+import { keepTogether } from './Contact'
 import { Bubble } from './marks'
 
 /*
