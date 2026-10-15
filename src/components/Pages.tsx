@@ -1,8 +1,8 @@
 import { Link, pathFor, useRoute } from '../router'
 import { booking } from '../i18n/booking'
 import { home } from '../i18n/home'
-import { SITE, waLink } from '../site'
-import { keepTogether } from './Contact'
+import { SITE } from '../site'
+import { ContactBand } from './Contact'
 import { Arrow, Bubble } from './marks'
 import {
   BenefitsSection, DayStripSection, HowSection, PricesAndFaq,
@@ -13,8 +13,9 @@ import { DeviceScroll } from './DeviceScroll'
 import type { Translation } from '../i18n'
 
 /*
- * The pages behind the booking page. They are the old home page, taken apart
- * by subject, and each one ends the same way: back to the call.
+ * The pages behind the home page. They are the old home page, taken apart
+ * by subject, and each one ends the same way: a contact band with this
+ * page's own message, ready to send.
  */
 
 function PageTitle({ title, lead, pic, eyebrow, children }: {
@@ -24,7 +25,7 @@ function PageTitle({ title, lead, pic, eyebrow, children }: {
     <section className={`page-head on-ink ${pic ? 'parallax' : 'page-head-plain'}`}>
       {pic && (
         <div className="hero-media" aria-hidden="true">
-          <Picture name={pic} sizes="100vw" eager className="hero-img" />
+          <Picture name={pic} sizes="100vw" eager className={`hero-img pic-${pic}`} />
           <div className="hero-shade" />
         </div>
       )}
@@ -33,33 +34,6 @@ function PageTitle({ title, lead, pic, eyebrow, children }: {
         <h1 className="hero-title">{title}</h1>
         <p className="hero-lead">{lead}</p>
         {children}
-      </div>
-    </section>
-  )
-}
-
-/* Every page ends on the call: a navy plate with the petrol ribbon behind
-   it, WhatsApp next to it as on the home page. */
-function BookBand() {
-  const { lang } = useRoute()
-  const c = booking[lang]
-  return (
-    <section className="band-paper">
-      <div className="container-page">
-        <div className="book-card book-card-dark p-3 sm:p-6" data-rise>
-          <h2 className="max-w-[22ch] font-display text-h3 font-bold text-paper sm:text-h2">{keepTogether(c.page.book)}</h2>
-          <p className="mt-2 max-w-lead text-body text-paper-dim">{c.page.bookLead}</p>
-          <div className="mt-4 flex flex-col gap-1 sm:flex-row">
-            <Link className="btn-mint" to={`${pathFor(lang, 'home')}#book`}>
-              {c.nav.book}
-              <Arrow />
-            </Link>
-            <a className="btn-ghost" href={waLink(c.hero.waText)} rel="noopener">
-              <Bubble size={16} />
-              {c.hero.whatsapp}
-            </a>
-          </div>
-        </div>
       </div>
     </section>
   )
@@ -95,7 +69,7 @@ export function AssistantPage({ t }: { t: Translation }) {
       <HowSection t={t} />
       <SecuritySection t={t} />
       <BenefitsSection t={t} />
-      <BookBand />
+      <ContactBand page="assistant" />
     </main>
   )
 }
@@ -104,11 +78,11 @@ export function WebsitesPage({ t }: { t: Translation }) {
   const { lang } = useRoute()
   return (
     <main id="main">
-      <PageTitle title={t.websites.title} lead={t.websites.lead} pic="websites" eyebrow={booking[lang].nav.websites} />
-      <WebsitesSection t={t} bare />
+      <PageTitle title={t.websites.title} lead={t.websites.lead} pic="workshop" eyebrow={booking[lang].nav.websites} />
       <DeviceScroll t={t} />
+      <WebsitesSection t={t} bare />
       <OtherHalf t={t} />
-      <BookBand />
+      <ContactBand page="websites" />
     </main>
   )
 }
@@ -117,9 +91,9 @@ export function PricesPage({ t }: { t: Translation }) {
   const { lang } = useRoute()
   return (
     <main id="main">
-      <PageTitle title={t.pricing.title} lead={t.pricing.lead} eyebrow={booking[lang].nav.prices} />
+      <PageTitle title={t.pricing.title} lead={t.pricing.lead} pic="prices" eyebrow={booking[lang].nav.prices} />
       <PricesAndFaq t={t} head={false} />
-      <BookBand />
+      <ContactBand page="prices" />
     </main>
   )
 }
