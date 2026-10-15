@@ -77,15 +77,19 @@ export const twinbyteStudio: Studio = {
     },
     {
       q: "Websites for small businesses",
-      a: "Besides the assistant we build websites: fast on mobile first, with a clear structure, no CMS for the owner to learn, and the assistant can be added to them later.",
+      a: "Besides the assistant we build websites: fast on mobile first, with a clear structure, no CMS for the owner to learn, and the assistant can be added to them later. Prices are on https://twinbyteservices.com/prices.",
+    },
+    {
+      q: "Online ads",
+      a: "Twinbyte creates and runs Instagram and Facebook ads aimed at people near the business. The cost depends on the campaign and is agreed in the free 15-minute call.",
     },
     {
       q: "How to get in touch",
-      a: "WhatsApp +31 6 45745163 or info@twinbyteservices.com. The Twinbyte team answers personally; there is no call centre.",
+      a: "WhatsApp +31 6 45745163 or info@twinbyteservices.com. The Twinbyte team answers personally; there is no call centre. The free 15-minute call is arranged by message.",
     },
     {
       q: "Demo",
-      a: "There is a live demo at https://twinbyteservices.com/demo/ — a fictional dental practice where the assistant answers and books on a test diary.",
+      a: "There is a live demo of a fictional dental practice, where the assistant answers and books on a test diary: https://twinbyteservices.com/demo/ in English, https://twinbyteservices.com/demo/nl/ in Dutch and https://twinbyteservices.com/demo/it/ in Italian.",
     },
   ],
 };
