@@ -225,12 +225,12 @@ last frame, which equals the first.
 - `contact-night-640.webp` (640 x 1132) and `contact-night-880.webp`
   (880 x 1556): the night street behind the phone in the home contact panel
   (asset A1, GPT Image 2.5, 9:16 at 2k: a rainy shop window, petrol and mint
-  bokeh, the centre left dark for the phone). WebP quality about 78, each
-  120 KB or less. The panel crops it with `object-position: 50% 55%`.
+  bokeh, the centre left dark for the phone). Each 120 KB or less (33 KB and
+  53 KB). The panel crops it with `object-position: 50% 55%`.
 - `contact-loop.webm` / `contact-loop.mp4` (720 x 1274, 5 s, no audio): the
   same picture with the rain moving (asset A2, Kling 3, A1 as first and last
-  frame), minus its last frame so it loops without a cut. VP9 at crf about 38
-  and H.264 at crf about 27 with `+faststart`, each 900 KB or less. Like the
+  frame), minus its last frame so it loops without a cut. VP9 and H.264
+  (`+faststart`), each 900 KB or less (52 KB and 96 KB). Like the
   hero loop it is wide screens only (1024 px and up), injected after the load
   event, never with Save-Data or reduced motion, and paused off screen
   (`Backdrop` in src/components/Contact.tsx).
