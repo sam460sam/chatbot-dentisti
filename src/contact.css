@@ -2,9 +2,9 @@
    The contact panel on the home page, the contact band at the end of the
    inner pages, and the drawn phone with its example conversation.
 
-   Loaded after site.css, and held to the same rules: no filter, no
-   backdrop-filter, no 3D transforms, no persistent will-change. Motion is
-   transform and opacity only. Nothing here is hidden until a script decides
+   Loaded after site.css, and held to the same rules: no blur or other
+   paint effects, no 3D transforms, no standing compositor hints. Motion is
+   transform and opacity only (the masks and clip-paths never animate). Nothing here is hidden until a script decides
    to show it: the chat waits at opacity 0 only while it is off screen
    (.is-armed, set by PhoneChat), and scroll motion is CSS scroll-driven,
    inside @supports and prefers-reduced-motion: no-preference.
@@ -948,7 +948,6 @@
   height: 1.8cqw;
   border-radius: 50%;
   background: var(--cream);
-  opacity: 0.3;
 }
 
 /* the confirmed call */
@@ -986,9 +985,13 @@
     calc(100% - var(--c) - 0.41px) calc(100% - 1px), 1px calc(100% - 1px), 1px calc(var(--c) + 0.41px));
 }
 
+/* the pulse exists only while the chat plays; the final frame has none */
 .pc-pulse {
+  display: none;
   opacity: 0;
 }
+
+.pc-fig.is-playing .pc-pulse { display: block; }
 
 .pc-check {
   display: grid;
@@ -1100,7 +1103,7 @@
 }
 
 .pc-fig.is-playing .pc-typing i {
-  animation: typing-dot 900ms ease-in-out var(--d, 0ms) 2;
+  animation: typing-dot 900ms ease-in-out var(--d, 0ms) 2 both;
 }
 
 .pc-fig.is-playing .pc-typing i:nth-child(2) { animation-delay: calc(var(--d, 0ms) + 150ms); }
