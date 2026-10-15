@@ -35,9 +35,10 @@ export const twinbyteStudio: Studio = {
       q: "What is Twinbyte",
       a: "Twinbyte is a small digital studio for local businesses. We build fast websites, add a digital assistant that answers customers and books appointments into the calendar the business already uses, and run Instagram and Facebook ads for people nearby.",
     },
+    // owner approval pending: "on the way" vs Assistant Pro listing WhatsApp.
     {
       q: "How the assistant works",
-      a: "We configure it with the practice's opening hours, treatments and the questions patients ask most, then add one line of code to the website the practice already has. Nothing to install, nothing else changes. A WhatsApp version is on the way.",
+      a: "We configure it with the business's opening hours, services and the questions customers ask most, then add one line of code to the website the business already has. Nothing to install, nothing else changes. A WhatsApp version is on the way.",
     },
     {
       q: "Getting started",
@@ -65,11 +66,11 @@ export const twinbyteStudio: Studio = {
     },
     {
       q: "Data protection",
-      a: "To make a booking the assistant needs only a name and a phone number: no medical history, no documents, no payment details. Before going live we sign a data processing agreement with the practice, which stays the controller of the data. Patients are told they are not talking to a person.",
+      a: "To make a booking the assistant needs only a name and a phone number: no medical history, no documents, no payment details. Before going live we sign a data processing agreement with the business, which stays the controller of the data. Customers are told they are not talking to a person.",
     },
     {
-      q: "Which calendars and practice software",
-      a: "Google Calendar works today. For other practice software we look at the integration together before we start.",
+      q: "Which calendars and booking software",
+      a: "Google Calendar works today. For other booking or practice software we look at the integration together before we start.",
     },
     {
       q: "Does it work with our current website",
