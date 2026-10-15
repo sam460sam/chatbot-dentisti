@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import { useRoute } from '../router'
+import { Link, pathFor, useRoute } from '../router'
 import { booking } from '../i18n/booking'
 import { home } from '../i18n/home'
-import { waLink } from '../site'
-import { Arrow, Bubble } from './marks'
+import { contact, mailBody } from '../i18n/contact'
+import { mailLink, waLink } from '../site'
+import { priceLine } from './Contact'
+import { Arrow, Bubble, Mail } from './marks'
 import { prefersReducedMotion } from './motion'
 import { introRuns } from './Intro'
 
@@ -33,6 +35,7 @@ function wantsMotion(): boolean {
 export function HomeHero() {
   const { lang } = useRoute()
   const b = booking[lang]
+  const c = contact[lang]
   const h = home[lang]
   const [loop, setLoop] = useState<null | typeof LOOP>(null)
   const [playing, setPlaying] = useState(false)
@@ -68,7 +71,7 @@ export function HomeHero() {
   }, [loop])
 
   return (
-    <section ref={section} aria-labelledby="hero-title" className="hero on-ink">
+    <section ref={section} aria-labelledby="hero-title" className="hero hero-plate on-ink">
       <div className="hero-media" aria-hidden="true">
         <picture>
           <source media={TALL} srcSet={STILL.tall} sizes="100vw" />
@@ -110,20 +113,29 @@ export function HomeHero() {
           <span aria-hidden="true" className="hero-dot" />
           {h.hero.eyebrow}
         </p>
+        {/* plain Bricolage, no serif accent: a font swap here would move the LCP text */}
         <h1 id="hero-title" className="hero-title">{b.hero.title}</h1>
         <p className="hero-lead">{b.hero.lead}</p>
         <div className="mt-4 flex flex-col gap-1 sm:flex-row sm:items-center">
-          <a className="btn-mint" href="#book">
-            {b.nav.book}
-            <Arrow />
-          </a>
-          <a className="btn-ghost" href={waLink(b.hero.waText)} rel="noopener">
+          <a className="btn-mint" href={waLink(c.prefill.default)} rel="noopener">
             <Bubble size={16} />
             {b.hero.whatsapp}
           </a>
+          <a className="btn-ghost" href={mailLink(c.mail.subject, mailBody(lang, ''))}>
+            <Mail size={16} />
+            {b.hero.email}
+          </a>
         </div>
+        {/* the lowest prices, read from the price list */}
+        <p className="hero-price">
+          {priceLine(lang)}{' '}
+          <Link to={pathFor(lang, 'prices')} className="hero-price-link">
+            {c.priceLine.link}
+            <Arrow size={16} />
+          </Link>
+        </p>
       </div>
-      <a href="#book" className="hero-cue" aria-hidden="true" tabIndex={-1}>
+      <a href="#contact" className="hero-cue" aria-hidden="true" tabIndex={-1}>
         <span />
       </a>
     </section>

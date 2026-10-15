@@ -36,6 +36,34 @@
   }
 }
 
+/* the hero's price line: the lowest prices, with a link to all of them */
+.hero-price {
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 22px;
+  color: #b5ad9e;
+}
+
+.hero-price-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  color: var(--cream);
+  text-decoration: underline;
+  text-decoration-color: rgba(244, 239, 230, 0.45);
+  text-underline-offset: 4px;
+  white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hero-price-link:hover { color: var(--mint); text-decoration-color: var(--mint); }
+}
+
+/* it rises fifth, after the buttons */
+.hero-copy > *:nth-child(5) { animation-delay: 280ms; }
+.hero-copy.after-intro > *:nth-child(5) { animation-delay: 800ms; }
+
 /* the hero makes room for the plate that overlaps its bottom edge */
 @media (min-width: 1024px) {
   .hero.hero-plate .hero-copy {
