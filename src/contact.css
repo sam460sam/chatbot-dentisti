@@ -36,6 +36,21 @@
   }
 }
 
+/* On a phone the headline is three lines in the fallback serif and two or
+   three in Bricolage. The hero is bottom-aligned, so one line fewer when
+   the font arrives would move everything above it (a layout shift on the
+   LCP text). Three lines are always reserved, and the words sit at the
+   bottom of that box: when Bricolage takes two, the space opens under the
+   eyebrow and nothing moves. */
+@media (max-width: 767.98px) {
+  .hero.hero-plate .hero-title {
+    display: flex;
+    min-height: 2.88em; /* 3 x line-height 0.96 */
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+}
+
 /* the hero's price line: the lowest prices, with a link to all of them */
 .hero-price {
   margin-top: 16px;
