@@ -27,6 +27,12 @@
   --cream-deep: #eae3d6;
   --line: #d9d0c0;
   --ease: cubic-bezier(0.2, 0.7, 0, 1);
+  /* how far a [data-rise] block travels as it scrolls in */
+  --rise: 32px;
+}
+
+@media (min-width: 768px) {
+  :root { --rise: 56px; }
 }
 
 html {
@@ -217,6 +223,98 @@ p, li, dd {
 .cut-line.group:active,
 .service-card:active { scale: 0.99; }
 .wa-float:active { scale: 0.94; }
+
+/* ------------------------------------------------------------------ the fold
+   On hover and on keyboard focus the cut corner of a filled button (and of a
+   service card's picture) folds over: a small triangle in the darker side of
+   the same colour grows out of the corner. The buttons' ::after is free
+   (only the line buttons draw a ring there). Transform only, nothing kept
+   on will-change. */
+.btn-mint,
+.btn-teal-bright { --fold: #6db8a2; }
+.btn-cream { --fold: #cbc1ae; }
+.btn-petrol,
+.btn-teal,
+.btn-verm { --fold: var(--navy); }
+
+.btn-mint::after,
+.btn-petrol::after,
+.btn-cream::after,
+.btn-teal::after,
+.btn-verm::after,
+.btn-teal-bright::after,
+.service-media::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  width: var(--c);
+  height: var(--c);
+  pointer-events: none;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  background: var(--fold);
+  transform: scale(0);
+  transform-origin: 100% 100%;
+  transition: transform 220ms var(--ease);
+}
+
+/* the picture fills its frame: the fold goes over it, in petrol */
+.service-media::after {
+  z-index: 1;
+  --fold: var(--petrol);
+}
+
+.btn-mint:focus-visible::after,
+.btn-petrol:focus-visible::after,
+.btn-cream:focus-visible::after,
+.btn-teal:focus-visible::after,
+.btn-verm:focus-visible::after,
+.btn-teal-bright:focus-visible::after,
+a:focus-visible .service-media::after { transform: scale(1); }
+
+/* the arrows lean the way they point */
+.i-arrow,
+.i-arrow-out {
+  flex: none;
+  transition: transform 180ms var(--ease);
+}
+
+:is(a, button):focus-visible .i-arrow { transform: translateX(3px); }
+:is(a, button):focus-visible .i-arrow-out { transform: translate(2px, -2px); }
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-mint:hover::after,
+  .btn-petrol:hover::after,
+  .btn-cream:hover::after,
+  .btn-teal:hover::after,
+  .btn-verm:hover::after,
+  .btn-teal-bright:hover::after,
+  a:hover .service-media::after { transform: scale(1); }
+
+  /* on hover the fill changes (see the buttons above): so does the fold */
+  .btn-mint:hover,
+  .btn-teal-bright:hover { --fold: #cbc1ae; }
+  .btn-cream:hover { --fold: #6db8a2; }
+  .btn-petrol:hover,
+  .btn-teal:hover,
+  .btn-verm:hover { --fold: var(--petrol); }
+
+  :is(a, button):hover .i-arrow { transform: translateX(3px); }
+  :is(a, button):hover .i-arrow-out { transform: translate(2px, -2px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-mint::after,
+  .btn-petrol::after,
+  .btn-cream::after,
+  .btn-teal::after,
+  .btn-verm::after,
+  .btn-teal-bright::after,
+  .service-media::after,
+  .i-arrow,
+  .i-arrow-out { transition: none; }
+}
 
 /* ------------------------------------------------------------------ intro */
 .intro {
@@ -523,11 +621,21 @@ p, li, dd {
   font-size: clamp(46px, 8.4vw, 116px);
   font-weight: 700;
   line-height: 0.96;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.04em;
   color: var(--cream);
   text-wrap: balance;
   hyphens: manual;
   overflow-wrap: normal;
+}
+
+/* tight at phone size, a little more air as the letters grow: at 1440px the
+   tighter setting made the bowls of the longer Dutch and Italian titles touch */
+@media (min-width: 1024px) {
+  .hero-title { letter-spacing: -0.034em; }
+}
+
+@media (min-width: 1280px) {
+  .hero-title { letter-spacing: -0.032em; }
 }
 
 .hero-lead {
@@ -609,6 +717,19 @@ p, li, dd {
 .page-head .hero-title {
   max-width: 16ch;
   font-size: clamp(40px, 6.4vw, 88px);
+}
+
+@media (min-width: 1024px) {
+  .page-head .hero-title { letter-spacing: -0.034em; }
+}
+
+/* the leads grow one step on a wide screen, where 19px read small */
+@media (min-width: 1280px) {
+  .hero-lead,
+  .t-lead {
+    font-size: 21px;
+    line-height: 32px;
+  }
 }
 
 .page-head-plain {
@@ -700,6 +821,33 @@ p, li, dd {
 @media (max-width: 640px) {
   .book-card { --c: 18px; }
   .book-card::before { inset: 10px 0 -8px 0; }
+}
+
+/* The seam on top of every deep band: a 1px petrol line from the
+   container's left edge to its right, where it folds down 45 degrees into a
+   12px flap, like the end of the ribbon. It sits on the band's hairline
+   (index.css). Scrolling draws it in from the left (scroll motion below);
+   without that it is simply there. */
+.band-deep::before {
+  --gut: 16px;
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: calc(max(0px, (100% - 74rem) / 2) + var(--gut));
+  right: calc(max(0px, (100% - 74rem) / 2) + var(--gut));
+  height: 12px;
+  pointer-events: none;
+  background: var(--petrol);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, calc(100% - 11px) 1px, 0 1px);
+  transform-origin: 0 0;
+}
+
+@media (min-width: 640px) {
+  .band-deep::before { --gut: 24px; }
+}
+
+@media (min-width: 1024px) {
+  .band-deep::before { --gut: 40px; }
 }
 
 /* service cards */
@@ -1196,6 +1344,17 @@ p, li, dd {
       animation-range: entry 0% cover 50%;
     }
 
+    /* the deep bands' seam draws itself in as the band arrives */
+    .band-deep {
+      view-timeline: --seam block;
+    }
+
+    .band-deep::before {
+      animation: seam-draw linear both;
+      animation-timeline: --seam;
+      animation-range: entry 10% cover 30%;
+    }
+
     /* it comes to rest at the bottom of the page: the end of its view range
        (exit) can never be reached there */
     .footer-word {
@@ -1208,7 +1367,7 @@ p, li, dd {
 
 /* movement only, no fade: text keeps its full contrast at every moment */
 @keyframes scroll-rise {
-  from { transform: translateY(56px); }
+  from { transform: translateY(var(--rise)); }
   to { transform: none; }
 }
 
@@ -1228,6 +1387,11 @@ p, li, dd {
 @keyframes media-settle {
   from { scale: 1.12; }
   to { scale: 1; }
+}
+
+@keyframes seam-draw {
+  from { transform: scaleX(0); }
+  to { transform: none; }
 }
 
 @keyframes word-slide {
