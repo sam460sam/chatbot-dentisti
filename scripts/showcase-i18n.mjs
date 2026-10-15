@@ -29,8 +29,7 @@ const T = {
     'A scroll-driven page by Twinbyte: three sequences of still frames played on a canvas by the scrollbar, the way the big product launches do it.':
       'Een pagina van Twinbyte die meebeweegt met het scrollen: drie reeksen stilstaande beelden, op een canvas afgespeeld door de scrolbalk, zoals de grote productlanceringen het doen.',
     'Language': 'Taal',
-    'Book a call': 'Plan een gesprek',
-    'Book': 'Plannen',
+    'Write to us': 'Neem contact op',
 
     'A case turns, opens, and three facts fan out of it; a card runs across them and a second card follows':
       'Een doosje draait, gaat open en drie gegevens waaieren eruit; een kaart schuift erlangs en een tweede kaart volgt',
@@ -156,7 +155,8 @@ const T = {
     'Message us on WhatsApp': 'Stuur ons een WhatsApp',
     'See what we normally build': 'Bekijk wat we normaal bouwen',
 
-    'Digital assistants and fast websites for small businesses.': 'Digitale assistenten en snelle websites voor kleine bedrijven.',
+    'Fast websites, a digital assistant and online ads for local businesses.':
+      'Snelle websites, een digitale assistent en online advertenties voor lokale bedrijven.',
     'Pages': 'Pagina’s',
     'Digital assistant': 'Digitale assistent',
     'Websites': 'Websites',
@@ -173,8 +173,7 @@ const T = {
     'A scroll-driven page by Twinbyte: three sequences of still frames played on a canvas by the scrollbar, the way the big product launches do it.':
       'Una pagina di Twinbyte che si muove con lo scroll: tre sequenze di fotogrammi fissi riprodotte su un canvas dallo scorrimento, come fanno i grandi lanci di prodotto.',
     'Language': 'Lingua',
-    'Book a call': 'Prenota una chiamata',
-    'Book': 'Prenota',
+    'Write to us': 'Scrivici',
 
     'A case turns, opens, and three facts fan out of it; a card runs across them and a second card follows':
       'Una custodia ruota, si apre e ne escono a ventaglio tre informazioni; una scheda ci scorre sopra e ne segue una seconda',
@@ -300,11 +299,12 @@ const T = {
     'Message us on WhatsApp': 'Scrivici su WhatsApp',
     'See what we normally build': 'Guarda cosa costruiamo di solito',
 
-    'Digital assistants and fast websites for small businesses.': 'Assistenti digitali e siti web veloci per piccole attività.',
+    'Fast websites, a digital assistant and online ads for local businesses.':
+      'Siti web veloci, assistente digitale e pubblicità online per attività locali.',
     'Pages': 'Pagine',
     'Digital assistant': 'Assistente digitale',
     'Websites': 'Siti web',
-    'Online ads': 'Annunci online',
+    'Online ads': 'Pubblicità online',
     'Prices': 'Prezzi',
     'Contact': 'Contatti',
     'Privacy statement': 'Informativa privacy',

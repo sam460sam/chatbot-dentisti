@@ -44,14 +44,18 @@ export const Window = ({ size = 20, className }: IconProps) => (
   </svg>
 )
 
+/* The two arrows carry a class of their own, so the link or button around
+   them can nudge them on hover and focus (site.css, .i-arrow). */
+const withClass = (own: string, extra?: string) => (extra ? `${own} ${extra}` : own)
+
 export const Arrow = ({ size = 18, className }: IconProps) => (
-  <svg {...base(size)} className={className}>
+  <svg {...base(size)} className={withClass('i-arrow', className)}>
     <path d="M5 12h13M13 6.5 18.5 12 13 17.5" />
   </svg>
 )
 
 export const ArrowOut = ({ size = 18, className }: IconProps) => (
-  <svg {...base(size)} className={className}>
+  <svg {...base(size)} className={withClass('i-arrow-out', className)}>
     <path d="M7 17 17 7M9 7h8v8" />
   </svg>
 )

@@ -96,15 +96,22 @@
     @apply bg-teal text-paper;
   }
 
-  /* One focus ring for the whole site: petrol on light ground, cream on dark.
-     Petrol clears 4.8:1 on cream; cream clears 16:1 on navy. */
+  /* One focus ring for the whole site, standing 4px clear of the control:
+     petrol on light ground, mint on the navy (the dark bands, the header,
+     the phone menu, the footer). Petrol clears 4.8:1 on cream; mint clears
+     11:1 on navy. */
   :focus-visible {
     outline: 2px solid #356F8E;
-    outline-offset: 2px;
+    outline-offset: 4px;
     border-radius: 2px;
   }
 
   .on-ink :focus-visible,
+  .site-header :focus-visible,
+  .menu-sheet :focus-visible {
+    outline-color: #96D3C0;
+  }
+
   .on-flood :focus-visible {
     outline-color: #F4EFE6;
   }
@@ -192,8 +199,12 @@
     @apply band bg-paper;
   }
 
+  /* The quieter cream keeps its colour (ink-mute and petrol text need its
+     contrast); where it meets the band above, a hairline and a petrol
+     ribbon seam (site.css) mark the join instead. */
   .band-deep {
-    @apply band bg-paper-deep;
+    @apply band relative bg-paper-deep;
+    border-top: 1px solid #D9D0C0;
   }
 
   .band-ink {
