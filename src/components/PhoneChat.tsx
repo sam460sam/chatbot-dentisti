@@ -46,6 +46,10 @@ function timeline(lines: ChatLine[]): { items: Timed[]; card: number } {
 
 const ms = (n: number) => ({ '--d': `${n}ms` }) as CSSProperties
 
+/* "15-minute" must not break at its hyphen in a narrow bubble */
+const unbroken = (text: string) =>
+  text.split(/(\S*\d-\S*)/).map((part, i) => (i % 2 ? <span key={i} className="whitespace-nowrap">{part}</span> : part))
+
 export function PhoneChat({
   lines, card, caption, you, us, placeholder, className = '',
 }: {
@@ -114,7 +118,7 @@ export function PhoneChat({
               {items.map((m, i) => (
                 <li key={i} className={`pc-row pc-${m.from}`}>
                   <span className="sr-only">{m.from === 'you' ? you : us} </span>
-                  <span className="pc-bubble pc-anim" style={ms(m.at)}>{m.text}</span>
+                  <span className="pc-bubble pc-anim" style={ms(m.at)}>{unbroken(m.text)}</span>
                   {m.typing && (
                     <span
                       className="pc-typing"

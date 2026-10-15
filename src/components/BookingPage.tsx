@@ -136,7 +136,7 @@ function ProofBand() {
   const shot = DEMO_SCREENS[lang].phone
   const src = `/media/screens/demo-phone-${lang}`
   return (
-    <section aria-labelledby="proof-title" className="band-ink proof-band">
+    <section aria-labelledby="proof-title" className="band-ink on-ink proof-band">
       <div className="container-page">
         <div className="proof-grid">
           <div data-rise>

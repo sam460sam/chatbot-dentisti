@@ -548,10 +548,18 @@
 
 .cp-backdrop-media video.is-on { opacity: 1; }
 
+/* On a phone the street bleeds to the plate's edges behind the phone and
+   fades out at the top and bottom into whatever is there (navy, or the
+   glow), so it never shows a box edge. */
+.cp-backdrop {
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 80%, transparent 100%);
+}
+
 .cp-backdrop-shade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, #0a0f1e 0%, rgba(10, 15, 30, 0.35) 22%, rgba(10, 15, 30, 0.35) 78%, #0a0f1e 100%);
+  background: linear-gradient(to bottom, rgba(10, 15, 30, 0.6) 0%, rgba(10, 15, 30, 0.3) 30%, rgba(10, 15, 30, 0.3) 70%, rgba(10, 15, 30, 0.7) 100%);
 }
 
 .cp-phone {
@@ -579,6 +587,8 @@
   .cp-backdrop {
     inset: -55px -55px -47px -24px;
     height: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .cp-backdrop-shade {
