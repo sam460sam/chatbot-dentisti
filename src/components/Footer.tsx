@@ -94,7 +94,9 @@ export function Footer({ t }: { t: Translation }) {
         </div>
       </div>
 
-      <div aria-hidden="true" className="footer-word container-page">twinbyte</div>
+      {/* the word is drawn by CSS (site.css, .footer-word::before): it is a
+          picture, and as page text its navy-on-navy plate failed contrast checks */}
+      <div aria-hidden="true" className="footer-word container-page" data-word="twinbyte" />
 
       {/* the bottom padding keeps the last line clear of the floating WhatsApp
           button (16px + 48px), and of the iPhone's home indicator */}

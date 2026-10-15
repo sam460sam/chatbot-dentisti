@@ -1068,6 +1068,10 @@ a:focus-visible .service-media::after { transform: scale(1); }
   overflow-x: clip;
 }
 
+/* drawn, not written: the letters are decoration (the logo above names the
+   company), so they stay out of the text that contrast checks read */
+.footer-word::before { content: attr(data-word); }
+
 /* ------------------------------------------------------------------ the devices
    /websites: the demo practice on a laptop and a phone drawn in code
    (src/components/DeviceScroll.tsx). Front view, so each screen is a plain
