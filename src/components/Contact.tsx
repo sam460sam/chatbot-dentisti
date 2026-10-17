@@ -122,12 +122,14 @@ function Ready({ lang, prefill, ids, qr }: { lang: Lang; prefill: string; ids: [
   )
 }
 
+/* Duration and "free" are the calendar card's words; how the call happens
+   is the contact copy's own (phone, WhatsApp or Meet, not only Meet). */
 function Chips({ lang, className = '' }: { lang: Lang; className?: string }) {
   const card = booking[lang].card
   return (
     <ul role="list" className={`cp-chips ${className}`}>
       <li className="cut-line cut-sm">{card.duration}</li>
-      <li className="cut-line cut-sm">{card.place}</li>
+      <li className="cut-line cut-sm">{contact[lang].place}</li>
       <li className="cut cut-sm cp-chip-free">{card.free}</li>
     </ul>
   )

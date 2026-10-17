@@ -50,6 +50,8 @@ export interface ContactCopy {
   copied: string
   qr: { title: string; body: string; alt: string }
   callLabel: string
+  /** the chip between the duration and "free": how the call happens */
+  place: string
   stepsTitle: string
   steps: string[]
   band: { title: string; lead: string }
@@ -78,7 +80,7 @@ export interface ContactCopy {
 export const contact: Record<Lang, ContactCopy> = {
   en: {
     title: 'A free 15-minute call, *one message* away.',
-    lead: 'Write to us on WhatsApp or by email. We agree the time with you, then talk for 15 minutes on Google Meet.',
+    lead: 'Write to us on WhatsApp or by email. We agree the time with you, then talk for 15 minutes by phone, WhatsApp or Google Meet — whichever you prefer.',
     topicLabel: 'What is it about?',
     topics: { website: 'A website', assistant: 'The assistant', ads: 'Online ads', unsure: 'Not sure yet' },
     whatsapp: 'WhatsApp',
@@ -92,15 +94,16 @@ export const contact: Record<Lang, ContactCopy> = {
       alt: 'QR code that opens the same WhatsApp chat on your phone',
     },
     callLabel: 'The call',
+    place: 'Phone or video',
     stepsTitle: 'What happens next',
     steps: [
       'You write two lines: your business and what you need.',
-      'We reply and agree a time for a free 15-minute call, no obligation.',
+      'We usually reply within 24 hours. Together we pick a time for the free 15-minute call, no obligation.',
       'In the call we agree the plan and the timing. The prices are the ones on the site.',
     ],
     band: {
       title: 'Interested? Write to us.',
-      lead: 'Two lines are enough. The Twinbyte team replies, not a call centre, and we set up a free 15-minute call together.',
+      lead: 'Two lines are enough: the Twinbyte team answers, not a call centre. We usually reply within 24 hours. Then we talk for 15 minutes, free, by phone, WhatsApp or Google Meet — whichever you prefer.',
     },
     prefill: {
       default: 'Hi Twinbyte, I run a business and would like to talk about what I need. When could we have a quick call?',
@@ -133,9 +136,9 @@ export const contact: Record<Lang, ContactCopy> = {
       replies: [
         'Happy to. Does Thursday at 10:30 work for a 15-minute call?',
         'Thursday works.',
-        'Done. We will send you the Google Meet link.',
+        'Done. On Thursday at 10:30 we call you — phone, WhatsApp or Meet, as you like.',
       ],
-      card: { title: 'Discovery call', meta: 'Thursday 10:30 · 15 min · Google Meet' },
+      card: { title: 'Discovery call', meta: 'Thursday 10:30 · 15 min · Phone or video' },
       caption: 'Example conversation, for illustration',
       you: 'You:',
       us: 'Twinbyte:',
@@ -161,7 +164,7 @@ export const contact: Record<Lang, ContactCopy> = {
 
   nl: {
     title: 'Een gratis gesprek van 15 minuten, op *één bericht* afstand.',
-    lead: 'Stuur ons een WhatsApp of een e-mail. We spreken samen een tijd af en praten dan 15 minuten via Google Meet.',
+    lead: 'Stuur ons een WhatsApp of een e-mail. We spreken samen een tijd af en praten dan 15 minuten, telefonisch, via WhatsApp of Google Meet — wat u het liefst heeft.',
     topicLabel: 'Waar gaat het over?',
     topics: { website: 'Een website', assistant: 'De assistent', ads: 'Online advertenties', unsure: 'Weet ik nog niet' },
     whatsapp: 'WhatsApp',
@@ -175,15 +178,16 @@ export const contact: Record<Lang, ContactCopy> = {
       alt: 'QR-code die hetzelfde WhatsApp-gesprek op uw telefoon opent',
     },
     callLabel: 'Het gesprek',
+    place: 'Telefoon of video',
     stepsTitle: 'Wat er daarna gebeurt',
     steps: [
       'U stuurt twee regels: uw bedrijf en wat u nodig heeft.',
-      'Wij antwoorden en spreken een moment af voor een gratis gesprek van 15 minuten, vrijblijvend.',
+      'We antwoorden meestal binnen 24 uur. Samen kiezen we een moment voor het gratis gesprek van 15 minuten, vrijblijvend.',
       'In het gesprek spreken we het pakket en de planning af. De prijzen zijn die op de site.',
     ],
     band: {
       title: 'Interesse? Stuur ons een bericht.',
-      lead: 'Twee regels is genoeg. U krijgt antwoord van het team van Twinbyte, niet van een callcenter, en we spreken samen een gratis gesprek van 15 minuten af.',
+      lead: 'Twee regels is genoeg: u krijgt antwoord van het team van Twinbyte, niet van een callcenter. We antwoorden meestal binnen 24 uur. Daarna praten we 15 minuten, gratis, telefonisch, via WhatsApp of Google Meet — wat u het liefst heeft.',
     },
     prefill: {
       default: 'Hallo Twinbyte, ik heb een bedrijf en wil graag bespreken wat ik nodig heb. Wanneer kunnen we even bellen?',
@@ -216,9 +220,9 @@ export const contact: Record<Lang, ContactCopy> = {
       replies: [
         'Graag! Past donderdag om 10:30 voor een gesprek van 15 minuten?',
         'Donderdag is goed.',
-        'Genoteerd. U krijgt de Google Meet-link van ons.',
+        'Genoteerd. Donderdag om 10:30 bellen we u — telefonisch, via WhatsApp of Meet, wat u wilt.',
       ],
-      card: { title: 'Kennismakingsgesprek', meta: 'Donderdag 10:30 · 15 min · Google Meet' },
+      card: { title: 'Kennismakingsgesprek', meta: 'Donderdag 10:30 · 15 min · Telefoon of video' },
       caption: 'Voorbeeldgesprek, ter illustratie',
       you: 'U:',
       us: 'Twinbyte:',
@@ -244,7 +248,7 @@ export const contact: Record<Lang, ContactCopy> = {
 
   it: {
     title: 'Una chiamata gratuita di 15 minuti, a *un messaggio* di distanza.',
-    lead: 'Scrivici su WhatsApp o per email. Concordiamo l’orario insieme, poi parliamo 15 minuti su Google Meet.',
+    lead: 'Scrivici su WhatsApp o per email. Concordiamo l’orario insieme, poi parliamo 15 minuti al telefono, su WhatsApp o in Google Meet, come preferisci.',
     topicLabel: 'Di cosa si tratta?',
     topics: { website: 'Un sito web', assistant: 'L’assistente', ads: 'Pubblicità online', unsure: 'Non lo so ancora' },
     whatsapp: 'WhatsApp',
@@ -258,15 +262,16 @@ export const contact: Record<Lang, ContactCopy> = {
       alt: 'Codice QR che apre la stessa chat WhatsApp sul tuo telefono',
     },
     callLabel: 'La chiamata',
+    place: 'Telefono o video',
     stepsTitle: 'Cosa succede dopo',
     steps: [
       'Ci scrivi due righe: che attività hai e cosa ti serve.',
-      'Ti rispondiamo e fissiamo insieme una chiamata gratuita di 15 minuti, senza impegno.',
+      'Di solito rispondiamo entro 24 ore. Poi fissiamo insieme la chiamata gratuita di 15 minuti, senza impegno.',
       'Nella chiamata concordiamo piano e tempi. I prezzi sono quelli del sito.',
     ],
     band: {
       title: 'Ti interessa? Scrivici.',
-      lead: 'Bastano due righe. Ti risponde il team Twinbyte, non un call center, e fissiamo insieme una chiamata gratuita di 15 minuti.',
+      lead: 'Bastano due righe: ti risponde il team Twinbyte, non un call center. Di solito rispondiamo entro 24 ore. Poi parliamo 15 minuti, gratis, al telefono, su WhatsApp o in Google Meet, come preferisci.',
     },
     prefill: {
       default: 'Ciao Twinbyte, ho un’attività e vorrei parlarvi di cosa mi serve. Quando possiamo sentirci?',
@@ -299,9 +304,9 @@ export const contact: Record<Lang, ContactCopy> = {
       replies: [
         'Volentieri! Giovedì alle 10:30 ti va bene per una chiamata di 15 minuti?',
         'Giovedì va bene.',
-        'Fatto. Ti mandiamo noi il link di Google Meet.',
+        'Fatto. Giovedì alle 10:30 ti chiamiamo: al telefono, su WhatsApp o in Meet, come preferisci.',
       ],
-      card: { title: 'Chiamata conoscitiva', meta: 'Giovedì 10:30 · 15 min · Google Meet' },
+      card: { title: 'Chiamata conoscitiva', meta: 'Giovedì 10:30 · 15 min · Telefono o video' },
       caption: 'Conversazione di esempio, a scopo illustrativo',
       you: 'Tu:',
       us: 'Twinbyte:',
