@@ -35,10 +35,9 @@ export const twinbyteStudio: Studio = {
       q: "What is Twinbyte",
       a: "Twinbyte is a small digital studio for local businesses. We build fast websites, add a digital assistant that answers customers and books appointments into the calendar the business already uses, and run Instagram and Facebook ads for people nearby.",
     },
-    // owner approval pending: "on the way" vs Assistant Pro listing WhatsApp.
     {
       q: "How the assistant works",
-      a: "We configure it with the business's opening hours, services and the questions customers ask most, then add one line of code to the website the business already has. Nothing to install, nothing else changes. A WhatsApp version is on the way.",
+      a: "We configure it with the business's opening hours, services and the questions customers ask most, then add one line of code to the website the business already has. Nothing to install, nothing else changes. With Assistant Pro it also answers on WhatsApp; setting that up takes about two weeks.",
     },
     {
       q: "Getting started",
@@ -47,18 +46,13 @@ export const twinbyteStudio: Studio = {
     // Figures copied from the price list on the site (src/i18n/en.ts and
     // src/i18n/it.ts on branch twinbyteservices; nl.ts has the English
     // figures). If one changes there, change it here too.
-    // owner approval pending: the two plan contradictions (Assistant "One
-    // language" vs /assistant; Assistant Pro "WhatsApp" vs "on the way"), so
-    // the plan lines below name only the conversations, not those points.
     {
       q: "Price",
-      a: "The full price list is public at https://twinbyteservices.com/prices. English and Dutch pages: one-page site €590 to set up + €19 a month; full site (up to five pages) €990 + €29 a month; Assistant €240 + €79 a month (300 conversations a month); Assistant Pro €340 + €129 a month (1,000 conversations a month); full site + Assistant bundle €860 + €79 a month. Italian page (https://twinbyteservices.com/it/prices): one-page site €490 + €19; full site €890 + €29; Assistant €190 + €59; Assistant Pro €290 + €99; bundle €750 + €59. Launch offer for the first three clients, on the bundle: €690 to set up (Italian page €620) and the first three months free. Conversations beyond the plan €0.08 each; extra page on a full site €140 (Italian page €120). Month to month, one month's notice. Ads: the cost depends on the campaign and is agreed in the free call. Quote the list for the language the person writes in.",
+      a: "The full price list is public at https://twinbyteservices.com/prices. English and Dutch pages: one-page site €590 to set up + €19 a month; full site (up to five pages) €990 + €29 a month; Assistant €240 + €79 a month (300 conversations a month, replies in your customer's language); Assistant Pro €340 + €129 a month (1,000 conversations a month, everything in Assistant, and WhatsApp as well as the website); full site + Assistant bundle €860 + €79 a month. Italian page (https://twinbyteservices.com/it/prices): one-page site €490 + €19; full site €890 + €29; Assistant €190 + €59; Assistant Pro €290 + €99; bundle €750 + €59. Launch offer for the first three clients, on the bundle: €690 to set up (Italian page €620) and the first three months free. Conversations beyond the plan €0.08 each; extra page on a full site €140 (Italian page €120). Month to month, one month's notice. Ads: the cost depends on the campaign and is agreed in the free call. Quote the list for the language the person writes in.",
     },
-    // owner approval pending: plan contradiction on languages (the price list
-    // says "One language" for Assistant). Today's promise stays until then.
     {
       q: "Languages",
-      a: "The assistant is set up in the language the business works in and answers each customer in the language that customer writes in.",
+      a: "On every plan the assistant is set up in the language the business works in and answers each customer in the language that customer writes in.",
     },
     {
       q: "Urgencies and medical questions",
