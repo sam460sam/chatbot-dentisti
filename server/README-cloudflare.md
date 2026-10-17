@@ -26,12 +26,23 @@ nella cartella `server/`. Niente da pubblicare a mano.
    - **Build command**: lascialo vuoto.
    - **Deploy command**: `npx wrangler deploy`.
    - **Root directory** (in *Advanced settings*, a volte chiamata *Path*): `server`.
-   - Lascia il comando per gli altri branch così com'è (`npx wrangler versions upload`)
-     oppure disattiva le build dei branch non di produzione.
+   - Il comando per gli altri branch (*Preview command*, di solito `npx wrangler preview`;
+     nei dashboard più vecchi *Non-production branch deploy command* con
+     `npx wrangler versions upload`) lascialo com'è: le build degli altri branch vanno
+     **disattivate** dopo la creazione (vedi sotto).
 4. **Deploy** (o *Save and Deploy*). La prima build installa le dipendenze (`npm ci` dal
    `package-lock.json`, Node 22 da `.node-version`) e pubblica il Worker. Verso la fine
    del log della build compaiono l'URL `https://twinbyte-chatbot.<tuo-sottodominio>.workers.dev`
    e la riga `schedule: 17 3 * * *` del cron.
+
+Subito dopo la prima build, **disattiva le build dei branch non di produzione**: Worker
+`twinbyte-chatbot` → **Settings** → **Build** → **Branch control** → togli la spunta a
+**Enable Preview Builds** (in alcune versioni del dashboard: *Builds for non-production
+branches*). Il branch `booking-page` (il sito) non ha la cartella `server/`, quindi ogni
+push lì farebbe partire una build del Worker destinata a fallire, con relativa email.
+In alternativa, o in più: **Settings** → **Build** → **Build watch paths** → *Include paths*
+`server/*`. Così Cloudflare rifà il Worker solo quando un push tocca `server/` (anche su
+`main`: un push che cambia solo il widget non ricostruisce il Worker).
 
 Se Cloudflare usa una versione di Node più vecchia di 22 (wrangler la richiede),
 aggiungi nelle impostazioni di build (Settings → Build → **Build variables**) la
