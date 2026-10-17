@@ -1,17 +1,20 @@
 import type { Studio } from "./studios/demo.js";
 import { workingSlots, type Booking, type CalendarProvider } from "./calendar.js";
 import { getServiceAccountToken } from "./google-auth.js";
+import type { Env } from "./env.js";
 
 const SCOPES = ["https://www.googleapis.com/auth/calendar"];
 const API = "https://www.googleapis.com/calendar/v3";
 
+type GoogleEnv = Pick<Env, "GOOGLE_SERVICE_ACCOUNT_JSON">;
+
 /** true se la variabile GOOGLE_SERVICE_ACCOUNT_JSON è impostata (contenuto del file JSON della service account). */
-export function googleConfigured(): boolean {
-  return Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
+export function googleConfigured(env: GoogleEnv): boolean {
+  return Boolean(env.GOOGLE_SERVICE_ACCOUNT_JSON);
 }
 
-async function call<T>(method: string, path: string, body?: unknown): Promise<T> {
-  const token = await getServiceAccountToken(process.env.GOOGLE_SERVICE_ACCOUNT_JSON!, SCOPES);
+async function call<T>(env: GoogleEnv, method: string, path: string, body?: unknown): Promise<T> {
+  const token = await getServiceAccountToken(env.GOOGLE_SERVICE_ACCOUNT_JSON!, SCOPES);
   const res = await fetch(`${API}${path}`, {
     method,
     headers: { Authorization: `Bearer ${token}`, "content-type": "application/json" },
@@ -46,11 +49,12 @@ function addMinutes(hhmm: string, min: number): string {
   return `${String(Math.floor(t / 60)).padStart(2, "0")}:${String(t % 60).padStart(2, "0")}`;
 }
 
-export const googleCalendar: CalendarProvider = {
+/** Il calendario Google dello studio, con le credenziali della service account in `env`. */
+export const googleCalendar = (env: GoogleEnv): CalendarProvider => ({
   async getSlots(studio, dateISO, durationMin) {
     const calId = studio.googleCalendarId!;
     const fb = await call<{ calendars: Record<string, { busy: { start: string; end: string }[] }> }>(
-      "POST", "/freeBusy", {
+      env, "POST", "/freeBusy", {
         timeMin: toRFC3339(dateISO, "00:00", studio.timezone),
         timeMax: toRFC3339(dateISO, "23:59", studio.timezone),
         timeZone: studio.timezone,
@@ -71,7 +75,7 @@ export const googleCalendar: CalendarProvider = {
     // ricontrollo disponibilità prima di scrivere (evita doppie prenotazioni)
     const free = await this.getSlots(studio, dateISO, duration);
     if (!free.includes(hhmm)) throw new Error("Orario non più disponibile");
-    const ev = await call<{ id: string }>("POST", `/calendars/${encodeURIComponent(studio.googleCalendarId!)}/events`, {
+    const ev = await call<{ id: string }>(env, "POST", `/calendars/${encodeURIComponent(studio.googleCalendarId!)}/events`, {
       summary: `${b.service} – ${b.patientName}`,
       description: `Prenotato dall'assistente virtuale.\nTelefono: ${b.phone}`,
       start: { dateTime: toRFC3339(dateISO, hhmm, studio.timezone), timeZone: studio.timezone },
@@ -81,7 +85,7 @@ export const googleCalendar: CalendarProvider = {
     console.log("[BOOKING:google]", booking.id, booking.start, booking.service);
     return booking;
   },
-};
+});
 
 const CALLBACK_TITLE: Record<string, string> = {
   it: "DA RICHIAMARE",
@@ -97,10 +101,10 @@ const callbackTitle = (language: string) =>
   CALLBACK_TITLE[language.slice(0, 2).toLowerCase()] ?? CALLBACK_TITLE.en;
 
 /** Segna nel calendario dello studio una richiesta da gestire a mano (urgenze, modifiche, domande senza risposta). */
-export async function addCallbackNote(studio: Studio, reason: string, contact?: string): Promise<string> {
+export async function addCallbackNote(env: GoogleEnv, studio: Studio, reason: string, contact?: string): Promise<string> {
   const now = new Date();
   const end = new Date(now.getTime() + 30 * 60000);
-  const ev = await call<{ id: string }>("POST", `/calendars/${encodeURIComponent(studio.googleCalendarId!)}/events`, {
+  const ev = await call<{ id: string }>(env, "POST", `/calendars/${encodeURIComponent(studio.googleCalendarId!)}/events`, {
     summary: `${callbackTitle(studio.language)} – ${contact?.trim() || "?"}`,
     description: `${reason}\n\n(segnalazione dell'assistente virtuale)`,
     start: { dateTime: now.toISOString() },

@@ -14,6 +14,8 @@ import {
   signServiceAccountJwt,
   type ServiceAccount,
 } from "../src/google-auth.js";
+import { googleCalendar } from "../src/calendar-google.js";
+import { demoStudio } from "../src/studios/demo.js";
 
 const SCOPES = ["https://www.googleapis.com/auth/calendar"];
 
@@ -98,4 +100,49 @@ test("errore leggibile se Google rifiuta il JWT", async () => {
   const fakeFetch = async () =>
     Response.json({ error: "invalid_grant", error_description: "Invalid JWT Signature." }, { status: 400 });
   await assert.rejects(getServiceAccountToken(JSON.stringify(sa), SCOPES, { fetch: fakeFetch }), /Google OAuth token: 400 .*invalid_grant/);
+});
+
+test("googleCalendar: token e poi freeBusy, con le stesse chiamate di prima", async () => {
+  const { sa, publicKey } = freshServiceAccount("calendar@example-project.iam.gserviceaccount.com");
+  const env = { GOOGLE_SERVICE_ACCOUNT_JSON: JSON.stringify(sa) };
+  const calls: { url: string; init: RequestInit }[] = [];
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = (async (input: string | URL | Request, init: RequestInit = {}) => {
+    const url = String(input);
+    calls.push({ url, init });
+    if (url === GOOGLE_TOKEN_URL) return Response.json({ access_token: "cal-token", expires_in: 3600 });
+    if (url.endsWith("/freeBusy")) {
+      // occupato dalle 9 alle 10 ora di Roma (ottobre: +02:00)
+      return Response.json({
+        calendars: { [demoStudio.googleCalendarId!]: { busy: [{ start: "2026-10-19T07:00:00Z", end: "2026-10-19T08:00:00Z" }] } },
+      });
+    }
+    return new Response("unexpected", { status: 500 });
+  }) as typeof fetch;
+  try {
+    const slots = await googleCalendar(env).getSlots(demoStudio, "2026-10-19", 30); // lunedì
+    assert.deepEqual(slots, [
+      "10:00", "10:30", "11:00", "11:30", "12:00", "12:30",
+      "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30",
+    ]);
+
+    assert.equal(calls.length, 2);
+    assert.equal(calls[0].url, GOOGLE_TOKEN_URL);
+    assert.ok(verifies(new URLSearchParams(String(calls[0].init.body)).get("assertion")!, publicKey));
+    assert.equal(calls[1].url, "https://www.googleapis.com/calendar/v3/freeBusy");
+    assert.equal(calls[1].init.method, "POST");
+    assert.deepEqual(calls[1].init.headers, { Authorization: "Bearer cal-token", "content-type": "application/json" });
+    assert.deepEqual(JSON.parse(String(calls[1].init.body)), {
+      timeMin: "2026-10-19T00:00:00+02:00",
+      timeMax: "2026-10-19T23:59:00+02:00",
+      timeZone: "Europe/Rome",
+      items: [{ id: demoStudio.googleCalendarId }],
+    });
+
+    // seconda richiesta: niente nuovo token
+    await googleCalendar(env).getSlots(demoStudio, "2026-10-20", 30);
+    assert.equal(calls.filter((c) => c.url === GOOGLE_TOKEN_URL).length, 1);
+  } finally {
+    globalThis.fetch = realFetch;
+  }
 });

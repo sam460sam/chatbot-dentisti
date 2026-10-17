@@ -2,9 +2,10 @@ import type Anthropic from "@anthropic-ai/sdk";
 import type { Studio } from "./studios/demo.js";
 import { memoryCalendar, type CalendarProvider } from "./calendar.js";
 import { googleCalendar, googleConfigured, addCallbackNote } from "./calendar-google.js";
+import type { Env } from "./env.js";
 
-export function calendarFor(studio: Studio): CalendarProvider {
-  return studio.googleCalendarId && googleConfigured() ? googleCalendar : memoryCalendar;
+export function calendarFor(studio: Studio, env: Env): CalendarProvider {
+  return studio.googleCalendarId && googleConfigured(env) ? googleCalendar(env) : memoryCalendar;
 }
 
 /** I tool disponibili per uno studio: chi non prende appuntamenti vede solo l'escalation. */
@@ -60,7 +61,8 @@ export async function executeTool(
   name: string,
   input: any,
   studio: Studio,
-  calendar: CalendarProvider = calendarFor(studio),
+  env: Env,
+  calendar: CalendarProvider = calendarFor(studio, env),
 ): Promise<string> {
   try {
     switch (name) {
@@ -81,8 +83,8 @@ export async function executeTool(
         return JSON.stringify({ ok: true, bookingId: b.id, start: b.start });
       }
       case "escalate_to_human": {
-        if (studio.googleCalendarId && googleConfigured()) {
-          await addCallbackNote(studio, String(input.reason), input.patient_contact ? String(input.patient_contact) : undefined);
+        if (studio.googleCalendarId && googleConfigured(env)) {
+          await addCallbackNote(env, studio, String(input.reason), input.patient_contact ? String(input.patient_contact) : undefined);
         } else {
           console.log("[HANDOFF]", studio.id, input);
         }
