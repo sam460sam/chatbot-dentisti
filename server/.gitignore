@@ -1,3 +1,9 @@
 node_modules
 dist
 .env
+# Cloudflare Workers: variabili locali per wrangler dev (contengono chiavi), cache e bundle di prova
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+.wrangler
+dist-worker

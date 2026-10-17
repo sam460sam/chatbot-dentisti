@@ -1,0 +1,19 @@
+# Cloudflare Worker dell'API della chat (GET /health, POST /chat).
+# Deploy: Workers Builds dal repository GitHub (root directory "server",
+# comando "npx wrangler deploy"). Istruzioni in README-cloudflare.md.
+name = "twinbyte-chatbot"
+main = "src/worker.ts"
+compatibility_date = "2026-09-01"
+workers_dev = true
+
+# Le variabili (CLAUDE_MODEL, SUPABASE_URL, ALLOWED_ORIGINS) e i secret si
+# impostano nel dashboard, non qui: senza keep_vars ogni deploy cancellerebbe
+# le variabili in chiaro che non sono in questo file.
+keep_vars = true
+
+# Pulizia giornaliera delle conversazioni più vecchie di 30 giorni (ore UTC).
+[triggers]
+crons = ["17 3 * * *"]
+
+[observability]
+enabled = true

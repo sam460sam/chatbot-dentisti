@@ -1,0 +1,9 @@
+# Copia in .dev.vars (non va su git) per provare il Worker in locale con: npm run dev:worker
+ANTHROPIC_API_KEY=sk-ant-...
+CLAUDE_MODEL=claude-sonnet-5
+# domini autorizzati a chiamare /chat, separati da virgola
+ALLOWED_ORIGINS=http://localhost:5173
+# opzionali: Google Calendar e Supabase (senza Supabase le conversazioni restano in memoria)
+GOOGLE_SERVICE_ACCOUNT_JSON=
+SUPABASE_URL=
+SUPABASE_SERVICE_KEY=
