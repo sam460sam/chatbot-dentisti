@@ -20,6 +20,7 @@ export const twinbyteStudio: Studio = {
     "Se chiedono una demo: https://twinbyteservices.com/demo/ (olandese https://twinbyteservices.com/demo/nl/, italiano https://twinbyteservices.com/demo/it/), uno studio dentistico immaginario.",
     "La chiamata gratuita di 15 minuti si fa al telefono, su WhatsApp o in Google Meet, come preferisce la persona; si fissa scrivendo su WhatsApp o per email: non c'è un calendario online.",
     "Di solito rispondiamo entro 24 ore: è l'unico tempo di risposta che puoi dare.",
+    "Se chiedono a nome di chi è registrato il dominio, non dirlo: invitali a chiederlo su WhatsApp o per email.",
   ].join(" "),
   address: "Da remoto, per attività nel Regno Unito, in Italia e nei Paesi Bassi.",
   phone: "+31 6 45745163",
@@ -48,7 +49,7 @@ export const twinbyteStudio: Studio = {
     // figures). If one changes there, change it here too.
     {
       q: "Price",
-      a: "The full price list is public at https://twinbyteservices.com/prices. English and Dutch pages: one-page site €590 to set up + €19 a month; full site (up to five pages) €990 + €29 a month; Assistant €240 + €79 a month (300 conversations a month, replies in your customer's language); Assistant Pro €340 + €129 a month (1,000 conversations a month, everything in Assistant, and WhatsApp as well as the website); full site + Assistant bundle €860 + €79 a month. Italian page (https://twinbyteservices.com/it/prices): one-page site €490 + €19; full site €890 + €29; Assistant €190 + €59; Assistant Pro €290 + €99; bundle €750 + €59. Launch offer for the first three clients, on the bundle: €690 to set up (Italian page €620) and the first three months free. Conversations beyond the plan €0.08 each; extra page on a full site €140 (Italian page €120). Month to month, one month's notice. Ads: the cost depends on the campaign and is agreed in the free call. Quote the list for the language the person writes in.",
+      a: "The full price list is public at https://twinbyteservices.com/prices. English and Dutch pages: one-page site €590 to set up + €19 a month; full site (up to five pages) €990 + €29 a month; Assistant €240 + €79 a month (300 conversations a month, replies in your customer's language); Assistant Pro €340 + €129 a month (1,000 conversations a month, everything in Assistant, and WhatsApp as well as the website); full site + Assistant bundle €860 + €79 a month. Italian page (https://twinbyteservices.com/it/prices): one-page site €490 + €19; full site €890 + €29; Assistant €190 + €59; Assistant Pro €290 + €99; bundle €750 + €59. Launch offer for the first three clients, on the bundle: €690 to set up (Italian page €620) and the first three months free. Conversations beyond the plan €0.08 each; extra page on a full site €140 (Italian page €120). Month to month, one month's notice. Site monthly fees include hosting, the security certificate, a standard domain and small changes; a premium domain name is quoted separately. Ads: the cost depends on the campaign and is agreed in the free call. Quote the list for the language the person writes in.",
     },
     {
       q: "Languages",
@@ -73,6 +74,19 @@ export const twinbyteStudio: Studio = {
     {
       q: "Websites for small businesses",
       a: "Besides the assistant we build websites: fast on mobile first, with a clear structure, no CMS for the owner to learn, and the assistant can be added to them later. Prices are on https://twinbyteservices.com/prices.",
+    },
+    {
+      q: "How long until my site is online",
+      a: "Online in about a week, once we have your texts and photos. Small changes (hours, prices, texts, photos): send them on WhatsApp, done within a week.",
+    },
+    {
+      q: "What the monthly fee includes",
+      a: "The monthly fee covers hosting, the security certificate, a standard domain and small changes. A premium domain name is quoted separately.",
+    },
+    // Do not say whose name the domain is registered in.
+    {
+      q: "Is the website mine",
+      a: "Your site runs as a subscription: design, hosting, the security certificate, a standard domain and small changes are all in the monthly fee. You can stop month by month with one month's notice; when the subscription ends, we take the site offline. A premium domain name is quoted separately.",
     },
     {
       q: "Online ads",
