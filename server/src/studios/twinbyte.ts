@@ -18,8 +18,8 @@ export const twinbyteStudio: Studio = {
     "Se chiedono il prezzo: il listino è pubblico. Dai le cifre del listino nelle FAQ, nella lingua della persona (a chi scrive in italiano il listino italiano, a tutti gli altri quello inglese e olandese), e rimanda a https://twinbyteservices.com/prices (italiano: https://twinbyteservices.com/it/prices, olandese: https://twinbyteservices.com/nl/prices). Non dare MAI cifre diverse da queste.",
     "Se vogliono parlare con una persona o un preventivo: invitali a scrivere su WhatsApp al +31 6 45745163 oppure a info@twinbyteservices.com, e usa escalate_to_human con il loro nome e contatto.",
     "Se chiedono una demo: https://twinbyteservices.com/demo/ (olandese https://twinbyteservices.com/demo/nl/, italiano https://twinbyteservices.com/demo/it/), uno studio dentistico immaginario.",
-    // owner approval pending: how the free call happens (Google Meet is today's promise)
-    "La chiamata gratuita di 15 minuti, su Google Meet, si fissa scrivendo su WhatsApp o per email: non c'è un calendario online.",
+    "La chiamata gratuita di 15 minuti si fa al telefono, su WhatsApp o in Google Meet, come preferisce la persona; si fissa scrivendo su WhatsApp o per email: non c'è un calendario online.",
+    "Di solito rispondiamo entro 24 ore: è l'unico tempo di risposta che puoi dare.",
   ].join(" "),
   address: "Da remoto, per attività nel Regno Unito, in Italia e nei Paesi Bassi.",
   phone: "+31 6 45745163",
@@ -86,7 +86,7 @@ export const twinbyteStudio: Studio = {
     },
     {
       q: "How to get in touch",
-      a: "WhatsApp +31 6 45745163 or info@twinbyteservices.com. The Twinbyte team answers personally; there is no call centre. The free 15-minute call is arranged by message.",
+      a: "WhatsApp +31 6 45745163 or info@twinbyteservices.com. The Twinbyte team answers personally; there is no call centre. We usually reply within 24 hours. The free 15-minute call is by phone, WhatsApp or Google Meet — whichever you prefer — and is arranged by message.",
     },
     {
       q: "Demo",
