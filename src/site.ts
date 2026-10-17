@@ -11,7 +11,7 @@ export const SITE = {
   lastUpdated: '2026-10-05',
   /** Live assistant widget on this site. Set enabled: false to take it off. */
   widget: {
-    enabled: true,
+    enabled: false,
     src: 'https://chatbot-dentisti.vercel.app/widget.js',
     api: 'https://chatbot-dentisti-production.up.railway.app',
     studio: 'twinbyte',
