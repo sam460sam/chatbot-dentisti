@@ -29,7 +29,7 @@ export const nl: Translation = {
     name: 'Uw bedrijf',
     tagline: 'De pagina waar uw klanten landen voordat ze bellen.',
     hours: 'Open ma–vr · 09:00–17:00',
-    address: 'Kerkstraat 12, Groningen',
+    address: 'Amandelhof 7, Groningen',
     nav: ['Wat we doen', 'Tarieven', 'Route'],
     call: 'Bel nu',
     book: 'Online afspraak',

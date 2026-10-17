@@ -29,7 +29,7 @@ export const it: Translation = {
     name: 'La tua attività',
     tagline: 'La pagina che i clienti guardano prima di chiamarti.',
     hours: 'Aperto lun–ven · 09:00–17:00',
-    address: 'Via Roma 12, Castelfranco Veneto',
+    address: 'Via dei Mandorli 7, Castelfranco Veneto',
     nav: ['Cosa facciamo', 'Prezzi', 'Dove siamo'],
     call: 'Chiama ora',
     book: 'Prenota online',
