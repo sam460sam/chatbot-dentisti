@@ -12,7 +12,7 @@ export type Env = {
   GOOGLE_SERVICE_ACCOUNT_JSON?: string;
   SUPABASE_URL?: string;
   SUPABASE_SERVICE_KEY?: string;
-  /** limiti di richieste facoltativi, vedi ratelimit.ts */
+  /** limiti di richieste facoltativi, vedi ratelimit.ts (quelli al giorno valgono anche per i contatori su Supabase) */
   RL_SESSION_PER_MIN?: string;
   RL_SESSION_PER_DAY?: string;
   RL_IP_PER_MIN?: string;

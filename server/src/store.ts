@@ -12,7 +12,7 @@ const RETENTION_DAYS = 30;
 let cached: { url: string; key: string; db: SupabaseClient } | null = null;
 let memoryLogged = false;
 
-function dbFor(env: Env): SupabaseClient | null {
+export function dbFor(env: Env): SupabaseClient | null {
   const url = env.SUPABASE_URL;
   const key = env.SUPABASE_SERVICE_KEY;
   if (!url || !key) {
@@ -48,11 +48,18 @@ export async function saveSession(env: Env, sessionId: string, studioId: string,
   if (error) console.error("[store] save", error.message);
 }
 
-/** Cancella le conversazioni più vecchie di RETENTION_DAYS (minimizzazione dati). */
+/**
+ * Cancella le conversazioni più vecchie di RETENTION_DAYS (minimizzazione dati)
+ * e i contatori del limite giornaliero (tabella rate_hits, vedi ratelimit.ts)
+ * dei giorni prima di ieri: servono solo per il giorno in corso.
+ */
 export async function cleanupOldSessions(env: Env): Promise<void> {
   const db = dbFor(env);
   if (!db) return;
   const cutoff = new Date(Date.now() - RETENTION_DAYS * 86400000).toISOString();
   const { error } = await db.from("sessions").delete().lt("updated_at", cutoff);
   if (error) console.error("[store] cleanup", error.message);
+  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  const hits = await db.from("rate_hits").delete().lt("day", yesterday);
+  if (hits.error) console.error("[store] cleanup rate_hits", hits.error.message);
 }

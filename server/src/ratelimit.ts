@@ -1,15 +1,18 @@
 import type { Env, RateLimitBinding } from "./env.js";
+import { dbFor } from "./store.js";
 
 /**
  * Limite di richieste, per non lasciare la spesa API aperta a chiunque.
  *
- * Il conteggio in memoria (una Map) vale per una sola istanza: su Cloudflare
- * Workers ogni isolate ha la sua Map, e un isolate può essere riciclato in
- * qualsiasi momento, quindi da solo è un limite indicativo. Per questo, se il
- * Worker ha i binding Workers Rate Limiting (RATE_LIMIT_SESSION, RATE_LIMIT_IP
- * in wrangler.toml), i limiti al minuto sono controllati anche lì, con contatori
- * condivisi da tutte le istanze nella stessa località Cloudflare. I limiti al
- * giorno restano solo in memoria (il binding conta al massimo su 60 secondi).
+ * - Al giorno (80 per conversazione, 300 per IP): contatori nella tabella
+ *   rate_hits di Supabase (supabase/rate_hits.sql), condivisi da tutte le
+ *   istanze. Il giorno è quello di calendario UTC. Se la tabella manca o
+ *   Supabase non risponde, la richiesta passa (e l'errore va nei log).
+ * - Al minuto (10 per conversazione, 30 per IP): i binding Workers Rate Limiting
+ *   (RATE_LIMIT_SESSION, RATE_LIMIT_IP in wrangler.toml), che contano per località
+ *   Cloudflare e in modo approssimato, più il conteggio in memoria qui sotto.
+ * - In memoria (una Map): vale per un solo isolate, che Cloudflare può riciclare
+ *   in qualsiasi momento, quindi da solo è solo indicativo.
  */
 const MINUTE = 60_000;
 const DAY = 24 * 60 * MINUTE;
@@ -65,6 +68,26 @@ async function sharedLimited(env: Env, sessionId: string, ip: string): Promise<b
   }
 }
 
+/** true se uno dei contatori giornalieri su Supabase ha superato il limite; senza Supabase o se la chiamata fallisce, false. */
+async function dailyLimited(env: Env, sessionId: string, ip: string, perSession: number, perIp: number): Promise<boolean> {
+  const db = dbFor(env);
+  if (!db) return false;
+  try {
+    const [s, i] = await Promise.all([
+      db.rpc("rate_hit", { k: `s:${sessionId}` }),
+      db.rpc("rate_hit", { k: `i:${ip}` }),
+    ]);
+    if (s.error || i.error) {
+      console.error("[ratelimit] daily", (s.error ?? i.error)!.message);
+      return false;
+    }
+    return (s.data as number) > perSession || (i.data as number) > perIp;
+  } catch (e) {
+    console.error("[ratelimit] daily", e instanceof Error ? e.message : e);
+    return false;
+  }
+}
+
 /** true se la richiesta va rifiutata */
 export async function rateLimited(env: Env, sessionId: string, ip: string): Promise<boolean> {
   const now = Date.now();
@@ -72,8 +95,11 @@ export async function rateLimited(env: Env, sessionId: string, ip: string): Prom
   const limits = limitsFor(env);
   const bySession = tooMany(`s:${sessionId}`, now, limits.sessionPerMinute, limits.sessionPerDay);
   const byIp = tooMany(`i:${ip}`, now, limits.ipPerMinute, limits.ipPerDay);
-  const shared = await sharedLimited(env, sessionId, ip);
-  return bySession || byIp || shared;
+  const [shared, daily] = await Promise.all([
+    sharedLimited(env, sessionId, ip),
+    dailyLimited(env, sessionId, ip, limits.sessionPerDay, limits.ipPerDay),
+  ]);
+  return bySession || byIp || shared || daily;
 }
 
 const MESSAGE: Record<string, string> = {
