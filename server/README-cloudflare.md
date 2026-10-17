@@ -11,6 +11,7 @@ nella cartella `server/`. Niente da pubblicare a mano.
 | `src/worker.ts` | entry del Worker: `fetch` (l'API) e `scheduled` (pulizia giornaliera delle conversazioni) |
 | `src/app.ts` | l'API vera e propria (Hono), uguale su Workers e su Node |
 | `src/google-auth.ts` | token della service account Google firmato con WebCrypto (al posto di google-auth-library) |
+| `supabase/rate_hits.sql` | tabella e funzione Supabase per il limite giornaliero dei messaggi (da eseguire una volta, sezione 3) |
 | `src/index.ts` | entry Node facoltativa (`npm run dev`, `npm start`), non usata da Cloudflare |
 
 ## 1. Creare il Worker (una volta sola)
@@ -69,9 +70,24 @@ variabili di tipo Text impostate dal dashboard; i Secret restano comunque.
 
 Senza `SUPABASE_URL` e `SUPABASE_SERVICE_KEY` le conversazioni restano in memoria: su
 Workers ogni istanza ha la sua memoria e può sparire in qualsiasi momento, quindi il bot
-perderebbe il filo tra un messaggio e l'altro. In produzione Supabase serve davvero.
+perderebbe il filo tra un messaggio e l'altro, e i limiti al giorno varrebbero solo per
+istanza. In produzione Supabase serve davvero.
 
-## 3. Trovare l'URL
+## 3. Limite giornaliero e tetto di spesa (una volta sola)
+
+1. **Tabella del limite giornaliero.** Su <https://supabase.com/dashboard>, nel progetto che
+   ha la tabella `sessions`: **SQL Editor** → **New query**, incolla tutto il contenuto di
+   [`supabase/rate_hits.sql`](supabase/rate_hits.sql) e premi **Run**. Crea la tabella
+   `rate_hits` e la funzione `rate_hit`, che contano i messaggi di ogni conversazione e di
+   ogni IP nel giorno in corso. Si può rieseguire senza danni. Senza questa tabella la chat
+   funziona lo stesso, ma senza limite giornaliero, e nei log compare a ogni messaggio
+   l'errore `[ratelimit] daily`.
+2. **Limite di spesa Anthropic.** Nella Console Anthropic (<https://console.anthropic.com>,
+   **Settings** → **Limits**, oppure le impostazioni del workspace che contiene la chiave)
+   imposta un limite di spesa mensile. È l'unico tetto che regge qualunque cosa succeda al
+   Worker: i limiti di richieste qui sotto riducono l'abuso, ma non sono una garanzia.
+
+## 4. Trovare l'URL
 
 Worker `twinbyte-chatbot` → **Settings** → **Domains & Routes**: la riga `workers.dev`
 mostra l'indirizzo, del tipo `https://twinbyte-chatbot.<tuo-sottodominio>.workers.dev`.
@@ -82,7 +98,7 @@ Quell'URL va poi messo come `data-api` del widget al posto di
 `https://chatbot-dentisti-production.up.railway.app` (in `src/site.ts` del sito e nelle
 pagine demo del widget).
 
-## 4. Provarlo
+## 5. Provarlo
 
 ```sh
 curl https://twinbyte-chatbot.<tuo-sottodominio>.workers.dev/health
@@ -102,6 +118,40 @@ curl -i https://twinbyte-chatbot.<tuo-sottodominio>.workers.dev/chat \
 Un `500 Internal Server Error` qui vuol dire quasi sempre chiave Anthropic mancante o
 sbagliata: il motivo è nei log (Worker → **Observability** / **Logs**).
 
+Dopo questa prova, in Supabase (**Table Editor** → `rate_hits`) ci sono due righe con la
+data di oggi: `s:s_test_1` e `i:<il tuo IP>`, con `hits` = 1. Se mancano, cerca nei log
+l'errore `[ratelimit] daily` (di solito la sezione 3 non è stata fatta).
+
+### Controllo del limite al minuto (una volta, dopo il primo deploy)
+
+Il limite al minuto condiviso tra le istanze viene dal binding Workers Rate Limiting. In
+locale `wrangler dev` lo applica, ma in produzione non è stato provato, quindi va
+controllato una volta:
+
+1. Worker → **Settings** → **Variables and Secrets**: aggiungi due variabili Text,
+   `RL_SESSION_PER_MIN` = `1000` e `RL_IP_PER_MIN` = `1000`, e salva con **Deploy**.
+   Così il conteggio in memoria non interviene e risponde solo il binding.
+2. Manda 15 messaggi insieme con la stessa conversazione (sostituisci l'URL):
+
+   ```sh
+   URL=https://twinbyte-chatbot.<tuo-sottodominio>.workers.dev
+   (for i in $(seq 1 15); do
+     curl -s -o /dev/null -w "%{http_code}\n" "$URL/chat" \
+       -H "Origin: https://twinbyteservices.com" -H "content-type: application/json" \
+       -d '{"studioId":"twinbyte","sessionId":"s_rl_check_1","message":"hi"}' &
+   done; wait) | sort | uniq -c
+   ```
+
+   Atteso: `10 200` e `5 429` (il binding conta in modo approssimato, quindi può passarne
+   qualcuno in più). I `200` sono vere risposte di Claude, quindi costano
+   qualche centesimo.
+3. **Cancella** le due variabili `RL_SESSION_PER_MIN` e `RL_IP_PER_MIN` (e salva con
+   **Deploy**). Con `keep_vars = true` i deploy successivi non le toglierebbero da soli.
+
+Se escono quindici `200`, in produzione il binding non sta limitando: il limite al minuto
+resta solo per istanza (e quindi debole), mentre il limite giornaliero su Supabase e il
+limite di spesa Anthropic continuano a valere.
+
 ## Cosa cambia rispetto a Railway
 
 - **API identica** per il widget: stessi percorsi, stesse risposte JSON, stessi codici
@@ -109,14 +159,25 @@ sbagliata: il motivo è nei log (Worker → **Observability** / **Logs**).
 - **Pulizia delle conversazioni** (più vecchie di 30 giorni): non più `setInterval` ma un
   Cron Trigger alle 03:17 UTC ogni giorno (Settings → **Triggers**).
 - **Limite di richieste**: le stesse regole (10 al minuto e 80 al giorno per conversazione,
-  30 al minuto e 300 al giorno per IP). Il conteggio in memoria vale per singola istanza
-  del Worker; per questo i limiti al minuto passano anche dal binding gratuito
-  **Workers Rate Limiting** (`[[ratelimits]]` in `wrangler.toml`), che conta per tutte le
-  istanze nella stessa località Cloudflare. I limiti al giorno restano per istanza, quindi
-  indicativi. Le variabili facoltative `RL_SESSION_PER_MIN`, `RL_IP_PER_MIN`,
-  `RL_SESSION_PER_DAY`, `RL_IP_PER_DAY` cambiano solo il conteggio in memoria: i limiti
-  del binding si cambiano in `wrangler.toml`. Se un giorno il deploy rifiutasse i blocchi
-  `[[ratelimits]]`, si possono togliere: il codice continua con il solo conteggio in memoria.
+  30 al minuto e 300 al giorno per IP), ma su Railway c'era un solo processo, mentre su
+  Workers ogni istanza ha la sua memoria e Cloudflare ne usa molte, che ricicla quando vuole.
+  Il conteggio in memoria da solo quindi non basta più:
+  - i limiti **al giorno** si contano nella tabella `rate_hits` di Supabase (sezione 3),
+    la stessa per tutte le istanze. Il giorno è quello di calendario UTC (ricomincia
+    all'01:00 ora italiana d'inverno, alle 02:00 d'estate), non più le ultime 24 ore. Ogni
+    messaggio fa due piccole chiamate in più a Supabase. Se la tabella manca o Supabase non
+    risponde, la chat continua senza limite giornaliero e nei log compare `[ratelimit] daily`.
+    Il cron giornaliero cancella le righe dei giorni prima di ieri.
+  - i limiti **al minuto** passano anche dal binding gratuito **Workers Rate Limiting**
+    (`[[ratelimits]]` in `wrangler.toml`). Cloudflare lo descrive come approssimato e
+    separato per ogni località, e in produzione non è ancora stato provato: va controllato
+    una volta (sezione 5). Se non limita, al minuto resta solo il conteggio per istanza.
+  - le variabili facoltative `RL_SESSION_PER_DAY` e `RL_IP_PER_DAY` cambiano i limiti al
+    giorno (memoria e Supabase); `RL_SESSION_PER_MIN` e `RL_IP_PER_MIN` solo il conteggio
+    al minuto in memoria: i limiti del binding si cambiano in `wrangler.toml`. Se un giorno
+    il deploy rifiutasse i blocchi `[[ratelimits]]`, si possono togliere.
+  - il tetto che regge comunque è il limite di spesa mensile nella Console Anthropic
+    (sezione 3).
 - **Piano gratuito**: 100.000 richieste al giorno e 10 ms di CPU per richiesta. L'attesa
   delle risposte di Anthropic, Supabase e Google non conta come CPU; il prompt di sistema
   si costruisce una volta per istanza.
