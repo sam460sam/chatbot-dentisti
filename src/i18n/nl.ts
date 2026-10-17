@@ -29,7 +29,7 @@ export const nl: Translation = {
     name: 'Uw bedrijf',
     tagline: 'De pagina waar uw klanten landen voordat ze bellen.',
     hours: 'Open ma–vr · 09:00–17:00',
-    address: 'Kerkstraat 12, Groningen',
+    address: 'Amandelhof 7, Groningen',
     nav: ['Wat we doen', 'Tarieven', 'Route'],
     call: 'Bel nu',
     book: 'Online afspraak',
@@ -77,14 +77,14 @@ export const nl: Translation = {
         name: 'Assistent',
         setup: '\u20AC240',
         month: '\u20AC79',
-        points: ['300 gesprekken per maand', 'Plant in de agenda die u al gebruikt', '\u00c9\u00e9n taal'],
+        points: ['300 gesprekken per maand', 'Plant in de agenda die u al gebruikt', 'Antwoordt in de taal van uw klant'],
       },
       {
         name: 'Assistent Pro',
         setup: '\u20AC340',
         month: '\u20AC129',
         plus: 'Alles uit Assistent, plus:',
-        points: ['1.000 gesprekken per maand', 'Ook via WhatsApp, niet alleen de website', 'Elke taal waarin uw klanten schrijven'],
+        points: ['1.000 gesprekken per maand', 'Ook via WhatsApp, niet alleen de website'],
       },
     ],
     bundle: {
@@ -95,6 +95,9 @@ export const nl: Translation = {
       body: 'Dertig procent van de eenmalige kosten eraf, en het maandbedrag van de site is van ons zolang u de assistent houdt. Ze samen bouwen is voor ons echt minder werk, dus het verschil is voor u.',
     },
     fine: [
+      'Online in ongeveer een week, zodra we uw teksten en foto’s hebben.',
+      'Het maandbedrag dekt hosting, het beveiligingscertificaat, een standaard domeinnaam en kleine wijzigingen.',
+      'Kleine wijzigingen (openingstijden, prijzen, teksten, foto’s): stuur ze via WhatsApp, binnen een week geregeld.',
       'Gesprekken boven uw pakket: \u20AC0,08 per stuk. We zeggen het voordat u eroverheen gaat, niet erna.',
       'Extra pagina op een volledige site: \u20AC140.',
       'Maand per maand, \u00e9\u00e9n maand opzegtermijn. Nooit een lang contract.',
@@ -171,7 +174,7 @@ export const nl: Translation = {
       },
       {
         title: 'Wij plaatsen het op uw website',
-        body: 'Eén regel code op de site die u al heeft. Niets te installeren, verder verandert er niets. Een WhatsApp-versie volgt binnenkort.',
+        body: 'Eén regel code op de site die u al heeft. Niets te installeren, verder verandert er niets. Met Assistent Pro antwoordt hij ook op WhatsApp; dat inrichten duurt ongeveer twee weken.',
       },
       {
         title: 'Klanten plannen zelf een afspraak',
@@ -181,7 +184,7 @@ export const nl: Translation = {
   },
   benefits: {
     title: 'Wat uw bedrijf eraan heeft',
-    lead: 'We hebben hem eerst ontworpen voor tandartspraktijken, waar een gemist telefoontje een verloren patiënt is. Datzelfde probleem heeft elk bedrijf dat op afspraak werkt: een salon, een garage, een praktijk, een studio, een adviesbureau.',
+    lead: 'In elk bedrijf dat op afspraak werkt, is een gemist telefoontje een verloren klant: een salon, een garage, een tandartspraktijk, een studio, een adviesbureau. Voor allemaal werkt dezelfde assistent.',
     items: [
       {
         title: 'Minder telefoontjes om op te nemen',
@@ -251,6 +254,19 @@ export const nl: Translation = {
         a: 'De hele prijslijst voor websites en de assistent staat op deze pagina — er wordt niets achtergehouden tot een telefoongesprek. De assistent kost €240 eenmalig en €79 per maand voor 300 gesprekken; sites beginnen bij €590. Neemt u de volledige site en de assistent samen, dan gaat er dertig procent van de eenmalige kosten af en is het maandbedrag van de site van ons.',
       },
       {
+        q: 'Is de website van mij?',
+        show: ['home'],
+        a: 'Uw site werkt als abonnement: ontwerp, hosting, het beveiligingscertificaat, een standaard domeinnaam en kleine wijzigingen zitten allemaal in het maandbedrag. U kunt per maand stoppen met één maand opzegtermijn; als het abonnement afloopt, halen we de site offline. Een premium domeinnaam rekenen we apart.',
+      },
+      {
+        q: 'Hoe snel staat mijn site online?',
+        a: 'Online in ongeveer een week, zodra we uw teksten en foto’s hebben. Kleine wijzigingen (openingstijden, prijzen, teksten, foto’s): stuur ze via WhatsApp, binnen een week geregeld.',
+      },
+      {
+        q: 'Wat kosten de advertenties?',
+        a: 'U betaalt twee dingen: het advertentiebudget, dat naar Meta gaat, en ons bedrag voor het maken en beheren van de advertenties. Beide spreken we af in het gesprek, voordat er iets begint.',
+      },
+      {
         q: 'Werkt het met onze huidige website?',
         show: ['assistant'],
         a: 'Ja, zolang we er één regel code aan kunnen toevoegen. Dat kan bij vrijwel elke site — WordPress, Wix, Squarespace, Shopify of maatwerk. Verder blijft uw site precies zoals hij is.',
@@ -278,7 +294,7 @@ export const nl: Translation = {
       {
         q: 'Neemt de assistent mijn telefoon op?',
         show: ['home', 'assistant'],
-        a: 'Nee. Hij antwoordt in een chat op uw website, alleen met uw eigen informatie, en zet afspraken in uw agenda. Wat hij niet kan afhandelen, komt bij u terecht met de naam en het nummer van de klant.',
+        a: 'Nee. Hij antwoordt in een chat op uw website (met Assistent Pro ook op WhatsApp), alleen met uw eigen informatie, en zet afspraken in uw agenda. Wat hij niet kan afhandelen, komt bij u terecht met de naam en het nummer van de klant.',
       },
     ],
   },

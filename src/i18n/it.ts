@@ -29,7 +29,7 @@ export const it: Translation = {
     name: 'La tua attività',
     tagline: 'La pagina che i clienti guardano prima di chiamarti.',
     hours: 'Aperto lun–ven · 09:00–17:00',
-    address: 'Via Roma 12, Castelfranco Veneto',
+    address: 'Via dei Mandorli 7, Castelfranco Veneto',
     nav: ['Cosa facciamo', 'Prezzi', 'Dove siamo'],
     call: 'Chiama ora',
     book: 'Prenota online',
@@ -77,14 +77,14 @@ export const it: Translation = {
         name: 'Assistente',
         setup: '\u20AC190',
         month: '\u20AC59',
-        points: ['300 conversazioni al mese', 'Fissa gli appuntamenti nell\u2019agenda che usi gi\u00e0', 'Una lingua'],
+        points: ['300 conversazioni al mese', 'Fissa gli appuntamenti nell\u2019agenda che usi gi\u00e0', 'Risponde nella lingua del cliente'],
       },
       {
         name: 'Assistente Pro',
         setup: '\u20AC290',
         month: '\u20AC99',
         plus: 'Tutto quello che c’è in Assistente, più:',
-        points: ['1.000 conversazioni al mese', 'Anche su WhatsApp, non solo sul sito', 'Tutte le lingue in cui ti scrivono'],
+        points: ['1.000 conversazioni al mese', 'Anche su WhatsApp, non solo sul sito'],
       },
     ],
     bundle: {
@@ -95,6 +95,9 @@ export const it: Translation = {
       body: 'Trenta per cento in meno sull\u2019attivazione, e il canone del sito lo offriamo noi finch\u00e9 tieni l\u2019assistente. Costruirli insieme per noi \u00e8 davvero meno lavoro, quindi la differenza resta a te.',
     },
     fine: [
+      'Online in circa una settimana, da quando abbiamo testi e foto.',
+      'Il canone mensile copre hosting, certificato di sicurezza, un dominio standard e piccole modifiche.',
+      'Piccole modifiche (orari, prezzi, testi, foto): mandacele su WhatsApp, fatte entro una settimana.',
       'Conversazioni oltre il piano: \u20AC0,08 l\u2019una. Te lo diciamo prima di superare la soglia, non dopo.',
       'Pagina aggiuntiva su un sito completo: \u20AC120.',
       'Mese per mese, un mese di preavviso. Mai un contratto lungo.',
@@ -171,7 +174,7 @@ export const it: Translation = {
       },
       {
         title: 'Lo inseriamo sul tuo sito',
-        body: 'Una riga di codice sul sito che hai già. Niente da installare, il resto del sito non cambia. La versione WhatsApp è in arrivo.',
+        body: 'Una riga di codice sul sito che hai già. Niente da installare, il resto del sito non cambia. Con Assistente Pro risponde anche su WhatsApp: per attivarlo servono circa due settimane.',
       },
       {
         title: 'I clienti prenotano da soli',
@@ -181,7 +184,7 @@ export const it: Translation = {
   },
   benefits: {
     title: 'Cosa ci guadagna la tua attività',
-    lead: 'L’abbiamo progettato prima per gli studi dentistici, dove una chiamata persa è un paziente perso. Lo stesso problema c’è in qualsiasi attività che prende appuntamenti: un salone, un’officina, uno studio professionale, una clinica, un centro estetico.',
+    lead: 'In qualsiasi attività che prende appuntamenti, una chiamata persa è un cliente perso: un salone, un’officina, uno studio dentistico, uno studio professionale, un centro estetico. Per tutti funziona lo stesso assistente.',
     items: [
       {
         title: 'Meno telefonate a cui rispondere',
@@ -251,6 +254,19 @@ export const it: Translation = {
         a: 'Il listino completo di siti e assistente è su questa pagina: non teniamo niente nascosto fino alla telefonata. L’assistente costa €190 di attivazione e €59 al mese per 300 conversazioni; i siti partono da €490. Prendendo insieme sito completo e assistente, l’attivazione cala del trenta per cento e il canone del sito lo offriamo noi.',
       },
       {
+        q: 'Il sito è mio?',
+        show: ['home'],
+        a: 'Il sito funziona in abbonamento: progetto, hosting, certificato di sicurezza, un dominio standard e piccole modifiche sono tutti nel canone mensile. Puoi smettere mese per mese con un mese di preavviso; quando l’abbonamento finisce, mettiamo il sito offline. Un dominio premium lo quotiamo a parte.',
+      },
+      {
+        q: 'Quanto ci vuole perché il sito sia online?',
+        a: 'Online in circa una settimana, da quando abbiamo testi e foto. Piccole modifiche (orari, prezzi, testi, foto): mandacele su WhatsApp, fatte entro una settimana.',
+      },
+      {
+        q: 'Quanto costa la pubblicità?',
+        a: 'Paghi due cose: il budget degli annunci, che va a Meta, e il nostro compenso per crearli e gestirli. Li concordiamo entrambi nella chiamata, prima di iniziare.',
+      },
+      {
         q: 'Funziona con il sito che abbiamo già?',
         show: ['assistant'],
         a: 'Sì, se possiamo aggiungerci una riga di codice. È possibile su quasi tutti i siti — WordPress, Wix, Squarespace, Shopify o sviluppati su misura. Per il resto il tuo sito resta esattamente com’è.',
@@ -278,7 +294,7 @@ export const it: Translation = {
       {
         q: 'L’assistente risponde al telefono?',
         show: ['home', 'assistant'],
-        a: 'No. Risponde in chat sul tuo sito, solo con le tue informazioni, e fissa gli appuntamenti nella tua agenda. Quello che non sa gestire passa a te, con nome e numero del cliente.',
+        a: 'No. Risponde in chat sul tuo sito (con Assistente Pro anche su WhatsApp), solo con le tue informazioni, e fissa gli appuntamenti nella tua agenda. Quello che non sa gestire passa a te, con nome e numero del cliente.',
       },
     ],
   },

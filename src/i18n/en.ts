@@ -29,7 +29,7 @@ export const en: Translation = {
     name: 'Your business',
     tagline: 'The page your customers land on before they call.',
     hours: 'Open Mon–Fri · 09:00–17:00',
-    address: 'Kerkstraat 12, Groningen',
+    address: '7 Almond Row, Richmond',
     nav: ['What we do', 'Prices', 'Find us'],
     call: 'Call now',
     book: 'Book online',
@@ -77,14 +77,14 @@ export const en: Translation = {
         name: 'Assistant',
         setup: '\u20AC240',
         month: '\u20AC79',
-        points: ['300 conversations a month', 'Books into the calendar you already use', 'One language'],
+        points: ['300 conversations a month', 'Books into the calendar you already use', 'Replies in your customer’s language'],
       },
       {
         name: 'Assistant Pro',
         setup: '\u20AC340',
         month: '\u20AC129',
         plus: 'Everything in Assistant, plus:',
-        points: ['1,000 conversations a month', 'WhatsApp as well as the website', 'Every language your customers write in'],
+        points: ['1,000 conversations a month', 'WhatsApp as well as the website'],
       },
     ],
     bundle: {
@@ -95,6 +95,9 @@ export const en: Translation = {
       body: 'Thirty per cent off the setup, and the site\u2019s monthly fee is on us for as long as you keep the assistant. Building them together is genuinely less work for us, so you keep the difference.',
     },
     fine: [
+      'Online in about a week, once we have your texts and photos.',
+      'The monthly fee covers hosting, the security certificate, a standard domain and small changes.',
+      'Small changes (hours, prices, texts, photos): send them on WhatsApp, done within a week.',
       'Conversations beyond your plan: \u20AC0.08 each. We tell you before you go over, never after.',
       'Extra page on a full site: \u20AC140.',
       'Month to month, one month\u2019s notice. No long contract, ever.',
@@ -171,7 +174,7 @@ export const en: Translation = {
       },
       {
         title: 'We put it on your website',
-        body: 'One line of code on the site you already have. Nothing to install, nothing else changes. A WhatsApp version is on the way.',
+        body: 'One line of code on the site you already have. Nothing to install, nothing else changes. With Assistant Pro it also answers on WhatsApp; setting that up takes about two weeks.',
       },
       {
         title: 'Customers book themselves',
@@ -181,7 +184,7 @@ export const en: Translation = {
   },
   benefits: {
     title: 'What your business gets out of it',
-    lead: 'We first designed it for dental practices, where a missed call is a lost patient. The same problem shows up in any business that takes bookings — a salon, a garage, a studio, a clinic, a consultancy.',
+    lead: 'In any business that takes bookings, a missed call is a lost customer — a salon, a garage, a dental practice, a studio, a clinic, a consultancy. The same assistant works for all of them.',
     items: [
       {
         title: 'Fewer calls to answer',
@@ -251,6 +254,19 @@ export const en: Translation = {
         a: 'The whole price list for websites and the assistant is on this page — nothing is held back until a phone call. The assistant is €240 to set up and €79 a month for 300 conversations; sites start at €590. Take the full site and the assistant together and the setup drops thirty per cent and the site’s monthly fee is on us.',
       },
       {
+        q: 'Is the website mine?',
+        show: ['home'],
+        a: 'Your site runs as a subscription: design, hosting, the security certificate, a standard domain and small changes are all in the monthly fee. You can stop month by month with one month’s notice; when the subscription ends, we take the site offline. A premium domain name is quoted separately.',
+      },
+      {
+        q: 'How long until my site is online?',
+        a: 'Online in about a week, once we have your texts and photos. Small changes (hours, prices, texts, photos): send them on WhatsApp, done within a week.',
+      },
+      {
+        q: 'How much do the ads cost?',
+        a: 'You pay two things: the ad budget, which goes to Meta, and our fee for creating and running the ads. We agree both in the call, before anything starts.',
+      },
+      {
         q: 'Does it work with our current website?',
         show: ['assistant'],
         a: 'Yes, as long as we can add one line of code to it. That is the case for almost every site — WordPress, Wix, Squarespace, Shopify or a custom build. Your site otherwise stays exactly as it is.',
@@ -278,7 +294,7 @@ export const en: Translation = {
       {
         q: 'Does the assistant answer my phone?',
         show: ['home', 'assistant'],
-        a: 'No. It answers in a chat on your website, from your information only, and books appointments into your calendar. Anything it cannot handle goes to you with the customer’s name and number.',
+        a: 'No. It answers in a chat on your website (with Assistant Pro, on WhatsApp too), from your information only, and books appointments into your calendar. Anything it cannot handle goes to you with the customer’s name and number.',
       },
     ],
   },
