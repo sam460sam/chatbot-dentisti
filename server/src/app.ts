@@ -35,6 +35,12 @@ function systemPromptFor(studio: Studio): string {
   return text;
 }
 
+// Lavoro fatto una volta all'avvio dell'isolate (global scope, che ha un suo limite di 1 s)
+// invece che nella prima richiesta, che sul piano gratuito ha 10 ms di CPU: carica i dati
+// ICU di Intl (nomi delle lingue, fusi orari) e costruisce i prompt di tutti gli studi.
+for (const s of Object.values(studios)) systemPromptFor(s);
+buildClockPrompt(studios.demo, new Date(0));
+
 export const app = new Hono<{ Bindings: Env }>();
 app.use(
   "/chat",

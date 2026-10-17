@@ -179,8 +179,13 @@ limite di spesa Anthropic continuano a valere.
   - il tetto che regge comunque è il limite di spesa mensile nella Console Anthropic
     (sezione 3).
 - **Piano gratuito**: 100.000 richieste al giorno e 10 ms di CPU per richiesta. L'attesa
-  delle risposte di Anthropic, Supabase e Google non conta come CPU; il prompt di sistema
-  si costruisce una volta per istanza.
+  delle risposte di Anthropic, Supabase e Google non conta come CPU. I prompt di sistema e
+  i dati di Intl (lingue, fusi orari) si preparano all'avvio di ogni istanza, fuori dalle
+  richieste. La prima richiesta di un'istanza nuova resta comunque la più pesante (carica
+  i client Anthropic e Supabase): dopo il deploy guarda la colonna del tempo di CPU in
+  Worker → **Observability**. Se una richiesta supera il limite, Cloudflare risponde con
+  l'errore 1102 (nei log: `Exceeded CPU Time Limits`) e il widget mostra il messaggio di
+  chat non disponibile.
 - **Google Calendar**: stesse chiamate (freeBusy ed eventi) con lo stesso scope
   `https://www.googleapis.com/auth/calendar`; il token si chiede a
   `https://oauth2.googleapis.com/token` e si riusa fino a 5 minuti prima della scadenza.
