@@ -17,4 +17,12 @@ export type Env = {
   RL_SESSION_PER_DAY?: string;
   RL_IP_PER_MIN?: string;
   RL_IP_PER_DAY?: string;
+  /** binding Workers Rate Limiting (wrangler.toml), assenti in Node */
+  RATE_LIMIT_SESSION?: RateLimitBinding;
+  RATE_LIMIT_IP?: RateLimitBinding;
 };
+
+/** Il binding "ratelimit" di Cloudflare Workers (solo la parte che usiamo). */
+export interface RateLimitBinding {
+  limit(options: { key: string }): Promise<{ success: boolean }>;
+}

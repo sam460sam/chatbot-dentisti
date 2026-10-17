@@ -1,8 +1,15 @@
-import type { Env } from "./env.js";
+import type { Env, RateLimitBinding } from "./env.js";
 
 /**
- * Limite di richieste in memoria, per non lasciare la spesa API aperta a chiunque.
- * Una Map per istanza del server: niente Redis.
+ * Limite di richieste, per non lasciare la spesa API aperta a chiunque.
+ *
+ * Il conteggio in memoria (una Map) vale per una sola istanza: su Cloudflare
+ * Workers ogni isolate ha la sua Map, e un isolate può essere riciclato in
+ * qualsiasi momento, quindi da solo è un limite indicativo. Per questo, se il
+ * Worker ha i binding Workers Rate Limiting (RATE_LIMIT_SESSION, RATE_LIMIT_IP
+ * in wrangler.toml), i limiti al minuto sono controllati anche lì, con contatori
+ * condivisi da tutte le istanze nella stessa località Cloudflare. I limiti al
+ * giorno restano solo in memoria (il binding conta al massimo su 60 secondi).
  */
 const MINUTE = 60_000;
 const DAY = 24 * 60 * MINUTE;
@@ -42,14 +49,31 @@ function tooMany(key: string, now: number, perMinute: number, perDay: number): b
   return lastMinute > perMinute || recent.length > perDay;
 }
 
+const isBinding = (b: unknown): b is RateLimitBinding => typeof (b as RateLimitBinding | undefined)?.limit === "function";
+
+/** true se uno dei binding Cloudflare dice di rifiutare; se i binding mancano o non rispondono, decide solo la memoria. */
+async function sharedLimited(env: Env, sessionId: string, ip: string): Promise<boolean> {
+  const checks: Promise<{ success: boolean }>[] = [];
+  if (isBinding(env.RATE_LIMIT_SESSION)) checks.push(env.RATE_LIMIT_SESSION.limit({ key: `s:${sessionId}` }));
+  if (isBinding(env.RATE_LIMIT_IP)) checks.push(env.RATE_LIMIT_IP.limit({ key: `i:${ip}` }));
+  if (!checks.length) return false;
+  try {
+    return (await Promise.all(checks)).some((r) => !r.success);
+  } catch (e) {
+    console.error("[ratelimit] binding", e instanceof Error ? e.message : e);
+    return false;
+  }
+}
+
 /** true se la richiesta va rifiutata */
-export function rateLimited(env: Env, sessionId: string, ip: string): boolean {
+export async function rateLimited(env: Env, sessionId: string, ip: string): Promise<boolean> {
   const now = Date.now();
   prune(now);
   const limits = limitsFor(env);
   const bySession = tooMany(`s:${sessionId}`, now, limits.sessionPerMinute, limits.sessionPerDay);
   const byIp = tooMany(`i:${ip}`, now, limits.ipPerMinute, limits.ipPerDay);
-  return bySession || byIp;
+  const shared = await sharedLimited(env, sessionId, ip);
+  return bySession || byIp || shared;
 }
 
 const MESSAGE: Record<string, string> = {

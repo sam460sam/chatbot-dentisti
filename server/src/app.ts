@@ -57,7 +57,7 @@ app.post("/chat", async (c) => {
   if (!sessionId || sessionId.length > 80) return c.json({ error: "sessionId non valido" }, 400);
 
   const ip = (c.req.header("cf-connecting-ip") ?? c.req.header("x-forwarded-for") ?? "unknown").split(",")[0].trim();
-  if (rateLimited(c.env, sessionId, ip)) {
+  if (await rateLimited(c.env, sessionId, ip)) {
     console.log("[RATELIMIT]", studio.id, ip);
     return c.json({ reply: rateLimitMessage(studio.language) }, 429);
   }

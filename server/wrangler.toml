@@ -17,3 +17,16 @@ crons = ["17 3 * * *"]
 
 [observability]
 enabled = true
+
+# Workers Rate Limiting: contatori al minuto condivisi dalle istanze del Worker
+# (per località Cloudflare). Stessi limiti di default di ratelimit.ts.
+# Se si tolgono questi blocchi resta il limite in memoria, per istanza.
+[[ratelimits]]
+name = "RATE_LIMIT_SESSION"
+namespace_id = "41001"
+simple = { limit = 10, period = 60 }
+
+[[ratelimits]]
+name = "RATE_LIMIT_IP"
+namespace_id = "41002"
+simple = { limit = 30, period = 60 }
