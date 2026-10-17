@@ -1,26 +1,17 @@
-import { JWT } from "google-auth-library";
 import type { Studio } from "./studios/demo.js";
 import { workingSlots, type Booking, type CalendarProvider } from "./calendar.js";
+import { getServiceAccountToken } from "./google-auth.js";
 
 const SCOPES = ["https://www.googleapis.com/auth/calendar"];
 const API = "https://www.googleapis.com/calendar/v3";
-
-let client: JWT | null = null;
 
 /** true se la variabile GOOGLE_SERVICE_ACCOUNT_JSON è impostata (contenuto del file JSON della service account). */
 export function googleConfigured(): boolean {
   return Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
 }
 
-function auth(): JWT {
-  if (client) return client;
-  const creds = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON!);
-  client = new JWT({ email: creds.client_email, key: creds.private_key, scopes: SCOPES });
-  return client;
-}
-
 async function call<T>(method: string, path: string, body?: unknown): Promise<T> {
-  const { token } = await auth().getAccessToken();
+  const token = await getServiceAccountToken(process.env.GOOGLE_SERVICE_ACCOUNT_JSON!, SCOPES);
   const res = await fetch(`${API}${path}`, {
     method,
     headers: { Authorization: `Bearer ${token}`, "content-type": "application/json" },
