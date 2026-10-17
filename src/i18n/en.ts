@@ -95,6 +95,9 @@ export const en: Translation = {
       body: 'Thirty per cent off the setup, and the site\u2019s monthly fee is on us for as long as you keep the assistant. Building them together is genuinely less work for us, so you keep the difference.',
     },
     fine: [
+      'Online in about a week, once we have your texts and photos.',
+      'The monthly fee covers hosting, the security certificate, a standard domain and small changes.',
+      'Small changes (hours, prices, texts, photos): send them on WhatsApp, done within a week.',
       'Conversations beyond your plan: \u20AC0.08 each. We tell you before you go over, never after.',
       'Extra page on a full site: \u20AC140.',
       'Month to month, one month\u2019s notice. No long contract, ever.',
@@ -249,6 +252,19 @@ export const en: Translation = {
       {
         q: 'What does it cost?',
         a: 'The whole price list for websites and the assistant is on this page — nothing is held back until a phone call. The assistant is €240 to set up and €79 a month for 300 conversations; sites start at €590. Take the full site and the assistant together and the setup drops thirty per cent and the site’s monthly fee is on us.',
+      },
+      {
+        q: 'Is the website mine?',
+        show: ['home'],
+        a: 'Your site runs as a subscription: design, hosting, the security certificate, a standard domain and small changes are all in the monthly fee. You can stop month by month with one month’s notice; when the subscription ends, we take the site offline. A premium domain name is quoted separately.',
+      },
+      {
+        q: 'How long until my site is online?',
+        a: 'Online in about a week, once we have your texts and photos. Small changes (hours, prices, texts, photos): send them on WhatsApp, done within a week.',
+      },
+      {
+        q: 'How much do the ads cost?',
+        a: 'You pay two things: the ad budget, which goes to Meta, and our fee for creating and running the ads. We agree both in the call, before anything starts.',
       },
       {
         q: 'Does it work with our current website?',

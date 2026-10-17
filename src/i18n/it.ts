@@ -95,6 +95,9 @@ export const it: Translation = {
       body: 'Trenta per cento in meno sull\u2019attivazione, e il canone del sito lo offriamo noi finch\u00e9 tieni l\u2019assistente. Costruirli insieme per noi \u00e8 davvero meno lavoro, quindi la differenza resta a te.',
     },
     fine: [
+      'Online in circa una settimana, da quando abbiamo testi e foto.',
+      'Il canone mensile copre hosting, certificato di sicurezza, un dominio standard e piccole modifiche.',
+      'Piccole modifiche (orari, prezzi, testi, foto): mandacele su WhatsApp, fatte entro una settimana.',
       'Conversazioni oltre il piano: \u20AC0,08 l\u2019una. Te lo diciamo prima di superare la soglia, non dopo.',
       'Pagina aggiuntiva su un sito completo: \u20AC120.',
       'Mese per mese, un mese di preavviso. Mai un contratto lungo.',
@@ -249,6 +252,19 @@ export const it: Translation = {
       {
         q: 'Quanto costa?',
         a: 'Il listino completo di siti e assistente è su questa pagina: non teniamo niente nascosto fino alla telefonata. L’assistente costa €190 di attivazione e €59 al mese per 300 conversazioni; i siti partono da €490. Prendendo insieme sito completo e assistente, l’attivazione cala del trenta per cento e il canone del sito lo offriamo noi.',
+      },
+      {
+        q: 'Il sito è mio?',
+        show: ['home'],
+        a: 'Il sito funziona in abbonamento: progetto, hosting, certificato di sicurezza, un dominio standard e piccole modifiche sono tutti nel canone mensile. Puoi smettere mese per mese con un mese di preavviso; quando l’abbonamento finisce, mettiamo il sito offline. Un dominio premium lo quotiamo a parte.',
+      },
+      {
+        q: 'Quanto ci vuole perché il sito sia online?',
+        a: 'Online in circa una settimana, da quando abbiamo testi e foto. Piccole modifiche (orari, prezzi, testi, foto): mandacele su WhatsApp, fatte entro una settimana.',
+      },
+      {
+        q: 'Quanto costa la pubblicità?',
+        a: 'Paghi due cose: il budget degli annunci, che va a Meta, e il nostro compenso per crearli e gestirli. Li concordiamo entrambi nella chiamata, prima di iniziare.',
       },
       {
         q: 'Funziona con il sito che abbiamo già?',

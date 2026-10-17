@@ -95,6 +95,9 @@ export const nl: Translation = {
       body: 'Dertig procent van de eenmalige kosten eraf, en het maandbedrag van de site is van ons zolang u de assistent houdt. Ze samen bouwen is voor ons echt minder werk, dus het verschil is voor u.',
     },
     fine: [
+      'Online in ongeveer een week, zodra we uw teksten en foto’s hebben.',
+      'Het maandbedrag dekt hosting, het beveiligingscertificaat, een standaard domeinnaam en kleine wijzigingen.',
+      'Kleine wijzigingen (openingstijden, prijzen, teksten, foto’s): stuur ze via WhatsApp, binnen een week geregeld.',
       'Gesprekken boven uw pakket: \u20AC0,08 per stuk. We zeggen het voordat u eroverheen gaat, niet erna.',
       'Extra pagina op een volledige site: \u20AC140.',
       'Maand per maand, \u00e9\u00e9n maand opzegtermijn. Nooit een lang contract.',
@@ -249,6 +252,19 @@ export const nl: Translation = {
       {
         q: 'Wat kost het?',
         a: 'De hele prijslijst voor websites en de assistent staat op deze pagina — er wordt niets achtergehouden tot een telefoongesprek. De assistent kost €240 eenmalig en €79 per maand voor 300 gesprekken; sites beginnen bij €590. Neemt u de volledige site en de assistent samen, dan gaat er dertig procent van de eenmalige kosten af en is het maandbedrag van de site van ons.',
+      },
+      {
+        q: 'Is de website van mij?',
+        show: ['home'],
+        a: 'Uw site werkt als abonnement: ontwerp, hosting, het beveiligingscertificaat, een standaard domeinnaam en kleine wijzigingen zitten allemaal in het maandbedrag. U kunt per maand stoppen met één maand opzegtermijn; als het abonnement afloopt, halen we de site offline. Een premium domeinnaam rekenen we apart.',
+      },
+      {
+        q: 'Hoe snel staat mijn site online?',
+        a: 'Online in ongeveer een week, zodra we uw teksten en foto’s hebben. Kleine wijzigingen (openingstijden, prijzen, teksten, foto’s): stuur ze via WhatsApp, binnen een week geregeld.',
+      },
+      {
+        q: 'Wat kosten de advertenties?',
+        a: 'U betaalt twee dingen: het advertentiebudget, dat naar Meta gaat, en ons bedrag voor het maken en beheren van de advertenties. Beide spreken we af in het gesprek, voordat er iets begint.',
       },
       {
         q: 'Werkt het met onze huidige website?',

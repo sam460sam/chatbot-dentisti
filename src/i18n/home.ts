@@ -5,7 +5,8 @@ import type { Lang } from './types'
  * online-ads card, the link to the live demo on the assistant page, the
  * demo link in the phone menu and the footer headings. Everything else on the home page
  * reuses the booking copy (src/i18n/booking.ts), so no promise is written
- * twice. The ads card names no price on purpose: it is agreed in the call.
+ * twice. The ads card names no price on purpose: it says what you pay for (the
+ * budget to Meta and our fee) and that both are agreed in the call.
  */
 export interface HomeCopy {
   hero: { eyebrow: string; video: string }
@@ -27,7 +28,7 @@ export const home: Record<Lang, HomeCopy> = {
     ads: {
       tag: 'Online ads',
       title: 'Seen by the people around you',
-      body: 'We create and run ads on Instagram and Facebook for your business, aimed at people in your area. The cost depends on the campaign: we agree it with you in the call.',
+      body: 'We create and run ads on Instagram and Facebook for your business, aimed at people in your area. You pay two things: the ad budget, which goes to Meta, and our fee for creating and running the ads. We agree both in the call, before anything starts.',
       cta: 'Ask about ads',
     },
     demo: {
@@ -46,7 +47,7 @@ export const home: Record<Lang, HomeCopy> = {
     ads: {
       tag: 'Online advertenties',
       title: 'Gezien worden in uw eigen buurt',
-      body: 'Wij maken en beheren advertenties op Instagram en Facebook voor uw bedrijf, gericht op mensen in uw omgeving. De kosten hangen af van de campagne: die spreken we met u af in het gesprek.',
+      body: 'Wij maken en beheren advertenties op Instagram en Facebook voor uw bedrijf, gericht op mensen in uw omgeving. U betaalt twee dingen: het advertentiebudget, dat naar Meta gaat, en ons bedrag voor het maken en beheren van de advertenties. Beide spreken we af in het gesprek, voordat er iets begint.',
       cta: 'Vraag naar advertenties',
     },
     demo: {
@@ -65,7 +66,7 @@ export const home: Record<Lang, HomeCopy> = {
     ads: {
       tag: 'Pubblicità online',
       title: 'Fatti vedere da chi abita in zona',
-      body: 'Creiamo e gestiamo annunci su Instagram e Facebook per la tua attività, rivolti alle persone della tua zona. Il costo dipende dalla campagna: lo concordiamo con te durante la chiamata.',
+      body: 'Creiamo e gestiamo annunci su Instagram e Facebook per la tua attività, rivolti alle persone della tua zona. Paghi due cose: il budget degli annunci, che va a Meta, e il nostro compenso per crearli e gestirli. Li concordiamo entrambi nella chiamata, prima di iniziare.',
       cta: 'Chiedici della pubblicità',
     },
     demo: {
