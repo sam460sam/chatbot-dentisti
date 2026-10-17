@@ -17,7 +17,7 @@ export const twinbyteStudio: Studio = {
     "Non inventare MAI numeri di clienti, percentuali o risultati.",
     "Se chiedono il prezzo: il listino è pubblico. Dai le cifre del listino nelle FAQ, nella lingua della persona (a chi scrive in italiano il listino italiano, a tutti gli altri quello inglese e olandese), e rimanda a https://twinbyteservices.com/prices (italiano: https://twinbyteservices.com/it/prices, olandese: https://twinbyteservices.com/nl/prices). Non dare MAI cifre diverse da queste.",
     "Se vogliono parlare con una persona o un preventivo: invitali a scrivere su WhatsApp al +31 6 45745163 oppure a info@twinbyteservices.com, e usa escalate_to_human con il loro nome e contatto.",
-    "Se chiedono una demo: https://twinbyteservices.com/demo/ (olandese https://twinbyteservices.com/demo/nl/, italiano https://twinbyteservices.com/demo/it/), uno studio dentistico immaginario.",
+    "Se chiedono una demo: https://twinbyteservices.com/demo/ (olandese https://twinbyteservices.com/demo/nl/, italiano https://twinbyteservices.com/demo/it/), uno studio dentistico immaginario: è solo un esempio, lavoriamo con ogni tipo di attività locale.",
     "La chiamata gratuita di 15 minuti si fa al telefono, su WhatsApp o in Google Meet, come preferisce la persona; si fissa scrivendo su WhatsApp o per email: non c'è un calendario online.",
     "Di solito rispondiamo entro 24 ore: è l'unico tempo di risposta che puoi dare.",
     "Per la pubblicità non c'è un prezzo fisso: non dare MAI cifre, né per il budget né per il nostro compenso.",
@@ -36,6 +36,10 @@ export const twinbyteStudio: Studio = {
     {
       q: "What is Twinbyte",
       a: "Twinbyte is a small digital studio for local businesses. We build fast websites, add a digital assistant that answers customers and books appointments into the calendar the business already uses, and run Instagram and Facebook ads for people nearby.",
+    },
+    {
+      q: "Who Twinbyte works with",
+      a: "All kinds of local businesses, not only dental practices: shops, salons, studios, tradespeople, practices and other businesses that take questions or bookings from customers.",
     },
     {
       q: "How the assistant works",
@@ -57,8 +61,8 @@ export const twinbyteStudio: Studio = {
       a: "On every plan the assistant is set up in the language the business works in and answers each customer in the language that customer writes in.",
     },
     {
-      q: "Urgencies and medical questions",
-      a: "The assistant gives no diagnosis and no medical advice, and does not triage. For an urgent case, or to move or cancel an appointment, it takes the name and phone number and creates a call-back event in the practice's calendar so a member of staff follows up.",
+      q: "Urgencies, cancellations and medical questions",
+      a: "For an urgent case, or to move or cancel an appointment, the assistant takes the name and phone number and creates a call-back event in the business's calendar so someone from the business follows up. For health businesses such as dental practices it gives no diagnosis and no medical advice, and does not triage.",
     },
     {
       q: "Data protection",
@@ -66,7 +70,7 @@ export const twinbyteStudio: Studio = {
     },
     {
       q: "Which calendars and booking software",
-      a: "Google Calendar works today. For other booking or practice software we look at the integration together before we start.",
+      a: "Google Calendar works today. For other booking or management software we look at the integration together before we start.",
     },
     {
       q: "Does it work with our current website",
@@ -99,7 +103,7 @@ export const twinbyteStudio: Studio = {
     },
     {
       q: "Demo",
-      a: "There is a live demo of a fictional dental practice, where the assistant answers and books on a test diary: https://twinbyteservices.com/demo/ in English, https://twinbyteservices.com/demo/nl/ in Dutch and https://twinbyteservices.com/demo/it/ in Italian.",
+      a: "There is a live demo of a fictional dental practice, where the assistant answers and books on a test diary. It is only one example: Twinbyte works with all kinds of local businesses. Demo: https://twinbyteservices.com/demo/ in English, https://twinbyteservices.com/demo/nl/ in Dutch and https://twinbyteservices.com/demo/it/ in Italian.",
     },
   ],
 };
