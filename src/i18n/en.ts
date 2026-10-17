@@ -77,14 +77,14 @@ export const en: Translation = {
         name: 'Assistant',
         setup: '\u20AC240',
         month: '\u20AC79',
-        points: ['300 conversations a month', 'Books into the calendar you already use', 'One language'],
+        points: ['300 conversations a month', 'Books into the calendar you already use', 'Replies in your customer’s language'],
       },
       {
         name: 'Assistant Pro',
         setup: '\u20AC340',
         month: '\u20AC129',
         plus: 'Everything in Assistant, plus:',
-        points: ['1,000 conversations a month', 'WhatsApp as well as the website', 'Every language your customers write in'],
+        points: ['1,000 conversations a month', 'WhatsApp as well as the website'],
       },
     ],
     bundle: {
@@ -171,7 +171,7 @@ export const en: Translation = {
       },
       {
         title: 'We put it on your website',
-        body: 'One line of code on the site you already have. Nothing to install, nothing else changes. A WhatsApp version is on the way.',
+        body: 'One line of code on the site you already have. Nothing to install, nothing else changes. With Assistant Pro it also answers on WhatsApp; setting that up takes about two weeks.',
       },
       {
         title: 'Customers book themselves',
@@ -181,7 +181,7 @@ export const en: Translation = {
   },
   benefits: {
     title: 'What your business gets out of it',
-    lead: 'We first designed it for dental practices, where a missed call is a lost patient. The same problem shows up in any business that takes bookings — a salon, a garage, a studio, a clinic, a consultancy.',
+    lead: 'In any business that takes bookings, a missed call is a lost customer — a salon, a garage, a dental practice, a studio, a clinic, a consultancy. The same assistant works for all of them.',
     items: [
       {
         title: 'Fewer calls to answer',
@@ -278,7 +278,7 @@ export const en: Translation = {
       {
         q: 'Does the assistant answer my phone?',
         show: ['home', 'assistant'],
-        a: 'No. It answers in a chat on your website, from your information only, and books appointments into your calendar. Anything it cannot handle goes to you with the customer’s name and number.',
+        a: 'No. It answers in a chat on your website (with Assistant Pro, on WhatsApp too), from your information only, and books appointments into your calendar. Anything it cannot handle goes to you with the customer’s name and number.',
       },
     ],
   },

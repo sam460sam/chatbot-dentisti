@@ -77,14 +77,14 @@ export const it: Translation = {
         name: 'Assistente',
         setup: '\u20AC190',
         month: '\u20AC59',
-        points: ['300 conversazioni al mese', 'Fissa gli appuntamenti nell\u2019agenda che usi gi\u00e0', 'Una lingua'],
+        points: ['300 conversazioni al mese', 'Fissa gli appuntamenti nell\u2019agenda che usi gi\u00e0', 'Risponde nella lingua del cliente'],
       },
       {
         name: 'Assistente Pro',
         setup: '\u20AC290',
         month: '\u20AC99',
         plus: 'Tutto quello che c’è in Assistente, più:',
-        points: ['1.000 conversazioni al mese', 'Anche su WhatsApp, non solo sul sito', 'Tutte le lingue in cui ti scrivono'],
+        points: ['1.000 conversazioni al mese', 'Anche su WhatsApp, non solo sul sito'],
       },
     ],
     bundle: {
@@ -171,7 +171,7 @@ export const it: Translation = {
       },
       {
         title: 'Lo inseriamo sul tuo sito',
-        body: 'Una riga di codice sul sito che hai già. Niente da installare, il resto del sito non cambia. La versione WhatsApp è in arrivo.',
+        body: 'Una riga di codice sul sito che hai già. Niente da installare, il resto del sito non cambia. Con Assistente Pro risponde anche su WhatsApp: per attivarlo servono circa due settimane.',
       },
       {
         title: 'I clienti prenotano da soli',
@@ -181,7 +181,7 @@ export const it: Translation = {
   },
   benefits: {
     title: 'Cosa ci guadagna la tua attività',
-    lead: 'L’abbiamo progettato prima per gli studi dentistici, dove una chiamata persa è un paziente perso. Lo stesso problema c’è in qualsiasi attività che prende appuntamenti: un salone, un’officina, uno studio professionale, una clinica, un centro estetico.',
+    lead: 'In qualsiasi attività che prende appuntamenti, una chiamata persa è un cliente perso: un salone, un’officina, uno studio dentistico, uno studio professionale, un centro estetico. Per tutti funziona lo stesso assistente.',
     items: [
       {
         title: 'Meno telefonate a cui rispondere',
@@ -278,7 +278,7 @@ export const it: Translation = {
       {
         q: 'L’assistente risponde al telefono?',
         show: ['home', 'assistant'],
-        a: 'No. Risponde in chat sul tuo sito, solo con le tue informazioni, e fissa gli appuntamenti nella tua agenda. Quello che non sa gestire passa a te, con nome e numero del cliente.',
+        a: 'No. Risponde in chat sul tuo sito (con Assistente Pro anche su WhatsApp), solo con le tue informazioni, e fissa gli appuntamenti nella tua agenda. Quello che non sa gestire passa a te, con nome e numero del cliente.',
       },
     ],
   },

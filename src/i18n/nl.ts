@@ -77,14 +77,14 @@ export const nl: Translation = {
         name: 'Assistent',
         setup: '\u20AC240',
         month: '\u20AC79',
-        points: ['300 gesprekken per maand', 'Plant in de agenda die u al gebruikt', '\u00c9\u00e9n taal'],
+        points: ['300 gesprekken per maand', 'Plant in de agenda die u al gebruikt', 'Antwoordt in de taal van uw klant'],
       },
       {
         name: 'Assistent Pro',
         setup: '\u20AC340',
         month: '\u20AC129',
         plus: 'Alles uit Assistent, plus:',
-        points: ['1.000 gesprekken per maand', 'Ook via WhatsApp, niet alleen de website', 'Elke taal waarin uw klanten schrijven'],
+        points: ['1.000 gesprekken per maand', 'Ook via WhatsApp, niet alleen de website'],
       },
     ],
     bundle: {
@@ -171,7 +171,7 @@ export const nl: Translation = {
       },
       {
         title: 'Wij plaatsen het op uw website',
-        body: 'Eén regel code op de site die u al heeft. Niets te installeren, verder verandert er niets. Een WhatsApp-versie volgt binnenkort.',
+        body: 'Eén regel code op de site die u al heeft. Niets te installeren, verder verandert er niets. Met Assistent Pro antwoordt hij ook op WhatsApp; dat inrichten duurt ongeveer twee weken.',
       },
       {
         title: 'Klanten plannen zelf een afspraak',
@@ -181,7 +181,7 @@ export const nl: Translation = {
   },
   benefits: {
     title: 'Wat uw bedrijf eraan heeft',
-    lead: 'We hebben hem eerst ontworpen voor tandartspraktijken, waar een gemist telefoontje een verloren patiënt is. Datzelfde probleem heeft elk bedrijf dat op afspraak werkt: een salon, een garage, een praktijk, een studio, een adviesbureau.',
+    lead: 'In elk bedrijf dat op afspraak werkt, is een gemist telefoontje een verloren klant: een salon, een garage, een tandartspraktijk, een studio, een adviesbureau. Voor allemaal werkt dezelfde assistent.',
     items: [
       {
         title: 'Minder telefoontjes om op te nemen',
@@ -278,7 +278,7 @@ export const nl: Translation = {
       {
         q: 'Neemt de assistent mijn telefoon op?',
         show: ['home', 'assistant'],
-        a: 'Nee. Hij antwoordt in een chat op uw website, alleen met uw eigen informatie, en zet afspraken in uw agenda. Wat hij niet kan afhandelen, komt bij u terecht met de naam en het nummer van de klant.',
+        a: 'Nee. Hij antwoordt in een chat op uw website (met Assistent Pro ook op WhatsApp), alleen met uw eigen informatie, en zet afspraken in uw agenda. Wat hij niet kan afhandelen, komt bij u terecht met de naam en het nummer van de klant.',
       },
     ],
   },
